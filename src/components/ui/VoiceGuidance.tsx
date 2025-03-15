@@ -20,7 +20,9 @@ const languageOptions = [
   { code: 'hi-IN', name: 'Hindi' },
   { code: 'pt-BR', name: 'Portuguese' },
   { code: 'ru-RU', name: 'Russian' },
-  { code: 'ar-SA', name: 'Arabic' },
+  { code: 'nl-NL', name: 'Dutch' },
+  { code: 'pl-PL', name: 'Polish' },
+  { code: 'id-ID', name: 'Indonesian' },
   { code: 'th-TH', name: 'Thai' },
   { code: 'tr-TR', name: 'Turkish' },
   { code: 'vi-VN', name: 'Vietnamese' }
@@ -78,23 +80,36 @@ const VoiceGuidance = ({ instructions, title }: VoiceGuidanceProps) => {
     utterance.current.lang = selectedLanguage;
     console.log(`Speaking in language: ${selectedLanguage}`);
     
-    const matchingVoices = availableVoices.filter(voice => 
-      voice.lang.toLowerCase().includes(selectedLanguage.toLowerCase().substr(0, 2))
-    );
+    const matchingVoices = availableVoices.filter(voice => {
+      const voiceLang = voice.lang.toLowerCase();
+      const selectedLangCode = selectedLanguage.toLowerCase();
+      
+      if (voiceLang === selectedLangCode) return true;
+      
+      const langCode = selectedLangCode.substr(0, 2);
+      return voiceLang.startsWith(langCode);
+    });
     
     console.log(`Found ${matchingVoices.length} matching voices for ${selectedLanguage}`);
     
     if (matchingVoices.length > 0) {
       const preferredVoice = matchingVoices.find(voice => 
-        voice.name.includes('Google') || 
-        voice.name.includes('Female') ||
+        voice.name.includes('Google') && (selectedLanguage === voice.lang)
+      ) || 
+      matchingVoices.find(voice => 
+        voice.name.includes('Google')
+      ) ||
+      matchingVoices.find(voice => 
+        voice.name.includes('Female') || 
         voice.name.includes('Samantha')
-      ) || matchingVoices[0];
+      ) || 
+      matchingVoices[0];
       
       utterance.current.voice = preferredVoice;
       console.log(`Selected voice: ${preferredVoice.name} (${preferredVoice.lang})`);
     } else {
       console.log(`No matching voice found for ${selectedLanguage}`);
+      utterance.current.lang = 'en-US';
     }
     
     utterance.current.rate = 0.9;

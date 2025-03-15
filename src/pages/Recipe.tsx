@@ -24,35 +24,35 @@ const Recipe = () => {
       setTimeout(() => {
         setRecipe(foundRecipe || null);
         setIsLoading(false);
-      }, 500);
+      }, 300);
       
       // Check if recipe is in favorites
       const favorites = JSON.parse(localStorage.getItem('favoriteRecipes') || '[]');
-      setIsFavorite(favorites.some((favId: string) => favId === id));
+      setIsFavorite(favorites.includes(id));
     }
   }, [id]);
 
   const toggleFavorite = () => {
     const favorites = JSON.parse(localStorage.getItem('favoriteRecipes') || '[]');
     
-    if (isFavorite) {
+    if (isFavorite && recipe) {
       const updatedFavorites = favorites.filter((favId: string) => favId !== id);
       localStorage.setItem('favoriteRecipes', JSON.stringify(updatedFavorites));
       setIsFavorite(false);
       
       toast({
         title: "Removed from Favorites",
-        description: `${recipe?.title} has been removed from your favorites.`,
+        description: `${recipe.name} has been removed from your favorites.`,
         duration: 3000,
       });
-    } else {
+    } else if (recipe) {
       favorites.push(id);
       localStorage.setItem('favoriteRecipes', JSON.stringify(favorites));
       setIsFavorite(true);
       
       toast({
         title: "Added to Favorites",
-        description: `${recipe?.title} has been added to your favorites.`,
+        description: `${recipe.name} has been added to your favorites.`,
         duration: 3000,
       });
     }
@@ -62,8 +62,8 @@ const Recipe = () => {
     if (navigator.share && recipe) {
       try {
         await navigator.share({
-          title: recipe.title,
-          text: `Check out this recipe: ${recipe.title}`,
+          title: recipe.name,
+          text: `Check out this recipe: ${recipe.name}`,
           url: window.location.href,
         });
         
@@ -146,35 +146,43 @@ const Recipe = () => {
           background: 'linear-gradient(90deg, hsla(46, 73%, 75%, 1) 0%, hsla(176, 73%, 88%, 1) 100%)',
           color: '#333'
         }}>
-          <h1 className="text-3xl sm:text-4xl font-bold mb-3">{recipe.title}</h1>
+          <h1 className="text-3xl sm:text-4xl font-bold mb-3">{recipe.name}</h1>
           <p className="text-lg mb-4">{recipe.description}</p>
           
           {/* Recipe meta info */}
           <div className="flex flex-wrap gap-4 text-sm">
-            <div className="flex items-center">
-              <Clock size={16} className="mr-1" />
-              <span>Prep: {recipe.prepTime} | Cook: {recipe.cookTime}</span>
-            </div>
+            {recipe.prepTime && recipe.cookTime && (
+              <div className="flex items-center">
+                <Clock size={16} className="mr-1" />
+                <span>Prep: {recipe.prepTime} | Cook: {recipe.cookTime}</span>
+              </div>
+            )}
             
-            <div className="flex items-center">
-              <Users size={16} className="mr-1" />
-              <span>Serves {recipe.servings}</span>
-            </div>
+            {recipe.servings && (
+              <div className="flex items-center">
+                <Users size={16} className="mr-1" />
+                <span>Serves {recipe.servings}</span>
+              </div>
+            )}
             
-            <div className="flex items-center">
-              <ChefHat size={16} className="mr-1" />
-              <span>{recipe.calories} calories per serving</span>
-            </div>
+            {recipe.calories && (
+              <div className="flex items-center">
+                <ChefHat size={16} className="mr-1" />
+                <span>{recipe.calories} calories per serving</span>
+              </div>
+            )}
             
-            <div className="flex items-center">
-              <span className={`px-2 py-1 rounded-full text-xs font-medium
-                ${recipe.difficulty === 'Easy' ? 'bg-green-500 text-white' : 
-                  recipe.difficulty === 'Medium' ? 'bg-yellow-500 text-white' : 
-                  'bg-red-500 text-white'}`}
-              >
-                {recipe.difficulty}
-              </span>
-            </div>
+            {recipe.difficulty && (
+              <div className="flex items-center">
+                <span className={`px-2 py-1 rounded-full text-xs font-medium
+                  ${recipe.difficulty === 'Easy' ? 'bg-green-500 text-white' : 
+                    recipe.difficulty === 'Medium' ? 'bg-yellow-500 text-white' : 
+                    'bg-red-500 text-white'}`}
+                >
+                  {recipe.difficulty}
+                </span>
+              </div>
+            )}
           </div>
         </div>
         
@@ -182,8 +190,8 @@ const Recipe = () => {
         <div className="grid md:grid-cols-2 gap-8 mb-8">
           <div className="overflow-hidden rounded-xl shadow-lg transition-all hover:shadow-xl">
             <img
-              src={`${recipe.imageUrl}?auto=format&fit=crop&w=800&h=600`}
-              alt={recipe.title}
+              src={recipe.imageUrl}
+              alt={recipe.name}
               className="w-full h-full object-cover"
             />
           </div>
@@ -320,7 +328,7 @@ const Recipe = () => {
       {/* Voice guidance component */}
       <VoiceGuidance 
         instructions={recipe.instructions} 
-        title={recipe.title}
+        title={recipe.name}
       />
     </>
   );
