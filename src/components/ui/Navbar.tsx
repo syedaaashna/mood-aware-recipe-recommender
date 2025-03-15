@@ -58,12 +58,6 @@ const Navbar = ({ toggleDarkMode, isDarkMode }: NavbarProps) => {
               >
                 Favorites
               </Link>
-              <Link 
-                to="/about" 
-                className="px-3 py-2 rounded-md text-sm font-medium text-gray-700 dark:text-gray-200 hover:text-primary dark:hover:text-primary transition-colors"
-              >
-                About
-              </Link>
               <button
                 onClick={toggleDarkMode}
                 className="p-2 rounded-full text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
@@ -103,13 +97,6 @@ const Navbar = ({ toggleDarkMode, isDarkMode }: NavbarProps) => {
               onClick={() => setMobileMenuOpen(false)}
             >
               Favorites
-            </Link>
-            <Link
-              to="/about"
-              className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              About
             </Link>
             <button
               onClick={() => {
