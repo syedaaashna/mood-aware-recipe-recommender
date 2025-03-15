@@ -120,6 +120,7 @@
     backdrop-filter: blur(8px);
   }
   
+  /* Enhanced recipe gradient styles with more vibrant colors */
   .recipe-gradient-1 {
     background: linear-gradient(90deg, hsla(46, 73%, 75%, 1) 0%, hsla(176, 73%, 88%, 1) 100%);
   }
@@ -139,6 +140,56 @@
   
   .recipe-gradient-5 {
     background: linear-gradient(90deg, hsla(259, 40%, 80%, 1) 0%, hsla(205, 45%, 76%, 1) 100%);
+  }
+
+  /* New vibrant recipe gradient styles */
+  .recipe-gradient-6 {
+    background: linear-gradient(90deg, hsla(22, 100%, 78%, 1) 0%, hsla(44, 100%, 78%, 1) 100%);
+  }
+  
+  .recipe-gradient-7 {
+    background: linear-gradient(90deg, hsla(186, 100%, 83%, 1) 0%, hsla(212, 100%, 83%, 1) 100%);
+  }
+  
+  .recipe-gradient-8 {
+    background: linear-gradient(90deg, hsla(300, 76%, 85%, 1) 0%, hsla(272, 76%, 85%, 1) 100%);
+  }
+  
+  .recipe-gradient-9 {
+    background: linear-gradient(90deg, hsla(120, 60%, 85%, 1) 0%, hsla(160, 60%, 85%, 1) 100%);
+  }
+  
+  .recipe-gradient-10 {
+    background: linear-gradient(90deg, hsla(30, 100%, 80%, 1) 0%, hsla(360, 100%, 80%, 1) 100%);
+  }
+
+  /* Mood-specific gradient backgrounds */
+  .mood-happy-gradient {
+    background: linear-gradient(135deg, #FFF176 0%, #FFD54F 100%);
+  }
+
+  .mood-romantic-gradient {
+    background: linear-gradient(135deg, #F48FB1 0%, #FF80AB 100%);
+  }
+
+  .mood-energetic-gradient {
+    background: linear-gradient(135deg, #4FC3F7 0%, #29B6F6 100%);
+  }
+
+  .mood-relaxed-gradient {
+    background: linear-gradient(135deg, #81D4FA 0%, #B3E5FC 100%);
+  }
+
+  .mood-creative-gradient {
+    background: linear-gradient(135deg, #CE93D8 0%, #BA68C8 100%);
+  }
+
+  .mood-adventurous-gradient {
+    background: linear-gradient(135deg, #FFB74D 0%, #FFA726 100%);
+  }
+  
+  .mood-nostalgic-gradient {
+    background: linear-gradient(135deg, #90CAF9 0%, #42A5F5 100%);
   }
 }
 
@@ -161,6 +212,18 @@
   
   .animate-float-delay-3 {
     animation: float 6s ease-in-out 3s infinite;
+  }
+  
+  .text-shadow-sm {
+    text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+  }
+  
+  .text-shadow {
+    text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  }
+  
+  .text-shadow-lg {
+    text-shadow: 0 4px 8px rgba(0,0,0,0.3);
   }
 }
 
@@ -217,4 +280,37 @@
   100% {
     transform: translate(100px, 50px);
   }
+}
+
+/* New decorative elements */
+.sparkle {
+  position: absolute;
+  background-color: white;
+  border-radius: 50%;
+  animation: sparkle 2s ease-in-out infinite;
+  opacity: 0;
+}
+
+@keyframes sparkle {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1);
+    opacity: 0.7;
+  }
+  100% {
+    transform: scale(0);
+    opacity: 0;
+  }
+}
+
+.card-hover-effect {
+  transition: all 0.3s ease;
+}
+
+.card-hover-effect:hover {
+  transform: translateY(-5px) scale(1.02);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
 }

@@ -1,4 +1,3 @@
-
 import { useState, useEffect, useRef } from 'react';
 import { Volume2, VolumeX, Play, Pause, SkipForward, SkipBack, Globe } from 'lucide-react';
 import { useToast } from "@/hooks/use-toast";
@@ -19,7 +18,12 @@ const languageOptions = [
   { code: 'ja-JP', name: 'Japanese' },
   { code: 'ko-KR', name: 'Korean' },
   { code: 'hi-IN', name: 'Hindi' },
-  { code: 'pt-BR', name: 'Portuguese' }
+  { code: 'pt-BR', name: 'Portuguese' },
+  { code: 'ru-RU', name: 'Russian' },
+  { code: 'ar-SA', name: 'Arabic' },
+  { code: 'th-TH', name: 'Thai' },
+  { code: 'tr-TR', name: 'Turkish' },
+  { code: 'vi-VN', name: 'Vietnamese' }
 ];
 
 const VoiceGuidance = ({ instructions, title }: VoiceGuidanceProps) => {
@@ -29,12 +33,24 @@ const VoiceGuidance = ({ instructions, title }: VoiceGuidanceProps) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [selectedLanguage, setSelectedLanguage] = useState('en-US');
   const [showLanguageSelector, setShowLanguageSelector] = useState(false);
+  const [availableVoices, setAvailableVoices] = useState<SpeechSynthesisVoice[]>([]);
   const synth = useRef<SpeechSynthesis | null>(null);
   const utterance = useRef<SpeechSynthesisUtterance | null>(null);
   const { toast } = useToast();
 
   useEffect(() => {
     synth.current = window.speechSynthesis;
+    
+    const loadVoices = () => {
+      const voices = synth.current?.getVoices() || [];
+      setAvailableVoices(voices);
+      console.log("Available voices:", voices.map(v => `${v.name} (${v.lang})`));
+    };
+
+    if (synth.current) {
+      synth.current.onvoiceschanged = loadVoices;
+      loadVoices();
+    }
     
     return () => {
       if (synth.current) {
@@ -55,21 +71,30 @@ const VoiceGuidance = ({ instructions, title }: VoiceGuidanceProps) => {
     if (!synth.current || isMuted || !instructions[currentStep]) return;
     
     synth.current.cancel();
-    utterance.current = new SpeechSynthesisUtterance(`Step ${currentStep + 1}: ${instructions[currentStep]}`);
     
-    // Set the language for the utterance
+    let stepText = `Step ${currentStep + 1}: ${instructions[currentStep]}`;
+    utterance.current = new SpeechSynthesisUtterance(stepText);
+    
     utterance.current.lang = selectedLanguage;
+    console.log(`Speaking in language: ${selectedLanguage}`);
     
-    const voices = synth.current.getVoices();
-    const preferredVoice = voices.find(voice => 
-      voice.lang === selectedLanguage && 
-      (voice.name.includes('Google') || 
-      voice.name.includes('Female') ||
-      voice.name.includes('Samantha'))
+    const matchingVoices = availableVoices.filter(voice => 
+      voice.lang.toLowerCase().includes(selectedLanguage.toLowerCase().substr(0, 2))
     );
     
-    if (preferredVoice) {
+    console.log(`Found ${matchingVoices.length} matching voices for ${selectedLanguage}`);
+    
+    if (matchingVoices.length > 0) {
+      const preferredVoice = matchingVoices.find(voice => 
+        voice.name.includes('Google') || 
+        voice.name.includes('Female') ||
+        voice.name.includes('Samantha')
+      ) || matchingVoices[0];
+      
       utterance.current.voice = preferredVoice;
+      console.log(`Selected voice: ${preferredVoice.name} (${preferredVoice.lang})`);
+    } else {
+      console.log(`No matching voice found for ${selectedLanguage}`);
     }
     
     utterance.current.rate = 0.9;
@@ -141,16 +166,18 @@ const VoiceGuidance = ({ instructions, title }: VoiceGuidanceProps) => {
   };
 
   const changeLanguage = (langCode: string) => {
+    console.log(`Changing language to: ${langCode}`);
     setSelectedLanguage(langCode);
     setShowLanguageSelector(false);
     
+    const langName = languageOptions.find(lang => lang.code === langCode)?.name || langCode;
+    
     toast({
       title: "Language Changed",
-      description: `Voice guidance language set to ${languageOptions.find(lang => lang.code === langCode)?.name}`,
+      description: `Voice guidance language set to ${langName}`,
       duration: 3000,
     });
     
-    // If currently playing, restart the current step with the new language
     if (isPlaying) {
       if (synth.current) synth.current.cancel();
       setTimeout(() => speakCurrentStep(), 100);
