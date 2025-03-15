@@ -14,16 +14,16 @@
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
 
-    --primary: 210 64% 50%;
+    --primary: 267 78% 58%;
     --primary-foreground: 210 40% 98%;
 
-    --secondary: 210 40% 96.1%;
+    --secondary: 346 87% 70%;
     --secondary-foreground: 222.2 47.4% 11.2%;
 
     --muted: 210 40% 96.1%;
     --muted-foreground: 215.4 16.3% 46.9%;
 
-    --accent: 210 40% 96.1%;
+    --accent: 142 76% 45%;
     --accent-foreground: 222.2 47.4% 11.2%;
 
     --destructive: 0 84.2% 60.2%;
@@ -31,7 +31,7 @@
 
     --border: 214.3 31.8% 91.4%;
     --input: 214.3 31.8% 91.4%;
-    --ring: 210 64% 50%;
+    --ring: 267 78% 58%;
 
     --radius: 0.75rem;
 
@@ -55,16 +55,16 @@
     --popover: 222.2 84% 4.9%;
     --popover-foreground: 210 40% 98%;
 
-    --primary: 210 64% 50%;
+    --primary: 267 78% 58%;
     --primary-foreground: 222.2 47.4% 11.2%;
 
-    --secondary: 217.2 32.6% 17.5%;
+    --secondary: 346 87% 70%;
     --secondary-foreground: 210 40% 98%;
 
     --muted: 217.2 32.6% 17.5%;
     --muted-foreground: 215 20.2% 65.1%;
 
-    --accent: 217.2 32.6% 17.5%;
+    --accent: 142 76% 45%;
     --accent-foreground: 210 40% 98%;
 
     --destructive: 0 62.8% 30.6%;
@@ -110,12 +110,111 @@
   }
   
   .text-gradient {
-    @apply bg-clip-text text-transparent bg-gradient-to-r from-primary to-blue-500;
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(90deg, hsla(277, 75%, 84%, 1) 0%, hsla(297, 50%, 51%, 1) 100%);
+  }
+  
+  .mood-card {
+    @apply rounded-lg p-4 transition-all duration-300 hover:shadow-lg hover:-translate-y-1 border border-white/20;
+    background: linear-gradient(45deg, rgba(255,255,255,0.1), rgba(255,255,255,0.2));
+    backdrop-filter: blur(8px);
+  }
+  
+  .recipe-gradient-1 {
+    background: linear-gradient(90deg, hsla(46, 73%, 75%, 1) 0%, hsla(176, 73%, 88%, 1) 100%);
+  }
+  
+  .recipe-gradient-2 {
+    background: linear-gradient(90deg, hsla(339, 100%, 83%, 1) 0%, hsla(24, 100%, 83%, 1) 100%);
+  }
+  
+  .recipe-gradient-3 {
+    background: linear-gradient(90deg, hsla(139, 70%, 75%, 1) 0%, hsla(63, 90%, 76%, 1) 100%);
+  }
+  
+  .recipe-gradient-4 {
+    background: linear-gradient(90deg, hsla(221, 45%, 73%, 1) 0%, hsla(220, 78%, 29%, 1) 100%);
+    color: white;
+  }
+  
+  .recipe-gradient-5 {
+    background: linear-gradient(90deg, hsla(259, 40%, 80%, 1) 0%, hsla(205, 45%, 76%, 1) 100%);
   }
 }
 
 @layer utilities {
   .mask-linear-gradient {
     mask-image: linear-gradient(to bottom, black 50%, transparent 100%);
+  }
+  
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+  
+  .animate-float-delay-1 {
+    animation: float 6s ease-in-out 1s infinite;
+  }
+  
+  .animate-float-delay-2 {
+    animation: float 6s ease-in-out 2s infinite;
+  }
+  
+  .animate-float-delay-3 {
+    animation: float 6s ease-in-out 3s infinite;
+  }
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+/* Colorful background decorative elements */
+.bg-blob-1 {
+  position: absolute;
+  width: 500px;
+  height: 500px;
+  border-radius: 50%;
+  background: linear-gradient(90deg, rgba(255,134,192,0.2), rgba(255,182,193,0.2));
+  filter: blur(80px);
+  z-index: -1;
+  animation: move 25s infinite alternate;
+}
+
+.bg-blob-2 {
+  position: absolute;
+  width: 400px;
+  height: 400px;
+  border-radius: 50%;
+  background: linear-gradient(90deg, rgba(101,157,255,0.2), rgba(161,140,255,0.2));
+  filter: blur(60px);
+  z-index: -1;
+  animation: move 20s infinite alternate-reverse;
+}
+
+.bg-blob-3 {
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  background: linear-gradient(90deg, rgba(131,241,190,0.2), rgba(182,255,168,0.2));
+  filter: blur(40px);
+  z-index: -1;
+  animation: move 15s infinite alternate;
+}
+
+@keyframes move {
+  0% {
+    transform: translate(0, 0);
+  }
+  100% {
+    transform: translate(100px, 50px);
   }
 }

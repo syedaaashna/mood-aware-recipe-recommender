@@ -1,5 +1,6 @@
+
 import { useState, useEffect, useRef } from 'react';
-import { Volume2, VolumeX, Play, Pause, SkipForward, SkipBack } from 'lucide-react';
+import { Volume2, VolumeX, Play, Pause, SkipForward, SkipBack, Globe } from 'lucide-react';
 import { useToast } from "@/hooks/use-toast";
 
 interface VoiceGuidanceProps {
@@ -7,11 +8,27 @@ interface VoiceGuidanceProps {
   title: string;
 }
 
+// Language options for voice guidance
+const languageOptions = [
+  { code: 'en-US', name: 'English (US)' },
+  { code: 'es-ES', name: 'Spanish' },
+  { code: 'fr-FR', name: 'French' },
+  { code: 'de-DE', name: 'German' },
+  { code: 'it-IT', name: 'Italian' },
+  { code: 'zh-CN', name: 'Chinese' },
+  { code: 'ja-JP', name: 'Japanese' },
+  { code: 'ko-KR', name: 'Korean' },
+  { code: 'hi-IN', name: 'Hindi' },
+  { code: 'pt-BR', name: 'Portuguese' }
+];
+
 const VoiceGuidance = ({ instructions, title }: VoiceGuidanceProps) => {
   const [isMuted, setIsMuted] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentStep, setCurrentStep] = useState(0);
   const [isExpanded, setIsExpanded] = useState(false);
+  const [selectedLanguage, setSelectedLanguage] = useState('en-US');
+  const [showLanguageSelector, setShowLanguageSelector] = useState(false);
   const synth = useRef<SpeechSynthesis | null>(null);
   const utterance = useRef<SpeechSynthesisUtterance | null>(null);
   const { toast } = useToast();
@@ -32,7 +49,7 @@ const VoiceGuidance = ({ instructions, title }: VoiceGuidanceProps) => {
     } else if (utterance.current && synth.current) {
       synth.current.cancel();
     }
-  }, [isPlaying, isMuted, currentStep]);
+  }, [isPlaying, isMuted, currentStep, selectedLanguage]);
 
   const speakCurrentStep = () => {
     if (!synth.current || isMuted || !instructions[currentStep]) return;
@@ -40,11 +57,15 @@ const VoiceGuidance = ({ instructions, title }: VoiceGuidanceProps) => {
     synth.current.cancel();
     utterance.current = new SpeechSynthesisUtterance(`Step ${currentStep + 1}: ${instructions[currentStep]}`);
     
+    // Set the language for the utterance
+    utterance.current.lang = selectedLanguage;
+    
     const voices = synth.current.getVoices();
     const preferredVoice = voices.find(voice => 
-      voice.name.includes('Google') || 
-      voice.name.includes('Samantha') || 
-      voice.name.includes('Female')
+      voice.lang === selectedLanguage && 
+      (voice.name.includes('Google') || 
+      voice.name.includes('Female') ||
+      voice.name.includes('Samantha'))
     );
     
     if (preferredVoice) {
@@ -119,53 +140,99 @@ const VoiceGuidance = ({ instructions, title }: VoiceGuidanceProps) => {
     setIsExpanded(!isExpanded);
   };
 
+  const changeLanguage = (langCode: string) => {
+    setSelectedLanguage(langCode);
+    setShowLanguageSelector(false);
+    
+    toast({
+      title: "Language Changed",
+      description: `Voice guidance language set to ${languageOptions.find(lang => lang.code === langCode)?.name}`,
+      duration: 3000,
+    });
+    
+    // If currently playing, restart the current step with the new language
+    if (isPlaying) {
+      if (synth.current) synth.current.cancel();
+      setTimeout(() => speakCurrentStep(), 100);
+    }
+  };
+
   return (
     <div 
       className={`fixed bottom-6 right-6 z-40 glass-card shadow-lg rounded-xl transition-all duration-300 overflow-hidden ${
         isExpanded ? 'w-80' : 'w-auto'
       }`}
+      style={{
+        background: 'linear-gradient(90deg, hsla(277, 75%, 84%, 1) 0%, hsla(297, 50%, 51%, 1) 100%)',
+        border: '1px solid rgba(255, 255, 255, 0.2)',
+      }}
     >
-      <div className="p-4 bg-primary bg-opacity-10 border-b border-white/10 flex items-center justify-between">
+      <div className="p-4 border-b border-white/10 flex items-center justify-between">
         <button 
           onClick={toggleExpand} 
-          className="text-sm font-medium text-primary-foreground flex items-center"
+          className="text-sm font-medium text-white flex items-center"
         >
           {isExpanded ? 'Voice Guidance' : ''}
           <Volume2 className={`${isExpanded ? 'ml-2' : ''} h-5 w-5`} />
         </button>
         {isExpanded && (
           <div className="flex items-center">
+            <button
+              onClick={() => setShowLanguageSelector(!showLanguageSelector)}
+              className="p-2 hover:bg-white/10 rounded-full transition-colors mr-2"
+              aria-label="Change language"
+            >
+              <Globe size={18} color="white" />
+            </button>
             <button 
               onClick={toggleMute} 
               className="p-2 hover:bg-white/10 rounded-full transition-colors"
               aria-label={isMuted ? "Unmute" : "Mute"}
             >
-              {isMuted ? <VolumeX size={18} /> : <Volume2 size={18} />}
+              {isMuted ? <VolumeX size={18} color="white" /> : <Volume2 size={18} color="white" />}
             </button>
           </div>
         )}
       </div>
       
+      {showLanguageSelector && isExpanded && (
+        <div className="bg-white/10 p-2 max-h-40 overflow-y-auto">
+          {languageOptions.map((lang) => (
+            <button
+              key={lang.code}
+              onClick={() => changeLanguage(lang.code)}
+              className={`w-full text-left p-2 text-sm rounded-md transition-colors ${
+                selectedLanguage === lang.code 
+                  ? 'bg-white/20 font-medium' 
+                  : 'hover:bg-white/10'
+              }`}
+            >
+              {lang.name}
+            </button>
+          ))}
+        </div>
+      )}
+      
       {isExpanded && (
-        <div className="p-4">
+        <div className="p-4 text-white">
           <h3 className="font-medium text-sm text-center mb-2">
             {title}
           </h3>
           
           <div className="mt-2 mb-4">
             <div className="text-sm mb-1 flex justify-between">
-              <span className="text-primary-foreground">Step {currentStep + 1} of {instructions.length}</span>
-              <span className="text-primary-foreground">{Math.round((currentStep + 1) / instructions.length * 100)}%</span>
+              <span>Step {currentStep + 1} of {instructions.length}</span>
+              <span>{Math.round((currentStep + 1) / instructions.length * 100)}%</span>
             </div>
-            <div className="h-1 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+            <div className="h-1 bg-white/20 rounded-full overflow-hidden">
               <div 
-                className="h-full bg-primary transition-all duration-300"
+                className="h-full bg-white transition-all duration-300"
                 style={{ width: `${((currentStep + 1) / instructions.length) * 100}%` }}
               ></div>
             </div>
           </div>
           
-          <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-3 text-sm mb-4 max-h-32 overflow-y-auto">
+          <div className="bg-white/10 backdrop-blur-md rounded-lg p-3 text-sm mb-4 max-h-32 overflow-y-auto">
             <p>{instructions[currentStep]}</p>
           </div>
           
@@ -173,15 +240,15 @@ const VoiceGuidance = ({ instructions, title }: VoiceGuidanceProps) => {
             <button
               onClick={prevStep}
               disabled={currentStep === 0}
-              className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+              className="p-2 rounded-full hover:bg-white/10 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
               aria-label="Previous step"
             >
-              <SkipBack size={20} />
+              <SkipBack size={20} color="white" />
             </button>
             
             <button
               onClick={togglePlayPause}
-              className="p-3 rounded-full bg-primary text-white hover:bg-primary/90 transition-colors"
+              className="p-3 rounded-full bg-white text-primary hover:bg-white/90 transition-colors"
               aria-label={isPlaying ? "Pause" : "Play"}
             >
               {isPlaying ? <Pause size={20} /> : <Play size={20} />}
@@ -190,10 +257,10 @@ const VoiceGuidance = ({ instructions, title }: VoiceGuidanceProps) => {
             <button
               onClick={nextStep}
               disabled={currentStep === instructions.length - 1}
-              className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+              className="p-2 rounded-full hover:bg-white/10 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
               aria-label="Next step"
             >
-              <SkipForward size={20} />
+              <SkipForward size={20} color="white" />
             </button>
           </div>
         </div>

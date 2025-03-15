@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { ArrowLeft, Clock, Users, ChefHat, Heart, Share2 } from 'lucide-react';
+import { ArrowLeft, Clock, Users, ChefHat, Heart, Share2, Volume2, Play, Pause } from 'lucide-react';
 import { Recipe as RecipeType, getRecipeById } from '@/utils/moodRecipeData';
 import VoiceGuidance from '@/components/ui/VoiceGuidance';
 import { useToast } from "@/hooks/use-toast";
@@ -12,6 +12,7 @@ const Recipe = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [isFavorite, setIsFavorite] = useState(false);
   const [activeTab, setActiveTab] = useState<'ingredients' | 'instructions'>('ingredients');
+  const [isPlaying, setIsPlaying] = useState(false);
   const { toast } = useToast();
 
   useEffect(() => {
@@ -86,6 +87,18 @@ const Recipe = () => {
     }
   };
 
+  const toggleVoiceGuidance = () => {
+    setIsPlaying(!isPlaying);
+    
+    // Voice guidance state is controlled in the VoiceGuidance component,
+    // but we keep this state for the UI button
+    toast({
+      title: isPlaying ? "Voice Guidance Paused" : "Voice Guidance Started",
+      description: isPlaying ? "Voice guidance has been paused." : "I'll guide you through each step of the recipe.",
+      duration: 3000,
+    });
+  };
+
   if (isLoading) {
     return (
       <div className="min-h-screen pt-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
@@ -128,13 +141,16 @@ const Recipe = () => {
           <span>Back to recipes</span>
         </button>
         
-        {/* Recipe header */}
-        <div className="mb-8">
+        {/* Recipe header with gradient background */}
+        <div className="mb-8 p-6 rounded-xl" style={{
+          background: 'linear-gradient(90deg, hsla(46, 73%, 75%, 1) 0%, hsla(176, 73%, 88%, 1) 100%)',
+          color: '#333'
+        }}>
           <h1 className="text-3xl sm:text-4xl font-bold mb-3">{recipe.title}</h1>
-          <p className="text-lg text-gray-600 dark:text-gray-300 mb-4">{recipe.description}</p>
+          <p className="text-lg mb-4">{recipe.description}</p>
           
           {/* Recipe meta info */}
-          <div className="flex flex-wrap gap-4 text-sm text-gray-600 dark:text-gray-300">
+          <div className="flex flex-wrap gap-4 text-sm">
             <div className="flex items-center">
               <Clock size={16} className="mr-1" />
               <span>Prep: {recipe.prepTime} | Cook: {recipe.cookTime}</span>
@@ -152,9 +168,9 @@ const Recipe = () => {
             
             <div className="flex items-center">
               <span className={`px-2 py-1 rounded-full text-xs font-medium
-                ${recipe.difficulty === 'Easy' ? 'bg-green-100 text-green-800 dark:bg-green-800 dark:text-green-100' : 
-                  recipe.difficulty === 'Medium' ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-800 dark:text-yellow-100' : 
-                  'bg-red-100 text-red-800 dark:bg-red-800 dark:text-red-100'}`}
+                ${recipe.difficulty === 'Easy' ? 'bg-green-500 text-white' : 
+                  recipe.difficulty === 'Medium' ? 'bg-yellow-500 text-white' : 
+                  'bg-red-500 text-white'}`}
               >
                 {recipe.difficulty}
               </span>
@@ -164,7 +180,7 @@ const Recipe = () => {
         
         {/* Recipe image and action buttons */}
         <div className="grid md:grid-cols-2 gap-8 mb-8">
-          <div className="overflow-hidden rounded-xl shadow-lg">
+          <div className="overflow-hidden rounded-xl shadow-lg transition-all hover:shadow-xl">
             <img
               src={`${recipe.imageUrl}?auto=format&fit=crop&w=800&h=600`}
               alt={recipe.title}
@@ -180,7 +196,11 @@ const Recipe = () => {
                 {recipe.tags.map((tag, index) => (
                   <span 
                     key={index} 
-                    className="px-3 py-1 bg-gray-100 dark:bg-gray-800 rounded-full text-sm"
+                    className="px-3 py-1 rounded-full text-sm"
+                    style={{
+                      background: `hsl(${(index * 25) % 360}, 70%, 85%)`,
+                      color: `hsl(${(index * 25) % 360}, 70%, 25%)`
+                    }}
                   >
                     {tag}
                   </span>
@@ -264,11 +284,26 @@ const Recipe = () => {
           
           {activeTab === 'instructions' && (
             <div>
-              <h2 className="text-xl font-bold mb-4">Instructions</h2>
+              <div className="flex justify-between items-center mb-4">
+                <h2 className="text-xl font-bold">Instructions</h2>
+                <button
+                  onClick={toggleVoiceGuidance}
+                  className="flex items-center px-3 py-2 rounded-full bg-primary text-white hover:bg-primary/90 transition-colors"
+                >
+                  {isPlaying ? <Pause size={16} className="mr-2" /> : <Play size={16} className="mr-2" />}
+                  <Volume2 size={16} className="mr-1" />
+                  <span>{isPlaying ? 'Pause Guidance' : 'Start Guidance'}</span>
+                </button>
+              </div>
+              
               <ol className="space-y-6">
                 {recipe.instructions.map((instruction, index) => (
                   <li key={index} className="flex">
-                    <div className="flex-shrink-0 w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center mr-4">
+                    <div className="flex-shrink-0 w-8 h-8 rounded-full text-white flex items-center justify-center mr-4"
+                      style={{
+                        background: `linear-gradient(90deg, hsla(${(index * 30) % 360}, 70%, 50%, 1) 0%, hsla(${(index * 30 + 20) % 360}, 70%, 60%, 1) 100%)`
+                      }}
+                    >
                       {index + 1}
                     </div>
                     <div className="pt-1">
