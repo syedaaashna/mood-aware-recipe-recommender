@@ -1,10 +1,9 @@
-
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { ArrowLeft, Clock, Users, ChefHat, Heart, Share2 } from 'lucide-react';
 import { Recipe as RecipeType, getRecipeById } from '@/utils/moodRecipeData';
 import VoiceGuidance from '@/components/ui/VoiceGuidance';
-import { useToast } from "@/components/ui/toast";
+import { useToast } from "@/hooks/use-toast";
 
 const Recipe = () => {
   const { id } = useParams<{ id: string }>();
