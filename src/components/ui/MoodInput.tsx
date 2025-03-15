@@ -1,8 +1,7 @@
-
 import { useState, useEffect, useRef } from 'react';
 import { Search, X } from 'lucide-react';
 import { moods, Mood } from '@/utils/moodRecipeData';
-import { useToast } from "@/components/ui/toast";
+import { useToast } from "@/hooks/use-toast";
 
 interface MoodInputProps {
   onMoodSelect: (mood: Mood) => void;

@@ -4,7 +4,7 @@ import MoodInput from '@/components/ui/MoodInput';
 import RecipeCard from '@/components/ui/RecipeCard';
 import ChatBot from '@/components/ui/ChatBot';
 import { Mood, Recipe, getRecipesByMood, searchRecipes } from '@/utils/moodRecipeData';
-import { useToast } from "@/components/ui/toast";
+import { useToast } from "@/hooks/use-toast";
 import { Search } from 'lucide-react';
 
 const Index = () => {

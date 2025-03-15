@@ -1,7 +1,6 @@
-
 import { useState, useEffect, useRef } from 'react';
 import { Volume2, VolumeX, Play, Pause, SkipForward, SkipBack } from 'lucide-react';
-import { useToast } from "@/components/ui/toast";
+import { useToast } from "@/hooks/use-toast";
 
 interface VoiceGuidanceProps {
   instructions: string[];
@@ -41,7 +40,6 @@ const VoiceGuidance = ({ instructions, title }: VoiceGuidanceProps) => {
     synth.current.cancel();
     utterance.current = new SpeechSynthesisUtterance(`Step ${currentStep + 1}: ${instructions[currentStep]}`);
     
-    // Get available voices and select a good one
     const voices = synth.current.getVoices();
     const preferredVoice = voices.find(voice => 
       voice.name.includes('Google') || 
@@ -53,15 +51,14 @@ const VoiceGuidance = ({ instructions, title }: VoiceGuidanceProps) => {
       utterance.current.voice = preferredVoice;
     }
     
-    utterance.current.rate = 0.9; // Slightly slower for clarity
-    utterance.current.pitch = 1.1; // Slightly higher pitch
+    utterance.current.rate = 0.9;
+    utterance.current.pitch = 1.1;
     
     utterance.current.onend = () => {
-      // Move to next step automatically when voice ends
       if (currentStep < instructions.length - 1 && isPlaying) {
         setTimeout(() => {
           setCurrentStep(prev => prev + 1);
-        }, 1000); // 1s pause between steps
+        }, 1000);
       } else if (currentStep === instructions.length - 1 && isPlaying) {
         setIsPlaying(false);
         toast({

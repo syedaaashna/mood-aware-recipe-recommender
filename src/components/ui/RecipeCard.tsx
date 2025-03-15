@@ -1,9 +1,8 @@
-
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Clock, Users, ChefHat, Heart } from 'lucide-react';
 import { Recipe } from '@/utils/moodRecipeData';
-import { useToast } from "@/components/ui/toast";
+import { useToast } from "@/hooks/use-toast";
 
 interface RecipeCardProps {
   recipe: Recipe;

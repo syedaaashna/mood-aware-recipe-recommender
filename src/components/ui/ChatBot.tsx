@@ -2,7 +2,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { MessageCircle, Send, X, Maximize, Minimize } from 'lucide-react';
 import { getChatbotResponse } from '@/utils/moodRecipeData';
-import { useToast } from "@/components/ui/toast";
+import { useToast } from "@/hooks/use-toast";
 
 interface Message {
   id: string;
@@ -28,10 +28,10 @@ const ChatBot = ({ currentMood }: ChatBotProps) => {
   // Generate welcome message when chatbot opens
   useEffect(() => {
     if (isOpen && messages.length === 0) {
-      const welcomeMessage = {
+      const welcomeMessage: Message = {
         id: Date.now().toString(),
         text: "Hello! I'm your recipe assistant. How can I help you today?",
-        sender: 'bot' as const,
+        sender: 'bot',
         timestamp: new Date()
       };
       setMessages([welcomeMessage]);
@@ -47,7 +47,7 @@ const ChatBot = ({ currentMood }: ChatBotProps) => {
         setIsTyping(true);
         
         setTimeout(() => {
-          const newMessage = {
+          const newMessage: Message = {
             id: Date.now().toString(),
             text: moodResponse,
             sender: 'bot',
@@ -93,10 +93,10 @@ const ChatBot = ({ currentMood }: ChatBotProps) => {
     
     if (message.trim() === '') return;
     
-    const newUserMessage = {
+    const newUserMessage: Message = {
       id: Date.now().toString(),
       text: message,
-      sender: 'user' as const,
+      sender: 'user',
       timestamp: new Date()
     };
     
@@ -126,10 +126,10 @@ const ChatBot = ({ currentMood }: ChatBotProps) => {
         botResponse = "Your mood can greatly influence what foods might satisfy you. Try selecting a mood to see matching recipes!";
       }
       
-      const newBotMessage = {
+      const newBotMessage: Message = {
         id: (Date.now() + 100).toString(),
         text: botResponse,
-        sender: 'bot' as const,
+        sender: 'bot',
         timestamp: new Date()
       };
       
