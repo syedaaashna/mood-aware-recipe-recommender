@@ -886,5 +886,71 @@ const recipes: Recipe[] = [
   },
 ];
 
+/**
+ * Get all recipes
+ */
+export const getAllRecipes = (): Recipe[] => {
+  return recipes;
+};
+
+/**
+ * Search recipes by query string
+ * @param query - The search query string
+ */
+export const searchRecipes = (query: string): Recipe[] => {
+  const searchTerm = query.toLowerCase().trim();
+  return recipes.filter((recipe) => {
+    return (
+      recipe.name.toLowerCase().includes(searchTerm) ||
+      recipe.description.toLowerCase().includes(searchTerm) ||
+      recipe.tags.some(tag => tag.toLowerCase().includes(searchTerm)) ||
+      recipe.ingredients.some(ingredient => ingredient.toLowerCase().includes(searchTerm))
+    );
+  });
+};
+
+/**
+ * Get recipes by mood ID
+ * @param moodId - The mood ID to filter recipes by
+ */
+export const getRecipesByMood = (moodId: string): Recipe[] => {
+  return recipes.filter(recipe => recipe.moodIds.includes(moodId));
+};
+
+/**
+ * Get recipe by ID
+ * @param id - The recipe ID to find
+ */
 export const getRecipeById = (id: string): Recipe | undefined => {
-  return recipes.find(recipe => recipe.id === id
+  return recipes.find(recipe => recipe.id === id);
+};
+
+/**
+ * Get chatbot response based on mood
+ * @param mood - The mood to generate a response for
+ */
+export const getChatbotResponse = (mood: string): string => {
+  const responses: Record<string, string> = {
+    happy: "You're feeling happy? That's wonderful! I have some delightful recipes that match your cheerful mood. How about a Classic Margherita Pizza or a Refreshing Berry Smoothie to keep those good vibes going?",
+    
+    romantic: "Feeling romantic? I can suggest some special recipes perfect for a date night. The Decadent Chocolate Cake or Shahi Paneer would make for an impressive and delicious meal to share with someone special.",
+    
+    energetic: "With all that energy, you might want something nutritious that keeps you going! Try the Spicy Peanut Noodles, Easy Chicken Stir-Fry, or a Refreshing Berry Smoothie for a perfect energy boost.",
+    
+    relaxed: "For your relaxed mood, I recommend comfortable dishes like Healing Moong Dal Khichdi or Comforting Kadhi Chawal. These recipes are perfect for a calm evening.",
+    
+    creative: "Feeling creative? Why not channel that energy into making something unique like Indian Naan Pizza or Masala Dosa Breakfast Crepe? These fusion recipes let you experiment with flavors!",
+    
+    adventurous: "Your adventurous spirit calls for bold flavors! Try Rajasthani Laal Maas or Goan Pork Vindaloo - these dishes will take your taste buds on an exciting journey.",
+    
+    nostalgic: "When you're feeling nostalgic, comfort food is the way to go. How about some Aloo Paratha with White Butter or Mumbai Street-style Pav Bhaji to bring back those cherished memories?",
+    
+    comforting: "Looking for comfort food? Warm Apple Pie or Khichdi are perfect choices that feel like a warm hug in a bowl.",
+    
+    festive: "For that festive mood, try making Homemade Gingerbread Cookies or a special Tandoori Raan that's perfect for celebrations and gatherings!",
+    
+    mindful: "For a mindful meal that nourishes body and soul, I recommend Healthy Semolina Upma or a Calming Lavender Tea. These recipes promote well-being through nutritious ingredients."
+  };
+  
+  return responses[mood] || "I don't have specific recommendations for that mood yet, but I'd be happy to suggest some versatile recipes that work for any occasion!";
+};

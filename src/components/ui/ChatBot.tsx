@@ -1,4 +1,3 @@
-
 import { useState, useRef, useEffect } from 'react';
 import { MessageCircle, Send, X, Maximize, Minimize } from 'lucide-react';
 import { getChatbotResponse } from '@/utils/moodRecipeData';
@@ -25,7 +24,6 @@ const ChatBot = ({ currentMood }: ChatBotProps) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const { toast } = useToast();
 
-  // Generate welcome message when chatbot opens
   useEffect(() => {
     if (isOpen && messages.length === 0) {
       const welcomeMessage: Message = {
@@ -38,7 +36,6 @@ const ChatBot = ({ currentMood }: ChatBotProps) => {
     }
   }, [isOpen, messages.length]);
 
-  // Respond to mood changes
   useEffect(() => {
     if (currentMood && isOpen) {
       const moodResponse = getChatbotResponse(currentMood);
@@ -61,14 +58,12 @@ const ChatBot = ({ currentMood }: ChatBotProps) => {
     }
   }, [currentMood, isOpen]);
 
-  // Scroll to bottom of chat when new messages come in
   useEffect(() => {
     if (messagesEndRef.current) {
       messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
     }
   }, [messages, isTyping]);
 
-  // Focus input field when chat opens
   useEffect(() => {
     if (isOpen && !isMinimized && inputRef.current) {
       inputRef.current.focus();
@@ -104,11 +99,9 @@ const ChatBot = ({ currentMood }: ChatBotProps) => {
     setMessage('');
     setIsTyping(true);
     
-    // Simulate bot typing and response
     setTimeout(() => {
       let botResponse = "I'm not sure how to respond to that. Could you ask about recipes or cooking?";
       
-      // Check for keywords in user message
       const lowerMessage = message.toLowerCase();
       
       if (lowerMessage.includes('recipe') || 
@@ -124,6 +117,14 @@ const ChatBot = ({ currentMood }: ChatBotProps) => {
         botResponse = "You're welcome! Let me know if you need anything else.";
       } else if (lowerMessage.includes('mood')) {
         botResponse = "Your mood can greatly influence what foods might satisfy you. Try selecting a mood to see matching recipes!";
+      } else if (lowerMessage.includes('ingredient')) {
+        botResponse = "I can suggest recipes based on ingredients. What ingredients do you have or would like to cook with?";
+      } else if (lowerMessage.includes('vegetarian') || lowerMessage.includes('vegan')) {
+        botResponse = "We have many delicious vegetarian options! Try filtering by the 'vegetarian' tag or selecting a mood like 'creative' or 'mindful'.";
+      } else if (lowerMessage.includes('spicy') || lowerMessage.includes('hot')) {
+        botResponse = "If you enjoy spicy food, try our Rajasthani Laal Maas, Goan Pork Vindaloo, or Spicy Peanut Noodles!";
+      } else if (lowerMessage.includes('dessert') || lowerMessage.includes('sweet')) {
+        botResponse = "For something sweet, our Decadent Chocolate Cake or Warm Apple Pie would be perfect choices!";
       }
       
       const newBotMessage: Message = {
@@ -144,7 +145,6 @@ const ChatBot = ({ currentMood }: ChatBotProps) => {
 
   return (
     <>
-      {/* Chat button */}
       <button
         onClick={toggleChat}
         className="fixed bottom-6 left-6 z-40 p-4 rounded-full bg-primary text-white shadow-lg hover:bg-primary/90 transition-colors"
@@ -153,7 +153,6 @@ const ChatBot = ({ currentMood }: ChatBotProps) => {
         <MessageCircle size={24} />
       </button>
       
-      {/* Chat window */}
       {isOpen && (
         <div
           className={`fixed left-6 z-40 shadow-xl rounded-lg overflow-hidden transition-all duration-300 glass-card border border-gray-200 dark:border-gray-800 ${
@@ -162,7 +161,6 @@ const ChatBot = ({ currentMood }: ChatBotProps) => {
               : 'bottom-20 w-80 sm:w-96 h-96'
           }`}
         >
-          {/* Chat header */}
           <div className="bg-primary text-white px-4 py-3 flex justify-between items-center">
             <div className="flex items-center">
               <MessageCircle size={18} className="mr-2" />
@@ -188,7 +186,6 @@ const ChatBot = ({ currentMood }: ChatBotProps) => {
           
           {!isMinimized && (
             <>
-              {/* Messages area */}
               <div className="p-4 h-[calc(100%-110px)] overflow-y-auto">
                 {messages.map((msg) => (
                   <div
@@ -233,7 +230,6 @@ const ChatBot = ({ currentMood }: ChatBotProps) => {
                 <div ref={messagesEndRef} />
               </div>
               
-              {/* Input area */}
               <form onSubmit={handleSendMessage} className="border-t border-gray-200 dark:border-gray-800 p-3 flex items-center">
                 <input
                   ref={inputRef}
