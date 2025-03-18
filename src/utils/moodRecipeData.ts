@@ -886,23 +886,5 @@ const recipes: Recipe[] = [
   },
 ];
 
-export const getAllRecipes = (): Recipe[] => {
-  return recipes;
-};
-
-export const searchRecipes = (query: string): Recipe[] => {
-  const searchTerm = query.toLowerCase().trim();
-  return recipes.filter((recipe) => {
-    return (
-      recipe.name.toLowerCase().includes(searchTerm) ||
-      recipe.description.toLowerCase().includes(searchTerm) ||
-      recipe.tags.some(tag => tag.toLowerCase().includes(searchTerm)) ||
-      recipe.ingredients.some(ingredient => ingredient.toLowerCase().includes(searchTerm))
-    );
-  });
-};
-
-export const getRecipesByMood = (moodId: string): Recipe[] => {
-  return recipes.filter(recipe => recipe.moodIds.includes(moodId));
-};
-
+export const getRecipeById = (id: string): Recipe | undefined => {
+  return recipes.find(recipe => recipe.id === id
