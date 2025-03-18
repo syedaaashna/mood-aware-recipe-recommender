@@ -2,6 +2,7 @@ export interface Mood {
   id: string;
   name: string;
   description: string;
+  icon: string; // Adding icon property to Mood interface
 }
 
 export interface Recipe {
@@ -26,56 +27,66 @@ interface MoodRecipe {
   recipes: Recipe[];
 }
 
-const moods: Mood[] = [
+export const moods: Mood[] = [
   {
     id: 'happy',
     name: 'Happy',
     description: 'Recipes to brighten your day',
+    icon: '😊'
   },
   {
     id: 'romantic',
     name: 'Romantic',
     description: 'Recipes for a special night',
+    icon: '💝'
   },
   {
     id: 'energetic',
     name: 'Energetic',
     description: 'Recipes to fuel your day',
+    icon: '⚡'
   },
   {
     id: 'relaxed',
     name: 'Relaxed',
     description: 'Recipes for a calm evening',
+    icon: '😌'
   },
   {
     id: 'creative',
     name: 'Creative',
     description: 'Recipes to inspire your inner chef',
+    icon: '🎨'
   },
   {
     id: 'adventurous',
     name: 'Adventurous',
     description: 'Recipes to try something new',
+    icon: '🌎'
   },
   {
     id: 'nostalgic',
     name: 'Nostalgic',
     description: 'Recipes that bring back memories',
+    icon: '📷'
   },
   {
     id: 'comforting',
     name: 'Comforting',
     description: 'Recipes that feel like a warm hug',
+    icon: '🤗'
   },
   {
     id: 'festive',
     name: 'Festive',
     description: 'Recipes for celebrations and gatherings',
+    icon: '🎉'
   },
   {
     id: 'mindful',
     name: 'Mindful',
     description: 'Nutritious recipes for body and soul',
+    icon: '🧘'
   },
 ];
 
@@ -876,277 +887,4 @@ const recipes: Recipe[] = [
   {
     id: 'dal-makhani',
     name: 'Slow-cooked Dal Makhani',
-    title: 'Slow-cooked Dal Makhani',
-    description: 'Creamy black lentils simmered overnight with butter and cream.',
-    ingredients: [
-      'Black urad dal (whole)',
-      'Kidney beans',
-      'Butter',
-      'Cream',
-      'Ginger-garlic paste',
-      'Tomato puree',
-      'Cumin seeds',
-      'Garam masala',
-      'Red chili powder',
-      'Kasoori methi'
-    ],
-    instructions: [
-      'Soak black urad dal and kidney beans overnight.',
-      'Pressure cook with salt until soft (about 30 minutes).',
-      'In a heavy-bottomed pot, heat butter and add cumin seeds.',
-      'Add ginger-garlic paste and sauté until fragrant.',
-      'Add tomato puree and spices, cook until oil separates.',
-      'Add cooked lentils and beans, simmer on low heat for at least 2 hours.',
-      'Stir occasionally and add water if needed.',
-      'Add cream and crushed kasoori methi in the last 10 minutes.',
-      'Finish with a dollop of butter.',
-      'Serve hot with naan or rice.',
-    ],
-    moodIds: ['comforting'],
-    tags: ['indian', 'punjabi', 'vegetarian', 'slow-cooked'],
-    imageUrl: '/images/recipes/dal-makhani.jpg',
-    prepTime: '12 hours',
-    cookTime: '3 hours',
-    servings: 6,
-    calories: 380,
-    difficulty: 'Medium',
-  },
-  {
-    id: 'chole-bhature',
-    name: 'Punjabi Chole Bhature',
-    title: 'Punjabi Chole Bhature',
-    description: 'Spicy chickpea curry served with deep-fried bread, a favorite North Indian comfort food.',
-    ingredients: [
-      'Chickpeas',
-      'Tea bag',
-      'Bay leaf',
-      'Cinnamon stick',
-      'Onions',
-      'Tomatoes',
-      'Ginger',
-      'Garlic',
-      'Chole masala',
-      'All-purpose flour',
-      'Yogurt',
-      'Baking soda'
-    ],
-    instructions: [
-      'Soak chickpeas overnight with a tea bag (for color).',
-      'Pressure cook with salt, bay leaf, and cinnamon until soft.',
-      'In a pan, heat oil and add chopped onions, sauté until golden.',
-      'Add ginger-garlic paste and cook for 2 minutes.',
-      'Add tomatoes, cook until oil separates.',
-      'Add spices and mashed chickpeas, simmer for 30 minutes.',
-      'For bhature, mix flour, yogurt, oil, baking soda, and salt.',
-      'Knead into a soft dough and let rest for 2-3 hours.',
-      'Roll out and deep fry until puffed and golden brown.',
-      'Serve hot chole with bhature and sliced onions.',
-    ],
-    moodIds: ['comforting'],
-    tags: ['indian', 'punjabi', 'breakfast', 'street food'],
-    imageUrl: '/images/recipes/chole-bhature.jpg',
-    prepTime: '12 hours',
-    cookTime: '1 hour',
-    servings: 4,
-    calories: 620,
-    difficulty: 'Medium',
-  },
-  {
-    id: 'hyderabadi-biryani',
-    name: 'Hyderabadi Dum Biryani',
-    title: 'Hyderabadi Dum Biryani',
-    description: 'A royal layered rice dish with marinated meat, herbs, and saffron.',
-    ingredients: [
-      'Basmati rice',
-      'Mutton or chicken',
-      'Yogurt',
-      'Fried onions',
-      'Mint leaves',
-      'Coriander leaves',
-      'Saffron',
-      'Milk',
-      'Ghee',
-      'Garam masala',
-      'Biryani masala'
-    ],
-    instructions: [
-      'Marinate meat with yogurt, ginger-garlic paste, and spices for 4 hours.',
-      'Partially cook basmati rice with whole spices until 70% done.',
-      'In a heavy-bottomed pot, layer marinated meat at the bottom.',
-      'Layer partially cooked rice over the meat.',
-      'Sprinkle fried onions, mint, and coriander leaves.',
-      'Add saffron soaked in warm milk and ghee.',
-      'Seal the pot with dough and cook on low heat for 30-40 minutes.',
-      'Let it rest for 10 minutes before opening.',
-      'Mix gently when serving.',
-      'Serve with raita and salan.',
-    ],
-    moodIds: ['festive'],
-    tags: ['indian', 'hyderabadi', 'biryani', 'celebration', 'rice'],
-    imageUrl: '/images/recipes/hyderabadi-biryani.jpg',
-    prepTime: '5 hours',
-    cookTime: '1 hour',
-    servings: 6,
-    calories: 680,
-    difficulty: 'Hard',
-  },
-  {
-    id: 'gulab-jamun',
-    name: 'Golden Gulab Jamun',
-    title: 'Golden Gulab Jamun',
-    description: 'Soft milk-solid dumplings soaked in rose-flavored sugar syrup.',
-    ingredients: [
-      'Milk powder',
-      'All-purpose flour',
-      'Ghee',
-      'Milk',
-      'Baking soda',
-      'Sugar',
-      'Water',
-      'Rose water',
-      'Cardamom powder',
-      'Saffron'
-    ],
-    instructions: [
-      'Mix milk powder, flour, baking soda, and ghee.',
-      'Add milk gradually to make a soft dough.',
-      'Rest the dough covered for 15 minutes.',
-      'Meanwhile, prepare sugar syrup with water, sugar, cardamom, and rose water.',
-      'Simmer until slightly sticky.',
-      'Shape dough into small balls, ensuring no cracks.',
-      'Heat oil or ghee on medium-low heat.',
-      'Fry balls until golden brown, stirring gently.',
-      'Drain and immediately transfer to warm sugar syrup.',
-      'Soak for at least 2 hours before serving.',
-    ],
-    moodIds: ['festive', 'happy'],
-    tags: ['indian', 'dessert', 'sweet', 'celebration'],
-    imageUrl: '/images/recipes/gulab-jamun.jpg',
-    prepTime: '20 min',
-    cookTime: '30 min',
-    servings: 16,
-    calories: 180,
-    difficulty: 'Medium',
-  },
-  {
-    id: 'quinoa-upma',
-    name: 'Quinoa Vegetable Upma',
-    title: 'Quinoa Vegetable Upma',
-    description: 'A nutritious twist on traditional upma using protein-rich quinoa.',
-    ingredients: [
-      'Quinoa',
-      'Mixed vegetables',
-      'Mustard seeds',
-      'Curry leaves',
-      'Green chilies',
-      'Turmeric',
-      'Lemon juice',
-      'Grated coconut',
-      'Coriander leaves',
-      'Ghee or olive oil'
-    ],
-    instructions: [
-      'Rinse quinoa thoroughly and drain.',
-      'Heat ghee or oil in a pan, add mustard seeds until they splutter.',
-      'Add curry leaves, green chilies, and asafoetida.',
-      'Add finely chopped vegetables and sauté for 3-4 minutes.',
-      'Add quinoa, turmeric, and salt, mix well.',
-      'Add water (2:1 ratio) and bring to a boil.',
-      'Reduce heat, cover, and cook until quinoa is fluffy (about 15 minutes).',
-      'Fluff with a fork and add lemon juice.',
-      'Garnish with fresh grated coconut and coriander leaves.',
-      'Serve warm for a healthy breakfast or light meal.',
-    ],
-    moodIds: ['mindful'],
-    tags: ['indian', 'fusion', 'healthy', 'quinoa', 'breakfast'],
-    imageUrl: '/images/recipes/quinoa-upma.jpg',
-    prepTime: '10 min',
-    cookTime: '20 min',
-    servings: 3,
-    calories: 230,
-    difficulty: 'Easy',
-  },
-  {
-    id: 'ragi-dosa',
-    name: 'Ragi Sprouted Dosa',
-    title: 'Ragi Sprouted Dosa',
-    description: 'A nutritious fermented crepe made with finger millet and sprouted lentils.',
-    ingredients: [
-      'Ragi flour (finger millet)',
-      'Sprouted green gram',
-      'Rice',
-      'Fenugreek seeds',
-      'Flaxseeds',
-      'Ginger',
-      'Cumin seeds',
-      'Curry leaves',
-      'Coriander leaves',
-      'Coconut oil'
-    ],
-    instructions: [
-      'Soak rice and fenugreek seeds for 4-6 hours.',
-      'Grind with sprouted green gram, flaxseeds, and ginger into a smooth batter.',
-      'Mix in ragi flour and let ferment overnight.',
-      'Add salt and mix well.',
-      'Heat a non-stick pan, pour a ladle of batter and spread in a circular motion.',
-      'Drizzle coconut oil around the edges.',
-      'Cook until the bottom is golden brown and top is dry.',
-      'Fold and serve with coconut chutney or sambar.',
-    ],
-    moodIds: ['mindful'],
-    tags: ['indian', 'healthy', 'breakfast', 'gluten-free', 'vegan'],
-    imageUrl: '/images/recipes/ragi-dosa.jpg',
-    prepTime: '12 hours',
-    cookTime: '20 min',
-    servings: 4,
-    calories: 180,
-    difficulty: 'Medium',
-  }
-];
-
-export const getRecipeById = (id: string): Recipe | null => {
-  const recipe = recipes.find((r) => r.id === id);
-  return recipe || null;
-};
-
-const moodRecipes: MoodRecipe[] = moods.map((mood) => ({
-  mood: mood,
-  recipes: recipes.filter((recipe) => recipe.moodIds.includes(mood.id)),
-}));
-
-export const getMoods = (): Mood[] => {
-  return moods;
-};
-
-export const getRecipesByMood = (moodId: string): Recipe[] => {
-  const moodRecipe = moodRecipes.find((mr) => mr.mood.id === moodId);
-  return moodRecipe ? moodRecipe.recipes : [];
-};
-
-export const searchRecipes = (searchTerm: string): Recipe[] => {
-  const lowerSearchTerm = searchTerm.toLowerCase();
-  return recipes.filter((recipe) => {
-    return (
-      recipe.name.toLowerCase().includes(lowerSearchTerm) ||
-      recipe.description.toLowerCase().includes(lowerSearchTerm) ||
-      recipe.ingredients.some((ingredient) =>
-        ingredient.toLowerCase().includes(lowerSearchTerm)
-      ) ||
-      recipe.tags.some((tag) => tag.toLowerCase().includes(lowerSearchTerm))
-    );
-  });
-};
-
-export const getAllRecipes = (): Recipe[] => {
-  const allRecipes: Recipe[] = [];
-  
-  moodRecipes.forEach(moodRecipe => {
-    moodRecipe.recipes.forEach(recipe => {
-      if (!allRecipes.some(r => r.id === recipe.id)) {
-        allRecipes.push(recipe);
-      }
-    });
-  });
-  
-  return allRecipes;
-};
+    title: 'Slow-
