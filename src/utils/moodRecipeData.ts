@@ -884,7 +884,10 @@ const recipes: Recipe[] = [
     calories: 410,
     difficulty: 'Easy',
   },
-  {
-    id: 'dal-makhani',
-    name: 'Slow-cooked Dal Makhani',
-    title: 'Slow-
+];
+
+export const getAllRecipes = (): Recipe[] => {
+  return recipes;
+};
+
+export const searchRecipes = (query: string): Recipe[]
