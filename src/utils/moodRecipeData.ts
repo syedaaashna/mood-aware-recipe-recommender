@@ -20,6 +20,8 @@ export interface Recipe {
   calories?: number;
   difficulty?: 'Easy' | 'Medium' | 'Hard';
   title?: string; // For compatibility with Recipe page
+  aiGenerated?: boolean; // Adding AI generated flag
+  aiSuggestion?: string; // Adding AI suggestion for recipe enhancement
 }
 
 interface MoodRecipe {
@@ -884,7 +886,140 @@ const recipes: Recipe[] = [
     calories: 410,
     difficulty: 'Easy',
   },
+  {
+    id: 'ai-comfort-soup',
+    name: 'AI-Crafted Comfort Soup',
+    title: 'AI-Crafted Comfort Soup',
+    description: 'A warm, hearty soup designed by AI to provide maximum comfort with balanced nutritional profile.',
+    ingredients: [
+      'Chicken broth', 
+      'Root vegetables (carrots, potatoes, parsnips)',
+      'Pearl barley',
+      'Free-range chicken pieces',
+      'Fresh herbs (thyme, rosemary)',
+      'Garlic',
+      'Onion',
+      'Himalayan salt',
+      'Freshly ground black pepper',
+      'Extra virgin olive oil'
+    ],
+    instructions: [
+      'Heat olive oil in a large pot over medium heat.',
+      'Add diced onion and minced garlic, sauté until translucent.',
+      'Add chicken pieces and brown slightly.',
+      'Pour in chicken broth and add pearl barley.',
+      'Add diced root vegetables and herbs.',
+      'Simmer for 45 minutes until vegetables are tender and barley is cooked.',
+      'Season with salt and pepper to taste.',
+      'Serve hot with fresh crusty bread.'
+    ],
+    moodIds: ['comforting', 'relaxed'],
+    tags: ['soup', 'comfort food', 'healthy', 'ai-crafted'],
+    imageUrl: '/images/recipes/comfort-soup.jpg',
+    prepTime: '15 min',
+    cookTime: '45 min',
+    servings: 6,
+    calories: 320,
+    difficulty: 'Easy',
+    aiGenerated: true,
+    aiSuggestion: 'For an immune boost, try adding fresh ginger and turmeric to the broth.'
+  },
+  {
+    id: 'ai-festive-roast',
+    name: 'AI-Designed Festive Roast',
+    title: 'AI-Designed Festive Roast',
+    description: 'A showstopping holiday roast created with AI-optimized cooking techniques for perfect results every time.',
+    ingredients: [
+      'Prime rib roast (4-5 lbs)',
+      'Garlic cloves',
+      'Fresh rosemary',
+      'Fresh thyme',
+      'High-quality butter',
+      'Sea salt',
+      'Black pepper',
+      'Red wine',
+      'Beef stock',
+      'Shallots'
+    ],
+    instructions: [
+      'Bring roast to room temperature for 2 hours before cooking.',
+      'Preheat oven to precisely 275°F (135°C) for optimal slow roasting.',
+      'Create a compound butter with minced garlic, chopped herbs, salt and pepper.',
+      'Pat roast dry and rub with compound butter, covering all surfaces.',
+      'Place in roasting pan on a rack with shallots around the base.',
+      'Roast until internal temperature reaches 125°F (52°C) for medium-rare, about 15-20 minutes per pound.',
+      'Rest for exactly 30 minutes before carving.',
+      'While resting, make a pan sauce with drippings, wine, and stock.',
+      'Serve with sauce and roasted shallots.'
+    ],
+    moodIds: ['festive', 'comforting'],
+    tags: ['roast', 'holiday', 'special occasion', 'ai-crafted'],
+    imageUrl: '/images/recipes/festive-roast.jpg',
+    prepTime: '30 min',
+    cookTime: '3 hours',
+    servings: 8,
+    calories: 450,
+    difficulty: 'Medium',
+    aiGenerated: true,
+    aiSuggestion: 'Use a probe thermometer with an alarm to achieve the perfect internal temperature without opening the oven.'
+  },
+  {
+    id: 'ai-mindful-bowl',
+    name: 'AI-Balanced Mindful Bowl',
+    title: 'AI-Balanced Mindful Bowl',
+    description: 'A nutritionally perfect grain bowl designed by AI to provide optimal macronutrients and micronutrients for wellness.',
+    ingredients: [
+      'Quinoa',
+      'Kale',
+      'Roasted sweet potatoes',
+      'Avocado',
+      'Chickpeas',
+      'Pumpkin seeds',
+      'Turmeric',
+      'Lemon juice',
+      'Extra virgin olive oil',
+      'Tahini'
+    ],
+    instructions: [
+      'Cook quinoa according to package instructions with a pinch of salt.',
+      'Massage kale with lemon juice and olive oil until tender.',
+      'Roast sweet potatoes with turmeric and a light coating of olive oil at 400°F for 25 minutes.',
+      'Rinse and drain chickpeas, season with spices and roast until crispy.',
+      'Whisk together tahini, lemon juice, olive oil, and water for dressing.',
+      'Assemble bowl with quinoa base, arranged sections of kale, sweet potatoes, chickpeas.',
+      'Add sliced avocado and sprinkle with pumpkin seeds.',
+      'Drizzle with tahini dressing just before serving.'
+    ],
+    moodIds: ['mindful', 'energetic'],
+    tags: ['grain bowl', 'healthy', 'vegan', 'ai-crafted'],
+    imageUrl: '/images/recipes/mindful-bowl.jpg',
+    prepTime: '20 min',
+    cookTime: '30 min',
+    servings: 2,
+    calories: 480,
+    difficulty: 'Easy',
+    aiGenerated: true,
+    aiSuggestion: 'Track your mood before and after eating this nutrient-dense meal to observe the impact on your mental clarity.'
+  }
 ];
+
+recipes.forEach(recipe => {
+  if (!recipe.aiGenerated) {
+    if (recipe.id === 'chocolate-cake') {
+      recipe.aiSuggestion = 'Try adding a pinch of espresso powder to enhance the chocolate flavor without adding coffee taste.';
+    } else if (recipe.id === 'classic-pizza') {
+      recipe.aiSuggestion = 'For a crispier crust, preheat your pizza stone for at least 30 minutes at the highest oven temperature.';
+    } else if (recipe.id === 'berry-smoothie') {
+      recipe.aiSuggestion = 'Add a handful of spinach for added nutrients without affecting the taste.';
+    } else if (recipe.id === 'chicken-curry') {
+      recipe.aiSuggestion = 'Marinate the chicken in yogurt and spices for 2 hours before cooking for more tender results.';
+    } else if (recipe.id === 'mushroom-risotto') {
+      recipe.aiSuggestion = 'Use a mixture of dried and fresh mushrooms to create a deeper umami flavor profile.';
+    } else {
+      recipe.aiSuggestion = 'AI analysis suggests this recipe is already well-balanced. Consider pairing with a complementary side dish.';
+    }
+  }
+});
 
 /**
  * Get all recipes
@@ -945,12 +1080,29 @@ export const getChatbotResponse = (mood: string): string => {
     
     nostalgic: "When you're feeling nostalgic, comfort food is the way to go. How about some Aloo Paratha with White Butter or Mumbai Street-style Pav Bhaji to bring back those cherished memories?",
     
-    comforting: "Looking for comfort food? Warm Apple Pie or Khichdi are perfect choices that feel like a warm hug in a bowl.",
+    comforting: "Looking for comfort food? Our AI-Crafted Comfort Soup or Warm Apple Pie are perfect choices that feel like a warm hug in a bowl.",
     
-    festive: "For that festive mood, try making Homemade Gingerbread Cookies or a special Tandoori Raan that's perfect for celebrations and gatherings!",
+    festive: "For that festive mood, try making our AI-Designed Festive Roast or Homemade Gingerbread Cookies that are perfect for celebrations and gatherings!",
     
-    mindful: "For a mindful meal that nourishes body and soul, I recommend Healthy Semolina Upma or a Calming Lavender Tea. These recipes promote well-being through nutritious ingredients."
+    mindful: "For a mindful meal that nourishes body and soul, I recommend our AI-Balanced Mindful Bowl or Healthy Semolina Upma. These recipes promote well-being through nutritious ingredients."
   };
   
   return responses[mood] || "I don't have specific recommendations for that mood yet, but I'd be happy to suggest some versatile recipes that work for any occasion!";
 };
+
+export const validateMoodRecipes = (): {valid: boolean, emptyMoods: string[]} => {
+  const emptyMoods = moods.filter(mood => {
+    const moodRecipes = recipes.filter(recipe => recipe.moodIds.includes(mood.id));
+    return moodRecipes.length === 0;
+  }).map(mood => mood.name);
+  
+  return {
+    valid: emptyMoods.length === 0,
+    emptyMoods
+  };
+};
+
+const validation = validateMoodRecipes();
+if (!validation.valid) {
+  console.warn(`Warning: The following moods have no recipes: ${validation.emptyMoods.join(', ')}`);
+}

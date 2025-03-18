@@ -1,3 +1,4 @@
+
 import { useState, useRef, useEffect } from 'react';
 import { MessageCircle, Send, X, Maximize, Minimize } from 'lucide-react';
 import { getChatbotResponse } from '@/utils/moodRecipeData';
@@ -28,7 +29,7 @@ const ChatBot = ({ currentMood }: ChatBotProps) => {
     if (isOpen && messages.length === 0) {
       const welcomeMessage: Message = {
         id: Date.now().toString(),
-        text: "Hello! I'm your recipe assistant. How can I help you today?",
+        text: "Hello! I'm your AI-powered recipe assistant. I can help you find recipes based on your mood or answer questions about cooking. How can I help you today?",
         sender: 'bot',
         timestamp: new Date()
       };
@@ -100,31 +101,35 @@ const ChatBot = ({ currentMood }: ChatBotProps) => {
     setIsTyping(true);
     
     setTimeout(() => {
-      let botResponse = "I'm not sure how to respond to that. Could you ask about recipes or cooking?";
+      let botResponse = "I'm still learning about cooking. Could you ask me about recipes, ingredients, or moods?";
       
       const lowerMessage = message.toLowerCase();
       
-      if (lowerMessage.includes('recipe') || 
+      if (lowerMessage.includes('ai') || lowerMessage.includes('artificial intelligence')) {
+        botResponse = "I've analyzed thousands of recipes to create special AI-enhanced recipes! They have optimal ingredient combinations and cooking techniques. Try filtering by the 'ai-crafted' tag or ask about our AI-Crafted Comfort Soup.";
+      } else if (lowerMessage.includes('recipe') || 
           lowerMessage.includes('cook') || 
           lowerMessage.includes('food') || 
           lowerMessage.includes('meal')) {
-        botResponse = "I can help you find recipes! Try selecting a mood first, or you can ask me about specific ingredients or dishes.";
+        botResponse = "I can help you find recipes! Try selecting a mood first, or you can ask me about specific ingredients or dishes. I've also created some AI-enhanced recipes with optimized techniques.";
       } else if (lowerMessage.includes('hello') || 
                 lowerMessage.includes('hi') || 
                 lowerMessage.includes('hey')) {
-        botResponse = "Hello there! How can I help with your cooking today?";
+        botResponse = "Hello there! I'm your AI recipe assistant. How can I help with your cooking today? I can suggest recipes based on mood or ingredients.";
       } else if (lowerMessage.includes('thank')) {
-        botResponse = "You're welcome! Let me know if you need anything else.";
+        botResponse = "You're welcome! I'm happy to help. Let me know if you need anything else - I'm constantly learning new recipes and cooking techniques.";
       } else if (lowerMessage.includes('mood')) {
-        botResponse = "Your mood can greatly influence what foods might satisfy you. Try selecting a mood to see matching recipes!";
+        botResponse = "Your mood can greatly influence what foods might satisfy you. Try selecting a mood to see matching recipes! Each mood has several recipes designed to complement how you're feeling.";
       } else if (lowerMessage.includes('ingredient')) {
-        botResponse = "I can suggest recipes based on ingredients. What ingredients do you have or would like to cook with?";
+        botResponse = "I can suggest recipes based on ingredients. What ingredients do you have or would like to cook with? My AI analysis can help find optimal flavor combinations.";
       } else if (lowerMessage.includes('vegetarian') || lowerMessage.includes('vegan')) {
-        botResponse = "We have many delicious vegetarian options! Try filtering by the 'vegetarian' tag or selecting a mood like 'creative' or 'mindful'.";
+        botResponse = "We have many delicious vegetarian options! Try our AI-Balanced Mindful Bowl for a nutritionally complete meal, or browse our vegetarian dishes for other options.";
       } else if (lowerMessage.includes('spicy') || lowerMessage.includes('hot')) {
-        botResponse = "If you enjoy spicy food, try our Rajasthani Laal Maas, Goan Pork Vindaloo, or Spicy Peanut Noodles!";
+        botResponse = "If you enjoy spicy food, try our Rajasthani Laal Maas, Goan Pork Vindaloo, or Spicy Peanut Noodles! My analysis shows these have the perfect heat levels for maximum flavor without overwhelming spiciness.";
       } else if (lowerMessage.includes('dessert') || lowerMessage.includes('sweet')) {
-        botResponse = "For something sweet, our Decadent Chocolate Cake or Warm Apple Pie would be perfect choices!";
+        botResponse = "For something sweet, our Decadent Chocolate Cake or Warm Apple Pie would be perfect choices! Try my AI suggestion of adding a pinch of espresso powder to the chocolate cake to enhance flavors!";
+      } else if (lowerMessage.includes('suggestion') || lowerMessage.includes('recommend') || lowerMessage.includes('what should')) {
+        botResponse = "Based on cooking trend analysis, I'd recommend trying our AI-Crafted Comfort Soup - it's designed with the perfect balance of nutrients and flavor compounds for maximum satisfaction!";
       }
       
       const newBotMessage: Message = {
@@ -164,7 +169,7 @@ const ChatBot = ({ currentMood }: ChatBotProps) => {
           <div className="bg-primary text-white px-4 py-3 flex justify-between items-center">
             <div className="flex items-center">
               <MessageCircle size={18} className="mr-2" />
-              <h3 className="font-medium text-sm">Recipe Assistant</h3>
+              <h3 className="font-medium text-sm">AI Recipe Assistant</h3>
             </div>
             <div className="flex items-center space-x-2">
               <button
@@ -236,7 +241,7 @@ const ChatBot = ({ currentMood }: ChatBotProps) => {
                   type="text"
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
-                  placeholder="Type a message..."
+                  placeholder="Ask about recipes or cooking..."
                   className="flex-1 border border-gray-300 dark:border-gray-700 rounded-l-full py-2 px-4 focus:outline-none focus:border-primary dark:bg-gray-800"
                 />
                 <button
