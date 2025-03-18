@@ -887,7 +887,4 @@ const recipes: Recipe[] = [
   {
     id: 'dal-makhani',
     name: 'Slow-cooked Dal Makhani',
-    title: 'Slow-cooked Dal Makhani',
-    description: 'A rich and creamy black lentil dal, slow-cooked to perfection.',
-   
-
+    title: 'Slow-
