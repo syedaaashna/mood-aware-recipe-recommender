@@ -887,4 +887,56 @@ const recipes: Recipe[] = [
   {
     id: 'dal-makhani',
     name: 'Slow-cooked Dal Makhani',
-    title: 'Slow-
+    title: 'Slow-cooked Dal Makhani',
+    description: 'A rich and creamy black lentil dal, slow-cooked to perfection.',
+    ingredients: [
+      'Black urad dal',
+      'Rajma (red kidney beans)',
+      'Butter',
+      'Cream',
+      'Onions',
+      'Tomatoes',
+      'Ginger-garlic paste',
+      'Garam masala',
+      'Kasoori methi',
+      'Bay leaf'
+    ],
+    instructions: [
+      'Soak black dal and rajma overnight.',
+      'Pressure cook with bay leaf until soft.',
+      'In a separate pan, sauté onions until golden.',
+      'Add ginger-garlic paste and cook until fragrant.',
+      'Add tomatoes and spices, cook until oil separates.',
+      'Add cooked dal and simmer on low heat for 2-3 hours.',
+      'Add butter and cream in the last 30 minutes.',
+      'Finish with kasoori methi and butter on top.',
+      'Serve hot with naan or rice.',
+    ],
+    moodIds: ['comforting'],
+    tags: ['indian', 'dal', 'punjabi', 'comfort food'],
+    imageUrl: '/images/recipes/dal-makhani.jpg',
+    prepTime: '8 hours',
+    cookTime: '3 hours',
+    servings: 6,
+    calories: 340,
+    difficulty: 'Medium'
+  }
+];
+
+export const getAllRecipes = (): Recipe[] => {
+  return recipes;
+};
+
+export const searchRecipes = (query: string): Recipe[] => {
+  const lowercaseQuery = query.toLowerCase();
+  return recipes.filter(recipe => 
+    recipe.name.toLowerCase().includes(lowercaseQuery) ||
+    recipe.description.toLowerCase().includes(lowercaseQuery) ||
+    recipe.tags.some(tag => tag.toLowerCase().includes(lowercaseQuery)) ||
+    recipe.ingredients.some(ingredient => ingredient.toLowerCase().includes(lowercaseQuery))
+  );
+};
+
+export const getRecipesByMood = (moodId: string): Recipe[] => {
+  return recipes.filter(recipe => recipe.moodIds.includes(moodId));
+};
