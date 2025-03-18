@@ -1,3 +1,4 @@
+
 export interface Mood {
   id: string;
   name: string;
@@ -887,4 +888,84 @@ const recipes: Recipe[] = [
   {
     id: 'dal-makhani',
     name: 'Slow-cooked Dal Makhani',
-    title: 'Slow-
+    title: 'Slow-cooked Dal Makhani',
+    description: 'A rich and creamy black lentil dal, slow-cooked to perfection.',
+    ingredients: [
+      'Black urad dal',
+      'Kidney beans',
+      'Butter',
+      'Cream',
+      'Onions',
+      'Tomatoes',
+      'Ginger',
+      'Garlic',
+      'Garam masala',
+      'Kasoori methi',
+      'Cream'
+    ],
+    instructions: [
+      'Soak black urad dal and kidney beans overnight.',
+      'Pressure cook with salt until soft.',
+      'In a heavy-bottomed pan, sauté onions until golden.',
+      'Add ginger-garlic paste and cook for 2 minutes.',
+      'Add tomato puree and spices, cook until oil separates.',
+      'Stir in cooked dal and simmer on low heat for 30 minutes.',
+      'Mash some dal for creaminess.',
+      'Add butter and cream, simmer for another 10 minutes.',
+      'Finish with kasoori methi and garam masala.',
+      'Garnish with cream and serve hot with naan or rice.',
+    ],
+    moodIds: ['comforting'],
+    tags: ['indian', 'punjabi', 'vegetarian', 'slow-cooked'],
+    imageUrl: '/images/recipes/dal-makhani.jpg',
+    prepTime: '8 hours',
+    cookTime: '1 hour',
+    servings: 4,
+    calories: 340,
+    difficulty: 'Medium',
+  }
+];
+
+// Export recipes for use in other parts of the application
+export { recipes };
+
+// Function to get recipes based on mood ID
+export const getRecipesByMood = (moodId: string): Recipe[] => {
+  return recipes.filter((recipe) => recipe.moodIds.includes(moodId));
+};
+
+// Function to get a recipe by its ID
+export const getRecipeById = (id: string): Recipe | undefined => {
+  return recipes.find((recipe) => recipe.id === id);
+};
+
+// Helper function for chatbot responses
+export const getChatbotResponse = (query: string): string => {
+  const lowerQuery = query.toLowerCase();
+  
+  if (lowerQuery.includes('hello') || lowerQuery.includes('hi')) {
+    return "Hi there! I'm your food mood assistant. How are you feeling today?";
+  }
+  
+  if (lowerQuery.includes('recipe') && lowerQuery.includes('breakfast')) {
+    return "For breakfast, I recommend trying Masala Dosa or French Toast. Both are delicious!";
+  }
+  
+  if (lowerQuery.includes('vegetarian')) {
+    return "We have many vegetarian options! Mushroom Risotto, Malai Kofta, and Shahi Paneer are some favorites.";
+  }
+  
+  if (lowerQuery.includes('quick') || lowerQuery.includes('easy')) {
+    return "For something quick and easy, try our Spicy Peanut Noodles or Naan Pizza. They take less than 30 minutes!";
+  }
+  
+  if (lowerQuery.includes('romantic')) {
+    return "For a romantic meal, I suggest Shahi Paneer or Tandoori Raan. Don't forget to pair it with a nice wine!";
+  }
+  
+  if (lowerQuery.includes('sad') || lowerQuery.includes('comfort')) {
+    return "When you're feeling down, comfort food like Khichdi or Dal Makhani can really help lift your spirits.";
+  }
+  
+  return "I'm not sure about that, but I can help you find recipes based on your mood. How are you feeling today?";
+};
