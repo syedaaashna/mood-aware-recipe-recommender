@@ -1,6 +1,6 @@
 
 import { useState, useRef, useEffect } from 'react';
-import { MessageCircle, Send, X, Maximize, Minimize, Brain, Sparkles, Zap, Bot } from 'lucide-react';
+import { MessageCircle, Send, X, Maximize, Minimize, Brain, Sparkles, Zap, Bot, Mic, MicOff, Volume2, VolumeX } from 'lucide-react';
 import { getChatbotResponse } from '@/utils/moodRecipeData';
 import { useToast } from "@/hooks/use-toast";
 
@@ -23,9 +23,54 @@ const ChatBot = ({ currentMood }: ChatBotProps) => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [isTyping, setIsTyping] = useState(false);
   const [suggestionChips, setSuggestionChips] = useState<string[]>([]);
+  const [isRecording, setIsRecording] = useState(false);
+  const [isMuted, setIsMuted] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const { toast } = useToast();
+  const recognitionRef = useRef<any>(null);
+
+  // Initialize speech recognition
+  useEffect(() => {
+    if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+      const SpeechRecognition = window.webkitSpeechRecognition || window.SpeechRecognition;
+      recognitionRef.current = new SpeechRecognition();
+      recognitionRef.current.continuous = false;
+      recognitionRef.current.interimResults = false;
+      recognitionRef.current.lang = 'en-US';
+
+      recognitionRef.current.onresult = (event: any) => {
+        const transcript = event.results[0][0].transcript;
+        setMessage(transcript);
+        
+        // Auto-submit after speech recognition
+        setTimeout(() => {
+          handleSendMessage(undefined, transcript);
+          setIsRecording(false);
+        }, 500);
+      };
+
+      recognitionRef.current.onerror = (event: any) => {
+        console.error('Speech recognition error', event.error);
+        setIsRecording(false);
+        toast({
+          title: "Voice Input Error",
+          description: "Could not recognize speech. Please try again or type your message.",
+          variant: "destructive"
+        });
+      };
+
+      recognitionRef.current.onend = () => {
+        setIsRecording(false);
+      };
+    }
+
+    return () => {
+      if (recognitionRef.current) {
+        recognitionRef.current.abort();
+      }
+    };
+  }, [toast]);
 
   useEffect(() => {
     if (isOpen && messages.length === 0) {
@@ -72,10 +117,15 @@ const ChatBot = ({ currentMood }: ChatBotProps) => {
           } else {
             setSuggestionChips(["What ingredients work well together?", "Quick dinner ideas", "Healthy options"]);
           }
+
+          // Read out response if not muted
+          if (!isMuted) {
+            speakText(moodResponse);
+          }
         }, 1500);
       }, 500);
     }
-  }, [currentMood, isOpen]);
+  }, [currentMood, isOpen, isMuted]);
 
   useEffect(() => {
     if (messagesEndRef.current) {
@@ -93,6 +143,10 @@ const ChatBot = ({ currentMood }: ChatBotProps) => {
     if (!isOpen) {
       setIsOpen(true);
       setIsMinimized(false);
+      toast({
+        title: "Chef Assistant Activated",
+        description: "Ask me anything about recipes and cooking!",
+      });
     } else {
       setIsMinimized(!isMinimized);
     }
@@ -100,6 +154,58 @@ const ChatBot = ({ currentMood }: ChatBotProps) => {
 
   const closeChat = () => {
     setIsOpen(false);
+    // Stop any ongoing voice recognition
+    if (isRecording && recognitionRef.current) {
+      recognitionRef.current.abort();
+      setIsRecording(false);
+    }
+  };
+
+  const toggleRecording = () => {
+    if (!recognitionRef.current) {
+      toast({
+        title: "Voice Input Not Available",
+        description: "Speech recognition is not supported in your browser.",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    if (isRecording) {
+      recognitionRef.current.abort();
+      setIsRecording(false);
+    } else {
+      setMessage('');
+      recognitionRef.current.start();
+      setIsRecording(true);
+      toast({
+        title: "Listening...",
+        description: "Speak clearly into your microphone.",
+      });
+    }
+  };
+
+  const toggleMute = () => {
+    setIsMuted(!isMuted);
+    toast({
+      title: isMuted ? "Voice Responses Enabled" : "Voice Responses Disabled",
+      description: isMuted ? "The assistant will now speak responses." : "The assistant will no longer speak responses.",
+    });
+  };
+
+  const speakText = (text: string) => {
+    if ('speechSynthesis' in window && !isMuted) {
+      const utterance = new SpeechSynthesisUtterance(text);
+      // Find an English voice
+      const voices = window.speechSynthesis.getVoices();
+      const englishVoice = voices.find(voice => voice.lang.includes('en-'));
+      if (englishVoice) {
+        utterance.voice = englishVoice;
+      }
+      utterance.rate = 1.0;
+      utterance.pitch = 1.0;
+      window.speechSynthesis.speak(utterance);
+    }
   };
 
   const processUserMessage = (userMessage: string) => {
@@ -117,7 +223,9 @@ const ChatBot = ({ currentMood }: ChatBotProps) => {
       ai: ['ai', 'artificial intelligence', 'machine learning', 'smart', 'analyze'],
       quick: ['quick', 'fast', 'easy', 'simple', 'under 30', 'busy'],
       healthy: ['healthy', 'nutritious', 'low calorie', 'diet', 'nutrition', 'balanced'],
-      help: ['help', 'how to', 'guide', 'explain', 'tell me']
+      help: ['help', 'how to', 'guide', 'explain', 'tell me'],
+      time: ['time', 'minutes', 'hours', 'quick', 'fast', 'slow'],
+      hindi: ['hindi', 'india', 'indian', 'voice', 'guidance']
     };
 
     // Check which categories the message falls into
@@ -172,7 +280,10 @@ const ChatBot = ({ currentMood }: ChatBotProps) => {
       ];
       
       // Generate response based on recognized categories
-      if (categories.includes('ai')) {
+      if (categories.includes('hindi')) {
+        botResponse = "हम कई भारतीय व्यंजनों के लिए हिंदी में वॉयस गाइडेंस प्रदान करते हैं! मसाला डोसा, बटर चिकन, या शाही पनीर के बारे में पूछें।";
+        newSuggestionChips = ["मसाला डोसा रेसिपी", "बटर चिकन कैसे बनाएं", "शाही पनीर"];
+      } else if (categories.includes('ai')) {
         botResponse = "I've analyzed thousands of recipes to create special AI-enhanced recipes! They have optimal ingredient combinations and cooking techniques. Our AI features include nutritional analysis, flavor pairing suggestions, and personalized cooking tips based on your preferences.";
         newSuggestionChips = ["Show AI recipes", "How does AI help cooking?", "Nutrition analysis"];
       } else if (categories.includes('recipe')) {
@@ -208,6 +319,9 @@ const ChatBot = ({ currentMood }: ChatBotProps) => {
       } else if (categories.includes('healthy')) {
         botResponse = "Our AI-analyzed healthy recipes optimize nutrition while maintaining great flavor. Try our Nutrient-Dense Buddha Bowl or Balanced Mediterranean Plate - both designed to provide complete nutrition with carefully calibrated macronutrients.";
         newSuggestionChips = ["Low-calorie options", "High-protein meals", "Nutrient-dense recipes"];
+      } else if (categories.includes('time')) {
+        botResponse = "Time is precious! Our quick recipes can be made in under 30 minutes, like our Easy Chicken Stir-Fry (15 minutes) or Berry Smoothie (5 minutes). For special occasions, try our slow-cooked options like Tandoori Raan (4 hours) for maximum flavor development.";
+        newSuggestionChips = ["15-minute meals", "Weekend cooking projects", "Meal prep ideas"];
       } else if (messageToSend.toLowerCase().includes('?')) {
         botResponse = "Great question! I can help with specific cooking techniques, ingredient substitutions, or finding the perfect recipe for any occasion. My AI analysis can provide personalized guidance based on your preferences and cooking skill level.";
         newSuggestionChips = ["Cooking techniques", "Ingredient help", "Recipe troubleshooting"];
@@ -229,6 +343,11 @@ const ChatBot = ({ currentMood }: ChatBotProps) => {
       setMessages(prev => [...prev, newBotMessage]);
       setSuggestionChips(newSuggestionChips);
       setIsTyping(false);
+
+      // Read out the response if not muted
+      if (!isMuted) {
+        speakText(botResponse);
+      }
     }, 1500);
   };
 
@@ -367,17 +486,36 @@ const ChatBot = ({ currentMood }: ChatBotProps) => {
               )}
               
               <form onSubmit={handleSendMessage} className="border-t border-gray-200 dark:border-gray-800 p-3 flex items-center bg-white dark:bg-gray-800">
-                <input
-                  ref={inputRef}
-                  type="text"
-                  value={message}
-                  onChange={(e) => setMessage(e.target.value)}
-                  placeholder="Ask about recipes or cooking..."
-                  className="flex-1 border border-gray-300 dark:border-gray-700 rounded-l-full py-2 px-4 focus:outline-none focus:border-primary dark:bg-gray-800"
-                />
+                <div className="flex-1 flex items-center border border-gray-300 dark:border-gray-700 rounded-l-full overflow-hidden">
+                  <input
+                    ref={inputRef}
+                    type="text"
+                    value={message}
+                    onChange={(e) => setMessage(e.target.value)}
+                    placeholder="Ask about recipes or cooking..."
+                    className="flex-1 py-2 px-4 outline-none focus:ring-0 dark:bg-gray-800"
+                    disabled={isRecording}
+                  />
+                  <button
+                    type="button"
+                    onClick={toggleMute}
+                    className="p-2 text-gray-500 hover:text-primary dark:text-gray-400 dark:hover:text-gray-300"
+                    title={isMuted ? "Enable voice responses" : "Mute voice responses"}
+                  >
+                    {isMuted ? <VolumeX size={18} /> : <Volume2 size={18} />}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={toggleRecording}
+                    className={`p-2 ${isRecording ? 'text-red-500 animate-pulse' : 'text-gray-500 hover:text-primary dark:text-gray-400 dark:hover:text-gray-300'}`}
+                    title={isRecording ? "Stop recording" : "Start voice input"}
+                  >
+                    {isRecording ? <MicOff size={18} /> : <Mic size={18} />}
+                  </button>
+                </div>
                 <button
                   type="submit"
-                  disabled={message.trim() === ''}
+                  disabled={message.trim() === '' && !isRecording}
                   className="bg-primary text-white p-2 rounded-r-full disabled:opacity-50 flex items-center justify-center"
                 >
                   <Send size={18} />
