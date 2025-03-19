@@ -35,7 +35,7 @@ const RecipeCard = ({ recipe, isFavorite = false, onToggleFavorite }: RecipeCard
       
       toast({
         title: isFavorite ? "Removed from Favorites" : "Added to Favorites",
-        description: isFavorite ? `${recipe.title} has been removed from your favorites.` : `${recipe.title} has been added to your favorites.`,
+        description: isFavorite ? `${recipe.title || recipe.name} has been removed from your favorites.` : `${recipe.title || recipe.name} has been added to your favorites.`,
         duration: 3000,
       });
     }
@@ -51,6 +51,9 @@ const RecipeCard = ({ recipe, isFavorite = false, onToggleFavorite }: RecipeCard
     const baseUrl = recipe.imageUrl.split('?')[0];
     return `${baseUrl}?auto=format&fit=crop&w=600&h=400`;
   };
+
+  // Use title if available, otherwise use name for display
+  const displayTitle = recipe.title || recipe.name;
 
   return (
     <Link
@@ -68,7 +71,7 @@ const RecipeCard = ({ recipe, isFavorite = false, onToggleFavorite }: RecipeCard
           
           <img
             src={getImageUrl()}
-            alt={recipe.title}
+            alt={displayTitle}
             className={`w-full h-full object-cover transition-transform duration-500 ${isHovered ? 'scale-105' : 'scale-100'}`}
             onLoad={handleImageLoad}
             onError={handleImageError}
@@ -103,7 +106,7 @@ const RecipeCard = ({ recipe, isFavorite = false, onToggleFavorite }: RecipeCard
         
         {/* Content */}
         <div className="p-4">
-          <h3 className="font-bold text-lg mb-1 line-clamp-1">{recipe.title}</h3>
+          <h3 className="font-bold text-lg mb-1 line-clamp-1">{displayTitle}</h3>
           <p className="text-gray-600 dark:text-gray-300 text-sm mb-3 line-clamp-2">{recipe.description}</p>
           
           {/* Recipe info */}

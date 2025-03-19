@@ -33,69 +33,6 @@ interface MoodRecipe {
   recipes: Recipe[];
 }
 
-export const moods: Mood[] = [
-  {
-    id: 'happy',
-    name: 'Happy',
-    description: 'Recipes to brighten your day',
-    icon: '😊'
-  },
-  {
-    id: 'romantic',
-    name: 'Romantic',
-    description: 'Recipes for a special night',
-    icon: '💝'
-  },
-  {
-    id: 'energetic',
-    name: 'Energetic',
-    description: 'Recipes to fuel your day',
-    icon: '⚡'
-  },
-  {
-    id: 'relaxed',
-    name: 'Relaxed',
-    description: 'Recipes for a calm evening',
-    icon: '😌'
-  },
-  {
-    id: 'creative',
-    name: 'Creative',
-    description: 'Recipes to inspire your inner chef',
-    icon: '🎨'
-  },
-  {
-    id: 'adventurous',
-    name: 'Adventurous',
-    description: 'Recipes to try something new',
-    icon: '🌎'
-  },
-  {
-    id: 'nostalgic',
-    name: 'Nostalgic',
-    description: 'Recipes that bring back memories',
-    icon: '📷'
-  },
-  {
-    id: 'comforting',
-    name: 'Comforting',
-    description: 'Recipes that feel like a warm hug',
-    icon: '🤗'
-  },
-  {
-    id: 'festive',
-    name: 'Festive',
-    description: 'Recipes for celebrations and gatherings',
-    icon: '🎉'
-  },
-  {
-    id: 'mindful',
-    name: 'Mindful',
-    description: 'Nutritious recipes for body and soul',
-    icon: '🧘'
-  },
-];
-
 const recipes: Recipe[] = [
   {
     id: 'classic-pizza',
@@ -113,7 +50,7 @@ const recipes: Recipe[] = [
     ],
     moodIds: ['happy'],
     tags: ['pizza', 'italian', 'vegetarian'],
-    imageUrl: 'https://images.unsplash.com/photo-1574071318508-1cdbab80d002?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1604917877934-07d8d248d396?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
     prepTime: '15 min',
     cookTime: '15 min',
     servings: 4,
@@ -316,7 +253,7 @@ const recipes: Recipe[] = [
     ],
     moodIds: ['relaxed', 'creative'],
     tags: ['risotto', 'mushroom', 'italian'],
-    imageUrl: 'https://images.unsplash.com/photo-1473093226795-af9932fe5856?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1626296536125-61e4e1f4d71d?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
     prepTime: '15 min',
     cookTime: '30 min',
     servings: 4,
@@ -383,7 +320,7 @@ const recipes: Recipe[] = [
     ],
     moodIds: ['nostalgic', 'relaxed'],
     tags: ['pie', 'apple', 'dessert'],
-    imageUrl: 'https://images.unsplash.com/photo-1535920527002-b35e96722eb9?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1621743478914-cc8a68d76208?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
     prepTime: '30 min',
     cookTime: '50 min',
     servings: 8,
@@ -449,7 +386,7 @@ const recipes: Recipe[] = [
     ],
     moodIds: ['happy', 'nostalgic'],
     tags: ['breakfast', 'french toast', 'comfort food'],
-    imageUrl: 'https://images.unsplash.com/photo-1484723091739-30a097e8f929?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1639108094328-2b94a49b1c2e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
     prepTime: '10 min',
     cookTime: '15 min',
     servings: 4,
@@ -485,7 +422,7 @@ const recipes: Recipe[] = [
     ],
     moodIds: ['adventurous', 'creative'],
     tags: ['curry', 'chicken', 'indian'],
-    imageUrl: 'https://images.unsplash.com/photo-1565557623262-b51c2513a641?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1604952564555-13c872c0a364?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
     prepTime: '15 min',
     cookTime: '30 min',
     servings: 4,
@@ -530,7 +467,7 @@ const recipes: Recipe[] = [
     ],
     moodIds: ['happy'],
     tags: ['indian', 'chicken', 'creamy', 'north indian', 'spicy'],
-    imageUrl: 'https://images.unsplash.com/photo-1588166524941-3bf61a9c41db?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1603894584373-5ac82b2ae398?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
     prepTime: '30 min',
     cookTime: '40 min',
     servings: 4,
@@ -723,7 +660,7 @@ const recipes: Recipe[] = [
       'Make sure your pan is very hot before pouring the batter',
       'Let the bottom cook completely before attempting to flip or fold'
     ],
-    hindiVoiceGuidance: 'मसाला डोसा बनाने के लिए, चावल और उड़द दाल को अलग-अलग भिगोकर रखें। फिर उ���्हें पीसकर रातभर फरमेंट करें। आलू भरने के लिए, उबले आलू में प्याज, हरी मिर्च और मसाले डालें। डोसा बनाने के लिए, गरम तवे पर घोल डालकर पतला फैलाएं और किनारों पर तेल डालें। फिर आलू भरकर मोड़ दें। गरमागरम परोसें।'
+    hindiVoiceGuidance: 'मसाला डोसा बनाने के लिए, चावल और उड़द दाल को अलग-अलग भिगोकर रखें। फिर उन्हें पीसकर रातभर फरमेंट करें। आलू भरने के ��िए, उबले आलू में प्याज, हरी मिर्च और मसाले डालें। डोसा बनाने के लिए, गरम तवे पर घोल डालकर पतला फैलाएं और किनारों पर तेल डालें। फिर आलू भरकर मोड़ दें। गरमागरम परोसें।'
   },
 ];
 
@@ -770,23 +707,19 @@ export const moodRecipes: MoodRecipe[] = [
   },
 ];
 
-// Function to get all recipes
 export const getAllRecipes = (): Recipe[] => {
   return recipes;
 };
 
-// Function to get a recipe by its ID
 export const getRecipeById = (id: string): Recipe | null => {
   const recipe = recipes.find(recipe => recipe.id === id);
   return recipe || null;
 };
 
-// Function to get recipes based on mood
 export const getRecipesByMood = (moodId: string): Recipe[] => {
   return recipes.filter(recipe => recipe.moodIds.includes(moodId));
 };
 
-// Function to search recipes by name, ingredients, or tags
 export const searchRecipes = (searchTerm: string): Recipe[] => {
   const term = searchTerm.toLowerCase();
   return recipes.filter(recipe => {
@@ -799,7 +732,6 @@ export const searchRecipes = (searchTerm: string): Recipe[] => {
   });
 };
 
-// Function to get similar recipes based on a recipe ID
 export const getSimilarRecipes = (recipeId: string, limit: number = 3): Recipe[] => {
   const currentRecipe = getRecipeById(recipeId);
   
@@ -807,7 +739,6 @@ export const getSimilarRecipes = (recipeId: string, limit: number = 3): Recipe[]
     return [];
   }
   
-  // If the recipe has explicitly defined similar recipes, use those
   if (currentRecipe.similarRecipes && currentRecipe.similarRecipes.length > 0) {
     const similarRecipes = currentRecipe.similarRecipes
       .map(id => getRecipeById(id))
@@ -815,25 +746,22 @@ export const getSimilarRecipes = (recipeId: string, limit: number = 3): Recipe[]
     return similarRecipes.slice(0, limit);
   }
   
-  // Otherwise, find recipes with similar tags or mood
   let similarRecipes = recipes
-    .filter(recipe => recipe.id !== recipeId) // Exclude the current recipe
+    .filter(recipe => recipe.id !== recipeId)
     .map(recipe => {
-      // Calculate similarity score based on matching tags and moods
       const sharedTags = recipe.tags.filter(tag => currentRecipe.tags.includes(tag)).length;
       const sharedMoods = recipe.moodIds.filter(mood => currentRecipe.moodIds.includes(mood)).length;
-      const similarityScore = sharedTags * 2 + sharedMoods * 3; // Weight moods more heavily
+      const similarityScore = sharedTags * 2 + sharedMoods * 3;
       
       return { recipe, similarityScore };
     })
-    .filter(item => item.similarityScore > 0) // Only include recipes with some similarity
-    .sort((a, b) => b.similarityScore - a.similarityScore) // Sort by similarity score
+    .filter(item => item.similarityScore > 0)
+    .sort((a, b) => b.similarityScore - a.similarityScore)
     .map(item => item.recipe);
   
   return similarRecipes.slice(0, limit);
 };
 
-// Function to get chatbot response based on mood
 export const getChatbotResponse = (mood: string | null): string => {
   if (!mood) {
     return "I'd be happy to help you find the perfect recipe. Tell me what you're in the mood for or ask about specific ingredients.";
