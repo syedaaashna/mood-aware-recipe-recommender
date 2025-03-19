@@ -1,6 +1,6 @@
 
 import { useState, useRef, useEffect } from 'react';
-import { MessageCircle, Send, X, Maximize, Minimize } from 'lucide-react';
+import { MessageCircle, Send, X, Maximize, Minimize, Brain, Sparkles, Zap, Bot } from 'lucide-react';
 import { getChatbotResponse } from '@/utils/moodRecipeData';
 import { useToast } from "@/hooks/use-toast";
 
@@ -9,6 +9,7 @@ interface Message {
   text: string;
   sender: 'user' | 'bot';
   timestamp: Date;
+  isAiEnhanced?: boolean;
 }
 
 interface ChatBotProps {
@@ -21,6 +22,7 @@ const ChatBot = ({ currentMood }: ChatBotProps) => {
   const [message, setMessage] = useState('');
   const [messages, setMessages] = useState<Message[]>([]);
   const [isTyping, setIsTyping] = useState(false);
+  const [suggestionChips, setSuggestionChips] = useState<string[]>([]);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const { toast } = useToast();
@@ -31,9 +33,15 @@ const ChatBot = ({ currentMood }: ChatBotProps) => {
         id: Date.now().toString(),
         text: "Hello! I'm your AI-powered recipe assistant. I can help you find recipes based on your mood or answer questions about cooking. How can I help you today?",
         sender: 'bot',
-        timestamp: new Date()
+        timestamp: new Date(),
+        isAiEnhanced: true
       };
       setMessages([welcomeMessage]);
+      setSuggestionChips([
+        "What's a good breakfast?",
+        "Find vegetarian recipes",
+        "How do I make pasta?"
+      ]);
     }
   }, [isOpen, messages.length]);
 
@@ -49,11 +57,21 @@ const ChatBot = ({ currentMood }: ChatBotProps) => {
             id: Date.now().toString(),
             text: moodResponse,
             sender: 'bot',
-            timestamp: new Date()
+            timestamp: new Date(),
+            isAiEnhanced: true
           };
           
           setMessages(prev => [...prev, newMessage]);
           setIsTyping(false);
+          
+          // Set suggestion chips based on mood
+          if (currentMood.includes('happy')) {
+            setSuggestionChips(["Show celebratory recipes", "Dessert ideas", "Party food"]);
+          } else if (currentMood.includes('sad')) {
+            setSuggestionChips(["Comfort food recipes", "Chocolate desserts", "Easy soups"]);
+          } else {
+            setSuggestionChips(["What ingredients work well together?", "Quick dinner ideas", "Healthy options"]);
+          }
         }, 1500);
       }, 500);
     }
@@ -84,14 +102,56 @@ const ChatBot = ({ currentMood }: ChatBotProps) => {
     setIsOpen(false);
   };
 
-  const handleSendMessage = (e?: React.FormEvent) => {
+  const processUserMessage = (userMessage: string) => {
+    // Keywords that the chatbot can recognize
+    const keywordMap: Record<string, string[]> = {
+      recipe: ['recipe', 'cook', 'food', 'meal', 'dish', 'dinner', 'lunch', 'breakfast'],
+      greeting: ['hello', 'hi', 'hey', 'howdy', 'greetings'],
+      thanks: ['thank', 'thanks', 'appreciate', 'grateful'],
+      mood: ['mood', 'feel', 'feeling', 'emotion'],
+      ingredient: ['ingredient', 'have', 'using', 'use', 'with'],
+      diet: ['vegetarian', 'vegan', 'gluten-free', 'dairy-free', 'keto', 'paleo', 'diet'],
+      spicy: ['spicy', 'hot', 'heat', 'chili', 'pepper'],
+      sweet: ['dessert', 'sweet', 'cake', 'cookie', 'chocolate', 'ice cream'],
+      suggestion: ['suggest', 'recommend', 'what should', 'idea', 'recommendation'],
+      ai: ['ai', 'artificial intelligence', 'machine learning', 'smart', 'analyze'],
+      quick: ['quick', 'fast', 'easy', 'simple', 'under 30', 'busy'],
+      healthy: ['healthy', 'nutritious', 'low calorie', 'diet', 'nutrition', 'balanced'],
+      help: ['help', 'how to', 'guide', 'explain', 'tell me']
+    };
+
+    // Check which categories the message falls into
+    const categories: string[] = [];
+    const lowerMessage = userMessage.toLowerCase();
+    
+    Object.entries(keywordMap).forEach(([category, keywords]) => {
+      if (keywords.some(keyword => lowerMessage.includes(keyword))) {
+        categories.push(category);
+      }
+    });
+
+    // Determine if we should mark response as AI-enhanced
+    const isComplexQuery = categories.length >= 2 || 
+                          lowerMessage.length > 20 || 
+                          categories.includes('ai') ||
+                          lowerMessage.includes('?');
+
+    return {
+      categories,
+      isComplexQuery
+    };
+  };
+
+  const handleSendMessage = (e?: React.FormEvent, suggestedMessage?: string) => {
     if (e) e.preventDefault();
     
-    if (message.trim() === '') return;
+    const messageToSend = suggestedMessage || message;
+    
+    if (messageToSend.trim() === '') return;
     
     const newUserMessage: Message = {
       id: Date.now().toString(),
-      text: message,
+      text: messageToSend,
       sender: 'user',
       timestamp: new Date()
     };
@@ -100,46 +160,74 @@ const ChatBot = ({ currentMood }: ChatBotProps) => {
     setMessage('');
     setIsTyping(true);
     
+    // Process the user message to determine response type
+    const { categories, isComplexQuery } = processUserMessage(messageToSend);
+    
     setTimeout(() => {
       let botResponse = "I'm still learning about cooking. Could you ask me about recipes, ingredients, or moods?";
+      let newSuggestionChips: string[] = [
+        "What's a good dinner?",
+        "Recipe ideas",
+        "Cooking techniques"
+      ];
       
-      const lowerMessage = message.toLowerCase();
+      // Generate response based on recognized categories
+      if (categories.includes('ai')) {
+        botResponse = "I've analyzed thousands of recipes to create special AI-enhanced recipes! They have optimal ingredient combinations and cooking techniques. Our AI features include nutritional analysis, flavor pairing suggestions, and personalized cooking tips based on your preferences.";
+        newSuggestionChips = ["Show AI recipes", "How does AI help cooking?", "Nutrition analysis"];
+      } else if (categories.includes('recipe')) {
+        botResponse = "I can help you find recipes! Try selecting a mood first, or you can ask me about specific ingredients or dishes. My AI analysis can suggest recipes with complementary flavor profiles and optimal cooking methods.";
+        newSuggestionChips = ["Breakfast ideas", "Dinner recipes", "Quick meals"];
+      } else if (categories.includes('greeting')) {
+        botResponse = "Hello there! I'm your AI recipe assistant. How can I help with your cooking today? I can suggest recipes based on mood, ingredients, or dietary needs. I'm constantly learning new recipes and techniques!";
+        newSuggestionChips = ["What can you do?", "Recipe suggestions", "Cooking help"];
+      } else if (categories.includes('thanks')) {
+        botResponse = "You're welcome! I'm happy to help. Let me know if you need anything else - I'm constantly learning new recipes and cooking techniques through advanced AI analysis of thousands of recipes.";
+        newSuggestionChips = ["More recipe ideas", "Cooking techniques", "Ingredient substitutions"];
+      } else if (categories.includes('mood')) {
+        botResponse = "Your mood can greatly influence what foods might satisfy you. Try selecting a mood to see matching recipes! Each mood has several recipes designed to complement how you're feeling, with AI-optimized ingredient combinations for maximum satisfaction.";
+        newSuggestionChips = ["I'm feeling happy", "I'm feeling sad", "I'm feeling energetic"];
+      } else if (categories.includes('ingredient')) {
+        botResponse = "I can suggest recipes based on ingredients. What ingredients do you have or would like to cook with? My AI analysis can help find optimal flavor combinations and suggest techniques to bring out the best in your ingredients.";
+        newSuggestionChips = ["I have chicken", "Cooking with vegetables", "Using leftovers"];
+      } else if (categories.includes('diet')) {
+        botResponse = "We have many specialized diet options! Our AI can customize recipes for any dietary restriction while maintaining optimal nutrition and flavor. Try our AI-Balanced Mindful Bowl for a nutritionally complete vegetarian meal, or browse our specialized diet section.";
+        newSuggestionChips = ["Vegetarian recipes", "Gluten-free options", "Keto-friendly meals"];
+      } else if (categories.includes('spicy')) {
+        botResponse = "If you enjoy spicy food, try our Rajasthani Laal Maas, Goan Pork Vindaloo, or Spicy Peanut Noodles! Our AI flavor analysis shows these have the perfect heat levels for maximum flavor without overwhelming spiciness.";
+        newSuggestionChips = ["Medium spicy recipes", "Very spicy dishes", "Mild but flavorful"];
+      } else if (categories.includes('sweet')) {
+        botResponse = "For something sweet, our Decadent Chocolate Cake or Warm Apple Pie would be perfect choices! Our AI analysis suggests adding a pinch of espresso powder to the chocolate cake to enhance flavors, and a touch of cardamom to the apple pie for complexity.";
+        newSuggestionChips = ["Quick desserts", "Chocolate recipes", "Fruit desserts"];
+      } else if (categories.includes('suggestion') || categories.includes('help')) {
+        botResponse = "Based on my AI cooking trend analysis, I'd recommend trying our Comfort Soup - it's designed with the perfect balance of nutrients and flavor compounds for maximum satisfaction! I can also help with step-by-step cooking instructions or ingredient substitutions.";
+        newSuggestionChips = ["Trending recipes", "Seasonal dishes", "Quick meal ideas"];
+      } else if (categories.includes('quick')) {
+        botResponse = "For quick meals, try our 15-minute Pasta Primavera or 20-minute Sheet Pan Chicken! Our AI has optimized these recipes for maximum flavor in minimal time, with simplified techniques and ingredient combinations.";
+        newSuggestionChips = ["Under 30 minutes", "One-pot meals", "No-cook recipes"];
+      } else if (categories.includes('healthy')) {
+        botResponse = "Our AI-analyzed healthy recipes optimize nutrition while maintaining great flavor. Try our Nutrient-Dense Buddha Bowl or Balanced Mediterranean Plate - both designed to provide complete nutrition with carefully calibrated macronutrients.";
+        newSuggestionChips = ["Low-calorie options", "High-protein meals", "Nutrient-dense recipes"];
+      } else if (messageToSend.toLowerCase().includes('?')) {
+        botResponse = "Great question! I can help with specific cooking techniques, ingredient substitutions, or finding the perfect recipe for any occasion. My AI analysis can provide personalized guidance based on your preferences and cooking skill level.";
+        newSuggestionChips = ["Cooking techniques", "Ingredient help", "Recipe troubleshooting"];
+      }
       
-      if (lowerMessage.includes('ai') || lowerMessage.includes('artificial intelligence')) {
-        botResponse = "I've analyzed thousands of recipes to create special AI-enhanced recipes! They have optimal ingredient combinations and cooking techniques. Try filtering by the 'ai-crafted' tag or ask about our AI-Crafted Comfort Soup.";
-      } else if (lowerMessage.includes('recipe') || 
-          lowerMessage.includes('cook') || 
-          lowerMessage.includes('food') || 
-          lowerMessage.includes('meal')) {
-        botResponse = "I can help you find recipes! Try selecting a mood first, or you can ask me about specific ingredients or dishes. I've also created some AI-enhanced recipes with optimized techniques.";
-      } else if (lowerMessage.includes('hello') || 
-                lowerMessage.includes('hi') || 
-                lowerMessage.includes('hey')) {
-        botResponse = "Hello there! I'm your AI recipe assistant. How can I help with your cooking today? I can suggest recipes based on mood or ingredients.";
-      } else if (lowerMessage.includes('thank')) {
-        botResponse = "You're welcome! I'm happy to help. Let me know if you need anything else - I'm constantly learning new recipes and cooking techniques.";
-      } else if (lowerMessage.includes('mood')) {
-        botResponse = "Your mood can greatly influence what foods might satisfy you. Try selecting a mood to see matching recipes! Each mood has several recipes designed to complement how you're feeling.";
-      } else if (lowerMessage.includes('ingredient')) {
-        botResponse = "I can suggest recipes based on ingredients. What ingredients do you have or would like to cook with? My AI analysis can help find optimal flavor combinations.";
-      } else if (lowerMessage.includes('vegetarian') || lowerMessage.includes('vegan')) {
-        botResponse = "We have many delicious vegetarian options! Try our AI-Balanced Mindful Bowl for a nutritionally complete meal, or browse our vegetarian dishes for other options.";
-      } else if (lowerMessage.includes('spicy') || lowerMessage.includes('hot')) {
-        botResponse = "If you enjoy spicy food, try our Rajasthani Laal Maas, Goan Pork Vindaloo, or Spicy Peanut Noodles! My analysis shows these have the perfect heat levels for maximum flavor without overwhelming spiciness.";
-      } else if (lowerMessage.includes('dessert') || lowerMessage.includes('sweet')) {
-        botResponse = "For something sweet, our Decadent Chocolate Cake or Warm Apple Pie would be perfect choices! Try my AI suggestion of adding a pinch of espresso powder to the chocolate cake to enhance flavors!";
-      } else if (lowerMessage.includes('suggestion') || lowerMessage.includes('recommend') || lowerMessage.includes('what should')) {
-        botResponse = "Based on cooking trend analysis, I'd recommend trying our AI-Crafted Comfort Soup - it's designed with the perfect balance of nutrients and flavor compounds for maximum satisfaction!";
+      // Add a more personal touch for complex queries
+      if (isComplexQuery) {
+        botResponse += " I've analyzed your specific question using AI to provide the most helpful response possible. Is there anything else you'd like to know?";
       }
       
       const newBotMessage: Message = {
         id: (Date.now() + 100).toString(),
         text: botResponse,
         sender: 'bot',
-        timestamp: new Date()
+        timestamp: new Date(),
+        isAiEnhanced: isComplexQuery
       };
       
       setMessages(prev => [...prev, newBotMessage]);
+      setSuggestionChips(newSuggestionChips);
       setIsTyping(false);
     }, 1500);
   };
@@ -152,10 +240,14 @@ const ChatBot = ({ currentMood }: ChatBotProps) => {
     <>
       <button
         onClick={toggleChat}
-        className="fixed bottom-6 left-6 z-40 p-4 rounded-full bg-primary text-white shadow-lg hover:bg-primary/90 transition-colors"
+        className="fixed bottom-6 left-6 z-40 p-4 rounded-full bg-primary text-white shadow-lg hover:bg-primary/90 transition-colors group"
         aria-label="Open chat"
       >
-        <MessageCircle size={24} />
+        <div className="absolute -top-2 -right-2 w-5 h-5 bg-red-500 rounded-full flex items-center justify-center animate-pulse">
+          <span className="text-white text-xs">!</span>
+        </div>
+        <MessageCircle size={24} className="group-hover:hidden" />
+        <Bot size={24} className="hidden group-hover:block" />
       </button>
       
       {isOpen && (
@@ -163,13 +255,21 @@ const ChatBot = ({ currentMood }: ChatBotProps) => {
           className={`fixed left-6 z-40 shadow-xl rounded-lg overflow-hidden transition-all duration-300 glass-card border border-gray-200 dark:border-gray-800 ${
             isMinimized
               ? 'bottom-20 w-60 h-12'
-              : 'bottom-20 w-80 sm:w-96 h-96'
+              : 'bottom-20 w-80 sm:w-96 h-[500px]'
           }`}
         >
-          <div className="bg-primary text-white px-4 py-3 flex justify-between items-center">
+          <div 
+            className="text-white px-4 py-3 flex justify-between items-center"
+            style={{
+              background: 'linear-gradient(90deg, hsla(259, 84%, 78%, 1) 0%, hsla(206, 67%, 75%, 1) 100%)',
+            }}
+          >
             <div className="flex items-center">
-              <MessageCircle size={18} className="mr-2" />
+              <Brain className="w-5 h-5 mr-2" />
               <h3 className="font-medium text-sm">AI Recipe Assistant</h3>
+              <div className="ml-2 bg-white/20 text-white text-xs px-1.5 py-0.5 rounded-full flex items-center">
+                <Sparkles size={10} className="mr-1" /> AI
+              </div>
             </div>
             <div className="flex items-center space-x-2">
               <button
@@ -191,7 +291,7 @@ const ChatBot = ({ currentMood }: ChatBotProps) => {
           
           {!isMinimized && (
             <>
-              <div className="p-4 h-[calc(100%-110px)] overflow-y-auto">
+              <div className="p-4 h-[calc(100%-180px)] overflow-y-auto bg-gray-50 dark:bg-gray-900/50">
                 {messages.map((msg) => (
                   <div
                     key={msg.id}
@@ -203,9 +303,17 @@ const ChatBot = ({ currentMood }: ChatBotProps) => {
                       className={`max-w-[80%] rounded-lg px-3 py-2 ${
                         msg.sender === 'user'
                           ? 'bg-primary text-white rounded-br-none'
-                          : 'bg-gray-100 dark:bg-gray-800 rounded-bl-none'
+                          : msg.isAiEnhanced
+                            ? 'bg-gradient-to-r from-purple-100 to-blue-100 dark:from-purple-900/40 dark:to-blue-900/40 text-gray-800 dark:text-gray-200 rounded-bl-none'
+                            : 'bg-gray-100 dark:bg-gray-800 rounded-bl-none'
                       }`}
                     >
+                      {msg.sender === 'bot' && msg.isAiEnhanced && (
+                        <div className="flex items-center mb-1 text-xs text-purple-600 dark:text-purple-300">
+                          <Zap size={10} className="mr-1" />
+                          <span>AI Enhanced Response</span>
+                        </div>
+                      )}
                       <p className="text-sm">{msg.text}</p>
                       <span
                         className={`text-xs mt-1 block ${
@@ -222,11 +330,15 @@ const ChatBot = ({ currentMood }: ChatBotProps) => {
                 
                 {isTyping && (
                   <div className="flex justify-start mb-3">
-                    <div className="bg-gray-100 dark:bg-gray-800 rounded-lg px-4 py-2 rounded-bl-none">
+                    <div className="bg-gradient-to-r from-purple-100 to-blue-100 dark:from-purple-900/40 dark:to-blue-900/40 rounded-lg px-4 py-2 rounded-bl-none">
+                      <div className="flex items-center mb-1 text-xs text-purple-600 dark:text-purple-300">
+                        <Brain size={10} className="mr-1" />
+                        <span>AI Thinking...</span>
+                      </div>
                       <div className="flex space-x-1">
-                        <div className="w-2 h-2 rounded-full bg-gray-400 animate-pulse"></div>
-                        <div className="w-2 h-2 rounded-full bg-gray-400 animate-pulse delay-75"></div>
-                        <div className="w-2 h-2 rounded-full bg-gray-400 animate-pulse delay-150"></div>
+                        <div className="w-2 h-2 rounded-full bg-purple-400 animate-pulse"></div>
+                        <div className="w-2 h-2 rounded-full bg-purple-400 animate-pulse delay-75"></div>
+                        <div className="w-2 h-2 rounded-full bg-purple-400 animate-pulse delay-150"></div>
                       </div>
                     </div>
                   </div>
@@ -235,7 +347,26 @@ const ChatBot = ({ currentMood }: ChatBotProps) => {
                 <div ref={messagesEndRef} />
               </div>
               
-              <form onSubmit={handleSendMessage} className="border-t border-gray-200 dark:border-gray-800 p-3 flex items-center">
+              {/* Suggestion chips */}
+              {suggestionChips.length > 0 && (
+                <div className="px-4 py-2 border-t border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-900/50 overflow-x-auto">
+                  <div className="flex space-x-2 pb-1">
+                    {suggestionChips.map((chip, index) => (
+                      <button
+                        key={index}
+                        onClick={() => handleSendMessage(undefined, chip)}
+                        className="px-3 py-1.5 rounded-full text-xs font-medium whitespace-nowrap
+                                  bg-primary/10 text-primary hover:bg-primary/20 
+                                  dark:bg-primary/20 dark:hover:bg-primary/30 transition-colors"
+                      >
+                        {chip}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
+              
+              <form onSubmit={handleSendMessage} className="border-t border-gray-200 dark:border-gray-800 p-3 flex items-center bg-white dark:bg-gray-800">
                 <input
                   ref={inputRef}
                   type="text"
@@ -247,7 +378,7 @@ const ChatBot = ({ currentMood }: ChatBotProps) => {
                 <button
                   type="submit"
                   disabled={message.trim() === ''}
-                  className="bg-primary text-white p-2 rounded-r-full disabled:opacity-50"
+                  className="bg-primary text-white p-2 rounded-r-full disabled:opacity-50 flex items-center justify-center"
                 >
                   <Send size={18} />
                 </button>

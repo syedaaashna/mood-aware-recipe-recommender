@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Clock, Users, ChefHat, Heart } from 'lucide-react';
@@ -13,6 +14,7 @@ interface RecipeCardProps {
 const RecipeCard = ({ recipe, isFavorite = false, onToggleFavorite }: RecipeCardProps) => {
   const [isLoading, setIsLoading] = useState(true);
   const [isHovered, setIsHovered] = useState(false);
+  const [imageError, setImageError] = useState(false);
   const { toast } = useToast();
 
   const handleImageLoad = () => {
@@ -21,7 +23,7 @@ const RecipeCard = ({ recipe, isFavorite = false, onToggleFavorite }: RecipeCard
 
   const handleImageError = () => {
     setIsLoading(false);
-    // Set a fallback image
+    setImageError(true);
   };
 
   const handleFavoriteToggle = (e: React.MouseEvent) => {
@@ -39,6 +41,17 @@ const RecipeCard = ({ recipe, isFavorite = false, onToggleFavorite }: RecipeCard
     }
   };
 
+  // Ensure image URL is properly formatted and handle fallback
+  const getImageUrl = () => {
+    if (imageError || !recipe.imageUrl) {
+      return 'https://images.unsplash.com/photo-1618160702438-9b02ab6515c9?auto=format&fit=crop&w=600&h=400';
+    }
+    
+    // Remove query parameters if they already exist in the URL
+    const baseUrl = recipe.imageUrl.split('?')[0];
+    return `${baseUrl}?auto=format&fit=crop&w=600&h=400`;
+  };
+
   return (
     <Link
       to={`/recipe/${recipe.id}`}
@@ -54,7 +67,7 @@ const RecipeCard = ({ recipe, isFavorite = false, onToggleFavorite }: RecipeCard
           )}
           
           <img
-            src={`${recipe.imageUrl}?auto=format&fit=crop&w=600&h=400`}
+            src={getImageUrl()}
             alt={recipe.title}
             className={`w-full h-full object-cover transition-transform duration-500 ${isHovered ? 'scale-105' : 'scale-100'}`}
             onLoad={handleImageLoad}

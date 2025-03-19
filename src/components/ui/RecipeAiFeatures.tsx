@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { Brain, ChevronDown, ChevronUp, Lightbulb, Utensils, ListPlus } from 'lucide-react';
+import { Brain, ChevronDown, ChevronUp, Lightbulb, Utensils, ListPlus, Sparkles, Flame } from 'lucide-react';
 import { Recipe, getSimilarRecipes } from '@/utils/moodRecipeData';
 import { Link } from 'react-router-dom';
 
@@ -25,20 +25,33 @@ const RecipeAiFeatures = ({ recipe }: RecipeAiFeaturesProps) => {
           <Brain className="w-6 h-6 mr-3 text-white" />
           <h3 className="text-lg font-bold text-white">AI-Powered Recipe Insights</h3>
         </div>
-        <button className="text-white">
-          {isExpanded ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
-        </button>
+        <div className="flex items-center">
+          <span className="text-white text-sm mr-3 bg-white/20 px-2 py-1 rounded-full">
+            <Sparkles className="w-3 h-3 inline mr-1" /> AI Enhanced
+          </span>
+          <button className="text-white">
+            {isExpanded ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+          </button>
+        </div>
       </div>
       
       {isExpanded && (
         <div className="p-6 bg-gray-50 dark:bg-gray-900">
+          {/* AI Badge */}
+          <div className="mb-4 flex justify-center">
+            <div className="px-4 py-2 bg-purple-100 dark:bg-purple-900 rounded-full flex items-center">
+              <Flame className="w-4 h-4 mr-2 text-purple-600 dark:text-purple-300" />
+              <span className="text-sm font-medium text-purple-700 dark:text-purple-300">AI-Analyzed Recipe</span>
+            </div>
+          </div>
+          
           {/* AI Recipe Suggestion */}
           <div className="mb-6">
             <div className="flex items-center mb-3">
               <Lightbulb className="w-5 h-5 mr-2 text-yellow-500" />
               <h4 className="text-base font-medium">Chef's AI Suggestion</h4>
             </div>
-            <p className="text-gray-700 dark:text-gray-300 pl-7">
+            <p className="text-gray-700 dark:text-gray-300 pl-7 bg-yellow-50 dark:bg-yellow-950/20 p-3 rounded-lg border border-yellow-100 dark:border-yellow-900/30">
               {recipe.aiSuggestion || "Our AI chef doesn't have any specific suggestions for this recipe."}
             </p>
           </div>
@@ -50,7 +63,7 @@ const RecipeAiFeatures = ({ recipe }: RecipeAiFeaturesProps) => {
                 <Utensils className="w-5 h-5 mr-2 text-green-500 flex-shrink-0 mt-1" />
                 <h4 className="text-base font-medium">Nutrition Insight</h4>
               </div>
-              <p className="text-gray-700 dark:text-gray-300 pl-7">
+              <p className="text-gray-700 dark:text-gray-300 pl-7 bg-green-50 dark:bg-green-950/20 p-3 rounded-lg border border-green-100 dark:border-green-900/30">
                 {recipe.nutritionAnalysis}
               </p>
             </div>
@@ -63,7 +76,7 @@ const RecipeAiFeatures = ({ recipe }: RecipeAiFeaturesProps) => {
                 <ListPlus className="w-5 h-5 mr-2 text-blue-500 flex-shrink-0 mt-1" />
                 <h4 className="text-base font-medium">AI Cooking Tips</h4>
               </div>
-              <ul className="text-gray-700 dark:text-gray-300 pl-7 space-y-2">
+              <ul className="text-gray-700 dark:text-gray-300 pl-7 space-y-2 bg-blue-50 dark:bg-blue-950/20 p-3 rounded-lg border border-blue-100 dark:border-blue-900/30">
                 {recipe.cookingTips.map((tip, index) => (
                   <li key={index} className="flex items-start">
                     <span className="inline-block w-2 h-2 rounded-full bg-blue-500 mt-2 mr-2"></span>
@@ -90,9 +103,12 @@ const RecipeAiFeatures = ({ recipe }: RecipeAiFeaturesProps) => {
                   >
                     <div className="h-24 rounded-md overflow-hidden mb-2">
                       <img 
-                        src={similarRecipe.imageUrl} 
+                        src={similarRecipe.imageUrl ? `${similarRecipe.imageUrl.split('?')[0]}?auto=format&fit=crop&w=400&h=200` : 'https://images.unsplash.com/photo-1618160702438-9b02ab6515c9?auto=format&fit=crop&w=400&h=200'} 
                         alt={similarRecipe.name} 
                         className="w-full h-full object-cover"
+                        onError={(e) => {
+                          (e.target as HTMLImageElement).src = 'https://images.unsplash.com/photo-1618160702438-9b02ab6515c9?auto=format&fit=crop&w=400&h=200';
+                        }}
                       />
                     </div>
                     <h5 className="font-medium text-sm">{similarRecipe.name}</h5>
