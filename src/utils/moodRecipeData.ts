@@ -769,3 +769,98 @@ export const moodRecipes: MoodRecipe[] = [
     recipes: recipes.filter(recipe => recipe.moodIds.includes(moods[9].id))
   },
 ];
+
+// Function to get all recipes
+export const getAllRecipes = (): Recipe[] => {
+  return recipes;
+};
+
+// Function to get a recipe by its ID
+export const getRecipeById = (id: string): Recipe | null => {
+  const recipe = recipes.find(recipe => recipe.id === id);
+  return recipe || null;
+};
+
+// Function to get recipes based on mood
+export const getRecipesByMood = (moodId: string): Recipe[] => {
+  return recipes.filter(recipe => recipe.moodIds.includes(moodId));
+};
+
+// Function to search recipes by name, ingredients, or tags
+export const searchRecipes = (searchTerm: string): Recipe[] => {
+  const term = searchTerm.toLowerCase();
+  return recipes.filter(recipe => {
+    return (
+      recipe.name.toLowerCase().includes(term) ||
+      recipe.description.toLowerCase().includes(term) ||
+      recipe.tags.some(tag => tag.toLowerCase().includes(term)) ||
+      recipe.ingredients.some(ingredient => ingredient.toLowerCase().includes(term))
+    );
+  });
+};
+
+// Function to get similar recipes based on a recipe ID
+export const getSimilarRecipes = (recipeId: string, limit: number = 3): Recipe[] => {
+  const currentRecipe = getRecipeById(recipeId);
+  
+  if (!currentRecipe) {
+    return [];
+  }
+  
+  // If the recipe has explicitly defined similar recipes, use those
+  if (currentRecipe.similarRecipes && currentRecipe.similarRecipes.length > 0) {
+    const similarRecipes = currentRecipe.similarRecipes
+      .map(id => getRecipeById(id))
+      .filter(recipe => recipe !== null) as Recipe[];
+    return similarRecipes.slice(0, limit);
+  }
+  
+  // Otherwise, find recipes with similar tags or mood
+  let similarRecipes = recipes
+    .filter(recipe => recipe.id !== recipeId) // Exclude the current recipe
+    .map(recipe => {
+      // Calculate similarity score based on matching tags and moods
+      const sharedTags = recipe.tags.filter(tag => currentRecipe.tags.includes(tag)).length;
+      const sharedMoods = recipe.moodIds.filter(mood => currentRecipe.moodIds.includes(mood)).length;
+      const similarityScore = sharedTags * 2 + sharedMoods * 3; // Weight moods more heavily
+      
+      return { recipe, similarityScore };
+    })
+    .filter(item => item.similarityScore > 0) // Only include recipes with some similarity
+    .sort((a, b) => b.similarityScore - a.similarityScore) // Sort by similarity score
+    .map(item => item.recipe);
+  
+  return similarRecipes.slice(0, limit);
+};
+
+// Function to get chatbot response based on mood
+export const getChatbotResponse = (mood: string | null): string => {
+  if (!mood) {
+    return "I'd be happy to help you find the perfect recipe. Tell me what you're in the mood for or ask about specific ingredients.";
+  }
+  
+  switch (mood) {
+    case 'happy':
+      return "You're feeling happy! How about trying our Classic Margherita Pizza or Berry Smoothie? These recipes are perfect for a bright mood and will keep your spirits high!";
+    case 'romantic':
+      return "Feeling romantic? Our Decadent Chocolate Cake or Shahi Paneer would be perfect for a special evening. Both recipes are designed to create a warm, intimate atmosphere.";
+    case 'energetic':
+      return "Since you're energetic, try our Spicy Peanut Noodles or Masala Dosa! These dishes will complement your active mood and provide sustained energy.";
+    case 'relaxed':
+      return "In a relaxed mood? Our Calming Lavender Tea or Creamy Mushroom Risotto would be perfect. These recipes are designed to maintain your peaceful state of mind.";
+    case 'creative':
+      return "Feeling creative? Our Mushroom Risotto or Homemade Sushi Rolls will give you a chance to express your creativity in the kitchen!";
+    case 'adventurous':
+      return "For your adventurous mood, I recommend trying our Sushi Rolls or Fragrant Chicken Curry. These dishes will take your taste buds on an exciting journey!";
+    case 'nostalgic':
+      return "Feeling nostalgic? Our Warm Apple Pie or Homemade Gingerbread Cookies might bring back some wonderful memories. These classic recipes have been comforting people for generations.";
+    case 'comforting':
+      return "Need some comfort? I'd suggest our Warm Apple Pie or Classic French Toast. These recipes are like a warm hug for your soul.";
+    case 'festive':
+      return "In a festive mood? Try our Gingerbread Cookies! They're perfect for celebrations and will fill your home with a wonderful aroma.";
+    case 'mindful':
+      return "For your mindful mood, I recommend our Berry Smoothie or a simple yet nutritious dish like our Easy Stir-Fry. These recipes focus on wholesome ingredients that nourish both body and mind.";
+    default:
+      return "I have the perfect recipe suggestions for you! Browse our collection or tell me more about what you're looking for today.";
+  }
+};
