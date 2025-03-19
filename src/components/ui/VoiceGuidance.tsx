@@ -8,8 +8,9 @@ interface VoiceGuidanceProps {
   title: string;
 }
 
-// Language options for voice guidance with improved support
+// Language options for voice guidance with improved support including Hindi
 const languageOptions = [
+  { code: 'hi-IN', name: 'Hindi' }, // Prioritizing Hindi by placing it first
   { code: 'en-US', name: 'English (US)' },
   { code: 'es-ES', name: 'Spanish' },
   { code: 'fr-FR', name: 'French' },
@@ -18,7 +19,6 @@ const languageOptions = [
   { code: 'zh-CN', name: 'Chinese' },
   { code: 'ja-JP', name: 'Japanese' },
   { code: 'ko-KR', name: 'Korean' },
-  { code: 'hi-IN', name: 'Hindi' },
   { code: 'pt-BR', name: 'Portuguese' },
   { code: 'ru-RU', name: 'Russian' },
   { code: 'nl-NL', name: 'Dutch' },
@@ -29,13 +29,36 @@ const languageOptions = [
   { code: 'vi-VN', name: 'Vietnamese' }
 ];
 
-// Fallback language mapping to improve voice compatibility
+// Improved fallback language mapping to better support Hindi
 const fallbackLanguageMapping: Record<string, string> = {
   'zh-CN': 'zh-HK',
-  'hi-IN': 'en-IN',
+  'hi-IN': 'en-IN', // If Hindi voice isn't available, fallback to Indian English
   'id-ID': 'en-US',
   'th-TH': 'en-US',
   'vi-VN': 'en-US'
+};
+
+// Common phrases in Hindi for cooking instructions
+const hindiPhrases: Record<string, string> = {
+  'step': 'चरण',
+  'ingredients': 'सामग्री',
+  'instructions': 'निर्देश',
+  'preheat': 'पहले से गरम करें',
+  'mix': 'मिलाएं',
+  'cook': 'पकाएं',
+  'minutes': 'मिनट',
+  'add': 'डालें',
+  'cut': 'काटें',
+  'serve': 'परोसें',
+  'heat': 'गरम करें',
+  'stir': 'हिलाएं',
+  'boil': 'उबालें',
+  'bake': 'बेक करें',
+  'fry': 'तलें',
+  'simmer': 'धीमी आंच पर पकाएं',
+  'garnish': 'सजाएं',
+  'plate': 'प्लेट में डालें',
+  'enjoy': 'आनंद लें'
 };
 
 const VoiceGuidance = ({ instructions, title }: VoiceGuidanceProps) => {
@@ -43,11 +66,12 @@ const VoiceGuidance = ({ instructions, title }: VoiceGuidanceProps) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentStep, setCurrentStep] = useState(0);
   const [isExpanded, setIsExpanded] = useState(false);
-  const [selectedLanguage, setSelectedLanguage] = useState('en-US');
+  const [selectedLanguage, setSelectedLanguage] = useState('hi-IN'); // Default to Hindi
   const [showLanguageSelector, setShowLanguageSelector] = useState(false);
   const [availableVoices, setAvailableVoices] = useState<SpeechSynthesisVoice[]>([]);
   const [showVoiceInfo, setShowVoiceInfo] = useState(false);
   const [lastUsedVoice, setLastUsedVoice] = useState<string | null>(null);
+  const [useHindiTranslation, setUseHindiTranslation] = useState(true);
   const synth = useRef<SpeechSynthesis | null>(null);
   const utterance = useRef<SpeechSynthesisUtterance | null>(null);
   const { toast } = useToast();
@@ -85,12 +109,27 @@ const VoiceGuidance = ({ instructions, title }: VoiceGuidanceProps) => {
     } else if (utterance.current && synth.current) {
       synth.current.cancel();
     }
-  }, [isPlaying, isMuted, currentStep, selectedLanguage]);
+  }, [isPlaying, isMuted, currentStep, selectedLanguage, useHindiTranslation]);
 
   // Save language preference when it changes
   useEffect(() => {
     localStorage.setItem('preferredLanguage', selectedLanguage);
   }, [selectedLanguage]);
+
+  // Translate basic cooking terms to Hindi
+  const translateCookingTerms = (text: string): string => {
+    if (!useHindiTranslation || selectedLanguage !== 'hi-IN') return text;
+    
+    let translatedText = text;
+    
+    // Replace common cooking terms with Hindi equivalents
+    Object.entries(hindiPhrases).forEach(([englishTerm, hindiTerm]) => {
+      const regex = new RegExp(`\\b${englishTerm}\\b`, 'gi');
+      translatedText = translatedText.replace(regex, hindiTerm);
+    });
+    
+    return translatedText;
+  };
 
   const speakCurrentStep = () => {
     if (!synth.current || isMuted || !instructions[currentStep]) return;
@@ -98,6 +137,12 @@ const VoiceGuidance = ({ instructions, title }: VoiceGuidanceProps) => {
     synth.current.cancel();
     
     let stepText = `Step ${currentStep + 1}: ${instructions[currentStep]}`;
+    
+    // Enhance Hindi support by translating common terms if Hindi is selected
+    if (selectedLanguage === 'hi-IN' && useHindiTranslation) {
+      stepText = `${hindiPhrases['step']} ${currentStep + 1}: ${translateCookingTerms(instructions[currentStep])}`;
+    }
+    
     utterance.current = new SpeechSynthesisUtterance(stepText);
     
     // First try with the selected language
@@ -131,6 +176,22 @@ const VoiceGuidance = ({ instructions, title }: VoiceGuidanceProps) => {
       });
     }
     
+    // Special adjustment for Hindi voice
+    if (selectedLanguage === 'hi-IN' && matchingVoices.length === 0) {
+      // If no Hindi voice is found, try to find any Indian voice
+      matchingVoices = availableVoices.filter(voice => voice.lang.includes('IN'));
+      
+      // If still no matches, try to find any Asian voice as they might pronounce better
+      if (matchingVoices.length === 0) {
+        matchingVoices = availableVoices.filter(voice => 
+          voice.lang.includes('IN') || 
+          voice.lang.includes('JP') || 
+          voice.lang.includes('CN') || 
+          voice.lang.includes('KR')
+        );
+      }
+    }
+    
     if (matchingVoices.length > 0) {
       // Select the best voice with this priority:
       // 1. Google voices that exactly match the language
@@ -158,8 +219,14 @@ const VoiceGuidance = ({ instructions, title }: VoiceGuidanceProps) => {
       setLastUsedVoice('Default browser voice');
     }
     
-    utterance.current.rate = 0.9;
-    utterance.current.pitch = 1.1;
+    // Adjust speech parameters to improve intelligibility for different languages
+    if (selectedLanguage === 'hi-IN') {
+      utterance.current.rate = 0.8; // Slower rate for Hindi
+      utterance.current.pitch = 1.0;
+    } else {
+      utterance.current.rate = 0.9;
+      utterance.current.pitch = 1.1;
+    }
     
     utterance.current.onend = () => {
       if (currentStep < instructions.length - 1 && isPlaying) {
@@ -169,8 +236,10 @@ const VoiceGuidance = ({ instructions, title }: VoiceGuidanceProps) => {
       } else if (currentStep === instructions.length - 1 && isPlaying) {
         setIsPlaying(false);
         toast({
-          title: "Cooking Complete!",
-          description: "All cooking steps have been read. Enjoy your meal!",
+          title: selectedLanguage === 'hi-IN' ? "पकाना पूरा हुआ!" : "Cooking Complete!",
+          description: selectedLanguage === 'hi-IN' 
+            ? "सभी पकाने के चरण पढ़े गए हैं। अपने भोजन का आनंद लें!" 
+            : "All cooking steps have been read. Enjoy your meal!",
           duration: 5000,
         });
       }
@@ -189,8 +258,10 @@ const VoiceGuidance = ({ instructions, title }: VoiceGuidanceProps) => {
 
     if (!isPlaying) {
       toast({
-        title: "Voice Guidance Started",
-        description: "I'll guide you through each step of the recipe.",
+        title: selectedLanguage === 'hi-IN' ? "आवाज मार्गदर्शन शुरू हुआ" : "Voice Guidance Started",
+        description: selectedLanguage === 'hi-IN' 
+          ? "मैं आपको व्यंजन के प्रत्येक चरण से गुजरने में मार्गदर्शन करूंगा।" 
+          : "I'll guide you through each step of the recipe.",
         duration: 3000,
       });
     }
@@ -204,8 +275,12 @@ const VoiceGuidance = ({ instructions, title }: VoiceGuidanceProps) => {
     }
     
     toast({
-      title: isMuted ? "Voice Guidance Enabled" : "Voice Guidance Muted",
-      description: isMuted ? "You'll now hear step-by-step instructions." : "Voice guidance is now muted.",
+      title: isMuted 
+        ? (selectedLanguage === 'hi-IN' ? "आवाज मार्गदर्शन सक्षम" : "Voice Guidance Enabled") 
+        : (selectedLanguage === 'hi-IN' ? "आवाज मार्गदर्शन म्यूट किया गया" : "Voice Guidance Muted"),
+      description: isMuted 
+        ? (selectedLanguage === 'hi-IN' ? "अब आप चरण-दर-चरण निर्देश सुनेंगे।" : "You'll now hear step-by-step instructions.") 
+        : (selectedLanguage === 'hi-IN' ? "आवाज मार्गदर्शन अब म्यूट है।" : "Voice guidance is now muted."),
       duration: 3000,
     });
   };
@@ -231,11 +306,34 @@ const VoiceGuidance = ({ instructions, title }: VoiceGuidanceProps) => {
     setSelectedLanguage(langCode);
     setShowLanguageSelector(false);
     
+    // If switching to Hindi, enable Hindi phrase translation by default
+    setUseHindiTranslation(langCode === 'hi-IN');
+    
     const langName = languageOptions.find(lang => lang.code === langCode)?.name || langCode;
     
     toast({
-      title: "Language Changed",
-      description: `Voice guidance language set to ${langName}`,
+      title: langCode === 'hi-IN' ? "भाषा बदली गई" : "Language Changed",
+      description: langCode === 'hi-IN' 
+        ? `आवाज मार्गदर्शन भाषा ${langName} पर सेट की गई` 
+        : `Voice guidance language set to ${langName}`,
+      duration: 3000,
+    });
+    
+    if (isPlaying) {
+      if (synth.current) synth.current.cancel();
+      setTimeout(() => speakCurrentStep(), 100);
+    }
+  };
+
+  // Toggle Hindi phrase translation
+  const toggleHindiTranslation = () => {
+    setUseHindiTranslation(!useHindiTranslation);
+    
+    toast({
+      title: selectedLanguage === 'hi-IN' ? "अनुवाद सेटिंग अपडेट की गई" : "Translation Setting Updated",
+      description: useHindiTranslation 
+        ? (selectedLanguage === 'hi-IN' ? "हिंदी अनुवाद अक्षम किया गया" : "Hindi translation disabled") 
+        : (selectedLanguage === 'hi-IN' ? "हिंदी अनुवाद सक्षम किया गया" : "Hindi translation enabled"),
       duration: 3000,
     });
     
@@ -260,7 +358,7 @@ const VoiceGuidance = ({ instructions, title }: VoiceGuidanceProps) => {
           onClick={toggleExpand} 
           className="text-sm font-medium text-white flex items-center"
         >
-          {isExpanded ? 'Voice Guidance' : ''}
+          {isExpanded ? (selectedLanguage === 'hi-IN' ? 'आवाज मार्गदर्शन' : 'Voice Guidance') : ''}
           <Volume2 className={`${isExpanded ? 'ml-2' : ''} h-5 w-5`} />
         </button>
         {isExpanded && (
@@ -294,13 +392,34 @@ const VoiceGuidance = ({ instructions, title }: VoiceGuidanceProps) => {
       {showVoiceInfo && isExpanded && (
         <div className="bg-white/10 p-3 max-h-40 overflow-y-auto">
           <p className="text-xs text-white mb-2">
-            <strong>Current language:</strong> {languageOptions.find(l => l.code === selectedLanguage)?.name || selectedLanguage}
+            <strong>{selectedLanguage === 'hi-IN' ? 'वर्तमान भाषा:' : 'Current language:'}</strong> {languageOptions.find(l => l.code === selectedLanguage)?.name || selectedLanguage}
           </p>
           <p className="text-xs text-white mb-2">
-            <strong>Using voice:</strong> {lastUsedVoice || 'Not yet determined'}
+            <strong>{selectedLanguage === 'hi-IN' ? 'उपयोग की जा रही आवाज:' : 'Using voice:'}</strong> {lastUsedVoice || 'Not yet determined'}
           </p>
+          {selectedLanguage === 'hi-IN' && (
+            <div className="flex items-center mb-2">
+              <span className="text-xs text-white mr-2">
+                <strong>{selectedLanguage === 'hi-IN' ? 'हिंदी अनुवाद:' : 'Hindi translation:'}</strong>
+              </span>
+              <button 
+                onClick={toggleHindiTranslation}
+                className={`px-2 py-1 text-xs rounded ${
+                  useHindiTranslation 
+                    ? 'bg-white/30 text-white' 
+                    : 'bg-white/10 text-white/70'
+                }`}
+              >
+                {useHindiTranslation 
+                  ? (selectedLanguage === 'hi-IN' ? 'सक्रिय' : 'Active') 
+                  : (selectedLanguage === 'hi-IN' ? 'निष्क्रिय' : 'Inactive')}
+              </button>
+            </div>
+          )}
           <p className="text-xs text-white">
-            If voice quality is poor in your selected language, try a different language or check if your browser supports the selected language.
+            {selectedLanguage === 'hi-IN' 
+              ? 'यदि आपकी चुनी हुई भाषा में आवाज की गुणवत्ता खराब है, तो कोई अन्य भाषा आज़माएँ या जांचें कि आपका ब्राउज़र चुनी हुई भाषा का समर्थन करता है या नहीं।'
+              : 'If voice quality is poor in your selected language, try a different language or check if your browser supports the selected language.'}
           </p>
         </div>
       )}
@@ -331,7 +450,11 @@ const VoiceGuidance = ({ instructions, title }: VoiceGuidanceProps) => {
           
           <div className="mt-2 mb-4">
             <div className="text-sm mb-1 flex justify-between">
-              <span>Step {currentStep + 1} of {instructions.length}</span>
+              <span>
+                {selectedLanguage === 'hi-IN' 
+                  ? `चरण ${currentStep + 1} / ${instructions.length}` 
+                  : `Step ${currentStep + 1} of ${instructions.length}`}
+              </span>
               <span>{Math.round((currentStep + 1) / instructions.length * 100)}%</span>
             </div>
             <div className="h-1 bg-white/20 rounded-full overflow-hidden">
@@ -343,7 +466,11 @@ const VoiceGuidance = ({ instructions, title }: VoiceGuidanceProps) => {
           </div>
           
           <div className="bg-white/10 backdrop-blur-md rounded-lg p-3 text-sm mb-4 max-h-32 overflow-y-auto">
-            <p>{instructions[currentStep]}</p>
+            <p>
+              {selectedLanguage === 'hi-IN' && useHindiTranslation 
+                ? translateCookingTerms(instructions[currentStep]) 
+                : instructions[currentStep]}
+            </p>
           </div>
           
           <div className="flex justify-between items-center">
@@ -351,7 +478,7 @@ const VoiceGuidance = ({ instructions, title }: VoiceGuidanceProps) => {
               onClick={prevStep}
               disabled={currentStep === 0}
               className="p-2 rounded-full hover:bg-white/10 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-              aria-label="Previous step"
+              aria-label={selectedLanguage === 'hi-IN' ? "पिछला चरण" : "Previous step"}
             >
               <SkipBack size={20} color="white" />
             </button>
@@ -359,7 +486,9 @@ const VoiceGuidance = ({ instructions, title }: VoiceGuidanceProps) => {
             <button
               onClick={togglePlayPause}
               className="p-3 rounded-full bg-white text-primary hover:bg-white/90 transition-colors"
-              aria-label={isPlaying ? "Pause" : "Play"}
+              aria-label={isPlaying 
+                ? (selectedLanguage === 'hi-IN' ? "रोकें" : "Pause") 
+                : (selectedLanguage === 'hi-IN' ? "शुरू करें" : "Play")}
             >
               {isPlaying ? <Pause size={20} /> : <Play size={20} />}
             </button>
@@ -368,7 +497,7 @@ const VoiceGuidance = ({ instructions, title }: VoiceGuidanceProps) => {
               onClick={nextStep}
               disabled={currentStep === instructions.length - 1}
               className="p-2 rounded-full hover:bg-white/10 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-              aria-label="Next step"
+              aria-label={selectedLanguage === 'hi-IN' ? "अगला चरण" : "Next step"}
             >
               <SkipForward size={20} color="white" />
             </button>
