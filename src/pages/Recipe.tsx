@@ -1,8 +1,10 @@
+
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { ArrowLeft, Clock, Users, ChefHat, Heart, Share2, Volume2, Play, Pause } from 'lucide-react';
 import { Recipe as RecipeType, getRecipeById } from '@/utils/moodRecipeData';
 import VoiceGuidance from '@/components/ui/VoiceGuidance';
+import RecipeAiFeatures from '@/components/ui/RecipeAiFeatures';
 import { useToast } from "@/hooks/use-toast";
 
 const Recipe = () => {
@@ -240,6 +242,9 @@ const Recipe = () => {
             </div>
           </div>
         </div>
+        
+        {/* AI-powered recipe features */}
+        <RecipeAiFeatures recipe={recipe} />
         
         {/* Recipe content tabs */}
         <div className="mb-6 border-b border-gray-200 dark:border-gray-800">

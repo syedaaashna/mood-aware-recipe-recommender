@@ -1,5 +1,6 @@
+
 import { useState, useEffect, useRef } from 'react';
-import { Volume2, VolumeX, Play, Pause, SkipForward, SkipBack, Globe } from 'lucide-react';
+import { Volume2, VolumeX, Play, Pause, SkipForward, SkipBack, Globe, Info } from 'lucide-react';
 import { useToast } from "@/hooks/use-toast";
 
 interface VoiceGuidanceProps {
@@ -7,7 +8,7 @@ interface VoiceGuidanceProps {
   title: string;
 }
 
-// Language options for voice guidance
+// Language options for voice guidance with improved support
 const languageOptions = [
   { code: 'en-US', name: 'English (US)' },
   { code: 'es-ES', name: 'Spanish' },
@@ -28,6 +29,15 @@ const languageOptions = [
   { code: 'vi-VN', name: 'Vietnamese' }
 ];
 
+// Fallback language mapping to improve voice compatibility
+const fallbackLanguageMapping: Record<string, string> = {
+  'zh-CN': 'zh-HK',
+  'hi-IN': 'en-IN',
+  'id-ID': 'en-US',
+  'th-TH': 'en-US',
+  'vi-VN': 'en-US'
+};
+
 const VoiceGuidance = ({ instructions, title }: VoiceGuidanceProps) => {
   const [isMuted, setIsMuted] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -36,6 +46,8 @@ const VoiceGuidance = ({ instructions, title }: VoiceGuidanceProps) => {
   const [selectedLanguage, setSelectedLanguage] = useState('en-US');
   const [showLanguageSelector, setShowLanguageSelector] = useState(false);
   const [availableVoices, setAvailableVoices] = useState<SpeechSynthesisVoice[]>([]);
+  const [showVoiceInfo, setShowVoiceInfo] = useState(false);
+  const [lastUsedVoice, setLastUsedVoice] = useState<string | null>(null);
   const synth = useRef<SpeechSynthesis | null>(null);
   const utterance = useRef<SpeechSynthesisUtterance | null>(null);
   const { toast } = useToast();
@@ -54,6 +66,12 @@ const VoiceGuidance = ({ instructions, title }: VoiceGuidanceProps) => {
       loadVoices();
     }
     
+    // Try to restore the user's language preference from localStorage
+    const savedLanguage = localStorage.getItem('preferredLanguage');
+    if (savedLanguage) {
+      setSelectedLanguage(savedLanguage);
+    }
+    
     return () => {
       if (synth.current) {
         synth.current.cancel();
@@ -69,6 +87,11 @@ const VoiceGuidance = ({ instructions, title }: VoiceGuidanceProps) => {
     }
   }, [isPlaying, isMuted, currentStep, selectedLanguage]);
 
+  // Save language preference when it changes
+  useEffect(() => {
+    localStorage.setItem('preferredLanguage', selectedLanguage);
+  }, [selectedLanguage]);
+
   const speakCurrentStep = () => {
     if (!synth.current || isMuted || !instructions[currentStep]) return;
     
@@ -77,24 +100,45 @@ const VoiceGuidance = ({ instructions, title }: VoiceGuidanceProps) => {
     let stepText = `Step ${currentStep + 1}: ${instructions[currentStep]}`;
     utterance.current = new SpeechSynthesisUtterance(stepText);
     
+    // First try with the selected language
     utterance.current.lang = selectedLanguage;
-    console.log(`Speaking in language: ${selectedLanguage}`);
+    console.log(`Attempting to speak in language: ${selectedLanguage}`);
     
-    const matchingVoices = availableVoices.filter(voice => {
+    // Find matching voices for the selected language
+    let matchingVoices = availableVoices.filter(voice => {
       const voiceLang = voice.lang.toLowerCase();
       const selectedLangCode = selectedLanguage.toLowerCase();
       
+      // Exact match
       if (voiceLang === selectedLangCode) return true;
       
-      const langCode = selectedLangCode.substr(0, 2);
+      // Partial match (e.g., 'en-US' should match 'en')
+      const langCode = selectedLangCode.substring(0, 2);
       return voiceLang.startsWith(langCode);
     });
     
     console.log(`Found ${matchingVoices.length} matching voices for ${selectedLanguage}`);
     
+    // If no matching voices found, try fallback language
+    if (matchingVoices.length === 0 && fallbackLanguageMapping[selectedLanguage]) {
+      const fallbackLang = fallbackLanguageMapping[selectedLanguage];
+      utterance.current.lang = fallbackLang;
+      console.log(`No matching voices found. Using fallback language: ${fallbackLang}`);
+      
+      matchingVoices = availableVoices.filter(voice => {
+        return voice.lang.toLowerCase() === fallbackLang.toLowerCase() || 
+               voice.lang.toLowerCase().startsWith(fallbackLang.substring(0, 2).toLowerCase());
+      });
+    }
+    
     if (matchingVoices.length > 0) {
+      // Select the best voice with this priority:
+      // 1. Google voices that exactly match the language
+      // 2. Any Google voice
+      // 3. Female voices or specific voices like Samantha
+      // 4. Any matching voice
       const preferredVoice = matchingVoices.find(voice => 
-        voice.name.includes('Google') && (selectedLanguage === voice.lang)
+        voice.name.includes('Google') && (utterance.current!.lang === voice.lang)
       ) || 
       matchingVoices.find(voice => 
         voice.name.includes('Google')
@@ -106,10 +150,12 @@ const VoiceGuidance = ({ instructions, title }: VoiceGuidanceProps) => {
       matchingVoices[0];
       
       utterance.current.voice = preferredVoice;
+      setLastUsedVoice(`${preferredVoice.name} (${preferredVoice.lang})`);
       console.log(`Selected voice: ${preferredVoice.name} (${preferredVoice.lang})`);
     } else {
-      console.log(`No matching voice found for ${selectedLanguage}`);
+      console.log(`No matching or fallback voice found for ${selectedLanguage}. Defaulting to browser's choice.`);
       utterance.current.lang = 'en-US';
+      setLastUsedVoice('Default browser voice');
     }
     
     utterance.current.rate = 0.9;
@@ -220,6 +266,14 @@ const VoiceGuidance = ({ instructions, title }: VoiceGuidanceProps) => {
         {isExpanded && (
           <div className="flex items-center">
             <button
+              onClick={() => setShowVoiceInfo(!showVoiceInfo)}
+              className="p-2 hover:bg-white/10 rounded-full transition-colors mr-1"
+              aria-label="Voice information"
+              title="Voice information"
+            >
+              <Info size={16} color="white" />
+            </button>
+            <button
               onClick={() => setShowLanguageSelector(!showLanguageSelector)}
               className="p-2 hover:bg-white/10 rounded-full transition-colors mr-2"
               aria-label="Change language"
@@ -236,6 +290,20 @@ const VoiceGuidance = ({ instructions, title }: VoiceGuidanceProps) => {
           </div>
         )}
       </div>
+      
+      {showVoiceInfo && isExpanded && (
+        <div className="bg-white/10 p-3 max-h-40 overflow-y-auto">
+          <p className="text-xs text-white mb-2">
+            <strong>Current language:</strong> {languageOptions.find(l => l.code === selectedLanguage)?.name || selectedLanguage}
+          </p>
+          <p className="text-xs text-white mb-2">
+            <strong>Using voice:</strong> {lastUsedVoice || 'Not yet determined'}
+          </p>
+          <p className="text-xs text-white">
+            If voice quality is poor in your selected language, try a different language or check if your browser supports the selected language.
+          </p>
+        </div>
+      )}
       
       {showLanguageSelector && isExpanded && (
         <div className="bg-white/10 p-2 max-h-40 overflow-y-auto">

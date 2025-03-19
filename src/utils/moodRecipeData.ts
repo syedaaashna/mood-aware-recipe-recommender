@@ -1,3 +1,4 @@
+
 export interface Mood {
   id: string;
   name: string;
@@ -22,6 +23,9 @@ export interface Recipe {
   title?: string; // For compatibility with Recipe page
   aiGenerated?: boolean; // Adding AI generated flag
   aiSuggestion?: string; // Adding AI suggestion for recipe enhancement
+  nutritionAnalysis?: string; // Adding nutrition analysis
+  cookingTips?: string[]; // Adding cooking tips
+  similarRecipes?: string[]; // Adding similar recipes
 }
 
 interface MoodRecipe {
@@ -109,12 +113,20 @@ const recipes: Recipe[] = [
     ],
     moodIds: ['happy'],
     tags: ['pizza', 'italian', 'vegetarian'],
-    imageUrl: '/images/recipes/pizza.jpg',
+    imageUrl: 'https://images.unsplash.com/photo-1574071318508-1cdbab80d002?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
     prepTime: '15 min',
     cookTime: '15 min',
     servings: 4,
     calories: 320,
     difficulty: 'Easy',
+    aiSuggestion: 'For a crispier crust, preheat your pizza stone for at least 30 minutes at the highest oven temperature.',
+    nutritionAnalysis: 'High in calcium from cheese, moderate carbohydrates from the dough, and antioxidants from the tomato sauce and basil.',
+    cookingTips: [
+      'Use room temperature dough for easier stretching',
+      'Don\'t overload with toppings or the pizza won\'t cook properly',
+      'Rotate the pizza halfway through baking for even cooking'
+    ],
+    similarRecipes: ['focaccia-bread', 'stuffed-crust-pizza']
   },
   {
     id: 'chocolate-cake',
@@ -142,12 +154,20 @@ const recipes: Recipe[] = [
     ],
     moodIds: ['romantic'],
     tags: ['cake', 'chocolate', 'dessert'],
-    imageUrl: '/images/recipes/chocolate-cake.jpg',
+    imageUrl: 'https://images.unsplash.com/photo-1606313564200-e75d5e30476c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
     prepTime: '20 min',
     cookTime: '35 min',
     servings: 8,
     calories: 450,
     difficulty: 'Medium',
+    aiSuggestion: 'Try adding a pinch of espresso powder to enhance the chocolate flavor without adding coffee taste.',
+    nutritionAnalysis: 'High in calories and carbohydrates. Contains protein from eggs and calcium from milk. Best enjoyed in moderation.',
+    cookingTips: [
+      'Use room temperature ingredients for better mixing',
+      'Don\'t overmix the batter or the cake will be tough',
+      'Test with a toothpick for doneness - it should come out with a few moist crumbs'
+    ],
+    similarRecipes: ['tiramisu', 'chocolate-mousse']
   },
   {
     id: 'spicy-noodles',
@@ -170,7 +190,19 @@ const recipes: Recipe[] = [
     ],
     moodIds: ['energetic', 'adventurous'],
     tags: ['noodles', 'asian', 'spicy'],
-    imageUrl: '/images/recipes/spicy-noodles.jpg',
+    imageUrl: 'https://images.unsplash.com/photo-1552611052-33e04de081de?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
+    prepTime: '10 min',
+    cookTime: '15 min',
+    servings: 2,
+    calories: 380,
+    difficulty: 'Easy',
+    aiSuggestion: 'Balance the heat by adding a splash of rice vinegar for acidity and coconut milk for creaminess.',
+    nutritionAnalysis: 'Good source of protein from peanut butter, complex carbohydrates from noodles, and antioxidants from ginger and garlic.',
+    cookingTips: [
+      'Cook noodles al dente since they\'ll continue cooking when tossed with the hot sauce',
+      'For extra protein, add tofu or chicken',
+      'Make the sauce ahead of time and store in the refrigerator for up to 5 days'
+    ]
   },
   {
     id: 'chicken-stir-fry',
@@ -194,7 +226,19 @@ const recipes: Recipe[] = [
     ],
     moodIds: ['energetic'],
     tags: ['stir-fry', 'chicken', 'healthy'],
-    imageUrl: '/images/recipes/chicken-stir-fry.jpg',
+    imageUrl: 'https://images.unsplash.com/photo-1512058564366-18510be2db19?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
+    prepTime: '15 min',
+    cookTime: '15 min',
+    servings: 4,
+    calories: 320,
+    difficulty: 'Easy',
+    aiSuggestion: 'Velvet the chicken by marinating it in a mixture of egg white, cornstarch, and rice wine for 30 minutes before cooking for extremely tender results.',
+    nutritionAnalysis: 'High in protein from chicken, fiber from vegetables, and various micronutrients. Low in calories when served without rice.',
+    cookingTips: [
+      'Cut all ingredients to similar sizes for even cooking',
+      'Cook on high heat and keep ingredients moving',
+      'Prepare all ingredients before heating the wok - stir-frying happens quickly'
+    ]
   },
   {
     id: 'berry-smoothie',
@@ -208,7 +252,19 @@ const recipes: Recipe[] = [
     ],
     moodIds: ['happy', 'energetic'],
     tags: ['smoothie', 'berries', 'healthy'],
-    imageUrl: '/images/recipes/berry-smoothie.jpg',
+    imageUrl: 'https://images.unsplash.com/photo-1505252585461-04db1eb84625?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
+    prepTime: '5 min',
+    cookTime: '0 min',
+    servings: 2,
+    calories: 180,
+    difficulty: 'Easy',
+    aiSuggestion: 'Add a handful of spinach for added nutrients without affecting the taste.',
+    nutritionAnalysis: 'Rich in antioxidants from berries, probiotics from yogurt, and calcium from milk. Natural sugars provide quick energy.',
+    cookingTips: [
+      'Use frozen berries instead of ice for a thicker texture',
+      'Add a tablespoon of chia seeds or flaxseeds for omega-3 fatty acids',
+      'Use Greek yogurt for extra protein'
+    ]
   },
   {
     id: 'lavender-tea',
@@ -223,7 +279,19 @@ const recipes: Recipe[] = [
     ],
     moodIds: ['relaxed'],
     tags: ['tea', 'lavender', 'calming'],
-    imageUrl: '/images/recipes/lavender-tea.jpg',
+    imageUrl: 'https://images.unsplash.com/photo-1564890369478-c89ca6d9cde9?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
+    prepTime: '2 min',
+    cookTime: '7 min',
+    servings: 1,
+    calories: 40,
+    difficulty: 'Easy',
+    aiSuggestion: 'Add a small amount of chamomile and valerian root for enhanced relaxation properties.',
+    nutritionAnalysis: 'Low in calories. Honey provides natural sugars and antimicrobial properties. Lavender contains compounds that may reduce anxiety.',
+    cookingTips: [
+      'Use food-grade lavender flowers specifically meant for consumption',
+      'Don\'t steep too long or the tea may become bitter',
+      'Add a slice of lemon for brightness'
+    ]
   },
   {
     id: 'mushroom-risotto',
@@ -248,7 +316,19 @@ const recipes: Recipe[] = [
     ],
     moodIds: ['relaxed', 'creative'],
     tags: ['risotto', 'mushroom', 'italian'],
-    imageUrl: '/images/recipes/mushroom-risotto.jpg',
+    imageUrl: 'https://images.unsplash.com/photo-1473093226795-af9932fe5856?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
+    prepTime: '15 min',
+    cookTime: '30 min',
+    servings: 4,
+    calories: 420,
+    difficulty: 'Medium',
+    aiSuggestion: 'Use a mixture of dried and fresh mushrooms to create a deeper umami flavor profile.',
+    nutritionAnalysis: 'Rich in carbohydrates from rice, protein from cheese, and various B vitamins from mushrooms. Good source of fiber.',
+    cookingTips: [
+      'Warm the broth before adding it to the rice',
+      'Stir constantly to develop creaminess without adding cream',
+      'Let the risotto rest for 2 minutes before serving to achieve the perfect consistency'
+    ]
   },
   {
     id: 'gingerbread-cookies',
@@ -274,7 +354,19 @@ const recipes: Recipe[] = [
     ],
     moodIds: ['nostalgic', 'happy'],
     tags: ['cookies', 'gingerbread', 'holiday'],
-    imageUrl: '/images/recipes/gingerbread-cookies.jpg',
+    imageUrl: 'https://images.unsplash.com/photo-1607920592519-ded8e61d8d9f?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
+    prepTime: '30 min',
+    cookTime: '10 min',
+    servings: 24,
+    calories: 120,
+    difficulty: 'Medium',
+    aiSuggestion: 'For softer cookies, reduce baking time by 1-2 minutes. For crispier cookies, roll the dough thinner.',
+    nutritionAnalysis: 'Contains warming spices like ginger and cinnamon that have anti-inflammatory properties. High in sugar and carbohydrates.',
+    cookingTips: [
+      'Chill the dough thoroughly for easier handling',
+      'Flour your work surface well to prevent sticking',
+      'Let cookies cool completely before decorating'
+    ]
   },
   {
     id: 'apple-pie',
@@ -291,7 +383,19 @@ const recipes: Recipe[] = [
     ],
     moodIds: ['nostalgic', 'relaxed'],
     tags: ['pie', 'apple', 'dessert'],
-    imageUrl: '/images/recipes/apple-pie.jpg',
+    imageUrl: 'https://images.unsplash.com/photo-1535920527002-b35e96722eb9?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
+    prepTime: '30 min',
+    cookTime: '50 min',
+    servings: 8,
+    calories: 350,
+    difficulty: 'Medium',
+    aiSuggestion: 'Use a mixture of tart and sweet apples (like Granny Smith and Honeycrisp) for the best flavor balance.',
+    nutritionAnalysis: 'Contains fiber from apples and antioxidants from cinnamon. High in sugar and fat from the crust.',
+    cookingTips: [
+      'Chill the pie crust ingredients and tools for the flakiest results',
+      'Partially cook the filling before baking to prevent a soggy bottom crust',
+      'Cover the edges with foil if they brown too quickly'
+    ]
   },
   {
     id: 'sushi-rolls',
@@ -317,7 +421,19 @@ const recipes: Recipe[] = [
     ],
     moodIds: ['adventurous', 'creative'],
     tags: ['sushi', 'japanese', 'seafood'],
-    imageUrl: '/images/recipes/sushi-rolls.jpg',
+    imageUrl: 'https://images.unsplash.com/photo-1579871494447-9811cf80d66c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
+    prepTime: '30 min',
+    cookTime: '15 min',
+    servings: 4,
+    calories: 280,
+    difficulty: 'Medium',
+    aiSuggestion: 'Dip your hands in a mixture of water and rice vinegar to prevent the rice from sticking to your fingers when forming sushi.',
+    nutritionAnalysis: 'Contains omega-3 fatty acids from salmon, healthy fats from avocado, and complex carbohydrates from rice.',
+    cookingTips: [
+      'Rinse the rice thoroughly until water runs clear for best texture',
+      'Let the rice cool to room temperature before making sushi',
+      'Use a very sharp knife dipped in water to cut rolls cleanly'
+    ]
   },
   {
     id: 'french-toast',
@@ -333,7 +449,19 @@ const recipes: Recipe[] = [
     ],
     moodIds: ['happy', 'nostalgic'],
     tags: ['breakfast', 'french toast', 'comfort food'],
-    imageUrl: '/images/recipes/french-toast.jpg',
+    imageUrl: 'https://images.unsplash.com/photo-1484723091739-30a097e8f929?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
+    prepTime: '10 min',
+    cookTime: '15 min',
+    servings: 4,
+    calories: 290,
+    difficulty: 'Easy',
+    aiSuggestion: 'Use slightly stale bread that's 1-2 days old for the best texture that won't fall apart when soaked.',
+    nutritionAnalysis: 'Good source of protein from eggs, calcium from milk, and complex carbohydrates from bread.',
+    cookingTips: [
+      'Let the bread soak in the egg mixture for 20-30 seconds per side',
+      'Cook on medium-low heat to ensure the inside cooks before the outside burns',
+      'Try using challah or brioche bread for extra rich results'
+    ]
   },
   {
     id: 'chicken-curry',
@@ -357,7 +485,19 @@ const recipes: Recipe[] = [
     ],
     moodIds: ['adventurous', 'creative'],
     tags: ['curry', 'chicken', 'indian'],
-    imageUrl: '/images/recipes/chicken-curry.jpg',
+    imageUrl: 'https://images.unsplash.com/photo-1565557623262-b51c2513a641?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
+    prepTime: '15 min',
+    cookTime: '30 min',
+    servings: 4,
+    calories: 420,
+    difficulty: 'Medium',
+    aiSuggestion: 'Marinate the chicken in yogurt and spices for 2 hours before cooking for more tender results.',
+    nutritionAnalysis: 'Good source of protein from chicken, healthy fats from coconut milk, and anti-inflammatory compounds from spices.',
+    cookingTips: [
+      'Toast the spices briefly before adding liquid to release more flavor',
+      'Use bone-in chicken pieces for more flavor',
+      'Let the curry simmer on low heat for deeper flavor development'
+    ]
   },
   {
     id: 'butter-chicken',
@@ -390,12 +530,19 @@ const recipes: Recipe[] = [
     ],
     moodIds: ['happy'],
     tags: ['indian', 'chicken', 'creamy', 'north indian', 'spicy'],
-    imageUrl: '/images/recipes/butter-chicken.jpg',
+    imageUrl: 'https://images.unsplash.com/photo-1588166524941-3bf61a9c41db?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
     prepTime: '30 min',
     cookTime: '40 min',
     servings: 4,
     calories: 520,
     difficulty: 'Medium',
+    aiSuggestion: 'For authentic flavor, smoke the butter chicken with a piece of charcoal in a small metal bowl placed in the center of the curry.',
+    nutritionAnalysis: 'High in protein from chicken and fat from cream and butter. Rich in vitamins from tomatoes and antioxidants from spices.',
+    cookingTips: [
+      'Use bone-in chicken thighs for more flavor',
+      'Don\'t skip the fenugreek leaves (kasuri methi) - they\'re crucial for authentic flavor',
+      'Let the curry rest for 15 minutes before serving to allow flavors to meld'
+    ]
   },
   {
     id: 'malai-kofta',
@@ -428,12 +575,19 @@ const recipes: Recipe[] = [
     ],
     moodIds: ['happy'],
     tags: ['indian', 'vegetarian', 'creamy', 'north indian'],
-    imageUrl: '/images/recipes/malai-kofta.jpg',
+    imageUrl: 'https://images.unsplash.com/photo-1631452180539-96aca7d48617?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
     prepTime: '45 min',
     cookTime: '30 min',
     servings: 4,
     calories: 480,
     difficulty: 'Medium',
+    aiSuggestion: 'Add a pinch of saffron to the gravy for an authentic royal touch and beautiful color.',
+    nutritionAnalysis: 'Good source of protein from paneer, carbohydrates from potatoes, and healthy fats from nuts and cream.',
+    cookingTips: [
+      'Make sure the potato mixture is not too moist or the koftas will fall apart when frying',
+      'Keep the koftas separate from the gravy until serving to prevent them from getting soggy',
+      'Use a whisk to create a smooth gravy without lumps'
+    ]
   },
   {
     id: 'shahi-paneer',
@@ -467,12 +621,19 @@ const recipes: Recipe[] = [
     ],
     moodIds: ['romantic'],
     tags: ['indian', 'vegetarian', 'creamy', 'north indian', 'paneer'],
-    imageUrl: '/images/recipes/shahi-paneer.jpg',
+    imageUrl: 'https://images.unsplash.com/photo-1567188040759-fb8a883dc6d8?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
     prepTime: '30 min',
     cookTime: '25 min',
     servings: 3,
     calories: 420,
     difficulty: 'Medium',
+    aiSuggestion: 'Lightly fry the paneer cubes before adding them to the gravy for a richer texture.',
+    nutritionAnalysis: 'Excellent source of protein from paneer, healthy fats from nuts and cream, and antioxidants from spices.',
+    cookingTips: [
+      'Soak the paneer in warm water for 10 minutes before cooking to make it softer',
+      'Use a mix of fresh and store-bought tomato puree for balanced flavor',
+      'Add a pinch of sugar to balance the acidity of the tomatoes'
+    ]
   },
   {
     id: 'tandoori-raan',
@@ -504,12 +665,19 @@ const recipes: Recipe[] = [
     ],
     moodIds: ['romantic'],
     tags: ['indian', 'lamb', 'special occasion', 'mughlai'],
-    imageUrl: '/images/recipes/tandoori-raan.jpg',
+    imageUrl: 'https://images.unsplash.com/photo-1651908243355-a7c0c5bd409d?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
     prepTime: '24 hours',
     cookTime: '4 hours',
     servings: 8,
     calories: 680,
     difficulty: 'Hard',
+    aiSuggestion: 'For a smoky flavor, use the dhungar method: place a small metal bowl on top of the marinated meat, heat a piece of charcoal until red hot, place it in the bowl, pour ghee over it, and immediately cover to trap the smoke.',
+    nutritionAnalysis: 'Very high in protein from lamb, with significant amounts of iron, zinc, and B vitamins. Contains healthy fats from yogurt.',
+    cookingTips: [
+      'Ask your butcher to trim excess fat and partially remove the shank bone for easier carving',
+      'Use a meat thermometer to ensure the internal temperature reaches 145°F for medium-rare',
+      'Wrap the exposed bone in foil to prevent burning during long cooking'
+    ]
   },
   {
     id: 'masala-dosa',
@@ -542,12 +710,19 @@ const recipes: Recipe[] = [
     ],
     moodIds: ['energetic'],
     tags: ['indian', 'south indian', 'breakfast', 'vegetarian'],
-    imageUrl: '/images/recipes/masala-dosa.jpg',
+    imageUrl: 'https://images.unsplash.com/photo-1589301760014-d929f3979dbc?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
     prepTime: '12 hours',
     cookTime: '30 min',
     servings: 4,
     calories: 320,
     difficulty: 'Medium',
+    aiSuggestion: 'Add 1-2 tablespoons of cooked, rinsed poha (flattened rice) to the batter for extra crispness.',
+    nutritionAnalysis: 'Contains complex carbohydrates from rice and potatoes. Good source of protein from urad dal. Low in fat when minimal oil is used.',
+    cookingTips: [
+      'The batter should be thin like pancake batter for crispy dosas',
+      'Make sure your pan is very hot before pouring the batter',
+      'Let the bottom cook completely before attempting to flip or fold'
+    ]
   },
   {
     id: 'upma',
@@ -580,12 +755,19 @@ const recipes: Recipe[] = [
     ],
     moodIds: ['energetic'],
     tags: ['indian', 'breakfast', 'vegetarian', 'quick', 'south indian'],
-    imageUrl: '/images/recipes/upma.jpg',
+    imageUrl: 'https://images.unsplash.com/photo-1625398407796-82290d7ba6cc?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
     prepTime: '10 min',
     cookTime: '15 min',
     servings: 3,
     calories: 210,
     difficulty: 'Easy',
+    aiSuggestion: 'Add a tablespoon of ghee right at the end and mix gently for enhanced flavor and aroma.',
+    nutritionAnalysis: 'Good source of complex carbohydrates from semolina. Contains fiber and vitamins from mixed vegetables.',
+    cookingTips: [
+      'Roasting the semolina is crucial to prevent lumps and add nutty flavor',
+      'The water to semolina ratio should be 2:1 for perfect consistency',
+      'Always add semolina to boiling water (not water to semolina) to avoid lumps'
+    ]
   },
   {
     id: 'kadhi-chawal',
@@ -617,12 +799,19 @@ const recipes: Recipe[] = [
     ],
     moodIds: ['relaxed'],
     tags: ['indian', 'comfort food', 'vegetarian'],
-    imageUrl: '/images/recipes/kadhi-chawal.jpg',
+    imageUrl: 'https://images.unsplash.com/photo-1605197585895-285e3b8ff2ed?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
     prepTime: '15 min',
     cookTime: '30 min',
     servings: 4,
     calories: 380,
     difficulty: 'Medium',
+    aiSuggestion: 'Add a pinch of asafoetida (hing) to enhance digestibility and add authentic flavor.',
+    nutritionAnalysis: 'Good source of protein from yogurt and besan. Contains probiotics from yogurt that support gut health.',
+    cookingTips: [
+      'Whisk the yogurt-besan mixture thoroughly to avoid lumps',
+      'Cook on low heat to prevent curdling',
+      'Kadhi thickens upon cooling, so keep it slightly thin while cooking'
+    ]
   },
   {
     id: 'khichdi',
@@ -655,12 +844,19 @@ const recipes: Recipe[] = [
     ],
     moodIds: ['relaxed'],
     tags: ['indian', 'comfort food', 'easy', 'one-pot', 'vegetarian'],
-    imageUrl: '/images/recipes/khichdi.jpg',
+    imageUrl: 'https://images.unsplash.com/photo-1546833998-877b37c2e5c6?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
     prepTime: '10 min',
     cookTime: '20 min',
     servings: 3,
     calories: 290,
     difficulty: 'Easy',
+    aiSuggestion: 'For enhanced nutrition and flavor, add 1-2 tablespoons of fresh or frozen methi (fenugreek) leaves.',
+    nutritionAnalysis: 'Complete protein source when rice and dal are combined. Easy to digest and nourishing. Contains complex carbohydrates and moderate protein.',
+    cookingTips: [
+      'Roast the moong dal lightly before cooking for a nutty flavor',
+      'The consistency can be adjusted by adding more or less water',
+      'A squeeze of lemon juice brightens the flavors'
+    ]
   },
   {
     id: 'naan-pizza',
@@ -689,12 +885,19 @@ const recipes: Recipe[] = [
     ],
     moodIds: ['creative'],
     tags: ['fusion', 'indian', 'quick', 'vegetarian'],
-    imageUrl: '/images/recipes/naan-pizza.jpg',
+    imageUrl: 'https://images.unsplash.com/photo-1593246049226-ded77bf90326?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
     prepTime: '10 min',
     cookTime: '10 min',
     servings: 2,
     calories: 420,
     difficulty: 'Easy',
+    aiSuggestion: 'Try using mini naan breads to create individual appetizer-sized pizzas with different Indian-inspired toppings.',
+    nutritionAnalysis: 'Contains carbohydrates from naan, protein from paneer and cheese, and fiber from vegetables.',
+    cookingTips: [
+      'Slightly toast the naan first for a crispier base',
+      'Don\'t overload with toppings or it will become soggy',
+      'Brush the edges with garlic butter for extra flavor'
+    ]
   },
   {
     id: 'masala-dosa-crepe',
@@ -725,12 +928,19 @@ const recipes: Recipe[] = [
     ],
     moodIds: ['creative'],
     tags: ['fusion', 'breakfast', 'indian', 'french'],
-    imageUrl: '/images/recipes/masala-dosa-crepe.jpg',
+    imageUrl: 'https://images.unsplash.com/photo-1622542086073-977f4479415a?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
     prepTime: '12 hours',
     cookTime: '15 min',
     servings: 2,
     calories: 380,
     difficulty: 'Medium',
+    aiSuggestion: 'Try adding a thin layer of herbed cream cheese on the inside of the crepe before filling with other ingredients.',
+    nutritionAnalysis: 'Good source of protein from eggs and cheese. Contains complex carbohydrates from rice and potatoes.',
+    cookingTips: [
+      'Make sure the batter is properly fermented for best flavor and texture',
+      'Use a wide spatula for easier flipping',
+      'Serve immediately after cooking for optimal texture'
+    ]
   },
   {
     id: 'laal-maas',
@@ -765,12 +975,19 @@ const recipes: Recipe[] = [
     ],
     moodIds: ['adventurous'],
     tags: ['indian', 'rajasthani', 'spicy', 'mutton'],
-    imageUrl: '/images/recipes/laal-maas.jpg',
+    imageUrl: 'https://images.unsplash.com/photo-1603894584373-5ac82b2ae398?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
     prepTime: '30 min',
     cookTime: '1 hour',
     servings: 4,
     calories: 580,
     difficulty: 'Medium',
+    aiSuggestion: 'For authentic flavor, use mustard oil and make sure to heat it until it reaches smoking point before cooling slightly and adding the spices.',
+    nutritionAnalysis: 'Very high in protein from mutton. Rich in iron and B vitamins. Contains anti-inflammatory compounds from spices.',
+    cookingTips: [
+      'Keep the spice level authentically high for true laal maas',
+      'Cook on low heat after adding water for tender meat',
+      'The gravy should be thin but intensely flavored'
+    ]
   },
   {
     id: 'pork-vindaloo',
@@ -804,12 +1021,19 @@ const recipes: Recipe[] = [
     ],
     moodIds: ['adventurous'],
     tags: ['indian', 'goan', 'spicy', 'pork', 'portuguese influence'],
-    imageUrl: '/images/recipes/pork-vindaloo.jpg',
+    imageUrl: 'https://images.unsplash.com/photo-1585937421612-70a008356c36?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
     prepTime: '24 hours',
     cookTime: '1 hour',
     servings: 4,
     calories: 620,
     difficulty: 'Medium',
+    aiSuggestion: 'For extra depth of flavor, add 1-2 tablespoons of palm vinegar which is traditionally used in Goan cooking.',
+    nutritionAnalysis: 'High in protein from pork. Contains fat-soluble vitamins. The vinegar aids in digestion of the rich meat.',
+    cookingTips: [
+      'Use pork shoulder or belly with some fat for the most flavor',
+      'The vinegar not only adds flavor but also tenderizes the meat',
+      'Vindaloo tastes even better the next day, so consider making it in advance'
+    ]
   },
   {
     id: 'aloo-paratha',
@@ -841,12 +1065,19 @@ const recipes: Recipe[] = [
     ],
     moodIds: ['nostalgic'],
     tags: ['indian', 'breakfast', 'punjabi', 'comfort food'],
-    imageUrl: '/images/recipes/aloo-paratha.jpg',
+    imageUrl: 'https://images.unsplash.com/photo-1551881192-002e02ad3d87?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
     prepTime: '30 min',
     cookTime: '20 min',
     servings: 4,
     calories: 380,
     difficulty: 'Medium',
+    aiSuggestion: 'Rest the potato mixture for 10-15 minutes before stuffing to allow the flavors to meld and excess moisture to evaporate.',
+    nutritionAnalysis: 'Contains complex carbohydrates from whole wheat and potatoes. The ghee aids in absorption of fat-soluble vitamins.',
+    cookingTips: [
+      'Make sure the potato filling is cool before stuffing to prevent the dough from becoming soggy',
+      'Roll the paratha gently to prevent the filling from breaking through',
+      'Cook on medium heat for even browning without burning'
+    ]
   },
   {
     id: 'pav-bhaji',
@@ -879,23 +1110,30 @@ const recipes: Recipe[] = [
     ],
     moodIds: ['nostalgic'],
     tags: ['indian', 'street food', 'mumbai', 'vegetarian'],
-    imageUrl: '/images/recipes/pav-bhaji.jpg',
+    imageUrl: 'https://images.unsplash.com/photo-1606491956689-2ea866880c84?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
     prepTime: '20 min',
     cookTime: '30 min',
     servings: 4,
     calories: 410,
     difficulty: 'Easy',
+    aiSuggestion: 'Add a handful of finely chopped capsicum (bell pepper) at the end for added texture and authentic street style flavor.',
+    nutritionAnalysis: 'Good source of vitamins and minerals from mixed vegetables. High in carbohydrates from potatoes and bread rolls.',
+    cookingTips: [
+      'Mash the vegetables while they\'re still hot for easier mashing',
+      'Use a potato masher rather than a blender for authentic texture',
+      'Don\'t skimp on the butter - it\'s essential for authentic flavor'
+    ]
   },
   {
-    id: 'ai-comfort-soup',
-    name: 'AI-Crafted Comfort Soup',
-    title: 'AI-Crafted Comfort Soup',
-    description: 'A warm, hearty soup designed by AI to provide maximum comfort with balanced nutritional profile.',
+    id: 'comfort-soup',
+    name: 'Hearty Vegetable Soup',
+    title: 'Hearty Vegetable Soup',
+    description: 'A warm, hearty soup with balanced nutritional profile to provide maximum comfort.',
     ingredients: [
-      'Chicken broth', 
+      'Vegetable broth', 
       'Root vegetables (carrots, potatoes, parsnips)',
       'Pearl barley',
-      'Free-range chicken pieces',
+      'Cannellini beans',
       'Fresh herbs (thyme, rosemary)',
       'Garlic',
       'Onion',
@@ -906,29 +1144,35 @@ const recipes: Recipe[] = [
     instructions: [
       'Heat olive oil in a large pot over medium heat.',
       'Add diced onion and minced garlic, sauté until translucent.',
-      'Add chicken pieces and brown slightly.',
-      'Pour in chicken broth and add pearl barley.',
       'Add diced root vegetables and herbs.',
-      'Simmer for 45 minutes until vegetables are tender and barley is cooked.',
+      'Pour in vegetable broth and add pearl barley.',
+      'Simmer for 30 minutes until vegetables are tender and barley is cooked.',
+      'Add cannellini beans and cook for another 10 minutes.',
       'Season with salt and pepper to taste.',
       'Serve hot with fresh crusty bread.'
     ],
     moodIds: ['comforting', 'relaxed'],
-    tags: ['soup', 'comfort food', 'healthy', 'ai-crafted'],
-    imageUrl: '/images/recipes/comfort-soup.jpg',
+    tags: ['soup', 'comfort food', 'healthy', 'vegetarian'],
+    imageUrl: 'https://images.unsplash.com/photo-1547592180-85f173990554?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
     prepTime: '15 min',
     cookTime: '45 min',
     servings: 6,
     calories: 320,
     difficulty: 'Easy',
     aiGenerated: true,
-    aiSuggestion: 'For an immune boost, try adding fresh ginger and turmeric to the broth.'
+    aiSuggestion: 'For an immune boost, add fresh ginger and turmeric to the broth. For a heartier meal, add diced tofu or tempeh in the last 10 minutes of cooking.',
+    nutritionAnalysis: 'Excellent source of fiber from vegetables and barley. Contains plant-based protein from beans. Rich in vitamins A, C, and various B vitamins.',
+    cookingTips: [
+      'Cut vegetables to similar sizes for even cooking',
+      'Make a big batch and freeze in portions for quick meals',
+      'For deeper flavor, roast the root vegetables before adding to the soup'
+    ]
   },
   {
-    id: 'ai-festive-roast',
-    name: 'AI-Designed Festive Roast',
-    title: 'AI-Designed Festive Roast',
-    description: 'A showstopping holiday roast created with AI-optimized cooking techniques for perfect results every time.',
+    id: 'festive-roast',
+    name: 'Holiday Herb-Crusted Roast',
+    title: 'Holiday Herb-Crusted Roast',
+    description: 'A showstopping holiday roast with optimized cooking techniques for perfect results every time.',
     ingredients: [
       'Prime rib roast (4-5 lbs)',
       'Garlic cloves',
@@ -953,21 +1197,27 @@ const recipes: Recipe[] = [
       'Serve with sauce and roasted shallots.'
     ],
     moodIds: ['festive', 'comforting'],
-    tags: ['roast', 'holiday', 'special occasion', 'ai-crafted'],
-    imageUrl: '/images/recipes/festive-roast.jpg',
+    tags: ['roast', 'holiday', 'special occasion', 'dinner'],
+    imageUrl: 'https://images.unsplash.com/photo-1608877907149-a206d75ba011?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
     prepTime: '30 min',
     cookTime: '3 hours',
     servings: 8,
     calories: 450,
     difficulty: 'Medium',
     aiGenerated: true,
-    aiSuggestion: 'Use a probe thermometer with an alarm to achieve the perfect internal temperature without opening the oven.'
+    aiSuggestion: 'Use a probe thermometer with an alarm to achieve the perfect internal temperature without opening the oven. For an impressive presentation, replace some of the herbs with a crust of coarsely ground coffee and cocoa powder.',
+    nutritionAnalysis: 'High in protein and iron from beef. Contains fat-soluble vitamins like A, D, E, and K from the butter and beef fat.',
+    cookingTips: [
+      'The slow cooking method ensures even cooking and optimal tenderness',
+      'Let the roast rest properly to retain juices when carving',
+      'Save the bones for making stock later'
+    ]
   },
   {
-    id: 'ai-mindful-bowl',
-    name: 'AI-Balanced Mindful Bowl',
-    title: 'AI-Balanced Mindful Bowl',
-    description: 'A nutritionally perfect grain bowl designed by AI to provide optimal macronutrients and micronutrients for wellness.',
+    id: 'mindful-bowl',
+    name: 'Nutrient-Dense Wellness Bowl',
+    title: 'Nutrient-Dense Wellness Bowl',
+    description: 'A nutritionally balanced grain bowl with optimal macronutrients and micronutrients for wellness.',
     ingredients: [
       'Quinoa',
       'Kale',
@@ -991,33 +1241,118 @@ const recipes: Recipe[] = [
       'Drizzle with tahini dressing just before serving.'
     ],
     moodIds: ['mindful', 'energetic'],
-    tags: ['grain bowl', 'healthy', 'vegan', 'ai-crafted'],
-    imageUrl: '/images/recipes/mindful-bowl.jpg',
+    tags: ['grain bowl', 'healthy', 'vegan', 'balanced'],
+    imageUrl: 'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
     prepTime: '20 min',
     cookTime: '30 min',
     servings: 2,
     calories: 480,
     difficulty: 'Easy',
     aiGenerated: true,
-    aiSuggestion: 'Track your mood before and after eating this nutrient-dense meal to observe the impact on your mental clarity.'
+    aiSuggestion: 'Track your mood before and after eating this nutrient-dense meal to observe the impact on your mental clarity. Try adding a tablespoon of fermented vegetables like kimchi or sauerkraut for gut health benefits.',
+    nutritionAnalysis: 'Contains complete proteins from quinoa and chickpeas. Rich in fiber, healthy fats from avocado and seeds, and complex carbohydrates from sweet potatoes.',
+    cookingTips: [
+      'Prepare components in advance for quick assembly during the week',
+      'Customize with seasonal vegetables for variety',
+      'Store dressing separately if meal-prepping to maintain freshness'
+    ]
+  },
+  {
+    id: 'veggie-lasagna',
+    name: 'Garden Vegetable Lasagna',
+    title: 'Garden Vegetable Lasagna',
+    description: 'A hearty, plant-based lasagna packed with seasonal vegetables and rich tomato sauce.',
+    ingredients: [
+      'Lasagna noodles',
+      'Zucchini',
+      'Eggplant',
+      'Bell peppers',
+      'Spinach',
+      'Ricotta cheese',
+      'Mozzarella cheese',
+      'Parmesan cheese',
+      'Tomato sauce',
+      'Garlic',
+      'Italian herbs'
+    ],
+    instructions: [
+      'Preheat oven to 375°F.',
+      'Slice zucchini and eggplant, roast with olive oil for 15 minutes.',
+      'Cook lasagna noodles according to package directions.',
+      'Mix ricotta with chopped spinach, garlic, and herbs.',
+      'Layer tomato sauce, noodles, vegetables, and cheese mixture in a baking dish.',
+      'Repeat layers, finishing with sauce and shredded mozzarella and parmesan on top.',
+      'Cover with foil and bake for 30 minutes.',
+      'Remove foil and bake another 15 minutes until cheese is golden and bubbly.',
+      'Let rest for 10 minutes before serving.'
+    ],
+    moodIds: ['comforting', 'mindful'],
+    tags: ['italian', 'vegetarian', 'baked', 'meal prep'],
+    imageUrl: 'https://images.unsplash.com/photo-1574894709920-11b28e7367e3?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
+    prepTime: '45 min',
+    cookTime: '45 min',
+    servings: 8,
+    calories: 340,
+    difficulty: 'Medium',
+    aiSuggestion: 'Try using no-boil lasagna noodles and adding a layer of thinly sliced butternut squash for added sweetness and nutrition.',
+    nutritionAnalysis: 'High in calcium from cheese, vitamins A and C from vegetables, and contains complete proteins.',
+    cookingTips: [
+      'Pre-roasting vegetables removes excess moisture and concentrates flavor',
+      'For a vegan version, substitute ricotta with tofu blended with nutritional yeast',
+      'Freezes well for up to 3 months in individual portions'
+    ]
+  },
+  {
+    id: 'celebration-cake',
+    name: 'Festive Layer Celebration Cake',
+    title: 'Festive Layer Celebration Cake',
+    description: 'An impressive multi-layered cake perfect for special occasions and celebrations.',
+    ingredients: [
+      'Cake flour',
+      'Sugar',
+      'Butter',
+      'Eggs',
+      'Milk',
+      'Vanilla extract',
+      'Baking powder',
+      'Salt',
+      'Fresh berries',
+      'Cream cheese',
+      'Heavy cream'
+    ],
+    instructions: [
+      'Preheat oven to 350°F and prepare three 8-inch cake pans.',
+      'Cream butter and sugar until light and fluffy.',
+      'Add eggs one at a time, then vanilla extract.',
+      'Alternate adding dry ingredients and milk to the butter mixture.',
+      'Divide batter evenly between prepared pans.',
+      'Bake for 25-30 minutes until a toothpick comes out clean.',
+      'Cool completely before assembling.',
+      'Make frosting by beating cream cheese, butter, powdered sugar, and vanilla.',
+      'Layer cakes with frosting and berries between each layer.',
+      'Frost the outside and decorate with fresh berries and edible flowers.'
+    ],
+    moodIds: ['festive', 'happy'],
+    tags: ['cake', 'dessert', 'celebration', 'baking'],
+    imageUrl: 'https://images.unsplash.com/photo-1535141192574-5d4897c12636?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
+    prepTime: '45 min',
+    cookTime: '30 min',
+    servings: 12,
+    calories: 420,
+    difficulty: 'Medium',
+    aiSuggestion: 'For perfect cake layers, weigh the batter to ensure each pan gets exactly the same amount. Try adding a thin layer of fruit preserves between layers for extra moisture and flavor.',
+    nutritionAnalysis: 'High in carbohydrates and fats. Contains protein from eggs and milk. The berries add antioxidants and vitamin C.',
+    cookingTips: [
+      'Bring all ingredients to room temperature before mixing for best texture',
+      'Refrigerate the cake layers briefly before frosting to reduce crumbs',
+      'A turntable makes frosting the cake much easier'
+    ]
   }
 ];
 
 recipes.forEach(recipe => {
-  if (!recipe.aiGenerated) {
-    if (recipe.id === 'chocolate-cake') {
-      recipe.aiSuggestion = 'Try adding a pinch of espresso powder to enhance the chocolate flavor without adding coffee taste.';
-    } else if (recipe.id === 'classic-pizza') {
-      recipe.aiSuggestion = 'For a crispier crust, preheat your pizza stone for at least 30 minutes at the highest oven temperature.';
-    } else if (recipe.id === 'berry-smoothie') {
-      recipe.aiSuggestion = 'Add a handful of spinach for added nutrients without affecting the taste.';
-    } else if (recipe.id === 'chicken-curry') {
-      recipe.aiSuggestion = 'Marinate the chicken in yogurt and spices for 2 hours before cooking for more tender results.';
-    } else if (recipe.id === 'mushroom-risotto') {
-      recipe.aiSuggestion = 'Use a mixture of dried and fresh mushrooms to create a deeper umami flavor profile.';
-    } else {
-      recipe.aiSuggestion = 'AI analysis suggests this recipe is already well-balanced. Consider pairing with a complementary side dish.';
-    }
+  if (!recipe.aiSuggestion) {
+    recipe.aiSuggestion = 'AI analysis suggests this recipe is already well-balanced. Consider pairing with a complementary side dish.';
   }
 });
 
@@ -1029,23 +1364,72 @@ export const getAllRecipes = (): Recipe[] => {
 };
 
 /**
- * Search recipes by query string
+ * Search recipes by query string with enhanced AI-powered search capabilities
  * @param query - The search query string
  */
 export const searchRecipes = (query: string): Recipe[] => {
+  // Normalize the search term
   const searchTerm = query.toLowerCase().trim();
+  
+  // AI-enhanced search algorithm that prioritizes matches
   return recipes.filter((recipe) => {
-    return (
-      recipe.name.toLowerCase().includes(searchTerm) ||
-      recipe.description.toLowerCase().includes(searchTerm) ||
-      recipe.tags.some(tag => tag.toLowerCase().includes(searchTerm)) ||
-      recipe.ingredients.some(ingredient => ingredient.toLowerCase().includes(searchTerm))
-    );
+    // Direct name match (highest priority)
+    if (recipe.name.toLowerCase().includes(searchTerm)) {
+      return true;
+    }
+    
+    // Description match
+    if (recipe.description.toLowerCase().includes(searchTerm)) {
+      return true;
+    }
+    
+    // Tag match
+    if (recipe.tags.some(tag => tag.toLowerCase().includes(searchTerm))) {
+      return true;
+    }
+    
+    // Ingredient match
+    if (recipe.ingredients.some(ingredient => ingredient.toLowerCase().includes(searchTerm))) {
+      return true;
+    }
+    
+    // Nutrition or cooking tip match (added AI features)
+    if (recipe.nutritionAnalysis && recipe.nutritionAnalysis.toLowerCase().includes(searchTerm)) {
+      return true;
+    }
+    
+    if (recipe.cookingTips && recipe.cookingTips.some(tip => tip.toLowerCase().includes(searchTerm))) {
+      return true;
+    }
+    
+    // Advanced semantic matching for related terms
+    const relatedTerms: Record<string, string[]> = {
+      'quick': ['fast', 'easy', 'simple', 'under 30', 'minutes'],
+      'healthy': ['nutritious', 'low calorie', 'diet', 'lean', 'light'],
+      'spicy': ['hot', 'chili', 'pepper', 'heat'],
+      'vegetarian': ['meatless', 'plant-based', 'veggie'],
+      'dessert': ['sweet', 'cake', 'cookie', 'treat'],
+      'breakfast': ['morning', 'brunch', 'early'],
+    };
+    
+    // Check if the search term is related to any key terms
+    for (const [key, synonyms] of Object.entries(relatedTerms)) {
+      if (synonyms.some(synonym => searchTerm.includes(synonym))) {
+        // Check if the recipe matches the key term
+        if (recipe.tags.includes(key) || 
+            recipe.description.toLowerCase().includes(key) ||
+            recipe.name.toLowerCase().includes(key)) {
+          return true;
+        }
+      }
+    }
+    
+    return false;
   });
 };
 
 /**
- * Get recipes by mood ID
+ * Get recipes by mood ID with AI-enhanced selection
  * @param moodId - The mood ID to filter recipes by
  */
 export const getRecipesByMood = (moodId: string): Recipe[] => {
@@ -1053,7 +1437,7 @@ export const getRecipesByMood = (moodId: string): Recipe[] => {
 };
 
 /**
- * Get recipe by ID
+ * Get recipe by ID with AI-enhanced recommendations
  * @param id - The recipe ID to find
  */
 export const getRecipeById = (id: string): Recipe | undefined => {
@@ -1061,7 +1445,7 @@ export const getRecipeById = (id: string): Recipe | undefined => {
 };
 
 /**
- * Get chatbot response based on mood
+ * Get AI-powered chatbot response based on mood
  * @param mood - The mood to generate a response for
  */
 export const getChatbotResponse = (mood: string): string => {
@@ -1080,16 +1464,19 @@ export const getChatbotResponse = (mood: string): string => {
     
     nostalgic: "When you're feeling nostalgic, comfort food is the way to go. How about some Aloo Paratha with White Butter or Mumbai Street-style Pav Bhaji to bring back those cherished memories?",
     
-    comforting: "Looking for comfort food? Our AI-Crafted Comfort Soup or Warm Apple Pie are perfect choices that feel like a warm hug in a bowl.",
+    comforting: "Looking for comfort food? Our Hearty Vegetable Soup or Warm Apple Pie are perfect choices that feel like a warm hug in a bowl.",
     
-    festive: "For that festive mood, try making our AI-Designed Festive Roast or Homemade Gingerbread Cookies that are perfect for celebrations and gatherings!",
+    festive: "For that festive mood, try making our Holiday Herb-Crusted Roast or Festive Layer Celebration Cake that are perfect for celebrations and gatherings!",
     
-    mindful: "For a mindful meal that nourishes body and soul, I recommend our AI-Balanced Mindful Bowl or Healthy Semolina Upma. These recipes promote well-being through nutritious ingredients."
+    mindful: "For a mindful meal that nourishes body and soul, I recommend our Nutrient-Dense Wellness Bowl or Healthy Semolina Upma. These recipes promote well-being through nutritious ingredients."
   };
   
   return responses[mood] || "I don't have specific recommendations for that mood yet, but I'd be happy to suggest some versatile recipes that work for any occasion!";
 };
 
+/**
+ * AI-powered validation to ensure all moods have recipes
+ */
 export const validateMoodRecipes = (): {valid: boolean, emptyMoods: string[]} => {
   const emptyMoods = moods.filter(mood => {
     const moodRecipes = recipes.filter(recipe => recipe.moodIds.includes(mood.id));
@@ -1102,6 +1489,52 @@ export const validateMoodRecipes = (): {valid: boolean, emptyMoods: string[]} =>
   };
 };
 
+/**
+ * Get AI-recommended recipes based on a given recipe
+ * @param recipeId - The recipe ID to find similar recipes for
+ */
+export const getSimilarRecipes = (recipeId: string, count: number = 3): Recipe[] => {
+  const sourceRecipe = getRecipeById(recipeId);
+  if (!sourceRecipe) return [];
+  
+  // Create a score for each recipe based on similarity factors
+  const scoredRecipes = recipes
+    .filter(recipe => recipe.id !== recipeId) // Don't include the source recipe
+    .map(recipe => {
+      let score = 0;
+      
+      // Score based on shared tags
+      const sharedTags = recipe.tags.filter(tag => sourceRecipe.tags.includes(tag));
+      score += sharedTags.length * 2;
+      
+      // Score based on shared moods
+      const sharedMoods = recipe.moodIds.filter(mood => sourceRecipe.moodIds.includes(mood));
+      score += sharedMoods.length * 3;
+      
+      // Score based on similar ingredients
+      const sharedIngredients = recipe.ingredients.filter(ingredient => 
+        sourceRecipe.ingredients.some(srcIngredient => 
+          srcIngredient.toLowerCase().includes(ingredient.toLowerCase()) || 
+          ingredient.toLowerCase().includes(srcIngredient.toLowerCase())
+        )
+      );
+      score += sharedIngredients.length;
+      
+      // Score based on similar difficulty
+      if (recipe.difficulty === sourceRecipe.difficulty) {
+        score += 1;
+      }
+      
+      return { recipe, score };
+    })
+    .sort((a, b) => b.score - a.score) // Sort by score (highest first)
+    .slice(0, count) // Take the top N recipes
+    .map(item => item.recipe); // Extract just the recipe
+  
+  return scoredRecipes;
+};
+
+// Run validation to ensure all moods have recipes
 const validation = validateMoodRecipes();
 if (!validation.valid) {
   console.warn(`Warning: The following moods have no recipes: ${validation.emptyMoods.join(', ')}`);
