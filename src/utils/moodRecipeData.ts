@@ -25,6 +25,7 @@ export interface Recipe {
   nutritionAnalysis?: string; // Adding nutrition analysis
   cookingTips?: string[]; // Adding cooking tips
   similarRecipes?: string[]; // Adding similar recipes
+  hindiVoiceGuidance?: string; // Adding Hindi voice guidance for recipes
 }
 
 interface MoodRecipe {
@@ -719,4 +720,52 @@ const recipes: Recipe[] = [
     nutritionAnalysis: 'Contains complex carbohydrates from rice and potatoes. Good source of protein from urad dal. Low in fat when minimal oil is used.',
     cookingTips: [
       'The batter should be thin like pancake batter for crispy dosas',
-      'Make sure your pan is very hot before pouring the batter
+      'Make sure your pan is very hot before pouring the batter',
+      'Let the bottom cook completely before attempting to flip or fold'
+    ],
+    hindiVoiceGuidance: 'मसाला डोसा बनाने के लिए, चावल और उड़द दाल को अलग-अलग भिगोकर रखें। फिर उ���्हें पीसकर रातभर फरमेंट करें। आलू भरने के लिए, उबले आलू में प्याज, हरी मिर्च और मसाले डालें। डोसा बनाने के लिए, गरम तवे पर घोल डालकर पतला फैलाएं और किनारों पर तेल डालें। फिर आलू भरकर मोड़ दें। गरमागरम परोसें।'
+  },
+];
+
+export const moodRecipes: MoodRecipe[] = [
+  {
+    mood: moods[0],
+    recipes: recipes.filter(recipe => recipe.moodIds.includes(moods[0].id))
+  },
+  {
+    mood: moods[1],
+    recipes: recipes.filter(recipe => recipe.moodIds.includes(moods[1].id))
+  },
+  {
+    mood: moods[2],
+    recipes: recipes.filter(recipe => recipe.moodIds.includes(moods[2].id))
+  },
+  {
+    mood: moods[3],
+    recipes: recipes.filter(recipe => recipe.moodIds.includes(moods[3].id))
+  },
+  {
+    mood: moods[4],
+    recipes: recipes.filter(recipe => recipe.moodIds.includes(moods[4].id))
+  },
+  {
+    mood: moods[5],
+    recipes: recipes.filter(recipe => recipe.moodIds.includes(moods[5].id))
+  },
+  {
+    mood: moods[6],
+    recipes: recipes.filter(recipe => recipe.moodIds.includes(moods[6].id))
+  },
+  {
+    mood: moods[7],
+    recipes: recipes.filter(recipe => recipe.moodIds.includes(moods[7].id))
+  },
+  {
+    mood: moods[8],
+    recipes: recipes.filter(recipe => recipe.moodIds.includes(moods[8].id))
+  },
+  {
+    mood: moods[9],
+    recipes: recipes.filter(recipe => recipe.moodIds.includes(moods[9].id))
+  },
+];
