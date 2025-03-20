@@ -1,14 +1,7 @@
-
 import { useState, useEffect, useRef } from 'react';
 import { Send, X, Volume2, Mic, MicOff } from 'lucide-react';
 import { getChatbotResponse } from '@/utils/moodRecipeData';
 import { useToast } from "@/hooks/use-toast";
-
-// Add TypeScript type definitions for Web Speech API
-interface Window {
-  SpeechRecognition: typeof SpeechRecognition;
-  webkitSpeechRecognition: typeof SpeechRecognition;
-}
 
 const suggestionChips = [
   "What's a good recipe for beginners?",
@@ -39,7 +32,6 @@ const ChatBot = ({ currentMood }: ChatBotProps) => {
   const { toast } = useToast();
   const speechRecognitionRef = useRef<any>(null);
 
-  // Initialize with a welcome message
   useEffect(() => {
     const welcomeMessage = getChatbotResponse(currentMood);
     setMessages([
@@ -51,16 +43,13 @@ const ChatBot = ({ currentMood }: ChatBotProps) => {
     ]);
   }, [currentMood]);
 
-  // Scroll to bottom when messages change
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
 
-  // Handle speech recognition initialization
   const initializeSpeechRecognition = () => {
     try {
-      // TypeScript workaround for browser compatibility
-      const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
+      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
       
       if (!SpeechRecognition) {
         toast({
@@ -76,13 +65,13 @@ const ChatBot = ({ currentMood }: ChatBotProps) => {
       recognition.interimResults = false;
       recognition.lang = 'en-US';
       
-      recognition.onresult = (event: any) => {
+      recognition.onresult = (event: SpeechRecognitionEvent) => {
         const transcript = event.results[0][0].transcript;
         setCurrentMessage(transcript);
         setTimeout(() => sendMessage(transcript), 500);
       };
       
-      recognition.onerror = (event: any) => {
+      recognition.onerror = (event: SpeechRecognitionErrorEvent) => {
         console.error('Speech recognition error', event.error);
         setIsListening(false);
         toast({
@@ -168,22 +157,17 @@ const ChatBot = ({ currentMood }: ChatBotProps) => {
   const sendMessage = (messageText: string = currentMessage) => {
     if (!messageText.trim()) return;
     
-    // Create a new user message
     const userMessage: Message = {
       id: Date.now().toString(),
       text: messageText,
       isUser: true
     };
     
-    // Add message to the chat
     setMessages(prev => [...prev, userMessage]);
     
-    // Clear input field
     setCurrentMessage('');
     
-    // Generate bot response
     setTimeout(() => {
-      // Generate appropriate response based on user input
       let botResponse: string;
       const lowerCaseMessage = messageText.toLowerCase();
       
@@ -211,7 +195,6 @@ const ChatBot = ({ currentMood }: ChatBotProps) => {
       
       setMessages(prev => [...prev, botMessage]);
       
-      // Speak the response if not muted
       speakText(botResponse);
     }, 800);
   };
@@ -228,7 +211,6 @@ const ChatBot = ({ currentMood }: ChatBotProps) => {
 
   return (
     <>
-      {/* Chatbot toggle button */}
       <button
         onClick={() => setIsOpen(prev => !prev)}
         className="fixed bottom-6 right-6 bg-primary text-white p-4 rounded-full shadow-lg hover:bg-primary/90 transition-all z-50"
@@ -243,13 +225,11 @@ const ChatBot = ({ currentMood }: ChatBotProps) => {
         }
       </button>
       
-      {/* Chatbot dialog */}
       <div 
         className={`fixed bottom-24 right-6 w-80 sm:w-96 bg-white dark:bg-gray-900 rounded-lg shadow-xl border border-gray-200 dark:border-gray-800 transition-all duration-300 ease-in-out z-50 ${
           isOpen ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0 pointer-events-none'
         }`}
       >
-        {/* Header */}
         <div className="flex justify-between items-center p-4 border-b border-gray-200 dark:border-gray-800">
           <h3 className="font-medium">Recipe Assistant</h3>
           <div className="flex gap-2">
@@ -272,7 +252,6 @@ const ChatBot = ({ currentMood }: ChatBotProps) => {
           </div>
         </div>
         
-        {/* Messages */}
         <div className="p-4 h-80 overflow-y-auto">
           {messages.map((message) => (
             <div 
@@ -293,7 +272,6 @@ const ChatBot = ({ currentMood }: ChatBotProps) => {
           <div ref={messagesEndRef} />
         </div>
         
-        {/* Suggestion chips */}
         <div className="px-4 py-2 border-t border-gray-200 dark:border-gray-800">
           <div className="flex overflow-x-auto gap-2 pb-2 no-scrollbar">
             {suggestionChips.map((suggestion, index) => (
@@ -308,7 +286,6 @@ const ChatBot = ({ currentMood }: ChatBotProps) => {
           </div>
         </div>
         
-        {/* Input */}
         <form onSubmit={handleSubmit} className="p-4 border-t border-gray-200 dark:border-gray-800">
           <div className="relative">
             <input
