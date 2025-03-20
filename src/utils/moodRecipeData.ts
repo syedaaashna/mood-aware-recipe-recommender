@@ -1,8 +1,9 @@
+
 export interface Mood {
   id: string;
   name: string;
   description: string;
-  icon: string; // Adding icon property to Mood interface
+  icon: string;
 }
 
 export interface Recipe {
@@ -19,14 +20,78 @@ export interface Recipe {
   servings?: number;
   calories?: number;
   difficulty?: 'Easy' | 'Medium' | 'Hard';
-  title?: string; // For compatibility with Recipe page
-  aiGenerated?: boolean; // Adding AI generated flag
-  aiSuggestion?: string; // Adding AI suggestion for recipe enhancement
-  nutritionAnalysis?: string; // Adding nutrition analysis
-  cookingTips?: string[]; // Adding cooking tips
-  similarRecipes?: string[]; // Adding similar recipes
-  hindiVoiceGuidance?: string; // Adding Hindi voice guidance for recipes
+  title?: string;
+  aiGenerated?: boolean;
+  aiSuggestion?: string;
+  nutritionAnalysis?: string;
+  cookingTips?: string[];
+  similarRecipes?: string[];
+  hindiVoiceGuidance?: string;
 }
+
+// Adding the missing moods array that's referenced in the code
+export const moods: Mood[] = [
+  {
+    id: 'happy',
+    name: 'Happy',
+    description: 'Joyful and content',
+    icon: '😊'
+  },
+  {
+    id: 'romantic',
+    name: 'Romantic',
+    description: 'In the mood for love',
+    icon: '❤️'
+  },
+  {
+    id: 'energetic',
+    name: 'Energetic',
+    description: 'Full of energy and vigor',
+    icon: '⚡'
+  },
+  {
+    id: 'relaxed',
+    name: 'Relaxed',
+    description: 'Calm and at ease',
+    icon: '😌'
+  },
+  {
+    id: 'creative',
+    name: 'Creative',
+    description: 'Inspired and imaginative',
+    icon: '🎨'
+  },
+  {
+    id: 'adventurous',
+    name: 'Adventurous',
+    description: 'Ready to try new things',
+    icon: '🧭'
+  },
+  {
+    id: 'nostalgic',
+    name: 'Nostalgic',
+    description: 'Reminiscing about the past',
+    icon: '🕰️'
+  },
+  {
+    id: 'comforting',
+    name: 'Comforting',
+    description: 'In need of comfort',
+    icon: '🧸'
+  },
+  {
+    id: 'festive',
+    name: 'Festive',
+    description: 'In a celebratory mood',
+    icon: '🎉'
+  },
+  {
+    id: 'mindful',
+    name: 'Mindful',
+    description: 'Present and conscious',
+    icon: '🧘'
+  }
+];
 
 interface MoodRecipe {
   mood: Mood;

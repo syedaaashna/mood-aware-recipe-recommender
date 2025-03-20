@@ -4,6 +4,12 @@ import { Send, X, Volume2, Mic, MicOff } from 'lucide-react';
 import { getChatbotResponse } from '@/utils/moodRecipeData';
 import { useToast } from "@/hooks/use-toast";
 
+// Add TypeScript type definitions for Web Speech API
+interface Window {
+  SpeechRecognition: typeof SpeechRecognition;
+  webkitSpeechRecognition: typeof SpeechRecognition;
+}
+
 const suggestionChips = [
   "What's a good recipe for beginners?",
   "Recommend a quick dinner idea",
@@ -54,7 +60,7 @@ const ChatBot = ({ currentMood }: ChatBotProps) => {
   const initializeSpeechRecognition = () => {
     try {
       // TypeScript workaround for browser compatibility
-      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+      const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
       
       if (!SpeechRecognition) {
         toast({
