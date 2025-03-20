@@ -41,15 +41,26 @@ const RecipeCard = ({ recipe, isFavorite = false, onToggleFavorite }: RecipeCard
     }
   };
 
-  // Ensure image URL is properly formatted and handle fallback
+  // Updated image mapping for recipes to ensure they match their dishes
   const getImageUrl = () => {
     if (imageError || !recipe.imageUrl) {
-      return 'https://images.unsplash.com/photo-1618160702438-9b02ab6515c9?auto=format&fit=crop&w=600&h=400';
+      // Provide specific fallback images based on recipe type/category
+      if (recipe.tags.includes('dessert')) {
+        return 'https://images.unsplash.com/photo-1606313564200-e75d5e30476c?auto=format&fit=crop&w=600&h=400';
+      } else if (recipe.tags.includes('indian')) {
+        return 'https://images.unsplash.com/photo-1604952564555-13c872c0a364?auto=format&fit=crop&w=600&h=400';
+      } else if (recipe.tags.includes('breakfast')) {
+        return 'https://images.unsplash.com/photo-1639108094328-2b94a49b1c2e?auto=format&fit=crop&w=600&h=400';
+      } else {
+        return 'https://images.unsplash.com/photo-1618160702438-9b02ab6515c9?auto=format&fit=crop&w=600&h=400';
+      }
     }
     
-    // Remove query parameters if they already exist in the URL
+    // Ensure we're using the base URL without existing query parameters
     const baseUrl = recipe.imageUrl.split('?')[0];
-    return `${baseUrl}?auto=format&fit=crop&w=600&h=400`;
+    
+    // Add quality parameters for better image loading
+    return `${baseUrl}?auto=format&fit=crop&w=600&h=400&q=80`;
   };
 
   // Use title if available, otherwise use name for display

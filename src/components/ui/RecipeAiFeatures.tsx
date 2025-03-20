@@ -12,6 +12,29 @@ const RecipeAiFeatures = ({ recipe }: RecipeAiFeaturesProps) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const similarRecipes = getSimilarRecipes(recipe.id, 3);
 
+  // Helper function to get appropriate image URL with fallbacks
+  const getImageUrl = (recipe: Recipe, smallSize = false) => {
+    if (!recipe.imageUrl) {
+      // Provide specific fallback images based on recipe type/category
+      if (recipe.tags.includes('dessert')) {
+        return 'https://images.unsplash.com/photo-1606313564200-e75d5e30476c?auto=format&fit=crop&w=400&h=200';
+      } else if (recipe.tags.includes('indian')) {
+        return 'https://images.unsplash.com/photo-1604952564555-13c872c0a364?auto=format&fit=crop&w=400&h=200';
+      } else if (recipe.tags.includes('breakfast')) {
+        return 'https://images.unsplash.com/photo-1639108094328-2b94a49b1c2e?auto=format&fit=crop&w=400&h=200';
+      } else {
+        return 'https://images.unsplash.com/photo-1618160702438-9b02ab6515c9?auto=format&fit=crop&w=400&h=200';
+      }
+    }
+    
+    // Ensure we're using the base URL without existing query parameters
+    const baseUrl = recipe.imageUrl.split('?')[0];
+    
+    // Add appropriate size parameters
+    const dimensions = smallSize ? 'w=400&h=200' : 'w=600&h=400';
+    return `${baseUrl}?auto=format&fit=crop&${dimensions}&q=80`;
+  };
+
   return (
     <div className="my-8 rounded-xl overflow-hidden border border-primary/20">
       <div 
@@ -103,11 +126,22 @@ const RecipeAiFeatures = ({ recipe }: RecipeAiFeaturesProps) => {
                   >
                     <div className="h-24 rounded-md overflow-hidden mb-2">
                       <img 
-                        src={similarRecipe.imageUrl ? `${similarRecipe.imageUrl.split('?')[0]}?auto=format&fit=crop&w=400&h=200` : 'https://images.unsplash.com/photo-1618160702438-9b02ab6515c9?auto=format&fit=crop&w=400&h=200'} 
+                        src={getImageUrl(similarRecipe, true)} 
                         alt={similarRecipe.name} 
                         className="w-full h-full object-cover"
                         onError={(e) => {
-                          (e.target as HTMLImageElement).src = 'https://images.unsplash.com/photo-1618160702438-9b02ab6515c9?auto=format&fit=crop&w=400&h=200';
+                          // Provide category-specific fallback images on error
+                          let fallbackUrl = 'https://images.unsplash.com/photo-1618160702438-9b02ab6515c9?auto=format&fit=crop&w=400&h=200';
+                          
+                          if (similarRecipe.tags.includes('dessert')) {
+                            fallbackUrl = 'https://images.unsplash.com/photo-1606313564200-e75d5e30476c?auto=format&fit=crop&w=400&h=200';
+                          } else if (similarRecipe.tags.includes('indian')) {
+                            fallbackUrl = 'https://images.unsplash.com/photo-1604952564555-13c872c0a364?auto=format&fit=crop&w=400&h=200';
+                          } else if (similarRecipe.tags.includes('breakfast')) {
+                            fallbackUrl = 'https://images.unsplash.com/photo-1639108094328-2b94a49b1c2e?auto=format&fit=crop&w=400&h=200';
+                          }
+                          
+                          (e.target as HTMLImageElement).src = fallbackUrl;
                         }}
                       />
                     </div>
