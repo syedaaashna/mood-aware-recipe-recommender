@@ -1,4 +1,3 @@
-
 export interface Mood {
   id: string;
   name: string;
@@ -29,7 +28,6 @@ export interface Recipe {
   hindiVoiceGuidance?: string;
 }
 
-// Adding the missing moods array that's referenced in the code
 export const moods: Mood[] = [
   {
     id: 'happy',
@@ -522,7 +520,7 @@ const recipes: Recipe[] = [
     instructions: [
       'Marinate chicken in yogurt, garlic, ginger and spices for at least 1 hour.',
       'Cook chicken in a tandoor or oven until charred.',
-      'In a pan, melt butter and sauté onions until golden.',
+      'In a pan, melt butter and sauté onions until golden brown.',
       'Add ginger-garlic paste and cook until fragrant.',
       'Stir in tomato puree and cook until oil separates.',
       'Add spices and salt, mix well.',
@@ -712,7 +710,7 @@ const recipes: Recipe[] = [
     ],
     moodIds: ['energetic'],
     tags: ['indian', 'south indian', 'breakfast', 'vegetarian'],
-    imageUrl: 'https://images.unsplash.com/photo-1589301760014-d929f3979dbc?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1610192244261-3f33de3f72e1?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
     prepTime: '12 hours',
     cookTime: '30 min',
     servings: 4,

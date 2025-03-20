@@ -7,6 +7,52 @@ import VoiceGuidance from '@/components/ui/VoiceGuidance';
 import RecipeAiFeatures from '@/components/ui/RecipeAiFeatures';
 import { useToast } from "@/hooks/use-toast";
 
+// Helper function to check and fix image URLs
+const getValidImageUrl = (recipe: RecipeType): string => {
+  // Default image based on recipe category/tags
+  const getDefaultImage = () => {
+    if (recipe.tags.includes('indian')) {
+      return 'https://images.unsplash.com/photo-1585937421612-70a008356c36?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80';
+    } else if (recipe.tags.includes('dessert')) {
+      return 'https://images.unsplash.com/photo-1563729784474-d77dbb933a9e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80';
+    } else {
+      return 'https://images.unsplash.com/photo-1505253758473-96b7015fcd40?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80';
+    }
+  };
+
+  // Special case for specific recipes that need image corrections
+  const specialCaseImages: Record<string, string> = {
+    'masala-dosa': 'https://images.unsplash.com/photo-1610192244261-3f33de3f72e1?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
+    'butter-chicken': 'https://images.unsplash.com/photo-1603894584373-5ac82b2ae398?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
+    'shahi-paneer': 'https://images.unsplash.com/photo-1567188040759-fb8a883dc6d8?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80'
+  };
+
+  // If there's a special case for this recipe, use that
+  if (recipe.id in specialCaseImages) {
+    return specialCaseImages[recipe.id];
+  }
+
+  // Check if the image URL is valid and add quality parameters
+  if (recipe.imageUrl && recipe.imageUrl.length > 10) {
+    // Add quality parameters to Unsplash URLs
+    if (recipe.imageUrl.includes('unsplash.com')) {
+      // Parse URL and add quality parameters if not already present
+      const url = new URL(recipe.imageUrl);
+      if (!url.searchParams.has('q')) {
+        url.searchParams.set('q', '80');
+      }
+      if (!url.searchParams.has('auto')) {
+        url.searchParams.set('auto', 'format');
+      }
+      return url.toString();
+    }
+    return recipe.imageUrl;
+  }
+
+  // Use default image as fallback
+  return getDefaultImage();
+};
+
 const Recipe = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
@@ -24,7 +70,16 @@ const Recipe = () => {
       
       // Simulate loading for smooth transitions
       setTimeout(() => {
-        setRecipe(foundRecipe || null);
+        if (foundRecipe) {
+          // Ensure the recipe has a valid image URL
+          const validatedRecipe = {
+            ...foundRecipe,
+            imageUrl: getValidImageUrl(foundRecipe)
+          };
+          setRecipe(validatedRecipe);
+        } else {
+          setRecipe(null);
+        }
         setIsLoading(false);
       }, 300);
       
@@ -197,6 +252,11 @@ const Recipe = () => {
               src={recipe.imageUrl}
               alt={recipe.name}
               className="w-full h-full object-cover"
+              onError={(e) => {
+                const target = e.target as HTMLImageElement;
+                target.onerror = null; // Prevent infinite loops
+                target.src = 'https://images.unsplash.com/photo-1505253758473-96b7015fcd40?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80';
+              }}
             />
           </div>
           

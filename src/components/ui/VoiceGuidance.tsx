@@ -76,8 +76,13 @@ const VoiceGuidance = ({ instructions, title }: VoiceGuidanceProps) => {
   const synth = useRef<SpeechSynthesis | null>(null);
   const utterance = useRef<SpeechSynthesisUtterance | null>(null);
   const isProcessing = useRef<boolean>(false); // Flag to track if we're processing speech
+  const maxRetries = useRef<number>(3); // Maximum number of retries for failed speech synthesis
+  const currentRetries = useRef<number>(0); // Current retry count
   const { toast } = useToast();
 
+  // Store speech queue to handle continuous playback more reliably
+  const speechQueue = useRef<string[]>([]);
+  
   useEffect(() => {
     synth.current = window.speechSynthesis;
     
@@ -98,10 +103,24 @@ const VoiceGuidance = ({ instructions, title }: VoiceGuidanceProps) => {
       setSelectedLanguage(savedLanguage);
     }
     
+    // Handle browser visibility changes to improve speech synthesis reliability
+    const handleVisibilityChange = () => {
+      if (document.hidden && synth.current) {
+        // If page is hidden, pause playback to prevent issues
+        synth.current.pause();
+      } else if (!document.hidden && synth.current && isPlaying) {
+        // Resume if page becomes visible again and was playing
+        synth.current.resume();
+      }
+    };
+    
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    
     return () => {
       if (synth.current) {
         synth.current.cancel();
       }
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
     };
   }, []);
 
@@ -231,8 +250,10 @@ const VoiceGuidance = ({ instructions, title }: VoiceGuidanceProps) => {
       utterance.current.pitch = 1.1;
     }
     
+    // Improved error handling to ensure continuous playback
     utterance.current.onend = () => {
       isProcessing.current = false;
+      currentRetries.current = 0; // Reset retry counter after successful speech
       
       if (isPlaying && isAutoPlayEnabled && currentStep < instructions.length - 1) {
         // Automatically move to the next step after a short pause
@@ -251,17 +272,39 @@ const VoiceGuidance = ({ instructions, title }: VoiceGuidanceProps) => {
       }
     };
     
-    utterance.current.onerror = () => {
+    utterance.current.onerror = (event) => {
+      console.error("Speech synthesis error occurred:", event);
       isProcessing.current = false;
-      console.error("Speech synthesis error occurred");
       
-      // If there's an error, still try to continue to the next step if auto-play is enabled
-      if (isPlaying && isAutoPlayEnabled && currentStep < instructions.length - 1) {
-        setTimeout(() => {
-          setCurrentStep(prev => prev + 1);
-        }, 1000);
+      // Retry logic for failed speech synthesis
+      if (currentRetries.current < maxRetries.current) {
+        currentRetries.current++;
+        console.log(`Retrying speech synthesis (${currentRetries.current}/${maxRetries.current})`);
+        setTimeout(() => speakCurrentStep(), 1000); // Wait 1 second before retrying
+      } else {
+        // If max retries reached, move to next step if auto-play is enabled
+        currentRetries.current = 0; // Reset for next step
+        
+        if (isPlaying && isAutoPlayEnabled && currentStep < instructions.length - 1) {
+          toast({
+            title: "Voice Guidance Issue",
+            description: "There was a problem with speech synthesis. Moving to the next step.",
+            duration: 3000,
+          });
+          
+          setTimeout(() => {
+            setCurrentStep(prev => prev + 1);
+          }, 1000);
+        }
       }
     };
+    
+    // Add robustness for mobile devices that might suspend speech synthesis
+    if ('onbeforeunload' in window) {
+      window.addEventListener('beforeunload', () => {
+        if (synth.current) synth.current.cancel();
+      }, { once: true });
+    }
     
     synth.current.speak(utterance.current);
   };
