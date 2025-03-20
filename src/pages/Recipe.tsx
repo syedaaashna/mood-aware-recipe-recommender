@@ -96,7 +96,9 @@ const Recipe = () => {
     // but we keep this state for the UI button
     toast({
       title: isPlaying ? "Voice Guidance Paused" : "Voice Guidance Started",
-      description: isPlaying ? "Voice guidance has been paused." : "I'll guide you through each step of the recipe.",
+      description: isPlaying 
+        ? "Voice guidance has been paused." 
+        : "I'll guide you through each step of the recipe automatically.",
       duration: 3000,
     });
   };

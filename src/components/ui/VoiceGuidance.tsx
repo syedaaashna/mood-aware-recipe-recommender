@@ -72,8 +72,10 @@ const VoiceGuidance = ({ instructions, title }: VoiceGuidanceProps) => {
   const [showVoiceInfo, setShowVoiceInfo] = useState(false);
   const [lastUsedVoice, setLastUsedVoice] = useState<string | null>(null);
   const [useHindiTranslation, setUseHindiTranslation] = useState(true);
+  const [isAutoPlayEnabled, setIsAutoPlayEnabled] = useState(true); // Default to autoplay enabled
   const synth = useRef<SpeechSynthesis | null>(null);
   const utterance = useRef<SpeechSynthesisUtterance | null>(null);
+  const isProcessing = useRef<boolean>(false); // Flag to track if we're processing speech
   const { toast } = useToast();
 
   useEffect(() => {
@@ -132,8 +134,9 @@ const VoiceGuidance = ({ instructions, title }: VoiceGuidanceProps) => {
   };
 
   const speakCurrentStep = () => {
-    if (!synth.current || isMuted || !instructions[currentStep]) return;
+    if (!synth.current || isMuted || !instructions[currentStep] || isProcessing.current) return;
     
+    isProcessing.current = true;
     synth.current.cancel();
     
     let stepText = `Step ${currentStep + 1}: ${instructions[currentStep]}`;
@@ -229,10 +232,13 @@ const VoiceGuidance = ({ instructions, title }: VoiceGuidanceProps) => {
     }
     
     utterance.current.onend = () => {
-      if (currentStep < instructions.length - 1 && isPlaying) {
+      isProcessing.current = false;
+      
+      if (isPlaying && isAutoPlayEnabled && currentStep < instructions.length - 1) {
+        // Automatically move to the next step after a short pause
         setTimeout(() => {
           setCurrentStep(prev => prev + 1);
-        }, 1000);
+        }, 1500); // 1.5 second pause between steps
       } else if (currentStep === instructions.length - 1 && isPlaying) {
         setIsPlaying(false);
         toast({
@@ -242,6 +248,18 @@ const VoiceGuidance = ({ instructions, title }: VoiceGuidanceProps) => {
             : "All cooking steps have been read. Enjoy your meal!",
           duration: 5000,
         });
+      }
+    };
+    
+    utterance.current.onerror = () => {
+      isProcessing.current = false;
+      console.error("Speech synthesis error occurred");
+      
+      // If there's an error, still try to continue to the next step if auto-play is enabled
+      if (isPlaying && isAutoPlayEnabled && currentStep < instructions.length - 1) {
+        setTimeout(() => {
+          setCurrentStep(prev => prev + 1);
+        }, 1000);
       }
     };
     
@@ -261,7 +279,7 @@ const VoiceGuidance = ({ instructions, title }: VoiceGuidanceProps) => {
         title: selectedLanguage === 'hi-IN' ? "आवाज मार्गदर्शन शुरू हुआ" : "Voice Guidance Started",
         description: selectedLanguage === 'hi-IN' 
           ? "मैं आपको व्यंजन के प्रत्येक चरण से गुजरने में मार्गदर्शन करूंगा।" 
-          : "I'll guide you through each step of the recipe.",
+          : "I'll guide you through each step of the recipe automatically.",
         duration: 3000,
       });
     }
@@ -281,6 +299,21 @@ const VoiceGuidance = ({ instructions, title }: VoiceGuidanceProps) => {
       description: isMuted 
         ? (selectedLanguage === 'hi-IN' ? "अब आप चरण-दर-चरण निर्देश सुनेंगे।" : "You'll now hear step-by-step instructions.") 
         : (selectedLanguage === 'hi-IN' ? "आवाज मार्गदर्शन अब म्यूट है।" : "Voice guidance is now muted."),
+      duration: 3000,
+    });
+  };
+
+  // Toggle auto-play functionality
+  const toggleAutoPlay = () => {
+    setIsAutoPlayEnabled(!isAutoPlayEnabled);
+    
+    toast({
+      title: isAutoPlayEnabled 
+        ? (selectedLanguage === 'hi-IN' ? "मैनुअल मोड सक्षम किया गया" : "Manual Mode Enabled") 
+        : (selectedLanguage === 'hi-IN' ? "ऑटोप्ले सक्षम किया गया" : "Auto-play Enabled"),
+      description: isAutoPlayEnabled 
+        ? (selectedLanguage === 'hi-IN' ? "आपको अगले चरण पर जाने के लिए बटन दबाना होगा।" : "You'll need to press the button to advance to the next step.") 
+        : (selectedLanguage === 'hi-IN' ? "निर्देश अब स्वचालित रूप से एक के बाद एक चलेंगे।" : "Instructions will now play one after another automatically."),
       duration: 3000,
     });
   };
@@ -416,6 +449,23 @@ const VoiceGuidance = ({ instructions, title }: VoiceGuidanceProps) => {
               </button>
             </div>
           )}
+          <div className="flex items-center mb-2">
+            <span className="text-xs text-white mr-2">
+              <strong>{selectedLanguage === 'hi-IN' ? 'ऑटोप्ले:' : 'Auto-play:'}</strong>
+            </span>
+            <button 
+              onClick={toggleAutoPlay}
+              className={`px-2 py-1 text-xs rounded ${
+                isAutoPlayEnabled 
+                  ? 'bg-white/30 text-white' 
+                  : 'bg-white/10 text-white/70'
+              }`}
+            >
+              {isAutoPlayEnabled 
+                ? (selectedLanguage === 'hi-IN' ? 'सक्रिय' : 'Active') 
+                : (selectedLanguage === 'hi-IN' ? 'निष्क्रिय' : 'Inactive')}
+            </button>
+          </div>
           <p className="text-xs text-white">
             {selectedLanguage === 'hi-IN' 
               ? 'यदि आपकी चुनी हुई भाषा में आवाज की गुणवत्ता खराब है, तो कोई अन्य भाषा आज़माएँ या जांचें कि आपका ब्राउज़र चुनी हुई भाषा का समर्थन करता है या नहीं।'
