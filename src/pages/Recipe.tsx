@@ -8,45 +8,51 @@ import RecipeAiFeatures from '@/components/ui/RecipeAiFeatures';
 import { useToast } from "@/hooks/use-toast";
 
 const getValidImageUrl = (recipe: RecipeType): string => {
-  // First, check if recipe has a specific ID that needs a fixed image
+  // Updated recipe-specific images with better quality and accuracy
   const recipeSpecificImages: Record<string, string> = {
-    'classic-pizza': 'https://images.unsplash.com/photo-1604917877934-07d8d248d396?auto=format&fit=crop&w=1350&q=80',
-    'chocolate-cake': 'https://images.unsplash.com/photo-1606313564200-e75d5e30476c?auto=format&fit=crop&w=1350&q=80',
+    'classic-pizza': 'https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=1350&q=80',
+    'chocolate-cake': 'https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=1350&q=80',
     'spicy-noodles': 'https://images.unsplash.com/photo-1552611052-33e04de081de?auto=format&fit=crop&w=1350&q=80',
-    'chicken-stir-fry': 'https://images.unsplash.com/photo-1512058564555-18510be2db19?auto=format&fit=crop&w=1350&q=80',
-    'berry-smoothie': 'https://images.unsplash.com/photo-1505252585461-04db1eb84625?auto=format&fit=crop&w=1350&q=80',
-    'lavender-tea': 'https://images.unsplash.com/photo-1564890369478-c89ca6d9cde9?auto=format&fit=crop&w=1350&q=80',
-    'mushroom-risotto': 'https://images.unsplash.com/photo-1626296536125-61e4e1f4d71d?auto=format&fit=crop&w=1350&q=80',
+    'chicken-stir-fry': 'https://images.unsplash.com/photo-1603133872878-684f208fb84b?auto=format&fit=crop&w=1350&q=80',
+    'berry-smoothie': 'https://images.unsplash.com/photo-1553530666-ba11a90a3360?auto=format&fit=crop&w=1350&q=80',
+    'lavender-tea': 'https://images.unsplash.com/photo-1572373696785-e8bd95d95b5b?auto=format&fit=crop&w=1350&q=80',
+    'mushroom-risotto': 'https://images.unsplash.com/photo-1655323048051-a50e14cae28a?auto=format&fit=crop&w=1350&q=80',
     'gingerbread-cookies': 'https://images.unsplash.com/photo-1607920592519-ded8e61d8d9f?auto=format&fit=crop&w=1350&q=80',
     'apple-pie': 'https://images.unsplash.com/photo-1621743478914-cc8a68d76208?auto=format&fit=crop&w=1350&q=80',
-    'sushi-rolls': 'https://images.unsplash.com/photo-1579871494447-9811cf80d66c?auto=format&fit=crop&w=1350&q=80',
-    'french-toast': 'https://images.unsplash.com/photo-1639108094328-2b94a49b1c2e?auto=format&fit=crop&w=1350&q=80',
-    'chicken-curry': 'https://images.unsplash.com/photo-1604952564555-13c872c0a364?auto=format&fit=crop&w=1350&q=80',
+    'sushi-rolls': 'https://images.unsplash.com/photo-1553621042-f6e147245754?auto=format&fit=crop&w=1350&q=80',
+    'french-toast': 'https://images.unsplash.com/photo-1484723091739-30a097e8f929?auto=format&fit=crop&w=1350&q=80',
+    'chicken-curry': 'https://images.unsplash.com/photo-1565557623262-b51c2513a641?auto=format&fit=crop&w=1350&q=80',
     'butter-chicken': 'https://images.unsplash.com/photo-1603894584373-5ac82b2ae398?auto=format&fit=crop&w=1350&q=80',
-    'malai-kofta': 'https://images.unsplash.com/photo-1631452180539-96aca7d48617?auto=format&fit=crop&w=1350&q=80',
-    'shahi-paneer': 'https://images.unsplash.com/photo-1567188040759-fb8a883dc6d8?auto=format&fit=crop&w=1350&q=80',
-    'tandoori-raan': 'https://images.unsplash.com/photo-1651908243355-a7c0c5bd409d?auto=format&fit=crop&w=1350&q=80',
-    'masala-dosa': 'https://images.unsplash.com/photo-1610192244261-3f33de3f72e1?auto=format&fit=crop&w=1350&q=80'
+    'malai-kofta': 'https://images.unsplash.com/photo-1585937421612-70a008356c36?auto=format&fit=crop&w=1350&q=80',
+    'shahi-paneer': 'https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=1350&q=80',
+    'tandoori-raan': 'https://images.unsplash.com/photo-1588516903720-8ceb67f9ef84?auto=format&fit=crop&w=1350&q=80',
+    'masala-dosa': 'https://images.unsplash.com/photo-1589301760014-d929f3979dbc?auto=format&fit=crop&w=1350&q=80'
   };
 
   if (recipe.id in recipeSpecificImages) {
     return recipeSpecificImages[recipe.id];
   }
 
-  // If no specific image is mapped, check recipe tags for category images
+  // Updated category images with better quality selections
   const categoryImages: Record<string, string> = {
     'indian': 'https://images.unsplash.com/photo-1585937421612-70a008356c36?auto=format&fit=crop&w=1350&q=80',
     'dessert': 'https://images.unsplash.com/photo-1563729784474-d77dbb933a9e?auto=format&fit=crop&w=1350&q=80',
     'pasta': 'https://images.unsplash.com/photo-1551183053-bf91a1d81141?auto=format&fit=crop&w=1350&q=80',
     'breakfast': 'https://images.unsplash.com/photo-1533089860892-a7c6f3a1aa85?auto=format&fit=crop&w=1350&q=80',
     'vegetarian': 'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=1350&q=80',
-    'chicken': 'https://images.unsplash.com/photo-1527477396000-e27163b481c2?auto=format&fit=crop&w=1350&q=80'
+    'chicken': 'https://images.unsplash.com/photo-1598515214211-89d3c73ae83b?auto=format&fit=crop&w=1350&q=80',
+    'cake': 'https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=1350&q=80',
+    'soup': 'https://images.unsplash.com/photo-1547592166-23ac45744acd?auto=format&fit=crop&w=1350&q=80',
+    'salad': 'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=1350&q=80',
+    'pizza': 'https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=1350&q=80',
+    'smoothie': 'https://images.unsplash.com/photo-1553530666-ba11a90a3360?auto=format&fit=crop&w=1350&q=80'
   };
 
+  // Check recipe tags for category images
   for (const tag of recipe.tags) {
     const lowerTag = tag.toLowerCase();
     for (const [category, url] of Object.entries(categoryImages)) {
-      if (lowerTag.includes(category)) {
+      if (lowerTag.includes(category) || category.includes(lowerTag)) {
         return url;
       }
     }
@@ -54,6 +60,11 @@ const getValidImageUrl = (recipe: RecipeType): string => {
 
   // If recipe has its own imageUrl that looks valid, use it
   if (recipe.imageUrl && recipe.imageUrl.length > 10) {
+    // Check if it's an Unsplash URL and format it correctly
+    if (recipe.imageUrl.includes('unsplash.com')) {
+      const baseUrl = recipe.imageUrl.split('?')[0];
+      return `${baseUrl}?auto=format&fit=crop&w=1350&q=80`;
+    }
     return recipe.imageUrl;
   }
 
