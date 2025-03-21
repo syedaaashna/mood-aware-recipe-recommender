@@ -135,7 +135,7 @@ const VoiceGuidance = ({
 
   // If externally controlled, update local state
   useEffect(() => {
-    if (externalPlayingState !== undefined && isPlaying !== externalPlayingState) {
+    if (externalPlayingState !== undefined) {
       setIsPlaying(externalPlayingState);
     }
   }, [externalPlayingState]);
@@ -169,7 +169,7 @@ const VoiceGuidance = ({
 
   // Translate basic cooking terms to Hindi
   const translateCookingTerms = (text: string): string => {
-    if (!useHindiTranslation || selectedLanguage !== 'hi-IN') return text;
+    if (!useHindiTranslation || selectedLanguage !== 'hi-IN' || !text) return text;
     
     let translatedText = text;
     
@@ -613,7 +613,7 @@ const VoiceGuidance = ({
           
           <div className="bg-white/10 backdrop-blur-md rounded-lg p-3 text-sm mb-4 max-h-32 overflow-y-auto">
             <p>
-              {selectedLanguage === 'hi-IN' && useHindiTranslation 
+              {selectedLanguage === 'hi-IN' && useHindiTranslation && instructions[currentStep]
                 ? translateCookingTerms(instructions[currentStep]) 
                 : instructions[currentStep]}
             </p>

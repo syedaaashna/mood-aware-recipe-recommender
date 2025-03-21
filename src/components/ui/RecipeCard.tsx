@@ -116,7 +116,9 @@ const RecipeCard = ({ recipe, isFavorite = false, onToggleFavorite }: RecipeCard
       'pizza': 'https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=600&h=400',
       'smoothie': 'https://images.unsplash.com/photo-1553530666-ba11a90a3360?auto=format&fit=crop&w=600&h=400',
       'chicken': 'https://images.unsplash.com/photo-1598515214211-89d3c73ae83b?auto=format&fit=crop&w=600&h=400',
-      'vegetarian': 'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=600&h=400'
+      'vegetarian': 'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=600&h=400',
+      'south indian': 'https://images.unsplash.com/photo-1589301760014-d929f3979dbc?auto=format&fit=crop&w=600&h=400',
+      'dosa': 'https://images.unsplash.com/photo-1610192244261-3f33de3f72e1?auto=format&fit=crop&w=600&h=400'
     };
     
     if (imageError || !recipe.imageUrl) {
