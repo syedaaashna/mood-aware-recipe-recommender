@@ -1,4 +1,3 @@
-
 export interface Mood {
   id: string;
   name: string;
@@ -727,3 +726,153 @@ const recipes: Recipe[] = [
     hindiVoiceGuidance: 'मसाला डोसा'
   }
 ];
+
+/**
+ * Gets all recipes
+ */
+export const getAllRecipes = (): Recipe[] => {
+  return recipes;
+};
+
+/**
+ * Gets a recipe by ID
+ */
+export const getRecipeById = (id: string): Recipe | null => {
+  return recipes.find(recipe => recipe.id === id) || null;
+};
+
+/**
+ * Gets recipes by mood ID
+ */
+export const getRecipesByMood = (moodId: string): Recipe[] => {
+  return recipes.filter(recipe => recipe.moodIds.includes(moodId));
+};
+
+/**
+ * Gets similar recipes based on the current recipe ID
+ */
+export const getSimilarRecipes = (recipeId: string, limit: number = 3): Recipe[] => {
+  const recipe = getRecipeById(recipeId);
+  if (!recipe) return [];
+  
+  // First try to use the explicit similarRecipes property if available
+  if (recipe.similarRecipes && recipe.similarRecipes.length > 0) {
+    const explicitSimilarRecipes = recipe.similarRecipes
+      .map(id => getRecipeById(id))
+      .filter(r => r !== null) as Recipe[];
+    
+    if (explicitSimilarRecipes.length > 0) {
+      return explicitSimilarRecipes.slice(0, limit);
+    }
+  }
+  
+  // Otherwise find recipes with similar tags or moods
+  return recipes
+    .filter(r => r.id !== recipeId) // Exclude the current recipe
+    .map(r => {
+      // Calculate a similarity score based on matching tags and moods
+      const sharedTags = r.tags.filter(tag => recipe.tags.includes(tag)).length;
+      const sharedMoods = r.moodIds.filter(mood => recipe.moodIds.includes(mood)).length;
+      const similarityScore = sharedTags * 2 + sharedMoods * 3; // Weigh moods more heavily
+      
+      return { recipe: r, score: similarityScore };
+    })
+    .filter(item => item.score > 0) // Only include recipes with some similarity
+    .sort((a, b) => b.score - a.score) // Sort by similarity score
+    .slice(0, limit) // Take only the requested number
+    .map(item => item.recipe); // Extract just the recipe objects
+};
+
+/**
+ * Searches recipes by name, ingredients, or tags
+ */
+export const searchRecipes = (query: string): Recipe[] => {
+  const searchTerm = query.toLowerCase().trim();
+  
+  return recipes.filter(recipe => {
+    // Search in recipe name
+    if (recipe.name.toLowerCase().includes(searchTerm)) return true;
+    
+    // Search in recipe description
+    if (recipe.description.toLowerCase().includes(searchTerm)) return true;
+    
+    // Search in ingredients
+    if (recipe.ingredients.some(ingredient => 
+      ingredient.toLowerCase().includes(searchTerm)
+    )) return true;
+    
+    // Search in tags
+    if (recipe.tags.some(tag => 
+      tag.toLowerCase().includes(searchTerm)
+    )) return true;
+    
+    return false;
+  });
+};
+
+/**
+ * Gets a chatbot response based on the user's mood
+ */
+export const getChatbotResponse = (moodId: string | null): string => {
+  // Default response if no mood is selected
+  if (!moodId) {
+    return "Hello! I'm your recipe assistant. How can I help you today? Select a mood or ask me about cooking!";
+  }
+  
+  // Get the matching mood
+  const mood = moods.find(m => m.id === moodId);
+  
+  if (!mood) {
+    return "I'm here to help with recipe suggestions. Let me know what you're in the mood for!";
+  }
+  
+  // Mood-specific responses
+  const responses: Record<string, string[]> = {
+    happy: [
+      "You seem happy today! I'd recommend trying our Classic Margherita Pizza or Butter Chicken for a delightful meal.",
+      "What a great mood! How about making something fun like homemade pizza or a colorful smoothie bowl?"
+    ],
+    romantic: [
+      "Looking for something romantic? I'd suggest Shahi Paneer or Chocolate Cake - both are perfect for a special evening.",
+      "Planning a romantic dinner? Let me suggest something elegant like a wine-paired pasta or a decadent dessert."
+    ],
+    energetic: [
+      "Need to maintain that energy? Try our Spicy Peanut Noodles or Masala Dosa - both are invigorating choices!",
+      "With that energy, you could prepare something exciting like a vibrant stir-fry or zesty tacos!"
+    ],
+    relaxed: [
+      "For a relaxed mood, I'd recommend comforting dishes like Mushroom Risotto or a warm cup of Lavender Tea.",
+      "When you're feeling relaxed, simple comfort foods like a hearty soup or freshly baked bread are perfect."
+    ],
+    creative: [
+      "Feeling creative? It's a great time to experiment with Sushi Rolls or try fusion dishes that combine different cuisines!",
+      "Channel that creativity into something unexpected - perhaps a fusion dish or a recipe with your own unique twist?"
+    ],
+    adventurous: [
+      "With your adventurous spirit, I'd suggest trying an authentic Chicken Curry or homemade Sushi Rolls!",
+      "Adventurous mood calls for exploring new cuisines! How about trying a dish from a country you've never visited?"
+    ],
+    nostalgic: [
+      "Feeling nostalgic? Warm Apple Pie or Gingerbread Cookies might bring back some wonderful memories.",
+      "For nostalgia, nothing beats family recipes. Would you like to try our version of classic comfort foods?"
+    ],
+    comforting: [
+      "When you need comfort, I recommend our Warm Apple Pie or a hearty Mushroom Risotto.",
+      "For comfort food, try something warming and familiar - perhaps a creamy soup or freshly baked cookies?"
+    ],
+    festive: [
+      "Feeling festive! How about some celebratory dishes like a special cake or a family-style feast?",
+      "For festive occasions, shared platters and colorful dishes create the perfect atmosphere!"
+    ],
+    mindful: [
+      "For mindful eating, I suggest balanced recipes with fresh ingredients like a nutrient-rich Buddha bowl or a colorful salad.",
+      "Mindful cooking is about being present with simple, whole ingredients. How about a grain bowl with seasonal vegetables?"
+    ]
+  };
+  
+  // Select a random response for the given mood
+  const moodResponses = responses[moodId] || ["I have some great recipes that might match your current mood!"];
+  const randomIndex = Math.floor(Math.random() * moodResponses.length);
+  
+  return moodResponses[randomIndex];
+};
