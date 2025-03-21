@@ -6,6 +6,9 @@ import { useToast } from "@/hooks/use-toast";
 interface VoiceGuidanceProps {
   instructions: string[];
   title: string;
+  manualControlled?: boolean; // If false, will auto-advance through steps
+  externalPlayingState?: boolean; // Optional external control of playing state
+  onPlayingStateChange?: (isPlaying: boolean) => void; // Callback to update parent state
 }
 
 // Language options for voice guidance with improved support including Hindi
@@ -61,7 +64,13 @@ const hindiPhrases: Record<string, string> = {
   'enjoy': 'आनंद लें'
 };
 
-const VoiceGuidance = ({ instructions, title }: VoiceGuidanceProps) => {
+const VoiceGuidance = ({ 
+  instructions, 
+  title, 
+  manualControlled = true, 
+  externalPlayingState, 
+  onPlayingStateChange 
+}: VoiceGuidanceProps) => {
   const [isMuted, setIsMuted] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentStep, setCurrentStep] = useState(0);
@@ -72,7 +81,7 @@ const VoiceGuidance = ({ instructions, title }: VoiceGuidanceProps) => {
   const [showVoiceInfo, setShowVoiceInfo] = useState(false);
   const [lastUsedVoice, setLastUsedVoice] = useState<string | null>(null);
   const [useHindiTranslation, setUseHindiTranslation] = useState(true);
-  const [isAutoPlayEnabled, setIsAutoPlayEnabled] = useState(true); // Default to autoplay enabled
+  const [isAutoPlayEnabled, setIsAutoPlayEnabled] = useState(!manualControlled); // Set based on prop
   const synth = useRef<SpeechSynthesis | null>(null);
   const utterance = useRef<SpeechSynthesisUtterance | null>(null);
   const isProcessing = useRef<boolean>(false); // Flag to track if we're processing speech
@@ -123,6 +132,27 @@ const VoiceGuidance = ({ instructions, title }: VoiceGuidanceProps) => {
       document.removeEventListener('visibilitychange', handleVisibilityChange);
     };
   }, []);
+
+  // If externally controlled, update local state
+  useEffect(() => {
+    if (externalPlayingState !== undefined && isPlaying !== externalPlayingState) {
+      setIsPlaying(externalPlayingState);
+    }
+  }, [externalPlayingState]);
+
+  // When playing state changes internally, update parent if callback provided
+  useEffect(() => {
+    if (onPlayingStateChange && externalPlayingState !== isPlaying) {
+      onPlayingStateChange(isPlaying);
+    }
+  }, [isPlaying, onPlayingStateChange, externalPlayingState]);
+
+  // Force auto-play mode if manualControlled is false
+  useEffect(() => {
+    if (!manualControlled) {
+      setIsAutoPlayEnabled(true);
+    }
+  }, [manualControlled]);
 
   useEffect(() => {
     if (isPlaying && !isMuted) {
@@ -262,6 +292,12 @@ const VoiceGuidance = ({ instructions, title }: VoiceGuidanceProps) => {
         }, 1500); // 1.5 second pause between steps
       } else if (currentStep === instructions.length - 1 && isPlaying) {
         setIsPlaying(false);
+        
+        // Notify parent component if callback is provided
+        if (onPlayingStateChange) {
+          onPlayingStateChange(false);
+        }
+        
         toast({
           title: selectedLanguage === 'hi-IN' ? "पकाना पूरा हुआ!" : "Cooking Complete!",
           description: selectedLanguage === 'hi-IN' 
@@ -310,14 +346,20 @@ const VoiceGuidance = ({ instructions, title }: VoiceGuidanceProps) => {
   };
 
   const togglePlayPause = () => {
-    if (!isPlaying && isMuted) {
+    const newPlayingState = !isPlaying;
+    
+    if (newPlayingState && isMuted) {
       setIsMuted(false);
-      setTimeout(() => setIsPlaying(true), 100);
-    } else {
-      setIsPlaying(!isPlaying);
+    }
+    
+    setIsPlaying(newPlayingState);
+    
+    // Notify parent component if callback is provided
+    if (onPlayingStateChange) {
+      onPlayingStateChange(newPlayingState);
     }
 
-    if (!isPlaying) {
+    if (newPlayingState) {
       toast({
         title: selectedLanguage === 'hi-IN' ? "आवाज मार्गदर्शन शुरू हुआ" : "Voice Guidance Started",
         description: selectedLanguage === 'hi-IN' 
@@ -329,10 +371,16 @@ const VoiceGuidance = ({ instructions, title }: VoiceGuidanceProps) => {
   };
 
   const toggleMute = () => {
-    setIsMuted(!isMuted);
+    const newMutedState = !isMuted;
+    setIsMuted(newMutedState);
     
-    if (!isMuted && isPlaying) {
+    if (newMutedState && isPlaying) {
       setIsPlaying(false);
+      
+      // Notify parent component if callback is provided
+      if (onPlayingStateChange) {
+        onPlayingStateChange(false);
+      }
     }
     
     toast({
@@ -348,17 +396,20 @@ const VoiceGuidance = ({ instructions, title }: VoiceGuidanceProps) => {
 
   // Toggle auto-play functionality
   const toggleAutoPlay = () => {
-    setIsAutoPlayEnabled(!isAutoPlayEnabled);
-    
-    toast({
-      title: isAutoPlayEnabled 
-        ? (selectedLanguage === 'hi-IN' ? "मैनुअल मोड सक्षम किया गया" : "Manual Mode Enabled") 
-        : (selectedLanguage === 'hi-IN' ? "ऑटोप्ले सक्षम किया गया" : "Auto-play Enabled"),
-      description: isAutoPlayEnabled 
-        ? (selectedLanguage === 'hi-IN' ? "आपको अगले चरण पर जाने के लिए बटन दबाना होगा।" : "You'll need to press the button to advance to the next step.") 
-        : (selectedLanguage === 'hi-IN' ? "निर्देश अब स्वचालित रूप से एक के बाद एक चलेंगे।" : "Instructions will now play one after another automatically."),
-      duration: 3000,
-    });
+    // Only allow toggling if manualControlled is true
+    if (manualControlled) {
+      setIsAutoPlayEnabled(!isAutoPlayEnabled);
+      
+      toast({
+        title: isAutoPlayEnabled 
+          ? (selectedLanguage === 'hi-IN' ? "मैनुअल मोड सक्षम किया गया" : "Manual Mode Enabled") 
+          : (selectedLanguage === 'hi-IN' ? "ऑटोप्ले सक्षम किया गया" : "Auto-play Enabled"),
+        description: isAutoPlayEnabled 
+          ? (selectedLanguage === 'hi-IN' ? "आपको अगले चरण पर जाने के लिए बटन दबाना होगा।" : "You'll need to press the button to advance to the next step.") 
+          : (selectedLanguage === 'hi-IN' ? "निर्देश अब स्वचालित रूप से एक के बाद एक चलेंगे।" : "Instructions will now play one after another automatically."),
+        duration: 3000,
+      });
+    }
   };
 
   const nextStep = () => {
@@ -492,23 +543,25 @@ const VoiceGuidance = ({ instructions, title }: VoiceGuidanceProps) => {
               </button>
             </div>
           )}
-          <div className="flex items-center mb-2">
-            <span className="text-xs text-white mr-2">
-              <strong>{selectedLanguage === 'hi-IN' ? 'ऑटोप्ले:' : 'Auto-play:'}</strong>
-            </span>
-            <button 
-              onClick={toggleAutoPlay}
-              className={`px-2 py-1 text-xs rounded ${
-                isAutoPlayEnabled 
-                  ? 'bg-white/30 text-white' 
-                  : 'bg-white/10 text-white/70'
-              }`}
-            >
-              {isAutoPlayEnabled 
-                ? (selectedLanguage === 'hi-IN' ? 'सक्रिय' : 'Active') 
-                : (selectedLanguage === 'hi-IN' ? 'निष्क्रिय' : 'Inactive')}
-            </button>
-          </div>
+          {manualControlled && (
+            <div className="flex items-center mb-2">
+              <span className="text-xs text-white mr-2">
+                <strong>{selectedLanguage === 'hi-IN' ? 'ऑटोप्ले:' : 'Auto-play:'}</strong>
+              </span>
+              <button 
+                onClick={toggleAutoPlay}
+                className={`px-2 py-1 text-xs rounded ${
+                  isAutoPlayEnabled 
+                    ? 'bg-white/30 text-white' 
+                    : 'bg-white/10 text-white/70'
+                }`}
+              >
+                {isAutoPlayEnabled 
+                  ? (selectedLanguage === 'hi-IN' ? 'सक्रिय' : 'Active') 
+                  : (selectedLanguage === 'hi-IN' ? 'निष्क्रिय' : 'Inactive')}
+              </button>
+            </div>
+          )}
           <p className="text-xs text-white">
             {selectedLanguage === 'hi-IN' 
               ? 'यदि आपकी चुनी हुई भाषा में आवाज की गुणवत्ता खराब है, तो कोई अन्य भाषा आज़माएँ या जांचें कि आपका ब्राउज़र चुनी हुई भाषा का समर्थन करता है या नहीं।'

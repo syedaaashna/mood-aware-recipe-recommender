@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { ArrowLeft, Clock, Users, ChefHat, Heart, Share2, Volume2, Play, Pause } from 'lucide-react';
@@ -7,50 +6,54 @@ import VoiceGuidance from '@/components/ui/VoiceGuidance';
 import RecipeAiFeatures from '@/components/ui/RecipeAiFeatures';
 import { useToast } from "@/hooks/use-toast";
 
-// Helper function to check and fix image URLs
 const getValidImageUrl = (recipe: RecipeType): string => {
-  // Default image based on recipe category/tags
-  const getDefaultImage = () => {
-    if (recipe.tags.includes('indian')) {
-      return 'https://images.unsplash.com/photo-1585937421612-70a008356c36?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80';
-    } else if (recipe.tags.includes('dessert')) {
-      return 'https://images.unsplash.com/photo-1563729784474-d77dbb933a9e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80';
-    } else {
-      return 'https://images.unsplash.com/photo-1505253758473-96b7015fcd40?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80';
-    }
+  const recipeSpecificImages: Record<string, string> = {
+    'classic-pizza': 'https://images.unsplash.com/photo-1604917877934-07d8d248d396?auto=format&fit=crop&w=1350&q=80',
+    'chocolate-cake': 'https://images.unsplash.com/photo-1606313564200-e75d5e30476c?auto=format&fit=crop&w=1350&q=80',
+    'spicy-noodles': 'https://images.unsplash.com/photo-1552611052-33e04de081de?auto=format&fit=crop&w=1350&q=80',
+    'chicken-stir-fry': 'https://images.unsplash.com/photo-1512058564555-18510be2db19?auto=format&fit=crop&w=1350&q=80',
+    'berry-smoothie': 'https://images.unsplash.com/photo-1505252585461-04db1eb84625?auto=format&fit=crop&w=1350&q=80',
+    'lavender-tea': 'https://images.unsplash.com/photo-1564890369478-c89ca6d9cde9?auto=format&fit=crop&w=1350&q=80',
+    'mushroom-risotto': 'https://images.unsplash.com/photo-1626296536125-61e4e1f4d71d?auto=format&fit=crop&w=1350&q=80',
+    'gingerbread-cookies': 'https://images.unsplash.com/photo-1607920592519-ded8e61d8d9f?auto=format&fit=crop&w=1350&q=80',
+    'apple-pie': 'https://images.unsplash.com/photo-1621743478914-cc8a68d76208?auto=format&fit=crop&w=1350&q=80',
+    'sushi-rolls': 'https://images.unsplash.com/photo-1579871494447-9811cf80d66c?auto=format&fit=crop&w=1350&q=80',
+    'french-toast': 'https://images.unsplash.com/photo-1639108094328-2b94a49b1c2e?auto=format&fit=crop&w=1350&q=80',
+    'chicken-curry': 'https://images.unsplash.com/photo-1604952564555-13c872c0a364?auto=format&fit=crop&w=1350&q=80',
+    'butter-chicken': 'https://images.unsplash.com/photo-1603894584373-5ac82b2ae398?auto=format&fit=crop&w=1350&q=80',
+    'malai-kofta': 'https://images.unsplash.com/photo-1631452180539-96aca7d48617?auto=format&fit=crop&w=1350&q=80',
+    'shahi-paneer': 'https://images.unsplash.com/photo-1567188040759-fb8a883dc6d8?auto=format&fit=crop&w=1350&q=80',
+    'tandoori-raan': 'https://images.unsplash.com/photo-1651908243355-a7c0c5bd409d?auto=format&fit=crop&w=1350&q=80',
+    'masala-dosa': 'https://images.unsplash.com/photo-1610192244261-3f33de3f72e1?auto=format&fit=crop&w=1350&q=80'
   };
 
-  // Special case for specific recipes that need image corrections
-  const specialCaseImages: Record<string, string> = {
-    'masala-dosa': 'https://images.unsplash.com/photo-1610192244261-3f33de3f72e1?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
-    'butter-chicken': 'https://images.unsplash.com/photo-1603894584373-5ac82b2ae398?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
-    'shahi-paneer': 'https://images.unsplash.com/photo-1567188040759-fb8a883dc6d8?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80'
-  };
-
-  // If there's a special case for this recipe, use that
-  if (recipe.id in specialCaseImages) {
-    return specialCaseImages[recipe.id];
+  if (recipe.id in recipeSpecificImages) {
+    return recipeSpecificImages[recipe.id];
   }
 
-  // Check if the image URL is valid and add quality parameters
-  if (recipe.imageUrl && recipe.imageUrl.length > 10) {
-    // Add quality parameters to Unsplash URLs
-    if (recipe.imageUrl.includes('unsplash.com')) {
-      // Parse URL and add quality parameters if not already present
-      const url = new URL(recipe.imageUrl);
-      if (!url.searchParams.has('q')) {
-        url.searchParams.set('q', '80');
+  const categoryImages: Record<string, string> = {
+    'indian': 'https://images.unsplash.com/photo-1585937421612-70a008356c36?auto=format&fit=crop&w=1350&q=80',
+    'dessert': 'https://images.unsplash.com/photo-1563729784474-d77dbb933a9e?auto=format&fit=crop&w=1350&q=80',
+    'pasta': 'https://images.unsplash.com/photo-1551183053-bf91a1d81141?auto=format&fit=crop&w=1350&q=80',
+    'breakfast': 'https://images.unsplash.com/photo-1533089860892-a7c6f3a1aa85?auto=format&fit=crop&w=1350&q=80',
+    'vegetarian': 'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=1350&q=80',
+    'chicken': 'https://images.unsplash.com/photo-1527477396000-e27163b481c2?auto=format&fit=crop&w=1350&q=80'
+  };
+
+  for (const tag of recipe.tags) {
+    const lowerTag = tag.toLowerCase();
+    for (const [category, url] of Object.entries(categoryImages)) {
+      if (lowerTag.includes(category)) {
+        return url;
       }
-      if (!url.searchParams.has('auto')) {
-        url.searchParams.set('auto', 'format');
-      }
-      return url.toString();
     }
+  }
+
+  if (recipe.imageUrl && recipe.imageUrl.length > 10) {
     return recipe.imageUrl;
   }
 
-  // Use default image as fallback
-  return getDefaultImage();
+  return 'https://images.unsplash.com/photo-1505253758473-96b7015fcd40?auto=format&fit=crop&w=1350&q=80';
 };
 
 const Recipe = () => {
@@ -68,10 +71,8 @@ const Recipe = () => {
       setIsLoading(true);
       const foundRecipe = getRecipeById(id);
       
-      // Simulate loading for smooth transitions
       setTimeout(() => {
         if (foundRecipe) {
-          // Ensure the recipe has a valid image URL
           const validatedRecipe = {
             ...foundRecipe,
             imageUrl: getValidImageUrl(foundRecipe)
@@ -83,7 +84,6 @@ const Recipe = () => {
         setIsLoading(false);
       }, 300);
       
-      // Check if recipe is in favorites
       const favorites = JSON.parse(localStorage.getItem('favoriteRecipes') || '[]');
       setIsFavorite(favorites.includes(id));
     }
@@ -133,7 +133,6 @@ const Recipe = () => {
         console.error('Error sharing:', error);
       }
     } else {
-      // Fallback for browsers that don't support navigator.share
       navigator.clipboard.writeText(window.location.href);
       
       toast({
@@ -147,8 +146,6 @@ const Recipe = () => {
   const toggleVoiceGuidance = () => {
     setIsPlaying(!isPlaying);
     
-    // Voice guidance state is controlled in the VoiceGuidance component,
-    // but we keep this state for the UI button
     toast({
       title: isPlaying ? "Voice Guidance Paused" : "Voice Guidance Started",
       description: isPlaying 
@@ -191,7 +188,6 @@ const Recipe = () => {
   return (
     <>
       <div className="min-h-screen pt-20 pb-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto animate-fade-in">
-        {/* Back button */}
         <button
           onClick={() => navigate('/')}
           className="mb-6 flex items-center text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors"
@@ -200,7 +196,6 @@ const Recipe = () => {
           <span>Back to recipes</span>
         </button>
         
-        {/* Recipe header with gradient background */}
         <div className="mb-8 p-6 rounded-xl" style={{
           background: 'linear-gradient(90deg, hsla(46, 73%, 75%, 1) 0%, hsla(176, 73%, 88%, 1) 100%)',
           color: '#333'
@@ -208,7 +203,6 @@ const Recipe = () => {
           <h1 className="text-3xl sm:text-4xl font-bold mb-3">{recipe.name}</h1>
           <p className="text-lg mb-4">{recipe.description}</p>
           
-          {/* Recipe meta info */}
           <div className="flex flex-wrap gap-4 text-sm">
             {recipe.prepTime && recipe.cookTime && (
               <div className="flex items-center">
@@ -245,7 +239,6 @@ const Recipe = () => {
           </div>
         </div>
         
-        {/* Recipe image and action buttons */}
         <div className="grid md:grid-cols-2 gap-8 mb-8">
           <div className="overflow-hidden rounded-xl shadow-lg transition-all hover:shadow-xl">
             <img
@@ -254,14 +247,13 @@ const Recipe = () => {
               className="w-full h-full object-cover"
               onError={(e) => {
                 const target = e.target as HTMLImageElement;
-                target.onerror = null; // Prevent infinite loops
+                target.onerror = null;
                 target.src = 'https://images.unsplash.com/photo-1505253758473-96b7015fcd40?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80';
               }}
             />
           </div>
           
           <div className="flex flex-col justify-between">
-            {/* Tags */}
             <div className="mb-6">
               <h3 className="text-lg font-medium mb-3">Tags</h3>
               <div className="flex flex-wrap gap-2">
@@ -280,7 +272,6 @@ const Recipe = () => {
               </div>
             </div>
             
-            {/* Action buttons */}
             <div className="space-y-4">
               <button
                 onClick={toggleFavorite}
@@ -305,10 +296,8 @@ const Recipe = () => {
           </div>
         </div>
         
-        {/* AI-powered recipe features */}
         <RecipeAiFeatures recipe={recipe} />
         
-        {/* Recipe content tabs */}
         <div className="mb-6 border-b border-gray-200 dark:border-gray-800">
           <div className="flex space-x-8">
             <button
@@ -341,7 +330,6 @@ const Recipe = () => {
           </div>
         </div>
         
-        {/* Tab content */}
         <div className="mb-12 animate-fade-in">
           {activeTab === 'ingredients' && (
             <div>
@@ -392,10 +380,12 @@ const Recipe = () => {
         </div>
       </div>
       
-      {/* Voice guidance component */}
       <VoiceGuidance 
         instructions={recipe.instructions} 
         title={recipe.name}
+        manualControlled={false}
+        externalPlayingState={isPlaying}
+        onPlayingStateChange={setIsPlaying}
       />
     </>
   );
