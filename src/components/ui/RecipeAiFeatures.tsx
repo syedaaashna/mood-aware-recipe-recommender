@@ -13,14 +13,42 @@ const RecipeAiFeatures = ({ recipe }: RecipeAiFeaturesProps) => {
   const similarRecipes = getSimilarRecipes(recipe.id, 3);
 
   // Helper function to get appropriate image URL with fallbacks
-  const getImageUrl = (recipe: Recipe, smallSize = false) => {
-    if (!recipe.imageUrl) {
-      // Provide specific fallback images based on recipe type/category
-      if (recipe.tags.includes('dessert')) {
+  const getImageUrl = (recipeItem: Recipe, smallSize = false) => {
+    // Recipe-specific image mappings
+    const recipeSpecificImages: Record<string, string> = {
+      'classic-pizza': 'https://images.unsplash.com/photo-1604917877934-07d8d248d396',
+      'chocolate-cake': 'https://images.unsplash.com/photo-1606313564200-e75d5e30476c',
+      'spicy-noodles': 'https://images.unsplash.com/photo-1552611052-33e04de081de',
+      'chicken-stir-fry': 'https://images.unsplash.com/photo-1512058564555-18510be2db19',
+      'berry-smoothie': 'https://images.unsplash.com/photo-1505252585461-04db1eb84625',
+      'lavender-tea': 'https://images.unsplash.com/photo-1564890369478-c89ca6d9cde9',
+      'mushroom-risotto': 'https://images.unsplash.com/photo-1626296536125-61e4e1f4d71d',
+      'gingerbread-cookies': 'https://images.unsplash.com/photo-1607920592519-ded8e61d8d9f',
+      'apple-pie': 'https://images.unsplash.com/photo-1621743478914-cc8a68d76208',
+      'sushi-rolls': 'https://images.unsplash.com/photo-1579871494447-9811cf80d66c',
+      'french-toast': 'https://images.unsplash.com/photo-1639108094328-2b94a49b1c2e',
+      'chicken-curry': 'https://images.unsplash.com/photo-1604952564555-13c872c0a364',
+      'butter-chicken': 'https://images.unsplash.com/photo-1603894584373-5ac82b2ae398',
+      'malai-kofta': 'https://images.unsplash.com/photo-1631452180539-96aca7d48617',
+      'shahi-paneer': 'https://images.unsplash.com/photo-1567188040759-fb8a883dc6d8',
+      'tandoori-raan': 'https://images.unsplash.com/photo-1651908243355-a7c0c5bd409d',
+      'masala-dosa': 'https://images.unsplash.com/photo-1610192244261-3f33de3f72e1'
+    };
+    
+    // Check if we have a recipe-specific image
+    if (recipeItem.id in recipeSpecificImages) {
+      const baseUrl = recipeSpecificImages[recipeItem.id];
+      const dimensions = smallSize ? 'w=400&h=200' : 'w=600&h=400';
+      return `${baseUrl}?auto=format&fit=crop&${dimensions}&q=80`;
+    }
+    
+    if (!recipeItem.imageUrl) {
+      // Category-specific fallbacks
+      if (recipeItem.tags.includes('dessert')) {
         return 'https://images.unsplash.com/photo-1606313564200-e75d5e30476c?auto=format&fit=crop&w=400&h=200';
-      } else if (recipe.tags.includes('indian')) {
+      } else if (recipeItem.tags.includes('indian')) {
         return 'https://images.unsplash.com/photo-1604952564555-13c872c0a364?auto=format&fit=crop&w=400&h=200';
-      } else if (recipe.tags.includes('breakfast')) {
+      } else if (recipeItem.tags.includes('breakfast')) {
         return 'https://images.unsplash.com/photo-1639108094328-2b94a49b1c2e?auto=format&fit=crop&w=400&h=200';
       } else {
         return 'https://images.unsplash.com/photo-1618160702438-9b02ab6515c9?auto=format&fit=crop&w=400&h=200';
@@ -28,7 +56,7 @@ const RecipeAiFeatures = ({ recipe }: RecipeAiFeaturesProps) => {
     }
     
     // Ensure we're using the base URL without existing query parameters
-    const baseUrl = recipe.imageUrl.split('?')[0];
+    const baseUrl = recipeItem.imageUrl.split('?')[0];
     
     // Add appropriate size parameters
     const dimensions = smallSize ? 'w=400&h=200' : 'w=600&h=400';

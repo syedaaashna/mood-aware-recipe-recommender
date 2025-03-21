@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { ArrowLeft, Clock, Users, ChefHat, Heart, Share2, Volume2, Play, Pause } from 'lucide-react';
@@ -7,6 +8,7 @@ import RecipeAiFeatures from '@/components/ui/RecipeAiFeatures';
 import { useToast } from "@/hooks/use-toast";
 
 const getValidImageUrl = (recipe: RecipeType): string => {
+  // First, check if recipe has a specific ID that needs a fixed image
   const recipeSpecificImages: Record<string, string> = {
     'classic-pizza': 'https://images.unsplash.com/photo-1604917877934-07d8d248d396?auto=format&fit=crop&w=1350&q=80',
     'chocolate-cake': 'https://images.unsplash.com/photo-1606313564200-e75d5e30476c?auto=format&fit=crop&w=1350&q=80',
@@ -31,6 +33,7 @@ const getValidImageUrl = (recipe: RecipeType): string => {
     return recipeSpecificImages[recipe.id];
   }
 
+  // If no specific image is mapped, check recipe tags for category images
   const categoryImages: Record<string, string> = {
     'indian': 'https://images.unsplash.com/photo-1585937421612-70a008356c36?auto=format&fit=crop&w=1350&q=80',
     'dessert': 'https://images.unsplash.com/photo-1563729784474-d77dbb933a9e?auto=format&fit=crop&w=1350&q=80',
@@ -49,10 +52,12 @@ const getValidImageUrl = (recipe: RecipeType): string => {
     }
   }
 
+  // If recipe has its own imageUrl that looks valid, use it
   if (recipe.imageUrl && recipe.imageUrl.length > 10) {
     return recipe.imageUrl;
   }
 
+  // Default fallback image if no valid image is found
   return 'https://images.unsplash.com/photo-1505253758473-96b7015fcd40?auto=format&fit=crop&w=1350&q=80';
 };
 

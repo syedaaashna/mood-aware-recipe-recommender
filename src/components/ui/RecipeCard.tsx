@@ -76,6 +76,32 @@ const RecipeCard = ({ recipe, isFavorite = false, onToggleFavorite }: RecipeCard
 
   // Enhanced image mapping for recipes to ensure they match their dishes
   const getImageUrl = () => {
+    // Recipe-specific image mappings
+    const recipeSpecificImages: Record<string, string> = {
+      'classic-pizza': 'https://images.unsplash.com/photo-1604917877934-07d8d248d396?auto=format&fit=crop&w=600&h=400',
+      'chocolate-cake': 'https://images.unsplash.com/photo-1606313564200-e75d5e30476c?auto=format&fit=crop&w=600&h=400',
+      'spicy-noodles': 'https://images.unsplash.com/photo-1552611052-33e04de081de?auto=format&fit=crop&w=600&h=400',
+      'chicken-stir-fry': 'https://images.unsplash.com/photo-1512058564555-18510be2db19?auto=format&fit=crop&w=600&h=400',
+      'berry-smoothie': 'https://images.unsplash.com/photo-1505252585461-04db1eb84625?auto=format&fit=crop&w=600&h=400',
+      'lavender-tea': 'https://images.unsplash.com/photo-1564890369478-c89ca6d9cde9?auto=format&fit=crop&w=600&h=400',
+      'mushroom-risotto': 'https://images.unsplash.com/photo-1626296536125-61e4e1f4d71d?auto=format&fit=crop&w=600&h=400',
+      'gingerbread-cookies': 'https://images.unsplash.com/photo-1607920592519-ded8e61d8d9f?auto=format&fit=crop&w=600&h=400',
+      'apple-pie': 'https://images.unsplash.com/photo-1621743478914-cc8a68d76208?auto=format&fit=crop&w=600&h=400',
+      'sushi-rolls': 'https://images.unsplash.com/photo-1579871494447-9811cf80d66c?auto=format&fit=crop&w=600&h=400',
+      'french-toast': 'https://images.unsplash.com/photo-1639108094328-2b94a49b1c2e?auto=format&fit=crop&w=600&h=400',
+      'chicken-curry': 'https://images.unsplash.com/photo-1604952564555-13c872c0a364?auto=format&fit=crop&w=600&h=400',
+      'butter-chicken': 'https://images.unsplash.com/photo-1603894584373-5ac82b2ae398?auto=format&fit=crop&w=600&h=400',
+      'malai-kofta': 'https://images.unsplash.com/photo-1631452180539-96aca7d48617?auto=format&fit=crop&w=600&h=400',
+      'shahi-paneer': 'https://images.unsplash.com/photo-1567188040759-fb8a883dc6d8?auto=format&fit=crop&w=600&h=400',
+      'tandoori-raan': 'https://images.unsplash.com/photo-1651908243355-a7c0c5bd409d?auto=format&fit=crop&w=600&h=400',
+      'masala-dosa': 'https://images.unsplash.com/photo-1610192244261-3f33de3f72e1?auto=format&fit=crop&w=600&h=400'
+    };
+    
+    // First check if we have a recipe-specific image
+    if (recipe.id in recipeSpecificImages) {
+      return recipeSpecificImages[recipe.id];
+    }
+    
     if (imageError || !recipe.imageUrl) {
       // Provide specific fallback images based on recipe name and type/category
       const recipeName = (recipe.title || recipe.name).toLowerCase();
