@@ -1,3 +1,4 @@
+
 export interface Mood {
   id: string;
   name: string;
@@ -723,4 +724,6 @@ const recipes: Recipe[] = [
       'Make sure your pan is very hot before pouring the batter',
       'Let the bottom cook completely before attempting to flip or fold'
     ],
-    hindiVoiceGuidance: 'मसाला डोसा
+    hindiVoiceGuidance: 'मसाला डोसा'
+  }
+];
