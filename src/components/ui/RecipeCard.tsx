@@ -102,7 +102,33 @@ const RecipeCard = ({ recipe, isFavorite = false, onToggleFavorite }: RecipeCard
       'mango-lassi': 'https://images.pexels.com/photos/6205791/pexels-photo-6205791.jpeg?auto=compress&cs=tinysrgb&w=600&h=400',
       'samosas': 'https://images.pexels.com/photos/8992923/pexels-photo-8992923.jpeg?auto=compress&cs=tinysrgb&w=600&h=400',
       'gulab-jamun': 'https://images.pexels.com/photos/14485899/pexels-photo-14485899.jpeg?auto=compress&cs=tinysrgb&w=600&h=400',
-      'palak-paneer': 'https://images.pexels.com/photos/6013452/pexels-photo-6013452.jpeg?auto=compress&cs=tinysrgb&w=600&h=400'
+      'palak-paneer': 'https://images.pexels.com/photos/6013452/pexels-photo-6013452.jpeg?auto=compress&cs=tinysrgb&w=600&h=400',
+      // Additional recipes for all moods
+      'vegetable-stir-fry': 'https://images.pexels.com/photos/1410235/pexels-photo-1410235.jpeg?auto=compress&cs=tinysrgb&w=600&h=400',
+      'avocado-toast': 'https://images.pexels.com/photos/1351238/pexels-photo-1351238.jpeg?auto=compress&cs=tinysrgb&w=600&h=400',
+      'banana-pancakes': 'https://images.pexels.com/photos/376464/pexels-photo-376464.jpeg?auto=compress&cs=tinysrgb&w=600&h=400',
+      'greek-salad': 'https://images.pexels.com/photos/1211887/pexels-photo-1211887.jpeg?auto=compress&cs=tinysrgb&w=600&h=400',
+      'caprese-salad': 'https://images.pexels.com/photos/5945757/pexels-photo-5945757.jpeg?auto=compress&cs=tinysrgb&w=600&h=400',
+      'lemon-pasta': 'https://images.pexels.com/photos/1527603/pexels-photo-1527603.jpeg?auto=compress&cs=tinysrgb&w=600&h=400',
+      'tiramisu': 'https://images.pexels.com/photos/6249515/pexels-photo-6249515.jpeg?auto=compress&cs=tinysrgb&w=600&h=400',
+      'chicken-sandwich': 'https://images.pexels.com/photos/5947104/pexels-photo-5947104.jpeg?auto=compress&cs=tinysrgb&w=600&h=400',
+      'pho-soup': 'https://images.pexels.com/photos/9332172/pexels-photo-9332172.jpeg?auto=compress&cs=tinysrgb&w=600&h=400',
+      'pasta-carbonara': 'https://images.pexels.com/photos/5175537/pexels-photo-5175537.jpeg?auto=compress&cs=tinysrgb&w=600&h=400',
+      'beef-tacos': 'https://images.pexels.com/photos/4958641/pexels-photo-4958641.jpeg?auto=compress&cs=tinysrgb&w=600&h=400',
+      'pad-thai': 'https://images.pexels.com/photos/9609861/pexels-photo-9609861.jpeg?auto=compress&cs=tinysrgb&w=600&h=400',
+      'ramen': 'https://images.pexels.com/photos/884600/pexels-photo-884600.jpeg?auto=compress&cs=tinysrgb&w=600&h=400',
+      'caesar-salad': 'https://images.pexels.com/photos/6107598/pexels-photo-6107598.jpeg?auto=compress&cs=tinysrgb&w=600&h=400',
+      'spinach-quiche': 'https://images.pexels.com/photos/6060931/pexels-photo-6060931.jpeg?auto=compress&cs=tinysrgb&w=600&h=400',
+      'pancakes': 'https://images.pexels.com/photos/376464/pexels-photo-376464.jpeg?auto=compress&cs=tinysrgb&w=600&h=400',
+      'chicken-shawarma': 'https://images.pexels.com/photos/8511837/pexels-photo-8511837.jpeg?auto=compress&cs=tinysrgb&w=600&h=400',
+      'fish-curry': 'https://images.pexels.com/photos/699953/pexels-photo-699953.jpeg?auto=compress&cs=tinysrgb&w=600&h=400',
+      'tomato-soup': 'https://images.pexels.com/photos/539451/pexels-photo-539451.jpeg?auto=compress&cs=tinysrgb&w=600&h=400',
+      'vegetable-curry': 'https://images.pexels.com/photos/2474661/pexels-photo-2474661.jpeg?auto=compress&cs=tinysrgb&w=600&h=400',
+      'falafel': 'https://images.pexels.com/photos/5490876/pexels-photo-5490876.jpeg?auto=compress&cs=tinysrgb&w=600&h=400',
+      'chole-bhature': 'https://images.pexels.com/photos/18590402/pexels-photo-18590402/free-photo-of-chole-bhature.jpeg?auto=compress&cs=tinysrgb&w=600&h=400',
+      'dal-makhani': 'https://images.pexels.com/photos/7625181/pexels-photo-7625181.jpeg?auto=compress&cs=tinysrgb&w=600&h=400',
+      'rajma-chawal': 'https://images.pexels.com/photos/19299587/pexels-photo-19299587/free-photo-of-rajma-chawal-meal.jpeg?auto=compress&cs=tinysrgb&w=600&h=400',
+      'chana-masala': 'https://images.pexels.com/photos/3296580/pexels-photo-3296580.jpeg?auto=compress&cs=tinysrgb&w=600&h=400'
     };
     
     // First check if we have a recipe-specific image
@@ -141,7 +167,13 @@ const RecipeCard = ({ recipe, isFavorite = false, onToggleFavorite }: RecipeCard
       'lassi': 'https://images.pexels.com/photos/6205791/pexels-photo-6205791.jpeg?auto=compress&cs=tinysrgb&w=600&h=400',
       'samosa': 'https://images.pexels.com/photos/8992923/pexels-photo-8992923.jpeg?auto=compress&cs=tinysrgb&w=600&h=400',
       'sweet': 'https://images.pexels.com/photos/14485899/pexels-photo-14485899.jpeg?auto=compress&cs=tinysrgb&w=600&h=400',
-      'palak': 'https://images.pexels.com/photos/6013452/pexels-photo-6013452.jpeg?auto=compress&cs=tinysrgb&w=600&h=400'
+      'palak': 'https://images.pexels.com/photos/6013452/pexels-photo-6013452.jpeg?auto=compress&cs=tinysrgb&w=600&h=400',
+      'mexican': 'https://images.pexels.com/photos/4958641/pexels-photo-4958641.jpeg?auto=compress&cs=tinysrgb&w=600&h=400',
+      'thai': 'https://images.pexels.com/photos/9609861/pexels-photo-9609861.jpeg?auto=compress&cs=tinysrgb&w=600&h=400',
+      'japanese': 'https://images.pexels.com/photos/884600/pexels-photo-884600.jpeg?auto=compress&cs=tinysrgb&w=600&h=400',
+      'middle eastern': 'https://images.pexels.com/photos/8511837/pexels-photo-8511837.jpeg?auto=compress&cs=tinysrgb&w=600&h=400',
+      'fish': 'https://images.pexels.com/photos/699953/pexels-photo-699953.jpeg?auto=compress&cs=tinysrgb&w=600&h=400',
+      'vegetable': 'https://images.pexels.com/photos/1410235/pexels-photo-1410235.jpeg?auto=compress&cs=tinysrgb&w=600&h=400'
     };
     
     if (imageError || !recipe.imageUrl) {
@@ -204,7 +236,7 @@ const RecipeCard = ({ recipe, isFavorite = false, onToggleFavorite }: RecipeCard
             
             <img
               src={getImageUrl()}
-              alt={displayTitle}
+              alt={recipe.title || recipe.name}
               className={`w-full h-full object-cover transition-all duration-500 ${isHovered ? 'scale-110' : 'scale-100'}`}
               onLoad={handleImageLoad}
               onError={handleImageError}
@@ -253,7 +285,7 @@ const RecipeCard = ({ recipe, isFavorite = false, onToggleFavorite }: RecipeCard
           
           {/* Content with gradient background */}
           <div className={`p-4 ${gradientClass} bg-opacity-20`}>
-            <h3 className="font-bold text-lg mb-1 line-clamp-1">{displayTitle}</h3>
+            <h3 className="font-bold text-lg mb-1 line-clamp-1">{recipe.title || recipe.name}</h3>
             <p className="text-gray-600 dark:text-gray-300 text-sm mb-3 line-clamp-2">{recipe.description}</p>
             
             {/* Recipe info */}
@@ -278,7 +310,7 @@ const RecipeCard = ({ recipe, isFavorite = false, onToggleFavorite }: RecipeCard
             <div className="mt-2 mb-2">
               <span className="text-xs flex items-center gap-1 text-purple-600 dark:text-purple-400">
                 <Award size={12} />
-                <span className="font-medium">{getEnthusiasmRating()}</span>
+                <span className="font-medium">{Math.random() > 0.5 ? "Chef's pick!" : "Must try!"}</span>
               </span>
             </div>
             

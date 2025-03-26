@@ -32,7 +32,32 @@ const getValidImageUrl = (recipe: RecipeType): string => {
     'mango-lassi': 'https://images.pexels.com/photos/6205791/pexels-photo-6205791.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
     'samosas': 'https://images.pexels.com/photos/8992923/pexels-photo-8992923.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
     'gulab-jamun': 'https://images.pexels.com/photos/14485899/pexels-photo-14485899.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
-    'palak-paneer': 'https://images.pexels.com/photos/6013452/pexels-photo-6013452.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80'
+    'palak-paneer': 'https://images.pexels.com/photos/6013452/pexels-photo-6013452.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
+    'vegetable-stir-fry': 'https://images.pexels.com/photos/1410235/pexels-photo-1410235.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
+    'avocado-toast': 'https://images.pexels.com/photos/1351238/pexels-photo-1351238.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
+    'banana-pancakes': 'https://images.pexels.com/photos/376464/pexels-photo-376464.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
+    'greek-salad': 'https://images.pexels.com/photos/1211887/pexels-photo-1211887.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
+    'caprese-salad': 'https://images.pexels.com/photos/5945757/pexels-photo-5945757.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
+    'lemon-pasta': 'https://images.pexels.com/photos/1527603/pexels-photo-1527603.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
+    'tiramisu': 'https://images.pexels.com/photos/6249515/pexels-photo-6249515.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
+    'chicken-sandwich': 'https://images.pexels.com/photos/5947104/pexels-photo-5947104.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
+    'pho-soup': 'https://images.pexels.com/photos/9332172/pexels-photo-9332172.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
+    'pasta-carbonara': 'https://images.pexels.com/photos/5175537/pexels-photo-5175537.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
+    'beef-tacos': 'https://images.pexels.com/photos/4958641/pexels-photo-4958641.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
+    'pad-thai': 'https://images.pexels.com/photos/9609861/pexels-photo-9609861.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
+    'ramen': 'https://images.pexels.com/photos/884600/pexels-photo-884600.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
+    'caesar-salad': 'https://images.pexels.com/photos/6107598/pexels-photo-6107598.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
+    'spinach-quiche': 'https://images.pexels.com/photos/6060931/pexels-photo-6060931.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
+    'pancakes': 'https://images.pexels.com/photos/376464/pexels-photo-376464.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
+    'chicken-shawarma': 'https://images.pexels.com/photos/8511837/pexels-photo-8511837.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
+    'fish-curry': 'https://images.pexels.com/photos/699953/pexels-photo-699953.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
+    'tomato-soup': 'https://images.pexels.com/photos/539451/pexels-photo-539451.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
+    'vegetable-curry': 'https://images.pexels.com/photos/2474661/pexels-photo-2474661.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
+    'falafel': 'https://images.pexels.com/photos/5490876/pexels-photo-5490876.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
+    'chole-bhature': 'https://images.pexels.com/photos/18590402/pexels-photo-18590402/free-photo-of-chole-bhature.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
+    'dal-makhani': 'https://images.pexels.com/photos/7625181/pexels-photo-7625181.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
+    'rajma-chawal': 'https://images.pexels.com/photos/19299587/pexels-photo-19299587/free-photo-of-rajma-chawal-meal.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
+    'chana-masala': 'https://images.pexels.com/photos/3296580/pexels-photo-3296580.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80'
   };
 
   if (recipe.id in recipeSpecificImages) {
@@ -69,7 +94,13 @@ const getValidImageUrl = (recipe: RecipeType): string => {
     'lassi': 'https://images.pexels.com/photos/6205791/pexels-photo-6205791.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
     'samosa': 'https://images.pexels.com/photos/8992923/pexels-photo-8992923.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
     'sweet': 'https://images.pexels.com/photos/14485899/pexels-photo-14485899.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
-    'palak': 'https://images.pexels.com/photos/6013452/pexels-photo-6013452.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80'
+    'palak': 'https://images.pexels.com/photos/6013452/pexels-photo-6013452.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
+    'mexican': 'https://images.pexels.com/photos/4958641/pexels-photo-4958641.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
+    'thai': 'https://images.pexels.com/photos/9609861/pexels-photo-9609861.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
+    'japanese': 'https://images.pexels.com/photos/884600/pexels-photo-884600.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
+    'middle eastern': 'https://images.pexels.com/photos/8511837/pexels-photo-8511837.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
+    'fish': 'https://images.pexels.com/photos/699953/pexels-photo-699953.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
+    'vegetable': 'https://images.pexels.com/photos/1410235/pexels-photo-1410235.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80'
   };
 
   for (const tag of recipe.tags) {
@@ -311,7 +342,31 @@ const Recipe = () => {
             
             <div className="space-y-4">
               <button
-                onClick={toggleFavorite}
+                onClick={()=>{
+                  if(isFavorite) {
+                    const favorites = JSON.parse(localStorage.getItem('favoriteRecipes') || '[]');
+                    const updatedFavorites = favorites.filter((favId: string) => favId !== id);
+                    localStorage.setItem('favoriteRecipes', JSON.stringify(updatedFavorites));
+                    setIsFavorite(false);
+                    
+                    toast({
+                      title: "Removed from Favorites",
+                      description: `${recipe.name} has been removed from your favorites.`,
+                      duration: 3000,
+                    });
+                  } else {
+                    const favorites = JSON.parse(localStorage.getItem('favoriteRecipes') || '[]');
+                    favorites.push(id);
+                    localStorage.setItem('favoriteRecipes', JSON.stringify(favorites));
+                    setIsFavorite(true);
+                    
+                    toast({
+                      title: "Added to Favorites",
+                      description: `${recipe.name} has been added to your favorites.`,
+                      duration: 3000,
+                    });
+                  }
+                }}
                 className={`w-full px-4 py-3 rounded-lg flex items-center justify-center transition-colors ${
                   isFavorite 
                     ? 'bg-red-100 text-red-600 dark:bg-red-900 dark:text-red-300' 
@@ -323,7 +378,33 @@ const Recipe = () => {
               </button>
               
               <button
-                onClick={shareRecipe}
+                onClick={async () => {
+                  if (navigator.share && recipe) {
+                    try {
+                      await navigator.share({
+                        title: recipe.name,
+                        text: `Check out this recipe: ${recipe.name}`,
+                        url: window.location.href,
+                      });
+                      
+                      toast({
+                        title: "Recipe Shared",
+                        description: "Recipe link has been shared successfully.",
+                        duration: 3000,
+                      });
+                    } catch (error) {
+                      console.error('Error sharing:', error);
+                    }
+                  } else {
+                    navigator.clipboard.writeText(window.location.href);
+                    
+                    toast({
+                      title: "Link Copied",
+                      description: "Recipe link has been copied to clipboard.",
+                      duration: 3000,
+                    });
+                  }
+                }}
                 className="w-full px-4 py-3 rounded-lg bg-primary text-white flex items-center justify-center hover:bg-primary/90 transition-colors"
               >
                 <Share2 size={18} className="mr-2" />
@@ -387,7 +468,17 @@ const Recipe = () => {
               <div className="flex justify-between items-center mb-4">
                 <h2 className="text-xl font-bold">Instructions</h2>
                 <button
-                  onClick={toggleVoiceGuidance}
+                  onClick={() => {
+                    setIsPlaying(!isPlaying);
+                    
+                    toast({
+                      title: isPlaying ? "Voice Guidance Paused" : "Voice Guidance Started",
+                      description: isPlaying 
+                        ? "Voice guidance has been paused." 
+                        : "I'll guide you through each step of the recipe automatically.",
+                      duration: 3000,
+                    });
+                  }}
                   className="flex items-center px-3 py-2 rounded-full bg-primary text-white hover:bg-primary/90 transition-colors"
                 >
                   {isPlaying ? <Pause size={16} className="mr-2" /> : <Play size={16} className="mr-2" />}

@@ -34,14 +34,16 @@ const VoiceGuidance = ({
   const [showLanguageSelector, setShowLanguageSelector] = useState(false);
   const synthRef = useRef<SpeechSynthesis | null>(null);
   const utteranceRef = useRef<SpeechSynthesisUtterance | null>(null);
-  const processingRef = useRef<boolean>(false);
   const { toast } = useToast();
+
+  // Simple flag to prevent multiple speech instances
+  const isSpeakingRef = useRef<boolean>(false);
 
   // Initialize speech synthesis
   useEffect(() => {
     synthRef.current = window.speechSynthesis;
     
-    // Try to restore user's language preference
+    // Restore user's language preference
     const savedLanguage = localStorage.getItem('preferredLanguage');
     if (savedLanguage) {
       setSelectedLanguage(savedLanguage);
@@ -70,32 +72,36 @@ const VoiceGuidance = ({
 
   // Speak current step when playing, step changes, or language changes
   useEffect(() => {
-    let isMounted = true;
+    if (!isPlaying || isMuted || !instructions[currentStep] || !synthRef.current) {
+      return;
+    }
     
-    const speakCurrentInstruction = async () => {
-      if (!synthRef.current || isMuted || !instructions[currentStep] || processingRef.current || !isMounted) return;
-      
-      processingRef.current = true;
-      if (synthRef.current.speaking) {
-        synthRef.current.cancel();
-      }
+    // Cancel any ongoing speech before starting new one
+    if (synthRef.current.speaking) {
+      synthRef.current.cancel();
+    }
+    
+    // Timeout to ensure previous speech is canceled
+    setTimeout(() => {
+      if (!isPlaying) return;
       
       const stepText = `Step ${currentStep + 1}: ${instructions[currentStep]}`;
-      utteranceRef.current = new SpeechSynthesisUtterance(stepText);
-      utteranceRef.current.lang = selectedLanguage;
-      utteranceRef.current.rate = 0.9;
-      utteranceRef.current.pitch = 1.0;
+      const utterance = new SpeechSynthesisUtterance(stepText);
+      utterance.lang = selectedLanguage;
+      utterance.rate = 0.9;
+      utterance.pitch = 1.0;
       
-      utteranceRef.current.onend = () => {
-        if (!isMounted) return;
-        processingRef.current = false;
+      utterance.onend = () => {
+        isSpeakingRef.current = false;
         
+        // Auto-advance to next step after a short pause if auto-playing
         if (isPlaying && !manualControlled && currentStep < instructions.length - 1) {
           setTimeout(() => {
-            if (isMounted) setCurrentStep(prev => prev + 1);
+            setCurrentStep(prev => prev + 1);
           }, 1000);
         } else if (currentStep === instructions.length - 1 && isPlaying) {
           setIsPlaying(false);
+          
           if (onPlayingStateChange) {
             onPlayingStateChange(false);
           }
@@ -108,25 +114,23 @@ const VoiceGuidance = ({
         }
       };
       
-      utteranceRef.current.onerror = () => {
-        if (!isMounted) return;
-        processingRef.current = false;
-        console.error("Speech synthesis error occurred");
+      utterance.onerror = (event) => {
+        console.error("Speech synthesis error:", event);
+        isSpeakingRef.current = false;
+        
+        toast({
+          title: "Voice Guidance Error",
+          description: "There was a problem with speech synthesis. Try again.",
+          duration: 3000,
+        });
       };
       
-      synthRef.current.speak(utteranceRef.current);
-    };
-    
-    if (isPlaying && !isMuted) {
-      speakCurrentInstruction();
-    }
-    
-    return () => {
-      isMounted = false;
-      if (synthRef.current && synthRef.current.speaking) {
-        synthRef.current.cancel();
+      // Prevent multiple utterances from starting at once
+      if (!isSpeakingRef.current) {
+        isSpeakingRef.current = true;
+        synthRef.current.speak(utterance);
       }
-    };
+    }, 100);
   }, [isPlaying, isMuted, currentStep, selectedLanguage, instructions, manualControlled, onPlayingStateChange, toast]);
 
   // Save language preference when it changes
@@ -147,13 +151,11 @@ const VoiceGuidance = ({
       onPlayingStateChange(newPlayingState);
     }
 
-    if (newPlayingState) {
-      toast({
-        title: "Voice Guidance Started",
-        description: "I'll guide you through each step of the recipe.",
-        duration: 2000,
-      });
-    }
+    toast({
+      title: newPlayingState ? "Voice Guidance Started" : "Voice Guidance Paused",
+      description: newPlayingState ? "I'll guide you through each step of the recipe." : "Voice guidance has been paused.",
+      duration: 2000,
+    });
   };
 
   const toggleMute = () => {
@@ -165,6 +167,10 @@ const VoiceGuidance = ({
       
       if (onPlayingStateChange) {
         onPlayingStateChange(false);
+      }
+      
+      if (synthRef.current) {
+        synthRef.current.cancel();
       }
     }
     
@@ -178,12 +184,24 @@ const VoiceGuidance = ({
   const nextStep = () => {
     if (currentStep < instructions.length - 1) {
       setCurrentStep(prev => prev + 1);
+      
+      // Cancel current speech when manually advancing
+      if (synthRef.current && synthRef.current.speaking) {
+        synthRef.current.cancel();
+        isSpeakingRef.current = false;
+      }
     }
   };
 
   const prevStep = () => {
     if (currentStep > 0) {
       setCurrentStep(prev => prev - 1);
+      
+      // Cancel current speech when manually going back
+      if (synthRef.current && synthRef.current.speaking) {
+        synthRef.current.cancel();
+        isSpeakingRef.current = false;
+      }
     }
   };
 
@@ -203,9 +221,10 @@ const VoiceGuidance = ({
       duration: 2000,
     });
     
-    if (isPlaying) {
-      if (synthRef.current) synthRef.current.cancel();
-      processingRef.current = false;
+    // Cancel current speech when changing language
+    if (synthRef.current && synthRef.current.speaking) {
+      synthRef.current.cancel();
+      isSpeakingRef.current = false;
     }
   };
 
