@@ -76,25 +76,33 @@ const RecipeCard = ({ recipe, isFavorite = false, onToggleFavorite }: RecipeCard
 
   // Enhanced image mapping for recipes to ensure they match their dishes
   const getImageUrl = () => {
-    // Recipe-specific image mappings - completely updated with better, more accurate images
+    // Recipe-specific image mappings with high-quality, reliable images
     const recipeSpecificImages: Record<string, string> = {
-      'classic-pizza': 'https://images.unsplash.com/photo-1604382354936-07c5d9983bd3?auto=format&fit=crop&w=600&h=400',
-      'chocolate-cake': 'https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=600&h=400',
-      'spicy-noodles': 'https://images.unsplash.com/photo-1569058242567-93de6c36f8e6?auto=format&fit=crop&w=600&h=400',
-      'chicken-stir-fry': 'https://images.unsplash.com/photo-1603133872878-684f208fb84b?auto=format&fit=crop&w=600&h=400',
-      'berry-smoothie': 'https://images.unsplash.com/photo-1553530666-ba11a90a3360?auto=format&fit=crop&w=600&h=400',
-      'lavender-tea': 'https://images.unsplash.com/photo-1594631252845-29fc4cc8cde9?auto=format&fit=crop&w=600&h=400',
-      'mushroom-risotto': 'https://images.unsplash.com/photo-1476124369491-e7addf5db371?auto=format&fit=crop&w=600&h=400',
-      'gingerbread-cookies': 'https://images.unsplash.com/photo-1481391319762-47dff72954d9?auto=format&fit=crop&w=600&h=400',
-      'apple-pie': 'https://images.unsplash.com/photo-1621743478914-cc8a68d76208?auto=format&fit=crop&w=600&h=400',
-      'sushi-rolls': 'https://images.unsplash.com/photo-1579584425555-c3ce17fd4351?auto=format&fit=crop&w=600&h=400',
-      'french-toast': 'https://images.unsplash.com/photo-1484723091739-30a097e8f929?auto=format&fit=crop&w=600&h=400',
-      'chicken-curry': 'https://images.unsplash.com/photo-1565557623262-b51c2513a641?auto=format&fit=crop&w=600&h=400',
-      'butter-chicken': 'https://images.unsplash.com/photo-1588166524941-3bf61a9c41db?auto=format&fit=crop&w=600&h=400',
-      'malai-kofta': 'https://images.unsplash.com/photo-1645177628172-a94c1f96e6db?auto=format&fit=crop&w=600&h=400',
-      'shahi-paneer': 'https://images.unsplash.com/photo-1631292784640-848cf71c0dce?auto=format&fit=crop&w=600&h=400',
-      'tandoori-raan': 'https://images.unsplash.com/photo-1615361200098-9e630ec29b4e?auto=format&fit=crop&w=600&h=400',
-      'masala-dosa': 'https://images.unsplash.com/photo-1610192244261-3f33de3f72e1?auto=format&fit=crop&w=600&h=400'
+      'classic-pizza': 'https://images.pexels.com/photos/825661/pexels-photo-825661.jpeg?auto=compress&cs=tinysrgb&w=600&h=400',
+      'chocolate-cake': 'https://images.pexels.com/photos/132694/pexels-photo-132694.jpeg?auto=compress&cs=tinysrgb&w=600&h=400',
+      'spicy-noodles': 'https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg?auto=compress&cs=tinysrgb&w=600&h=400',
+      'chicken-stir-fry': 'https://images.pexels.com/photos/2673353/pexels-photo-2673353.jpeg?auto=compress&cs=tinysrgb&w=600&h=400',
+      'berry-smoothie': 'https://images.pexels.com/photos/775032/pexels-photo-775032.jpeg?auto=compress&cs=tinysrgb&w=600&h=400',
+      'lavender-tea': 'https://images.pexels.com/photos/1417945/pexels-photo-1417945.jpeg?auto=compress&cs=tinysrgb&w=600&h=400',
+      'mushroom-risotto': 'https://images.pexels.com/photos/6419720/pexels-photo-6419720.jpeg?auto=compress&cs=tinysrgb&w=600&h=400',
+      'gingerbread-cookies': 'https://images.pexels.com/photos/6341984/pexels-photo-6341984.jpeg?auto=compress&cs=tinysrgb&w=600&h=400',
+      'apple-pie': 'https://images.pexels.com/photos/6163263/pexels-photo-6163263.jpeg?auto=compress&cs=tinysrgb&w=600&h=400',
+      'sushi-rolls': 'https://images.pexels.com/photos/2323398/pexels-photo-2323398.jpeg?auto=compress&cs=tinysrgb&w=600&h=400',
+      'french-toast': 'https://images.pexels.com/photos/7170323/pexels-photo-7170323.jpeg?auto=compress&cs=tinysrgb&w=600&h=400',
+      'chicken-curry': 'https://images.pexels.com/photos/6645965/pexels-photo-6645965.jpeg?auto=compress&cs=tinysrgb&w=600&h=400',
+      'butter-chicken': 'https://images.pexels.com/photos/7625056/pexels-photo-7625056.jpeg?auto=compress&cs=tinysrgb&w=600&h=400',
+      'malai-kofta': 'https://images.pexels.com/photos/12385193/pexels-photo-12385193.jpeg?auto=compress&cs=tinysrgb&w=600&h=400',
+      'shahi-paneer': 'https://images.pexels.com/photos/6940996/pexels-photo-6940996.jpeg?auto=compress&cs=tinysrgb&w=600&h=400',
+      'tandoori-raan': 'https://images.pexels.com/photos/6107787/pexels-photo-6107787.jpeg?auto=compress&cs=tinysrgb&w=600&h=400',
+      'masala-dosa': 'https://images.pexels.com/photos/5560763/pexels-photo-5560763.jpeg?auto=compress&cs=tinysrgb&w=600&h=400',
+      'aloo-paratha': 'https://images.pexels.com/photos/9797029/pexels-photo-9797029.jpeg?auto=compress&cs=tinysrgb&w=600&h=400',
+      'biryani': 'https://images.pexels.com/photos/7394819/pexels-photo-7394819.jpeg?auto=compress&cs=tinysrgb&w=600&h=400', 
+      'coconut-curry': 'https://images.pexels.com/photos/5409015/pexels-photo-5409015.jpeg?auto=compress&cs=tinysrgb&w=600&h=400',
+      'matcha-smoothie': 'https://images.pexels.com/photos/4790618/pexels-photo-4790618.jpeg?auto=compress&cs=tinysrgb&w=600&h=400',
+      'mango-lassi': 'https://images.pexels.com/photos/6205791/pexels-photo-6205791.jpeg?auto=compress&cs=tinysrgb&w=600&h=400',
+      'samosas': 'https://images.pexels.com/photos/8992923/pexels-photo-8992923.jpeg?auto=compress&cs=tinysrgb&w=600&h=400',
+      'gulab-jamun': 'https://images.pexels.com/photos/14485899/pexels-photo-14485899.jpeg?auto=compress&cs=tinysrgb&w=600&h=400',
+      'palak-paneer': 'https://images.pexels.com/photos/6013452/pexels-photo-6013452.jpeg?auto=compress&cs=tinysrgb&w=600&h=400'
     };
     
     // First check if we have a recipe-specific image
@@ -102,33 +110,38 @@ const RecipeCard = ({ recipe, isFavorite = false, onToggleFavorite }: RecipeCard
       return recipeSpecificImages[recipe.id];
     }
     
-    // Fallback category images with improved quality selections
+    // Fallback category images with reliable sources
     const categoryImages: Record<string, string> = {
-      'pasta': 'https://images.unsplash.com/photo-1563379926898-05f4575a45d8?auto=format&fit=crop&w=600&h=400',
-      'curry': 'https://images.unsplash.com/photo-1565557623262-b51c2513a641?auto=format&fit=crop&w=600&h=400',
-      'indian': 'https://images.unsplash.com/photo-1585937421612-70a008356c36?auto=format&fit=crop&w=600&h=400',
-      'breakfast': 'https://images.unsplash.com/photo-1533089860892-a7c6f3a1aa85?auto=format&fit=crop&w=600&h=400',
-      'pancake': 'https://images.unsplash.com/photo-1528207776546-365bb710ee93?auto=format&fit=crop&w=600&h=400',
-      'cake': 'https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=600&h=400',
-      'dessert': 'https://images.unsplash.com/photo-1563729784474-d77dbb933a9e?auto=format&fit=crop&w=600&h=400',
-      'soup': 'https://images.unsplash.com/photo-1547592166-23ac45744acd?auto=format&fit=crop&w=600&h=400',
-      'salad': 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=600&h=400',
-      'pizza': 'https://images.unsplash.com/photo-1604382354936-07c5d9983bd3?auto=format&fit=crop&w=600&h=400',
-      'smoothie': 'https://images.unsplash.com/photo-1553530666-ba11a90a3360?auto=format&fit=crop&w=600&h=400',
-      'chicken': 'https://images.unsplash.com/photo-1598532213298-304a96a11b8e?auto=format&fit=crop&w=600&h=400',
-      'vegetarian': 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=600&h=400',
-      'south indian': 'https://images.unsplash.com/photo-1610192244261-3f33de3f72e1?auto=format&fit=crop&w=600&h=400',
-      'dosa': 'https://images.unsplash.com/photo-1610192244261-3f33de3f72e1?auto=format&fit=crop&w=600&h=400',
-      'noodles': 'https://images.unsplash.com/photo-1569058242567-93de6c36f8e6?auto=format&fit=crop&w=600&h=400',
-      'stir-fry': 'https://images.unsplash.com/photo-1603133872878-684f208fb84b?auto=format&fit=crop&w=600&h=400',
-      'cookies': 'https://images.unsplash.com/photo-1499636136210-6f4ee915583e?auto=format&fit=crop&w=600&h=400',
-      'pie': 'https://images.unsplash.com/photo-1621743478914-cc8a68d76208?auto=format&fit=crop&w=600&h=400',
-      'tea': 'https://images.unsplash.com/photo-1594631252845-29fc4cc8cde9?auto=format&fit=crop&w=600&h=400',
-      'risotto': 'https://images.unsplash.com/photo-1476124369491-e7addf5db371?auto=format&fit=crop&w=600&h=400',
-      'sushi': 'https://images.unsplash.com/photo-1579584425555-c3ce17fd4351?auto=format&fit=crop&w=600&h=400',
-      'north indian': 'https://images.unsplash.com/photo-1565557623262-b51c2513a641?auto=format&fit=crop&w=600&h=400',
-      'paneer': 'https://images.unsplash.com/photo-1631292784640-848cf71c0dce?auto=format&fit=crop&w=600&h=400',
-      'lamb': 'https://images.unsplash.com/photo-1615361200098-9e630ec29b4e?auto=format&fit=crop&w=600&h=400'
+      'pasta': 'https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg?auto=compress&cs=tinysrgb&w=600&h=400',
+      'curry': 'https://images.pexels.com/photos/6645965/pexels-photo-6645965.jpeg?auto=compress&cs=tinysrgb&w=600&h=400',
+      'indian': 'https://images.pexels.com/photos/7625056/pexels-photo-7625056.jpeg?auto=compress&cs=tinysrgb&w=600&h=400',
+      'breakfast': 'https://images.pexels.com/photos/7170323/pexels-photo-7170323.jpeg?auto=compress&cs=tinysrgb&w=600&h=400',
+      'pancake': 'https://images.pexels.com/photos/376464/pexels-photo-376464.jpeg?auto=compress&cs=tinysrgb&w=600&h=400',
+      'cake': 'https://images.pexels.com/photos/132694/pexels-photo-132694.jpeg?auto=compress&cs=tinysrgb&w=600&h=400',
+      'dessert': 'https://images.pexels.com/photos/1126359/pexels-photo-1126359.jpeg?auto=compress&cs=tinysrgb&w=600&h=400',
+      'soup': 'https://images.pexels.com/photos/5409035/pexels-photo-5409035.jpeg?auto=compress&cs=tinysrgb&w=600&h=400',
+      'salad': 'https://images.pexels.com/photos/1059905/pexels-photo-1059905.jpeg?auto=compress&cs=tinysrgb&w=600&h=400',
+      'pizza': 'https://images.pexels.com/photos/825661/pexels-photo-825661.jpeg?auto=compress&cs=tinysrgb&w=600&h=400',
+      'smoothie': 'https://images.pexels.com/photos/775032/pexels-photo-775032.jpeg?auto=compress&cs=tinysrgb&w=600&h=400',
+      'chicken': 'https://images.pexels.com/photos/2673353/pexels-photo-2673353.jpeg?auto=compress&cs=tinysrgb&w=600&h=400',
+      'vegetarian': 'https://images.pexels.com/photos/1059905/pexels-photo-1059905.jpeg?auto=compress&cs=tinysrgb&w=600&h=400',
+      'south indian': 'https://images.pexels.com/photos/5560763/pexels-photo-5560763.jpeg?auto=compress&cs=tinysrgb&w=600&h=400',
+      'dosa': 'https://images.pexels.com/photos/5560763/pexels-photo-5560763.jpeg?auto=compress&cs=tinysrgb&w=600&h=400',
+      'noodles': 'https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg?auto=compress&cs=tinysrgb&w=600&h=400',
+      'stir-fry': 'https://images.pexels.com/photos/2673353/pexels-photo-2673353.jpeg?auto=compress&cs=tinysrgb&w=600&h=400',
+      'cookies': 'https://images.pexels.com/photos/6341984/pexels-photo-6341984.jpeg?auto=compress&cs=tinysrgb&w=600&h=400',
+      'pie': 'https://images.pexels.com/photos/6163263/pexels-photo-6163263.jpeg?auto=compress&cs=tinysrgb&w=600&h=400',
+      'tea': 'https://images.pexels.com/photos/1417945/pexels-photo-1417945.jpeg?auto=compress&cs=tinysrgb&w=600&h=400',
+      'risotto': 'https://images.pexels.com/photos/6419720/pexels-photo-6419720.jpeg?auto=compress&cs=tinysrgb&w=600&h=400',
+      'sushi': 'https://images.pexels.com/photos/2323398/pexels-photo-2323398.jpeg?auto=compress&cs=tinysrgb&w=600&h=400',
+      'north indian': 'https://images.pexels.com/photos/7625056/pexels-photo-7625056.jpeg?auto=compress&cs=tinysrgb&w=600&h=400',
+      'paneer': 'https://images.pexels.com/photos/6940996/pexels-photo-6940996.jpeg?auto=compress&cs=tinysrgb&w=600&h=400',
+      'lamb': 'https://images.pexels.com/photos/6107787/pexels-photo-6107787.jpeg?auto=compress&cs=tinysrgb&w=600&h=400',
+      'biryani': 'https://images.pexels.com/photos/7394819/pexels-photo-7394819.jpeg?auto=compress&cs=tinysrgb&w=600&h=400',
+      'lassi': 'https://images.pexels.com/photos/6205791/pexels-photo-6205791.jpeg?auto=compress&cs=tinysrgb&w=600&h=400',
+      'samosa': 'https://images.pexels.com/photos/8992923/pexels-photo-8992923.jpeg?auto=compress&cs=tinysrgb&w=600&h=400',
+      'sweet': 'https://images.pexels.com/photos/14485899/pexels-photo-14485899.jpeg?auto=compress&cs=tinysrgb&w=600&h=400',
+      'palak': 'https://images.pexels.com/photos/6013452/pexels-photo-6013452.jpeg?auto=compress&cs=tinysrgb&w=600&h=400'
     };
     
     if (imageError || !recipe.imageUrl) {
@@ -153,14 +166,10 @@ const RecipeCard = ({ recipe, isFavorite = false, onToggleFavorite }: RecipeCard
       }
       
       // Default fallback image if nothing else matches
-      return 'https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=600&h=400';
+      return 'https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg?auto=compress&cs=tinysrgb&w=600&h=400';
     }
     
-    // Ensure we're using the base URL without existing query parameters
-    const baseUrl = recipe.imageUrl.split('?')[0];
-    
-    // Add quality parameters for better image loading
-    return `${baseUrl}?auto=format&fit=crop&w=600&h=400&q=80`;
+    return recipe.imageUrl;
   };
 
   // Use title if available, otherwise use name for display
