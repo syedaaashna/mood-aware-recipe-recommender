@@ -1,7 +1,9 @@
+
 import { useState, useEffect, useRef } from 'react';
 import { Send, X, Volume2, Mic, MicOff } from 'lucide-react';
 import { getChatbotResponse } from '@/utils/moodRecipeData';
 import { useToast } from "@/hooks/use-toast";
+import { Button } from './button';
 
 const suggestionChips = [
   "What's a good recipe for beginners?",
@@ -127,8 +129,18 @@ const ChatBot = ({ currentMood }: ChatBotProps) => {
     if (isMuted || !text) return;
     
     const speech = new SpeechSynthesisUtterance(text);
-    speech.lang = 'en-US';
-    speech.rate = 1;
+    
+    // Check if Hindi should be used based on content
+    if (text.includes('Hindi') || text.includes('hindi') || 
+        text.includes('Indian cuisine') || text.includes('North Indian') || 
+        text.includes('South Indian')) {
+      speech.lang = 'hi-IN';
+      speech.rate = 0.8; // Slower rate for Hindi
+    } else {
+      speech.lang = 'en-US';
+      speech.rate = 1;
+    }
+    
     speech.pitch = 1;
     speech.volume = 1;
     
@@ -182,7 +194,7 @@ const ChatBot = ({ currentMood }: ChatBotProps) => {
       } else if (lowerCaseMessage.includes('quick') || lowerCaseMessage.includes('easy')) {
         botResponse = "If you're short on time, try our Spicy Peanut Noodles or Berry Smoothie. Both can be prepared in under 20 minutes!";
       } else if (lowerCaseMessage.includes('hindi') || lowerCaseMessage.includes('indian')) {
-        botResponse = "We have several delicious Indian recipes, including Butter Chicken, Malai Kofta, Shahi Paneer, and Masala Dosa. Some recipes even include Hindi voice guidance!";
+        botResponse = "We have several delicious Indian recipes, including Butter Chicken, Malai Kofta, Shahi Paneer, and Masala Dosa. Our voice guidance also supports Hindi for these recipes!";
       } else {
         botResponse = getChatbotResponse(currentMood);
       }
@@ -211,10 +223,12 @@ const ChatBot = ({ currentMood }: ChatBotProps) => {
 
   return (
     <>
-      <button
+      <Button
         onClick={() => setIsOpen(prev => !prev)}
         className="fixed bottom-6 right-6 bg-primary text-white p-4 rounded-full shadow-lg hover:bg-primary/90 transition-all z-50"
         aria-label={isOpen ? "Close chat" : "Open chat"}
+        size="icon"
+        variant="default"
       >
         {isOpen ? <X size={24} /> : 
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -223,7 +237,7 @@ const ChatBot = ({ currentMood }: ChatBotProps) => {
             <path d="M8 13h6" />
           </svg>
         }
-      </button>
+      </Button>
       
       <div 
         className={`fixed bottom-24 right-6 w-80 sm:w-96 bg-white dark:bg-gray-900 rounded-lg shadow-xl border border-gray-200 dark:border-gray-800 transition-all duration-300 ease-in-out z-50 ${

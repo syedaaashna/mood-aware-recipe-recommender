@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { ArrowLeft, Clock, Users, ChefHat, Heart, Share2, Volume2, Play, Pause } from 'lucide-react';
@@ -5,102 +6,120 @@ import { Recipe as RecipeType, getRecipeById } from '@/utils/moodRecipeData';
 import VoiceGuidance from '@/components/ui/VoiceGuidance';
 import RecipeAiFeatures from '@/components/ui/RecipeAiFeatures';
 import { useToast } from "@/hooks/use-toast";
+import { Button } from '@/components/ui/button';
 
 const getValidImageUrl = (recipe: RecipeType): string => {
+  // Define recipe-specific image mappings with accurate, high-quality images
   const recipeSpecificImages: Record<string, string> = {
-    'classic-pizza': 'https://images.pexels.com/photos/825661/pexels-photo-825661.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
-    'chocolate-cake': 'https://images.pexels.com/photos/132694/pexels-photo-132694.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
-    'spicy-noodles': 'https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
-    'chicken-stir-fry': 'https://images.pexels.com/photos/2673353/pexels-photo-2673353.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
-    'berry-smoothie': 'https://images.pexels.com/photos/775032/pexels-photo-775032.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
-    'lavender-tea': 'https://images.pexels.com/photos/1417945/pexels-photo-1417945.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
-    'mushroom-risotto': 'https://images.pexels.com/photos/6419720/pexels-photo-6419720.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
-    'gingerbread-cookies': 'https://images.pexels.com/photos/6341984/pexels-photo-6341984.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
-    'apple-pie': 'https://images.pexels.com/photos/6163263/pexels-photo-6163263.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
-    'sushi-rolls': 'https://images.pexels.com/photos/2323398/pexels-photo-2323398.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
-    'french-toast': 'https://images.pexels.com/photos/7170323/pexels-photo-7170323.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
-    'chicken-curry': 'https://images.pexels.com/photos/6645965/pexels-photo-6645965.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
-    'butter-chicken': 'https://images.pexels.com/photos/7625056/pexels-photo-7625056.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
-    'malai-kofta': 'https://images.pexels.com/photos/12385193/pexels-photo-12385193.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
-    'shahi-paneer': 'https://images.pexels.com/photos/6940996/pexels-photo-6940996.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
-    'tandoori-raan': 'https://images.pexels.com/photos/6107787/pexels-photo-6107787.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
-    'masala-dosa': 'https://images.pexels.com/photos/5560763/pexels-photo-5560763.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
-    'aloo-paratha': 'https://images.pexels.com/photos/9797029/pexels-photo-9797029.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
-    'biryani': 'https://images.pexels.com/photos/7394819/pexels-photo-7394819.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80', 
-    'coconut-curry': 'https://images.pexels.com/photos/5409015/pexels-photo-5409015.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
-    'matcha-smoothie': 'https://images.pexels.com/photos/4790618/pexels-photo-4790618.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
-    'mango-lassi': 'https://images.pexels.com/photos/6205791/pexels-photo-6205791.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
-    'samosas': 'https://images.pexels.com/photos/8992923/pexels-photo-8992923.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
-    'gulab-jamun': 'https://images.pexels.com/photos/14485899/pexels-photo-14485899.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
-    'palak-paneer': 'https://images.pexels.com/photos/6013452/pexels-photo-6013452.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
-    'vegetable-stir-fry': 'https://images.pexels.com/photos/1410235/pexels-photo-1410235.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
-    'avocado-toast': 'https://images.pexels.com/photos/1351238/pexels-photo-1351238.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
-    'banana-pancakes': 'https://images.pexels.com/photos/376464/pexels-photo-376464.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
+    'classic-pizza': 'https://images.pexels.com/photos/1146760/pexels-photo-1146760.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
+    'chocolate-cake': 'https://images.pexels.com/photos/291528/pexels-photo-291528.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
+    'spicy-noodles': 'https://images.pexels.com/photos/1907228/pexels-photo-1907228.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
+    'chicken-stir-fry': 'https://images.pexels.com/photos/2741448/pexels-photo-2741448.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
+    'berry-smoothie': 'https://images.pexels.com/photos/1346347/pexels-photo-1346347.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
+    'lavender-tea': 'https://images.pexels.com/photos/961361/pexels-photo-961361.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
+    'mushroom-risotto': 'https://images.pexels.com/photos/5639021/pexels-photo-5639021.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
+    'gingerbread-cookies': 'https://images.pexels.com/photos/14875196/pexels-photo-14875196.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
+    'apple-pie': 'https://images.pexels.com/photos/4202392/pexels-photo-4202392.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
+    'sushi-rolls': 'https://images.pexels.com/photos/2098085/pexels-photo-2098085.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
+    'french-toast': 'https://images.pexels.com/photos/8470041/pexels-photo-8470041.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
+    'chicken-curry': 'https://images.pexels.com/photos/2474661/pexels-photo-2474661.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
+    'butter-chicken': 'https://images.pexels.com/photos/7887920/pexels-photo-7887920.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
+    'malai-kofta': 'https://images.pexels.com/photos/5409363/pexels-photo-5409363.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
+    'shahi-paneer': 'https://images.pexels.com/photos/5410422/pexels-photo-5410422.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
+    'tandoori-raan': 'https://images.pexels.com/photos/2233729/pexels-photo-2233729.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
+    'masala-dosa': 'https://images.pexels.com/photos/12737969/pexels-photo-12737969.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
+    'aloo-paratha': 'https://images.pexels.com/photos/2474658/pexels-photo-2474658.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
+    'biryani': 'https://images.pexels.com/photos/12737656/pexels-photo-12737656.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80', 
+    'coconut-curry': 'https://images.pexels.com/photos/674574/pexels-photo-674574.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
+    'matcha-smoothie': 'https://images.pexels.com/photos/14835960/pexels-photo-14835960.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
+    'mango-lassi': 'https://images.pexels.com/photos/14967506/pexels-photo-14967506.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
+    'samosas': 'https://images.pexels.com/photos/4449068/pexels-photo-4449068.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
+    'gulab-jamun': 'https://images.pexels.com/photos/14900302/pexels-photo-14900302.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
+    'palak-paneer': 'https://images.pexels.com/photos/14900377/pexels-photo-14900377.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
+    'vegetable-stir-fry': 'https://images.pexels.com/photos/3026805/pexels-photo-3026805.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
+    'avocado-toast': 'https://images.pexels.com/photos/1824353/pexels-photo-1824353.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
+    'banana-pancakes': 'https://images.pexels.com/photos/2280545/pexels-photo-2280545.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
     'greek-salad': 'https://images.pexels.com/photos/1211887/pexels-photo-1211887.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
-    'caprese-salad': 'https://images.pexels.com/photos/5945757/pexels-photo-5945757.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
-    'lemon-pasta': 'https://images.pexels.com/photos/1527603/pexels-photo-1527603.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
-    'tiramisu': 'https://images.pexels.com/photos/6249515/pexels-photo-6249515.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
-    'chicken-sandwich': 'https://images.pexels.com/photos/5947104/pexels-photo-5947104.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
-    'pho-soup': 'https://images.pexels.com/photos/9332172/pexels-photo-9332172.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
-    'pasta-carbonara': 'https://images.pexels.com/photos/5175537/pexels-photo-5175537.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
-    'beef-tacos': 'https://images.pexels.com/photos/4958641/pexels-photo-4958641.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
-    'pad-thai': 'https://images.pexels.com/photos/9609861/pexels-photo-9609861.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
+    'caprese-salad': 'https://images.pexels.com/photos/2097090/pexels-photo-2097090.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
+    'lemon-pasta': 'https://images.pexels.com/photos/1487511/pexels-photo-1487511.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
+    'tiramisu': 'https://images.pexels.com/photos/6880219/pexels-photo-6880219.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
+    'chicken-sandwich': 'https://images.pexels.com/photos/2424832/pexels-photo-2424832.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
+    'pho-soup': 'https://images.pexels.com/photos/14967531/pexels-photo-14967531.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
+    'pasta-carbonara': 'https://images.pexels.com/photos/6287525/pexels-photo-6287525.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
+    'beef-tacos': 'https://images.pexels.com/photos/2092507/pexels-photo-2092507.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
+    'pad-thai': 'https://images.pexels.com/photos/723198/pexels-photo-723198.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
     'ramen': 'https://images.pexels.com/photos/884600/pexels-photo-884600.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
-    'caesar-salad': 'https://images.pexels.com/photos/6107598/pexels-photo-6107598.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
-    'spinach-quiche': 'https://images.pexels.com/photos/6060931/pexels-photo-6060931.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
+    'caesar-salad': 'https://images.pexels.com/photos/3184183/pexels-photo-3184183.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
+    'spinach-quiche': 'https://images.pexels.com/photos/6072095/pexels-photo-6072095.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
     'pancakes': 'https://images.pexels.com/photos/376464/pexels-photo-376464.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
-    'chicken-shawarma': 'https://images.pexels.com/photos/8511837/pexels-photo-8511837.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
-    'fish-curry': 'https://images.pexels.com/photos/699953/pexels-photo-699953.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
+    'chicken-shawarma': 'https://images.pexels.com/photos/6002213/pexels-photo-6002213.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
+    'fish-curry': 'https://images.pexels.com/photos/5835353/pexels-photo-5835353.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
     'tomato-soup': 'https://images.pexels.com/photos/539451/pexels-photo-539451.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
-    'vegetable-curry': 'https://images.pexels.com/photos/2474661/pexels-photo-2474661.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
-    'falafel': 'https://images.pexels.com/photos/5490876/pexels-photo-5490876.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
-    'chole-bhature': 'https://images.pexels.com/photos/18590402/pexels-photo-18590402/free-photo-of-chole-bhature.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
+    'vegetable-curry': 'https://images.pexels.com/photos/2347311/pexels-photo-2347311.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
+    'falafel': 'https://images.pexels.com/photos/7651089/pexels-photo-7651089.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
+    'chole-bhature': 'https://images.pexels.com/photos/14900395/pexels-photo-14900395.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
     'dal-makhani': 'https://images.pexels.com/photos/7625181/pexels-photo-7625181.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
-    'rajma-chawal': 'https://images.pexels.com/photos/19299587/pexels-photo-19299587/free-photo-of-rajma-chawal-meal.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
-    'chana-masala': 'https://images.pexels.com/photos/3296580/pexels-photo-3296580.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80'
+    'rajma-chawal': 'https://images.pexels.com/photos/12737651/pexels-photo-12737651.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
+    'chana-masala': 'https://images.pexels.com/photos/12737670/pexels-photo-12737670.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
+    'pav-bhaji': 'https://images.pexels.com/photos/20423768/pexels-photo-20423768/free-photo-of-pav-bhaji-served-on-plate.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
+    'jalebi': 'https://images.pexels.com/photos/15716785/pexels-photo-15716785/free-photo-of-jalebi-an-indian-sweet-dish.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
+    'rasgulla': 'https://images.pexels.com/photos/14835769/pexels-photo-14835769.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
+    'golgappa': 'https://images.pexels.com/photos/12737714/pexels-photo-12737714.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
+    'kofta-curry': 'https://images.pexels.com/photos/16128492/pexels-photo-16128492/free-photo-of-kofta-curry-served-with-rice.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
+    'saag-aloo': 'https://images.pexels.com/photos/6149435/pexels-photo-6149435.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
+    'lamb-curry': 'https://images.pexels.com/photos/5409026/pexels-photo-5409026.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
+    'chicken-biryani': 'https://images.pexels.com/photos/7194467/pexels-photo-7194467.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
+    'lamb-vindaloo': 'https://images.pexels.com/photos/7625056/pexels-photo-7625056.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
+    'spicy-chicken-wings': 'https://images.pexels.com/photos/60616/fried-chicken-meal-fast-food-60616.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
+    'peanut-butter-cookies': 'https://images.pexels.com/photos/230325/pexels-photo-230325.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
+    'oatmeal-cookies': 'https://images.pexels.com/photos/3776939/pexels-photo-3776939.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
+    'homemade-burger': 'https://images.pexels.com/photos/1639557/pexels-photo-1639557.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
+    'grilled-cheese': 'https://images.pexels.com/photos/5409031/pexels-photo-5409031.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
+    'vegetable-soup': 'https://images.pexels.com/photos/3669638/pexels-photo-3669638.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80'
   };
-
+  
   if (recipe.id in recipeSpecificImages) {
     return recipeSpecificImages[recipe.id];
   }
 
+  // Category-based fallback images
   const categoryImages: Record<string, string> = {
-    'pasta': 'https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
-    'curry': 'https://images.pexels.com/photos/6645965/pexels-photo-6645965.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
-    'indian': 'https://images.pexels.com/photos/7625056/pexels-photo-7625056.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
-    'breakfast': 'https://images.pexels.com/photos/7170323/pexels-photo-7170323.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
+    'pasta': 'https://images.pexels.com/photos/1527603/pexels-photo-1527603.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
+    'curry': 'https://images.pexels.com/photos/2474661/pexels-photo-2474661.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
+    'indian': 'https://images.pexels.com/photos/7194467/pexels-photo-7194467.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
+    'breakfast': 'https://images.pexels.com/photos/3724354/pexels-photo-3724354.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
     'pancake': 'https://images.pexels.com/photos/376464/pexels-photo-376464.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
-    'cake': 'https://images.pexels.com/photos/132694/pexels-photo-132694.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
-    'dessert': 'https://images.pexels.com/photos/1126359/pexels-photo-1126359.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
-    'soup': 'https://images.pexels.com/photos/5409035/pexels-photo-5409035.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
-    'salad': 'https://images.pexels.com/photos/1059905/pexels-photo-1059905.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
-    'pizza': 'https://images.pexels.com/photos/825661/pexels-photo-825661.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
-    'smoothie': 'https://images.pexels.com/photos/775032/pexels-photo-775032.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
-    'chicken': 'https://images.pexels.com/photos/2673353/pexels-photo-2673353.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
-    'vegetarian': 'https://images.pexels.com/photos/1059905/pexels-photo-1059905.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
-    'south indian': 'https://images.pexels.com/photos/5560763/pexels-photo-5560763.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
-    'dosa': 'https://images.pexels.com/photos/5560763/pexels-photo-5560763.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
-    'noodles': 'https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
-    'stir-fry': 'https://images.pexels.com/photos/2673353/pexels-photo-2673353.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
-    'cookies': 'https://images.pexels.com/photos/6341984/pexels-photo-6341984.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
-    'pie': 'https://images.pexels.com/photos/6163263/pexels-photo-6163263.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
-    'tea': 'https://images.pexels.com/photos/1417945/pexels-photo-1417945.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
-    'risotto': 'https://images.pexels.com/photos/6419720/pexels-photo-6419720.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
-    'sushi': 'https://images.pexels.com/photos/2323398/pexels-photo-2323398.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
-    'north indian': 'https://images.pexels.com/photos/7625056/pexels-photo-7625056.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
-    'paneer': 'https://images.pexels.com/photos/6940996/pexels-photo-6940996.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
-    'lamb': 'https://images.pexels.com/photos/6107787/pexels-photo-6107787.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
-    'biryani': 'https://images.pexels.com/photos/7394819/pexels-photo-7394819.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
-    'lassi': 'https://images.pexels.com/photos/6205791/pexels-photo-6205791.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
-    'samosa': 'https://images.pexels.com/photos/8992923/pexels-photo-8992923.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
-    'sweet': 'https://images.pexels.com/photos/14485899/pexels-photo-14485899.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
-    'palak': 'https://images.pexels.com/photos/6013452/pexels-photo-6013452.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
-    'mexican': 'https://images.pexels.com/photos/4958641/pexels-photo-4958641.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
-    'thai': 'https://images.pexels.com/photos/9609861/pexels-photo-9609861.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
+    'cake': 'https://images.pexels.com/photos/291528/pexels-photo-291528.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
+    'dessert': 'https://images.pexels.com/photos/6123618/pexels-photo-6123618.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
+    'soup': 'https://images.pexels.com/photos/539451/pexels-photo-539451.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
+    'salad': 'https://images.pexels.com/photos/1211887/pexels-photo-1211887.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
+    'pizza': 'https://images.pexels.com/photos/1146760/pexels-photo-1146760.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
+    'smoothie': 'https://images.pexels.com/photos/1346347/pexels-photo-1346347.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
+    'chicken': 'https://images.pexels.com/photos/6210876/pexels-photo-6210876.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
+    'vegetarian': 'https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
+    'south indian': 'https://images.pexels.com/photos/12737969/pexels-photo-12737969.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
+    'dosa': 'https://images.pexels.com/photos/12737969/pexels-photo-12737969.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
+    'noodles': 'https://images.pexels.com/photos/1907228/pexels-photo-1907228.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
+    'stir-fry': 'https://images.pexels.com/photos/2741448/pexels-photo-2741448.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
+    'cookies': 'https://images.pexels.com/photos/14875196/pexels-photo-14875196.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
+    'pie': 'https://images.pexels.com/photos/4202392/pexels-photo-4202392.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
+    'tea': 'https://images.pexels.com/photos/961361/pexels-photo-961361.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
+    'risotto': 'https://images.pexels.com/photos/5639021/pexels-photo-5639021.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
+    'sushi': 'https://images.pexels.com/photos/2098085/pexels-photo-2098085.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
+    'north indian': 'https://images.pexels.com/photos/7887920/pexels-photo-7887920.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
+    'paneer': 'https://images.pexels.com/photos/5410422/pexels-photo-5410422.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
+    'lamb': 'https://images.pexels.com/photos/2233729/pexels-photo-2233729.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
+    'biryani': 'https://images.pexels.com/photos/12737656/pexels-photo-12737656.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
+    'lassi': 'https://images.pexels.com/photos/14967506/pexels-photo-14967506.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
+    'samosa': 'https://images.pexels.com/photos/4449068/pexels-photo-4449068.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
+    'sweet': 'https://images.pexels.com/photos/14900302/pexels-photo-14900302.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
+    'palak': 'https://images.pexels.com/photos/14900377/pexels-photo-14900377.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
+    'mexican': 'https://images.pexels.com/photos/2092507/pexels-photo-2092507.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
+    'thai': 'https://images.pexels.com/photos/723198/pexels-photo-723198.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
     'japanese': 'https://images.pexels.com/photos/884600/pexels-photo-884600.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
-    'middle eastern': 'https://images.pexels.com/photos/8511837/pexels-photo-8511837.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
-    'fish': 'https://images.pexels.com/photos/699953/pexels-photo-699953.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
-    'vegetable': 'https://images.pexels.com/photos/1410235/pexels-photo-1410235.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80'
+    'middle eastern': 'https://images.pexels.com/photos/6002213/pexels-photo-6002213.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
+    'fish': 'https://images.pexels.com/photos/5835353/pexels-photo-5835353.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80',
+    'vegetable': 'https://images.pexels.com/photos/3026805/pexels-photo-3026805.jpeg?auto=compress&cs=tinysrgb&w=1350&q=80'
   };
 
   for (const tag of recipe.tags) {
@@ -308,7 +327,7 @@ const Recipe = () => {
         </div>
         
         <div className="grid md:grid-cols-2 gap-8 mb-8">
-          <div className="overflow-hidden rounded-xl shadow-lg transition-all hover:shadow-xl">
+          <div className="overflow-hidden rounded-xl shadow-lg transition-all hover:shadow-xl h-80">
             <img
               src={recipe.imageUrl}
               alt={recipe.name}
@@ -342,31 +361,7 @@ const Recipe = () => {
             
             <div className="space-y-4">
               <button
-                onClick={()=>{
-                  if(isFavorite) {
-                    const favorites = JSON.parse(localStorage.getItem('favoriteRecipes') || '[]');
-                    const updatedFavorites = favorites.filter((favId: string) => favId !== id);
-                    localStorage.setItem('favoriteRecipes', JSON.stringify(updatedFavorites));
-                    setIsFavorite(false);
-                    
-                    toast({
-                      title: "Removed from Favorites",
-                      description: `${recipe.name} has been removed from your favorites.`,
-                      duration: 3000,
-                    });
-                  } else {
-                    const favorites = JSON.parse(localStorage.getItem('favoriteRecipes') || '[]');
-                    favorites.push(id);
-                    localStorage.setItem('favoriteRecipes', JSON.stringify(favorites));
-                    setIsFavorite(true);
-                    
-                    toast({
-                      title: "Added to Favorites",
-                      description: `${recipe.name} has been added to your favorites.`,
-                      duration: 3000,
-                    });
-                  }
-                }}
+                onClick={toggleFavorite}
                 className={`w-full px-4 py-3 rounded-lg flex items-center justify-center transition-colors ${
                   isFavorite 
                     ? 'bg-red-100 text-red-600 dark:bg-red-900 dark:text-red-300' 
@@ -378,33 +373,7 @@ const Recipe = () => {
               </button>
               
               <button
-                onClick={async () => {
-                  if (navigator.share && recipe) {
-                    try {
-                      await navigator.share({
-                        title: recipe.name,
-                        text: `Check out this recipe: ${recipe.name}`,
-                        url: window.location.href,
-                      });
-                      
-                      toast({
-                        title: "Recipe Shared",
-                        description: "Recipe link has been shared successfully.",
-                        duration: 3000,
-                      });
-                    } catch (error) {
-                      console.error('Error sharing:', error);
-                    }
-                  } else {
-                    navigator.clipboard.writeText(window.location.href);
-                    
-                    toast({
-                      title: "Link Copied",
-                      description: "Recipe link has been copied to clipboard.",
-                      duration: 3000,
-                    });
-                  }
-                }}
+                onClick={shareRecipe}
                 className="w-full px-4 py-3 rounded-lg bg-primary text-white flex items-center justify-center hover:bg-primary/90 transition-colors"
               >
                 <Share2 size={18} className="mr-2" />
@@ -467,24 +436,16 @@ const Recipe = () => {
             <div>
               <div className="flex justify-between items-center mb-4">
                 <h2 className="text-xl font-bold">Instructions</h2>
-                <button
-                  onClick={() => {
-                    setIsPlaying(!isPlaying);
-                    
-                    toast({
-                      title: isPlaying ? "Voice Guidance Paused" : "Voice Guidance Started",
-                      description: isPlaying 
-                        ? "Voice guidance has been paused." 
-                        : "I'll guide you through each step of the recipe automatically.",
-                      duration: 3000,
-                    });
-                  }}
-                  className="flex items-center px-3 py-2 rounded-full bg-primary text-white hover:bg-primary/90 transition-colors"
+                <Button
+                  onClick={toggleVoiceGuidance}
+                  className="px-3 py-2 rounded-full bg-primary text-white hover:bg-primary/90 transition-colors flex items-center space-x-2"
+                  variant="default"
+                  size="sm"
                 >
-                  {isPlaying ? <Pause size={16} className="mr-2" /> : <Play size={16} className="mr-2" />}
+                  {isPlaying ? <Pause size={16} className="mr-1" /> : <Play size={16} className="mr-1" />}
                   <Volume2 size={16} className="mr-1" />
                   <span>{isPlaying ? 'Pause Guidance' : 'Start Guidance'}</span>
-                </button>
+                </Button>
               </div>
               
               <ol className="space-y-6">

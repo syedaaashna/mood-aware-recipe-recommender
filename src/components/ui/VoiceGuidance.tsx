@@ -34,10 +34,8 @@ const VoiceGuidance = ({
   const [showLanguageSelector, setShowLanguageSelector] = useState(false);
   const synthRef = useRef<SpeechSynthesis | null>(null);
   const utteranceRef = useRef<SpeechSynthesisUtterance | null>(null);
-  const { toast } = useToast();
-
-  // Simple flag to prevent multiple speech instances
   const isSpeakingRef = useRef<boolean>(false);
+  const { toast } = useToast();
 
   // Initialize speech synthesis
   useEffect(() => {
@@ -88,8 +86,15 @@ const VoiceGuidance = ({
       const stepText = `Step ${currentStep + 1}: ${instructions[currentStep]}`;
       const utterance = new SpeechSynthesisUtterance(stepText);
       utterance.lang = selectedLanguage;
-      utterance.rate = 0.9;
-      utterance.pitch = 1.0;
+      
+      // Adjust voice settings for Hindi to improve pronunciation
+      if (selectedLanguage === 'hi-IN') {
+        utterance.rate = 0.8; // Slower rate for Hindi
+        utterance.pitch = 1.1; // Slightly higher pitch for Hindi
+      } else {
+        utterance.rate = 0.9;
+        utterance.pitch = 1.0;
+      }
       
       utterance.onend = () => {
         isSpeakingRef.current = false;
@@ -322,6 +327,7 @@ const VoiceGuidance = ({
               onClick={togglePlayPause}
               className="p-2.5 rounded-full bg-white text-purple-600 hover:bg-white/90 transition-colors"
               aria-label={isPlaying ? "Pause" : "Play"}
+              style={{ transform: 'none' }} /* Fix for shaking button */
             >
               {isPlaying ? <Pause size={18} /> : <Play size={18} />}
             </button>
