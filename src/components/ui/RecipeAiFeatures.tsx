@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Brain, ChevronDown, ChevronUp, Lightbulb, Utensils, ListPlus, Sparkles, Flame } from 'lucide-react';
 import { Recipe, getSimilarRecipes } from '@/utils/moodRecipeData';
@@ -10,7 +9,7 @@ interface RecipeAiFeaturesProps {
 
 const RecipeAiFeatures = ({ recipe }: RecipeAiFeaturesProps) => {
   const [isExpanded, setIsExpanded] = useState(false);
-  const similarRecipes = getSimilarRecipes(recipe.id, 3);
+  const similarRecipes = getSimilarRecipes(recipe.id);
 
   // Helper function to get appropriate image URL with fallbacks
   const getImageUrl = (recipeItem: Recipe, smallSize = false) => {

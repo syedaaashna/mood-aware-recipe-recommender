@@ -87,10 +87,11 @@ const VoiceGuidance = ({
       const utterance = new SpeechSynthesisUtterance(stepText);
       utterance.lang = selectedLanguage;
       
-      // Adjust voice settings for Hindi to improve pronunciation
+      // Adjust voice settings for better pronunciation
       if (selectedLanguage === 'hi-IN') {
-        utterance.rate = 0.8; // Slower rate for Hindi
-        utterance.pitch = 1.1; // Slightly higher pitch for Hindi
+        utterance.rate = 0.7; // Slower rate for Hindi
+        utterance.pitch = 1.0; // Normal pitch for Hindi
+        utterance.volume = 1.0; // Full volume
       } else {
         utterance.rate = 0.9;
         utterance.pitch = 1.0;
@@ -133,6 +134,16 @@ const VoiceGuidance = ({
       // Prevent multiple utterances from starting at once
       if (!isSpeakingRef.current) {
         isSpeakingRef.current = true;
+        utteranceRef.current = utterance;
+        
+        // Get available voices and try to find one for the selected language
+        const voices = synthRef.current.getVoices();
+        const languageVoice = voices.find(voice => voice.lang.includes(selectedLanguage.split('-')[0]));
+        
+        if (languageVoice) {
+          utterance.voice = languageVoice;
+        }
+        
         synthRef.current.speak(utterance);
       }
     }, 100);
@@ -325,9 +336,8 @@ const VoiceGuidance = ({
             
             <button
               onClick={togglePlayPause}
-              className="p-2.5 rounded-full bg-white text-purple-600 hover:bg-white/90 transition-colors"
+              className="p-2.5 rounded-full bg-white text-purple-600 hover:bg-white/90 transition-colors transform-none"
               aria-label={isPlaying ? "Pause" : "Play"}
-              style={{ transform: 'none' }} /* Fix for shaking button */
             >
               {isPlaying ? <Pause size={18} /> : <Play size={18} />}
             </button>
