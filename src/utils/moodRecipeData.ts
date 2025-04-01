@@ -1,3 +1,4 @@
+
 export interface Mood {
   id: string;
   name: string;
@@ -724,3 +725,16 @@ const recipes: Recipe[] = [
       'Let the bottom cook completely before attempting to flip or fold'
     ],
     hindiVoiceGuidance: 'मसाला डोसा'
+  }
+];
+
+// Export recipes array
+export const recipesData = recipes;
+
+// Group recipes by mood
+export const recipesByMood = moods.map(mood => {
+  return {
+    mood,
+    recipes: recipes.filter(recipe => recipe.moodIds.includes(mood.id))
+  };
+});
