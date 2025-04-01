@@ -1,6 +1,6 @@
 
 import { useState, useEffect, useRef } from 'react';
-import { Send, X, Volume2, Mic, MicOff } from 'lucide-react';
+import { Send, X, Mic, MicOff } from 'lucide-react';
 import { getChatbotResponse } from '@/utils/moodRecipeData';
 import { useToast } from "@/hooks/use-toast";
 import { Button } from './button';
@@ -28,7 +28,6 @@ const ChatBot = ({ currentMood }: ChatBotProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
   const [currentMessage, setCurrentMessage] = useState('');
-  const [isMuted, setIsMuted] = useState(false);
   const [isListening, setIsListening] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const { toast } = useToast();
@@ -125,47 +124,6 @@ const ChatBot = ({ currentMood }: ChatBotProps) => {
     }
   };
 
-  const speakText = (text: string) => {
-    if (isMuted || !text) return;
-    
-    const speech = new SpeechSynthesisUtterance(text);
-    
-    // Check if Hindi should be used based on content
-    if (text.includes('Hindi') || text.includes('hindi') || 
-        text.includes('Indian cuisine') || text.includes('North Indian') || 
-        text.includes('South Indian')) {
-      speech.lang = 'hi-IN';
-      speech.rate = 0.8; // Slower rate for Hindi
-    } else {
-      speech.lang = 'en-US';
-      speech.rate = 1;
-    }
-    
-    speech.pitch = 1;
-    speech.volume = 1;
-    
-    window.speechSynthesis.speak(speech);
-  };
-
-  const toggleMute = () => {
-    setIsMuted(!isMuted);
-    
-    if (!isMuted) {
-      window.speechSynthesis.cancel();
-      toast({
-        title: "Voice Output Muted",
-        description: "Bot responses will no longer be spoken aloud.",
-        duration: 1500,
-      });
-    } else {
-      toast({
-        title: "Voice Output Unmuted",
-        description: "Bot responses will be spoken aloud.",
-        duration: 1500,
-      });
-    }
-  };
-
   const sendMessage = (messageText: string = currentMessage) => {
     if (!messageText.trim()) return;
     
@@ -194,7 +152,7 @@ const ChatBot = ({ currentMood }: ChatBotProps) => {
       } else if (lowerCaseMessage.includes('quick') || lowerCaseMessage.includes('easy')) {
         botResponse = "If you're short on time, try our Spicy Peanut Noodles or Berry Smoothie. Both can be prepared in under 20 minutes!";
       } else if (lowerCaseMessage.includes('hindi') || lowerCaseMessage.includes('indian')) {
-        botResponse = "We have several delicious Indian recipes, including Butter Chicken, Malai Kofta, Shahi Paneer, and Masala Dosa. Our voice guidance also supports Hindi for these recipes!";
+        botResponse = "We have several delicious Indian recipes, including Butter Chicken, Malai Kofta, Shahi Paneer, and Masala Dosa.";
       } else {
         botResponse = getChatbotResponse(currentMood);
       }
@@ -206,8 +164,6 @@ const ChatBot = ({ currentMood }: ChatBotProps) => {
       };
       
       setMessages(prev => [...prev, botMessage]);
-      
-      speakText(botResponse);
     }, 800);
   };
 
@@ -247,13 +203,6 @@ const ChatBot = ({ currentMood }: ChatBotProps) => {
         <div className="flex justify-between items-center p-4 border-b border-gray-200 dark:border-gray-800">
           <h3 className="font-medium">Recipe Assistant</h3>
           <div className="flex gap-2">
-            <button 
-              onClick={toggleMute}
-              className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
-              aria-label={isMuted ? "Unmute" : "Mute"}
-            >
-              <Volume2 size={16} className={isMuted ? 'text-gray-400' : 'text-primary'} />
-            </button>
             <button
               onClick={toggleVoiceInput}
               className={`p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors ${
