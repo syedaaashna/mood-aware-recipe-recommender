@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Brain, ChevronDown, ChevronUp, Lightbulb, Utensils, ListPlus, Sparkles, Flame } from 'lucide-react';
 import { Recipe, getSimilarRecipes } from '@/utils/moodRecipeData';
 import { Link } from 'react-router-dom';
@@ -30,23 +30,26 @@ const RecipeAiFeatures = ({ recipe }: RecipeAiFeaturesProps) => {
     return `https://source.unsplash.com/random/?${searchQuery},food&fit=crop&${dimensions}&random=${Math.random()}`;
   };
 
-  React.useEffect(() => {
-    // Initialize images for all similar recipes
+  // Initialize images only once when the component mounts or recipe changes
+  useEffect(() => {
     const initialImages: Record<string, string> = {};
     similarRecipes.forEach(similarRecipe => {
       initialImages[similarRecipe.id] = getRecipeImageUrl(similarRecipe.name, true);
     });
     setRecipeImages(initialImages);
-  }, [similarRecipes]);
+  }, [recipe.id]); // Only re-run when recipe.id changes
 
   const handleImageError = (recipeId: string) => {
-    setImageErrors(prev => ({ ...prev, [recipeId]: true }));
-    
-    // Try to get a backup image
-    setRecipeImages(prev => ({
-      ...prev,
-      [recipeId]: getBackupImageUrl(similarRecipes.find(r => r.id === recipeId)?.name || '', true)
-    }));
+    // Only update if we haven't already tried for this image
+    if (!imageErrors[recipeId]) {
+      setImageErrors(prev => ({ ...prev, [recipeId]: true }));
+      
+      // Try to get a backup image
+      setRecipeImages(prev => ({
+        ...prev,
+        [recipeId]: getBackupImageUrl(similarRecipes.find(r => r.id === recipeId)?.name || '', true)
+      }));
+    }
   };
 
   return (
