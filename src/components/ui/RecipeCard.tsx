@@ -16,6 +16,7 @@ const RecipeCard = ({ recipe, isFavorite = false, onToggleFavorite }: RecipeCard
   const [showSparkle, setShowSparkle] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
   const { toast } = useToast();
+  const [imageError, setImageError] = useState(false);
 
   // Random color for recipe card gradient
   const getRandomGradient = () => {
@@ -36,6 +37,13 @@ const RecipeCard = ({ recipe, isFavorite = false, onToggleFavorite }: RecipeCard
 
   const [gradientClass] = useState(getRandomGradient());
 
+  // Get recipe image URL based on recipe name
+  const getRecipeImageUrl = (recipeName: string) => {
+    // Clean up recipe name to use in search query
+    const searchQuery = recipeName.toLowerCase().replace(/[^\w\s]/gi, '').replace(/\s+/g, '+');
+    return `https://source.unsplash.com/featured/?${searchQuery},food,dish,recipe&fit=crop&w=600&h=350`;
+  };
+  
   useEffect(() => {
     // Show sparkle animation occasionally
     const sparkleTimer = setInterval(() => {
@@ -87,6 +95,17 @@ const RecipeCard = ({ recipe, isFavorite = false, onToggleFavorite }: RecipeCard
         onMouseLeave={() => setIsHovered(false)}
       >
         <div className={`relative overflow-hidden rounded-xl border border-gray-200 dark:border-gray-800 ${isHovered ? 'shadow-lg shadow-primary/20 dark:shadow-primary/10' : 'shadow-sm'}`}>
+          {/* Recipe Image */}
+          <div className="h-48 overflow-hidden">
+            <img 
+              src={getRecipeImageUrl(recipe.name)}
+              alt={recipe.name}
+              className="w-full h-full object-cover transition-transform duration-300"
+              style={{ transform: isHovered ? 'scale(1.05)' : 'scale(1)' }}
+              onError={() => setImageError(true)}
+            />
+          </div>
+
           {/* Content with gradient background */}
           <div className={`p-4 ${gradientClass} bg-opacity-20`}>
             <div className="absolute top-3 left-3 flex space-x-2">
@@ -117,7 +136,7 @@ const RecipeCard = ({ recipe, isFavorite = false, onToggleFavorite }: RecipeCard
               <Heart size={16} fill={isFavorite ? "currentColor" : "none"} />
             </button>
 
-            <h3 className="font-bold text-lg mt-8 mb-1 line-clamp-1">{recipe.title || recipe.name}</h3>
+            <h3 className="font-bold text-lg mt-2 mb-1 line-clamp-1">{recipe.title || recipe.name}</h3>
             <p className="text-gray-600 dark:text-gray-300 text-sm mb-3 line-clamp-2">{recipe.description}</p>
             
             {/* Recipe info */}

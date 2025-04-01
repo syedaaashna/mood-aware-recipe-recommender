@@ -4,6 +4,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { ArrowLeft, Clock, Users, ChefHat, Heart, Share2 } from 'lucide-react';
 import { Recipe as RecipeType, getRecipeById } from '@/utils/moodRecipeData';
 import RecipeAiFeatures from '@/components/ui/RecipeAiFeatures';
+import VoiceGuidance from '@/components/ui/VoiceGuidance';
 import { useToast } from "@/hooks/use-toast";
 
 const Recipe = () => {
@@ -13,7 +14,15 @@ const Recipe = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [isFavorite, setIsFavorite] = useState(false);
   const [activeTab, setActiveTab] = useState<'ingredients' | 'instructions'>('ingredients');
+  const [imageError, setImageError] = useState(false);
   const { toast } = useToast();
+
+  // Get recipe image URL based on recipe name
+  const getRecipeImageUrl = (recipeName: string) => {
+    // Clean up recipe name to use in search query
+    const searchQuery = recipeName.toLowerCase().replace(/[^\w\s]/gi, '').replace(/\s+/g, '+');
+    return `https://source.unsplash.com/featured/?${searchQuery},food,dish,recipe&fit=crop&w=1200&h=600`;
+  };
 
   useEffect(() => {
     if (id) {
@@ -127,6 +136,16 @@ const Recipe = () => {
           <ArrowLeft size={18} className="mr-2" />
           <span>Back to recipes</span>
         </button>
+
+        {/* Recipe image */}
+        <div className="mb-8 rounded-xl overflow-hidden">
+          <img 
+            src={getRecipeImageUrl(recipe.name)} 
+            alt={recipe.name}
+            className="w-full h-64 sm:h-80 object-cover"
+            onError={() => setImageError(true)}
+          />
+        </div>
         
         <div className="mb-8 p-6 rounded-xl" style={{
           background: 'linear-gradient(90deg, hsla(46, 73%, 75%, 1) 0%, hsla(176, 73%, 88%, 1) 100%)',
@@ -170,6 +189,9 @@ const Recipe = () => {
             )}
           </div>
         </div>
+        
+        {/* Add voice guidance component here */}
+        <VoiceGuidance recipe={recipe} />
         
         <div className="grid md:grid-cols-2 gap-8 mb-8">
           <div className="flex flex-col justify-between">

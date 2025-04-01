@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Brain, ChevronDown, ChevronUp, Lightbulb, Utensils, ListPlus, Sparkles, Flame } from 'lucide-react';
 import { Recipe, getSimilarRecipes } from '@/utils/moodRecipeData';
@@ -10,84 +11,18 @@ interface RecipeAiFeaturesProps {
 const RecipeAiFeatures = ({ recipe }: RecipeAiFeaturesProps) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const similarRecipes = getSimilarRecipes(recipe.id);
+  const [imageErrors, setImageErrors] = useState<Record<string, boolean>>({});
 
-  // Helper function to get appropriate image URL with fallbacks
-  const getImageUrl = (recipeItem: Recipe, smallSize = false) => {
-    // Recipe-specific image mappings with high-quality, reliable images
-    const recipeSpecificImages: Record<string, string> = {
-      'classic-pizza': 'https://images.pexels.com/photos/825661/pexels-photo-825661.jpeg',
-      'chocolate-cake': 'https://images.pexels.com/photos/132694/pexels-photo-132694.jpeg',
-      'spicy-noodles': 'https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg',
-      'chicken-stir-fry': 'https://images.pexels.com/photos/2673353/pexels-photo-2673353.jpeg',
-      'berry-smoothie': 'https://images.pexels.com/photos/775032/pexels-photo-775032.jpeg',
-      'lavender-tea': 'https://images.pexels.com/photos/1417945/pexels-photo-1417945.jpeg',
-      'mushroom-risotto': 'https://images.pexels.com/photos/6419720/pexels-photo-6419720.jpeg',
-      'gingerbread-cookies': 'https://images.pexels.com/photos/6341984/pexels-photo-6341984.jpeg',
-      'apple-pie': 'https://images.pexels.com/photos/6163263/pexels-photo-6163263.jpeg',
-      'sushi-rolls': 'https://images.pexels.com/photos/2323398/pexels-photo-2323398.jpeg',
-      'french-toast': 'https://images.pexels.com/photos/7170323/pexels-photo-7170323.jpeg',
-      'chicken-curry': 'https://images.pexels.com/photos/6645965/pexels-photo-6645965.jpeg',
-      'butter-chicken': 'https://images.pexels.com/photos/7625056/pexels-photo-7625056.jpeg',
-      'malai-kofta': 'https://images.pexels.com/photos/12385193/pexels-photo-12385193.jpeg',
-      'shahi-paneer': 'https://images.pexels.com/photos/6940996/pexels-photo-6940996.jpeg',
-      'tandoori-raan': 'https://images.pexels.com/photos/6107787/pexels-photo-6107787.jpeg',
-      'masala-dosa': 'https://images.pexels.com/photos/5560763/pexels-photo-5560763.jpeg'
-    };
-    
-    // Check if we have a recipe-specific image
-    if (recipeItem.id in recipeSpecificImages) {
-      const baseUrl = recipeSpecificImages[recipeItem.id];
-      const dimensions = smallSize ? 'w=400&h=200' : 'w=600&h=400';
-      return `${baseUrl}?auto=compress&cs=tinysrgb&${dimensions}&q=80`;
-    }
-    
-    // Updated category images with better quality selections
-    const categoryImages: Record<string, string> = {
-      'pasta': 'https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg',
-      'curry': 'https://images.pexels.com/photos/6645965/pexels-photo-6645965.jpeg',
-      'indian': 'https://images.pexels.com/photos/7625056/pexels-photo-7625056.jpeg',
-      'breakfast': 'https://images.pexels.com/photos/7170323/pexels-photo-7170323.jpeg',
-      'pancake': 'https://images.pexels.com/photos/376464/pexels-photo-376464.jpeg',
-      'cake': 'https://images.pexels.com/photos/132694/pexels-photo-132694.jpeg',
-      'dessert': 'https://images.pexels.com/photos/1126359/pexels-photo-1126359.jpeg',
-      'soup': 'https://images.pexels.com/photos/5409035/pexels-photo-5409035.jpeg',
-      'salad': 'https://images.pexels.com/photos/1059905/pexels-photo-1059905.jpeg',
-      'pizza': 'https://images.pexels.com/photos/825661/pexels-photo-825661.jpeg',
-      'smoothie': 'https://images.pexels.com/photos/775032/pexels-photo-775032.jpeg',
-      'chicken': 'https://images.pexels.com/photos/2673353/pexels-photo-2673353.jpeg',
-      'vegetarian': 'https://images.pexels.com/photos/1059905/pexels-photo-1059905.jpeg',
-      'south indian': 'https://images.pexels.com/photos/5560763/pexels-photo-5560763.jpeg',
-      'dosa': 'https://images.pexels.com/photos/5560763/pexels-photo-5560763.jpeg',
-      'noodles': 'https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg',
-      'stir-fry': 'https://images.pexels.com/photos/2673353/pexels-photo-2673353.jpeg',
-      'cookies': 'https://images.pexels.com/photos/6341984/pexels-photo-6341984.jpeg',
-      'pie': 'https://images.pexels.com/photos/6163263/pexels-photo-6163263.jpeg',
-      'tea': 'https://images.pexels.com/photos/1417945/pexels-photo-1417945.jpeg',
-      'risotto': 'https://images.pexels.com/photos/6419720/pexels-photo-6419720.jpeg',
-      'sushi': 'https://images.pexels.com/photos/2323398/pexels-photo-2323398.jpeg',
-      'north indian': 'https://images.pexels.com/photos/7625056/pexels-photo-7625056.jpeg',
-      'paneer': 'https://images.pexels.com/photos/6940996/pexels-photo-6940996.jpeg',
-      'lamb': 'https://images.pexels.com/photos/6107787/pexels-photo-6107787.jpeg',
-      'biryani': 'https://images.pexels.com/photos/7394819/pexels-photo-7394819.jpeg',
-      'lassi': 'https://images.pexels.com/photos/6205791/pexels-photo-6205791.jpeg',
-      'samosa': 'https://images.pexels.com/photos/8992923/pexels-photo-8992923.jpeg',
-      'sweet': 'https://images.pexels.com/photos/14485899/pexels-photo-14485899.jpeg',
-      'palak': 'https://images.pexels.com/photos/6013452/pexels-photo-6013452.jpeg'
-    };
-    
-    // Search for matching category in recipe tags
-    for (const tag of recipeItem.tags) {
-      const lowerTag = tag.toLowerCase();
-      for (const [category, url] of Object.entries(categoryImages)) {
-        if (lowerTag.includes(category) || category.includes(lowerTag)) {
-          const dimensions = smallSize ? 'w=400&h=200' : 'w=600&h=400';
-          return `${url}?auto=compress&cs=tinysrgb&${dimensions}&q=80`;
-        }
-      }
-    }
-    
-    // Default fallback image
-    return `https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg?auto=compress&cs=tinysrgb&w=${smallSize ? '400&h=200' : '600&h=400'}&q=80`;
+  // Get recipe image URL based on recipe name
+  const getRecipeImageUrl = (recipeName: string, smallSize = false) => {
+    // Clean up recipe name to use in search query
+    const searchQuery = recipeName.toLowerCase().replace(/[^\w\s]/gi, '').replace(/\s+/g, '+');
+    const dimensions = smallSize ? 'w=400&h=200' : 'w=600&h=400';
+    return `https://source.unsplash.com/featured/?${searchQuery},food,dish,recipe&fit=crop&${dimensions}`;
+  };
+
+  const handleImageError = (recipeId: string) => {
+    setImageErrors(prev => ({ ...prev, [recipeId]: true }));
   };
 
   return (
@@ -181,23 +116,10 @@ const RecipeAiFeatures = ({ recipe }: RecipeAiFeaturesProps) => {
                   >
                     <div className="h-24 rounded-md overflow-hidden mb-2">
                       <img 
-                        src={getImageUrl(similarRecipe, true)} 
+                        src={getRecipeImageUrl(similarRecipe.name, true)} 
                         alt={similarRecipe.name} 
                         className="w-full h-full object-cover"
-                        onError={(e) => {
-                          // Provide category-specific fallback images on error
-                          let fallbackUrl = 'https://images.unsplash.com/photo-1618160702438-9b02ab6515c9?auto=format&fit=crop&w=400&h=200';
-                          
-                          if (similarRecipe.tags.includes('dessert')) {
-                            fallbackUrl = 'https://images.unsplash.com/photo-1606313564200-e75d5e30476c?auto=format&fit=crop&w=400&h=200';
-                          } else if (similarRecipe.tags.includes('indian')) {
-                            fallbackUrl = 'https://images.unsplash.com/photo-1604952564555-13c872c0a364?auto=format&fit=crop&w=400&h=200';
-                          } else if (similarRecipe.tags.includes('breakfast')) {
-                            fallbackUrl = 'https://images.unsplash.com/photo-1639108094328-2b94a49b1c2e?auto=format&fit=crop&w=400&h=200';
-                          }
-                          
-                          (e.target as HTMLImageElement).src = fallbackUrl;
-                        }}
+                        onError={() => handleImageError(similarRecipe.id)}
                       />
                     </div>
                     <h5 className="font-medium text-sm">{similarRecipe.name}</h5>
