@@ -17,6 +17,7 @@ const RecipeCard = ({ recipe, isFavorite = false, onToggleFavorite }: RecipeCard
   const [isHovered, setIsHovered] = useState(false);
   const { toast } = useToast();
   const [imageError, setImageError] = useState(false);
+  const [imageUrl, setImageUrl] = useState<string>('');
 
   // Random color for recipe card gradient
   const getRandomGradient = () => {
@@ -43,7 +44,19 @@ const RecipeCard = ({ recipe, isFavorite = false, onToggleFavorite }: RecipeCard
     const searchQuery = recipeName.toLowerCase().replace(/[^\w\s]/gi, '').replace(/\s+/g, '+');
     return `https://source.unsplash.com/featured/?${searchQuery},food,dish,recipe&fit=crop&w=600&h=350`;
   };
+
+  // Get a backup image if the first one fails
+  const getBackupImageUrl = (recipeName: string) => {
+    const searchQuery = recipeName.toLowerCase().replace(/[^\w\s]/gi, '').replace(/\s+/g, '+');
+    // Adding random parameters to prevent caching and get a different image
+    return `https://source.unsplash.com/random/?${searchQuery},food&fit=crop&w=600&h=350&random=${Math.random()}`;
+  };
   
+  useEffect(() => {
+    // Initial image URL
+    setImageUrl(getRecipeImageUrl(recipe.name));
+  }, [recipe.name]);
+
   useEffect(() => {
     // Show sparkle animation occasionally
     const sparkleTimer = setInterval(() => {
@@ -55,6 +68,12 @@ const RecipeCard = ({ recipe, isFavorite = false, onToggleFavorite }: RecipeCard
 
     return () => clearInterval(sparkleTimer);
   }, [isHovered]);
+
+  const handleImageError = () => {
+    setImageError(true);
+    // Try a different query to get another image
+    setImageUrl(getBackupImageUrl(recipe.name));
+  };
 
   const handleFavoriteToggle = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -98,11 +117,11 @@ const RecipeCard = ({ recipe, isFavorite = false, onToggleFavorite }: RecipeCard
           {/* Recipe Image */}
           <div className="h-48 overflow-hidden">
             <img 
-              src={getRecipeImageUrl(recipe.name)}
+              src={imageUrl}
               alt={recipe.name}
               className="w-full h-full object-cover transition-transform duration-300"
               style={{ transform: isHovered ? 'scale(1.05)' : 'scale(1)' }}
-              onError={() => setImageError(true)}
+              onError={handleImageError}
             />
           </div>
 

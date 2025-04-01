@@ -12,6 +12,7 @@ const RecipeAiFeatures = ({ recipe }: RecipeAiFeaturesProps) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const similarRecipes = getSimilarRecipes(recipe.id);
   const [imageErrors, setImageErrors] = useState<Record<string, boolean>>({});
+  const [recipeImages, setRecipeImages] = useState<Record<string, string>>({});
 
   // Get recipe image URL based on recipe name
   const getRecipeImageUrl = (recipeName: string, smallSize = false) => {
@@ -21,8 +22,31 @@ const RecipeAiFeatures = ({ recipe }: RecipeAiFeaturesProps) => {
     return `https://source.unsplash.com/featured/?${searchQuery},food,dish,recipe&fit=crop&${dimensions}`;
   };
 
+  // Get a backup image if the first one fails
+  const getBackupImageUrl = (recipeName: string, smallSize = false) => {
+    const searchQuery = recipeName.toLowerCase().replace(/[^\w\s]/gi, '').replace(/\s+/g, '+');
+    const dimensions = smallSize ? 'w=400&h=200' : 'w=600&h=400';
+    // Adding random parameters to prevent caching and get a different image
+    return `https://source.unsplash.com/random/?${searchQuery},food&fit=crop&${dimensions}&random=${Math.random()}`;
+  };
+
+  React.useEffect(() => {
+    // Initialize images for all similar recipes
+    const initialImages: Record<string, string> = {};
+    similarRecipes.forEach(similarRecipe => {
+      initialImages[similarRecipe.id] = getRecipeImageUrl(similarRecipe.name, true);
+    });
+    setRecipeImages(initialImages);
+  }, [similarRecipes]);
+
   const handleImageError = (recipeId: string) => {
     setImageErrors(prev => ({ ...prev, [recipeId]: true }));
+    
+    // Try to get a backup image
+    setRecipeImages(prev => ({
+      ...prev,
+      [recipeId]: getBackupImageUrl(similarRecipes.find(r => r.id === recipeId)?.name || '', true)
+    }));
   };
 
   return (
@@ -116,7 +140,7 @@ const RecipeAiFeatures = ({ recipe }: RecipeAiFeaturesProps) => {
                   >
                     <div className="h-24 rounded-md overflow-hidden mb-2">
                       <img 
-                        src={getRecipeImageUrl(similarRecipe.name, true)} 
+                        src={recipeImages[similarRecipe.id] || getRecipeImageUrl(similarRecipe.name, true)} 
                         alt={similarRecipe.name} 
                         className="w-full h-full object-cover"
                         onError={() => handleImageError(similarRecipe.id)}

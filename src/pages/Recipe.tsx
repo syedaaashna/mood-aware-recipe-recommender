@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { ArrowLeft, Clock, Users, ChefHat, Heart, Share2 } from 'lucide-react';
@@ -15,6 +14,7 @@ const Recipe = () => {
   const [isFavorite, setIsFavorite] = useState(false);
   const [activeTab, setActiveTab] = useState<'ingredients' | 'instructions'>('ingredients');
   const [imageError, setImageError] = useState(false);
+  const [imageUrl, setImageUrl] = useState<string>('');
   const { toast } = useToast();
 
   // Get recipe image URL based on recipe name
@@ -22,6 +22,13 @@ const Recipe = () => {
     // Clean up recipe name to use in search query
     const searchQuery = recipeName.toLowerCase().replace(/[^\w\s]/gi, '').replace(/\s+/g, '+');
     return `https://source.unsplash.com/featured/?${searchQuery},food,dish,recipe&fit=crop&w=1200&h=600`;
+  };
+
+  // Get a backup image if the first one fails
+  const getBackupImageUrl = (recipeName: string) => {
+    const searchQuery = recipeName.toLowerCase().replace(/[^\w\s]/gi, '').replace(/\s+/g, '+');
+    // Adding random parameters to prevent caching and get a different image
+    return `https://source.unsplash.com/random/?${searchQuery},food,cooking&fit=crop&w=1200&h=600&random=${Math.random()}`;
   };
 
   useEffect(() => {
@@ -32,6 +39,7 @@ const Recipe = () => {
       setTimeout(() => {
         if (foundRecipe) {
           setRecipe(foundRecipe);
+          setImageUrl(getRecipeImageUrl(foundRecipe.name));
         } else {
           setRecipe(null);
         }
@@ -42,6 +50,13 @@ const Recipe = () => {
       setIsFavorite(favorites.includes(id));
     }
   }, [id]);
+
+  const handleImageError = () => {
+    setImageError(true);
+    if (recipe) {
+      setImageUrl(getBackupImageUrl(recipe.name));
+    }
+  };
 
   const toggleFavorite = () => {
     const favorites = JSON.parse(localStorage.getItem('favoriteRecipes') || '[]');
@@ -140,10 +155,10 @@ const Recipe = () => {
         {/* Recipe image */}
         <div className="mb-8 rounded-xl overflow-hidden">
           <img 
-            src={getRecipeImageUrl(recipe.name)} 
+            src={imageUrl} 
             alt={recipe.name}
             className="w-full h-64 sm:h-80 object-cover"
-            onError={() => setImageError(true)}
+            onError={handleImageError}
           />
         </div>
         
@@ -190,7 +205,7 @@ const Recipe = () => {
           </div>
         </div>
         
-        {/* Add voice guidance component here */}
+        {/* Voice guidance component */}
         <VoiceGuidance recipe={recipe} />
         
         <div className="grid md:grid-cols-2 gap-8 mb-8">
