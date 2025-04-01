@@ -1,4 +1,3 @@
-
 export interface Mood {
   id: string;
   name: string;
@@ -724,7 +723,7 @@ const recipes: Recipe[] = [
       'Make sure your pan is very hot before pouring the batter',
       'Let the bottom cook completely before attempting to flip or fold'
     ],
-    hindiVoiceGuidance: 'मसाला डोसा'
+    hindiVoiceGuidance: 'मसा���ा डोसा'
   }
 ];
 
@@ -738,3 +737,84 @@ export const recipesByMood = moods.map(mood => {
     recipes: recipes.filter(recipe => recipe.moodIds.includes(mood.id))
   };
 });
+
+// Function to get a welcome message based on mood
+export const getChatbotResponse = (currentMood: string | null): string => {
+  if (!currentMood) {
+    return "Hello! I'm your recipe assistant. How can I help you today?";
+  }
+  
+  switch (currentMood) {
+    case 'happy':
+      return "You're in a great mood! Would you like to try a fun recipe to match your happiness?";
+    case 'romantic':
+      return "Feeling romantic today? I can suggest some special recipes perfect for a date night.";
+    case 'energetic':
+      return "You're full of energy! How about a quick and nutritious recipe to keep your momentum going?";
+    case 'relaxed':
+      return "Feeling relaxed? Let me suggest some comforting dishes that are easy to prepare.";
+    case 'creative':
+      return "Feeling creative? Let's explore some recipes that allow you to experiment in the kitchen!";
+    case 'adventurous':
+      return "Ready for an adventure? I can suggest some exotic recipes to explore new flavors!";
+    case 'nostalgic':
+      return "Feeling nostalgic? Let's revisit some classic comfort food recipes that bring back memories.";
+    case 'comforting':
+      return "Need some comfort? I have the perfect soul-warming recipes for you today.";
+    case 'festive':
+      return "In a celebratory mood? Let me suggest some special recipes perfect for festivities!";
+    case 'mindful':
+      return "Feeling mindful today? I can suggest nutritious and balanced recipes that nourish body and soul.";
+    default:
+      return "Hello! I'm your recipe assistant. What kind of recipe are you looking for today?";
+  }
+};
+
+// Function to get recipes by mood
+export const getRecipesByMood = (moodId: string | null): Recipe[] => {
+  if (!moodId) return recipes;
+  return recipes.filter(recipe => recipe.moodIds.includes(moodId));
+};
+
+// Function to get a recipe by ID
+export const getRecipeById = (id: string): Recipe | undefined => {
+  return recipes.find(recipe => recipe.id === id);
+};
+
+// Function to get all recipes
+export const getAllRecipes = (): Recipe[] => {
+  return recipes;
+};
+
+// Function to search recipes
+export const searchRecipes = (query: string): Recipe[] => {
+  const lowerCaseQuery = query.toLowerCase();
+  return recipes.filter(recipe => 
+    recipe.name.toLowerCase().includes(lowerCaseQuery) ||
+    recipe.description.toLowerCase().includes(lowerCaseQuery) ||
+    recipe.ingredients.some(ingredient => ingredient.toLowerCase().includes(lowerCaseQuery)) ||
+    recipe.tags.some(tag => tag.toLowerCase().includes(lowerCaseQuery))
+  );
+};
+
+// Function to get similar recipes
+export const getSimilarRecipes = (recipeId: string): Recipe[] => {
+  const recipe = getRecipeById(recipeId);
+  if (!recipe) return [];
+  
+  // If the recipe has defined similar recipes, use those
+  if (recipe.similarRecipes && recipe.similarRecipes.length > 0) {
+    return recipe.similarRecipes
+      .map(id => getRecipeById(id))
+      .filter((r): r is Recipe => r !== undefined);
+  }
+  
+  // Otherwise, find recipes with matching tags or mood
+  return recipes
+    .filter(r => r.id !== recipeId) // exclude current recipe
+    .filter(r => 
+      r.tags.some(tag => recipe.tags.includes(tag)) || // matching tags
+      r.moodIds.some(mood => recipe.moodIds.includes(mood)) // matching moods
+    )
+    .slice(0, 3); // limit to 3 similar recipes
+};
