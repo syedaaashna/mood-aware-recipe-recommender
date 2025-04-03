@@ -5,6 +5,7 @@ import { Recipe as RecipeType, getRecipeById } from '@/utils/moodRecipeData';
 import RecipeAiFeatures from '@/components/ui/RecipeAiFeatures';
 import VoiceGuidance from '@/components/ui/VoiceGuidance';
 import { useToast } from "@/hooks/use-toast";
+import { AspectRatio } from "@/components/ui/aspect-ratio";
 
 const Recipe = () => {
   const { id } = useParams<{ id: string }>();
@@ -13,22 +14,26 @@ const Recipe = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [isFavorite, setIsFavorite] = useState(false);
   const [activeTab, setActiveTab] = useState<'ingredients' | 'instructions'>('ingredients');
-  const [imageError, setImageError] = useState(false);
+  const [imageLoading, setImageLoading] = useState(true);
   const [imageUrl, setImageUrl] = useState<string>('');
   const { toast } = useToast();
 
-  // Get recipe image URL based on recipe name
+  // Get recipe image URL with better fallback strategy
   const getRecipeImageUrl = (recipeName: string) => {
-    // Clean up recipe name to use in search query
+    // Try more specific search terms for better images
     const searchQuery = recipeName.toLowerCase().replace(/[^\w\s]/gi, '').replace(/\s+/g, '+');
-    // Add a cache-busting parameter
-    return `https://source.unsplash.com/featured/?${searchQuery},food,dish&fit=crop&w=1200&h=600&random=${Math.random()}`;
+    return `https://source.unsplash.com/featured/?${searchQuery},food,dish&fit=crop&w=1200&h=600&random=${Date.now()}`;
   };
 
   // Get a backup image if the first one fails
-  const getBackupImageUrl = (recipeName: string) => {
-    const searchQuery = recipeName.toLowerCase().replace(/[^\w\s]/gi, '').replace(/\s+/g, '+');
-    return `https://placehold.co/1200x600/f4f4f4/909090?text=${encodeURIComponent(recipeName)}`;
+  const getBackupImageUrl = () => {
+    // Use reliable food images that will always work
+    const reliableFoodImages = [
+      "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=1200&h=600&q=80",
+      "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=1200&h=600&q=80",
+      "https://images.unsplash.com/photo-1606787366850-de6330128bfc?auto=format&fit=crop&w=1200&h=600&q=80"
+    ];
+    return reliableFoodImages[Math.floor(Math.random() * reliableFoodImages.length)];
   };
 
   useEffect(() => {
@@ -40,21 +45,34 @@ const Recipe = () => {
         if (foundRecipe) {
           setRecipe(foundRecipe);
           // Set a default placeholder while image is loading
-          setImageUrl("https://placehold.co/1200x600/f5f5f5/a0a0a0?text=Loading+Recipe+Image...");
+          setImageUrl("https://placehold.co/1200x600/f8f9fa/6c757d?text=Loading+Recipe+Image...");
+          setImageLoading(true);
           
           // Load actual image with proper error handling
           const img = new Image();
           img.src = getRecipeImageUrl(foundRecipe.name);
           
+          // Set timeout for slow loading images
+          const timeoutId = setTimeout(() => {
+            if (imageLoading) {
+              setImageUrl(getBackupImageUrl());
+              setImageLoading(false);
+            }
+          }, 5000);
+          
           img.onload = () => {
+            clearTimeout(timeoutId);
             setImageUrl(img.src);
-            setImageError(false);
+            setImageLoading(false);
           };
           
           img.onerror = () => {
-            setImageError(true);
-            setImageUrl(getBackupImageUrl(foundRecipe.name));
+            clearTimeout(timeoutId);
+            setImageUrl(getBackupImageUrl());
+            setImageLoading(false);
           };
+          
+          return () => clearTimeout(timeoutId);
         } else {
           setRecipe(null);
         }
@@ -67,10 +85,9 @@ const Recipe = () => {
   }, [id]);
 
   const handleImageError = () => {
-    if (!imageError && recipe) {
-      setImageError(true);
-      setImageUrl(getBackupImageUrl(recipe.name));
-    }
+    // If the image still fails, use another reliable backup
+    setImageUrl(getBackupImageUrl());
+    setImageLoading(false);
   };
 
   const toggleFavorite = () => {
@@ -167,21 +184,22 @@ const Recipe = () => {
           <span>Back to recipes</span>
         </button>
 
-        {/* Recipe image with background fallback */}
+        {/* Recipe image with reliable fallbacks and loading indicator */}
         <div className="mb-8 rounded-xl overflow-hidden bg-gray-200 dark:bg-gray-800">
-          {imageUrl ? (
+          <AspectRatio ratio={21/9} className="bg-muted">
             <img 
               src={imageUrl} 
               alt={recipe.name}
-              className="w-full h-64 sm:h-80 object-cover"
+              className="w-full h-full object-cover"
               onError={handleImageError}
               loading="lazy"
             />
-          ) : (
-            <div className="w-full h-64 sm:h-80 bg-gray-300 dark:bg-gray-700 flex items-center justify-center">
-              <span className="text-gray-500 dark:text-gray-400">Loading image...</span>
-            </div>
-          )}
+            {imageLoading && (
+              <div className="absolute inset-0 flex items-center justify-center bg-gray-100/80 dark:bg-gray-800/80">
+                <div className="w-10 h-10 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>
+              </div>
+            )}
+          </AspectRatio>
         </div>
         
         <div className="mb-8 p-6 rounded-xl" style={{

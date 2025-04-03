@@ -3,6 +3,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Brain, ChevronDown, ChevronUp, Lightbulb, Utensils, ListPlus, Sparkles, Flame } from 'lucide-react';
 import { Recipe, getSimilarRecipes } from '@/utils/moodRecipeData';
 import { Link } from 'react-router-dom';
+import { AspectRatio } from "@/components/ui/aspect-ratio";
 
 interface RecipeAiFeaturesProps {
   recipe: Recipe;
@@ -11,54 +12,82 @@ interface RecipeAiFeaturesProps {
 const RecipeAiFeatures = ({ recipe }: RecipeAiFeaturesProps) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const similarRecipes = getSimilarRecipes(recipe.id);
-  const [imageErrors, setImageErrors] = useState<Record<string, boolean>>({});
+  const [imageLoading, setImageLoading] = useState<Record<string, boolean>>({});
   const [recipeImages, setRecipeImages] = useState<Record<string, string>>({});
   const imagesInitializedRef = useRef(false);
 
-  // Get recipe image URL based on recipe name
-  const getRecipeImageUrl = (recipeName: string, smallSize = false) => {
+  // Get recipe image URL with reliable alternatives
+  const getRecipeImageUrl = (recipeName: string) => {
     const searchQuery = recipeName.toLowerCase().replace(/[^\w\s]/gi, '').replace(/\s+/g, '+');
-    const dimensions = smallSize ? 'w=400&h=200' : 'w=600&h=400';
-    return `https://source.unsplash.com/featured/?${searchQuery},food&fit=crop&${dimensions}&random=${Math.random()}`;
+    return `https://source.unsplash.com/featured/?${searchQuery},food&fit=crop&w=400&h=200&random=${Date.now()}`;
   };
 
-  // Get a backup image if the first one fails
-  const getBackupImageUrl = (recipeName: string, smallSize = false) => {
-    const searchQuery = recipeName.toLowerCase().replace(/[^\w\s]/gi, '').replace(/\s+/g, '+');
-    const dimensions = smallSize ? '400x200' : '600x400';
-    return `https://placehold.co/${dimensions}/f4f4f4/909090?text=${encodeURIComponent(recipeName)}`;
+  // Get a backup image using reliable food images
+  const getBackupImageUrl = (recipeId: string) => {
+    // Reliable food images that should always work
+    const reliableFoodImages = [
+      "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=400&h=200&q=80",
+      "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=400&h=200&q=80", 
+      "https://images.unsplash.com/photo-1606787366850-de6330128bfc?auto=format&fit=crop&w=400&h=200&q=80",
+      "https://images.unsplash.com/photo-1505253716362-afaea1d3d1af?auto=format&fit=crop&w=400&h=200&q=80"
+    ];
+    
+    // Use recipe ID to consistently select the same image for the same recipe
+    const index = parseInt(recipeId.replace(/\D/g, '')) % reliableFoodImages.length;
+    return reliableFoodImages[Math.abs(index)];
   };
 
-  // Initialize images only once when the component mounts or recipe changes
+  // Initialize images for all similar recipes
   useEffect(() => {
-    if (!imagesInitializedRef.current) {
+    if (!imagesInitializedRef.current && similarRecipes.length > 0) {
+      // Set initial placeholders and loading states for all similar recipes
       const initialImages: Record<string, string> = {};
+      const initialLoadingStates: Record<string, boolean> = {};
       
-      // Set initial placeholders for all similar recipes
       similarRecipes.forEach(similarRecipe => {
-        initialImages[similarRecipe.id] = "https://placehold.co/400x200/f5f5f5/a0a0a0?text=Loading...";
+        initialImages[similarRecipe.id] = "https://placehold.co/400x200/f8f9fa/6c757d?text=Loading...";
+        initialLoadingStates[similarRecipe.id] = true;
       });
-      setRecipeImages(initialImages);
       
-      // Then load actual images one by one
+      setRecipeImages(initialImages);
+      setImageLoading(initialLoadingStates);
+      
+      // Load actual images one by one
       similarRecipes.forEach(similarRecipe => {
+        // First try with Unsplash
         const img = new Image();
-        img.src = getRecipeImageUrl(similarRecipe.name, true);
+        img.src = getRecipeImageUrl(similarRecipe.name);
+        
+        // Set a timeout for slow-loading images
+        const timeoutId = setTimeout(() => {
+          if (imageLoading[similarRecipe.id]) {
+            setRecipeImages(prev => ({
+              ...prev,
+              [similarRecipe.id]: getBackupImageUrl(similarRecipe.id)
+            }));
+            setImageLoading(prev => ({ ...prev, [similarRecipe.id]: false }));
+          }
+        }, 5000);
         
         img.onload = () => {
+          clearTimeout(timeoutId);
           setRecipeImages(prev => ({
             ...prev,
             [similarRecipe.id]: img.src
           }));
+          setImageLoading(prev => ({ ...prev, [similarRecipe.id]: false }));
         };
         
         img.onerror = () => {
-          setImageErrors(prev => ({ ...prev, [similarRecipe.id]: true }));
+          clearTimeout(timeoutId);
           setRecipeImages(prev => ({
             ...prev,
-            [similarRecipe.id]: getBackupImageUrl(similarRecipe.name, true)
+            [similarRecipe.id]: getBackupImageUrl(similarRecipe.id)
           }));
+          setImageLoading(prev => ({ ...prev, [similarRecipe.id]: false }));
         };
+        
+        return () => clearTimeout(timeoutId);
       });
       
       imagesInitializedRef.current = true;
@@ -71,18 +100,12 @@ const RecipeAiFeatures = ({ recipe }: RecipeAiFeaturesProps) => {
   }, [recipe.id, similarRecipes]);
 
   const handleImageError = (recipeId: string) => {
-    // Only update if we haven't already tried for this image
-    if (!imageErrors[recipeId]) {
-      setImageErrors(prev => ({ ...prev, [recipeId]: true }));
-      
-      const similarRecipe = similarRecipes.find(r => r.id === recipeId);
-      if (similarRecipe) {
-        setRecipeImages(prev => ({
-          ...prev,
-          [recipeId]: getBackupImageUrl(similarRecipe.name, true)
-        }));
-      }
-    }
+    // Fall back to a reliable image if loading fails
+    setRecipeImages(prev => ({
+      ...prev,
+      [recipeId]: getBackupImageUrl(recipeId)
+    }));
+    setImageLoading(prev => ({ ...prev, [recipeId]: false }));
   };
 
   return (
@@ -174,14 +197,21 @@ const RecipeAiFeatures = ({ recipe }: RecipeAiFeaturesProps) => {
                     to={`/recipe/${similarRecipe.id}`}
                     className="block p-2 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
                   >
-                    <div className="h-20 rounded-md overflow-hidden mb-2 bg-gray-200 dark:bg-gray-700">
-                      <img 
-                        src={recipeImages[similarRecipe.id] || "https://placehold.co/400x200/f5f5f5/a0a0a0?text=Loading..."}
-                        alt={similarRecipe.name}
-                        className="w-full h-full object-cover"
-                        onError={() => handleImageError(similarRecipe.id)}
-                        loading="lazy"
-                      />
+                    <div className="rounded-md overflow-hidden mb-2 bg-gray-200 dark:bg-gray-700">
+                      <AspectRatio ratio={2/1}>
+                        <img 
+                          src={recipeImages[similarRecipe.id] || "https://placehold.co/400x200/f8f9fa/6c757d?text=Loading..."}
+                          alt={similarRecipe.name}
+                          className="w-full h-full object-cover"
+                          onError={() => handleImageError(similarRecipe.id)}
+                          loading="lazy"
+                        />
+                        {imageLoading[similarRecipe.id] && (
+                          <div className="absolute inset-0 flex items-center justify-center bg-gray-100/80 dark:bg-gray-800/80">
+                            <div className="w-6 h-6 border-2 border-primary border-t-transparent rounded-full animate-spin"></div>
+                          </div>
+                        )}
+                      </AspectRatio>
                     </div>
                     <h5 className="font-medium text-xs">{similarRecipe.name}</h5>
                     <p className="text-xs text-gray-500 dark:text-gray-400 mt-1 truncate">

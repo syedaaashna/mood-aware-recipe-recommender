@@ -5,6 +5,7 @@ import { Clock, Users, ChefHat, Heart, Sparkles, Award } from 'lucide-react';
 import { Recipe } from '@/utils/moodRecipeData';
 import { useToast } from "@/hooks/use-toast";
 import { motion } from "framer-motion";
+import { AspectRatio } from "./aspect-ratio";
 
 interface RecipeCardProps {
   recipe: Recipe;
@@ -16,7 +17,7 @@ const RecipeCard = ({ recipe, isFavorite = false, onToggleFavorite }: RecipeCard
   const [showSparkle, setShowSparkle] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
   const { toast } = useToast();
-  const [imageError, setImageError] = useState(false);
+  const [imageLoading, setImageLoading] = useState(true);
   const [imageUrl, setImageUrl] = useState<string>('');
 
   // Random color for recipe card gradient
@@ -38,37 +39,55 @@ const RecipeCard = ({ recipe, isFavorite = false, onToggleFavorite }: RecipeCard
 
   const [gradientClass] = useState(getRandomGradient());
 
-  // Get recipe image URL based on recipe name
+  // Get recipe image URL based on recipe name with more reliable sources
   const getRecipeImageUrl = (recipeName: string) => {
-    // Clean up recipe name to use in search query
-    const searchQuery = recipeName.toLowerCase().replace(/[^\w\s]/gi, '').replace(/\s+/g, '+');
-    // Add a cache-busting parameter to prevent cached responses
-    return `https://source.unsplash.com/featured/?${searchQuery},food,dish&fit=crop&w=600&h=350&random=${Math.random()}`;
+    // Try multiple options to increase chances of getting an image
+    const options = [
+      `https://source.unsplash.com/featured/?${encodeURIComponent(recipeName)},food,dish&fit=crop&w=600&h=350&random=${Date.now()}`,
+      `https://source.unsplash.com/featured/?cooking,${encodeURIComponent(recipeName.split(' ')[0])}&fit=crop&w=600&h=350&random=${Date.now()}`,
+      `https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=600&h=350&q=80`, // Fallback food image
+    ];
+    return options[0]; // Start with the first option
   };
 
-  // Get a backup image if the first one fails
+  // Get a backup image if unsplash fails
   const getBackupImageUrl = (recipeName: string) => {
-    // Use a different search query for backup image
-    const searchQuery = recipeName.toLowerCase().replace(/[^\w\s]/gi, '').replace(/\s+/g, '+');
-    return `https://placehold.co/600x350/f4f4f4/909090?text=${searchQuery}`;
+    return `https://placehold.co/600x350/f8f9fa/6c757d?text=${encodeURIComponent(recipeName)}`;
   };
   
+  // Load recipe image with reliable fallbacks
   useEffect(() => {
     if (recipe.name) {
-      // Set a placeholder while loading
-      setImageUrl("https://placehold.co/600x350/f5f5f5/a0a0a0?text=Loading...");
+      // Set a placeholder immediately
+      setImageUrl("https://placehold.co/600x350/f8f9fa/6c757d?text=Loading...");
+      setImageLoading(true);
       
-      // Then attempt to load the actual image
+      // Try to load the actual image
       const img = new Image();
       img.src = getRecipeImageUrl(recipe.name);
+      
+      // Set a timeout to fall back if loading takes too long
+      const timeoutId = setTimeout(() => {
+        if (imageLoading) {
+          setImageUrl(getBackupImageUrl(recipe.name));
+          setImageLoading(false);
+        }
+      }, 5000);
+      
       img.onload = () => {
+        clearTimeout(timeoutId);
         setImageUrl(img.src);
-        setImageError(false);
+        setImageLoading(false);
       };
+      
       img.onerror = () => {
-        setImageError(true);
-        setImageUrl(getBackupImageUrl(recipe.name));
+        clearTimeout(timeoutId);
+        // Try a different fallback food image
+        setImageUrl("https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=600&h=350&q=80");
+        setImageLoading(false);
       };
+      
+      return () => clearTimeout(timeoutId);
     }
   }, [recipe.name]);
 
@@ -85,11 +104,8 @@ const RecipeCard = ({ recipe, isFavorite = false, onToggleFavorite }: RecipeCard
   }, [isHovered]);
 
   const handleImageError = () => {
-    if (!imageError) {
-      setImageError(true);
-      // Fall back to placeholder
-      setImageUrl(getBackupImageUrl(recipe.name));
-    }
+    // If the image still fails to load, use a reliable food placeholder
+    setImageUrl("https://images.unsplash.com/photo-1606787366850-de6330128bfc?auto=format&fit=crop&w=600&h=350&q=80");
   };
 
   const handleFavoriteToggle = (e: React.MouseEvent) => {
@@ -131,9 +147,9 @@ const RecipeCard = ({ recipe, isFavorite = false, onToggleFavorite }: RecipeCard
         onMouseLeave={() => setIsHovered(false)}
       >
         <div className={`relative overflow-hidden rounded-xl border border-gray-200 dark:border-gray-800 ${isHovered ? 'shadow-lg shadow-primary/20 dark:shadow-primary/10' : 'shadow-sm'}`}>
-          {/* Recipe Image */}
-          <div className="h-48 overflow-hidden">
-            {imageUrl ? (
+          {/* Recipe Image with AspectRatio */}
+          <div className="overflow-hidden">
+            <AspectRatio ratio={16 / 9} className="bg-muted">
               <img 
                 src={imageUrl}
                 alt={recipe.name}
@@ -142,11 +158,12 @@ const RecipeCard = ({ recipe, isFavorite = false, onToggleFavorite }: RecipeCard
                 onError={handleImageError}
                 loading="lazy"
               />
-            ) : (
-              <div className="w-full h-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center">
-                <span className="text-gray-400 dark:text-gray-500">Loading image...</span>
-              </div>
-            )}
+              {imageLoading && (
+                <div className="absolute inset-0 flex items-center justify-center bg-gray-100/80 dark:bg-gray-800/80">
+                  <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>
+                </div>
+              )}
+            </AspectRatio>
           </div>
 
           {/* Content with gradient background */}
