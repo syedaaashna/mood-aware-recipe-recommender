@@ -70,9 +70,11 @@ const RecipeCard = ({ recipe, isFavorite = false, onToggleFavorite }: RecipeCard
   }, [isHovered]);
 
   const handleImageError = () => {
-    setImageError(true);
-    // Try a different query to get another image
-    setImageUrl(getBackupImageUrl(recipe.name));
+    if (!imageError) {
+      setImageError(true);
+      // Try a different query to get another image
+      setImageUrl(getBackupImageUrl(recipe.name));
+    }
   };
 
   const handleFavoriteToggle = (e: React.MouseEvent) => {

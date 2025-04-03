@@ -37,7 +37,9 @@ const RecipeAiFeatures = ({ recipe }: RecipeAiFeaturesProps) => {
       initialImages[similarRecipe.id] = getRecipeImageUrl(similarRecipe.name, true);
     });
     setRecipeImages(initialImages);
-  }, [recipe.id]); // Only re-run when recipe.id changes
+    // Reset image errors when recipe changes
+    setImageErrors({});
+  }, [recipe.id]);
 
   const handleImageError = (recipeId: string) => {
     // Only update if we haven't already tried for this image
@@ -141,12 +143,13 @@ const RecipeAiFeatures = ({ recipe }: RecipeAiFeaturesProps) => {
                     to={`/recipe/${similarRecipe.id}`}
                     className="block p-3 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
                   >
-                    <div className="h-24 rounded-md overflow-hidden mb-2">
+                    <div className="h-24 rounded-md overflow-hidden mb-2 bg-gray-200 dark:bg-gray-700">
                       <img 
                         src={recipeImages[similarRecipe.id] || getRecipeImageUrl(similarRecipe.name, true)} 
                         alt={similarRecipe.name} 
                         className="w-full h-full object-cover"
                         onError={() => handleImageError(similarRecipe.id)}
+                        loading="lazy"
                       />
                     </div>
                     <h5 className="font-medium text-sm">{similarRecipe.name}</h5>

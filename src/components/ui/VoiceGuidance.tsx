@@ -3,6 +3,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { VolumeX, Volume2, Pause, Play, SkipForward, SkipBack, Globe } from 'lucide-react';
 import { Recipe } from '@/utils/moodRecipeData';
 import { useToast } from '@/hooks/use-toast';
+import { Button } from '@/components/ui/button';
 
 interface VoiceGuidanceProps {
   recipe: Recipe;
@@ -24,6 +25,7 @@ const VoiceGuidance: React.FC<VoiceGuidanceProps> = ({ recipe }) => {
   const [speechRate, setSpeechRate] = useState(1);
   const [isLanguageMenuOpen, setIsLanguageMenuOpen] = useState(false);
   const [voicesLoaded, setVoicesLoaded] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(false);
   const { toast } = useToast();
 
   const speechSynthRef = useRef(window.speechSynthesis);
@@ -239,151 +241,208 @@ const VoiceGuidance: React.FC<VoiceGuidanceProps> = ({ recipe }) => {
   }
 
   return (
-    <div className="my-6 p-4 rounded-lg border border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-900">
-      <h3 className="text-lg font-medium mb-4 flex items-center">
-        <Volume2 className="w-5 h-5 mr-2 text-primary" />
-        Voice Guidance
-      </h3>
-      
-      <div className="mb-4">
-        <p className="text-sm text-gray-600 dark:text-gray-300">
-          Listen to step-by-step instructions for this recipe
-        </p>
+    <div className="my-6 relative">
+      {/* Compact floating play button */}
+      <div className="absolute top-0 right-0">
+        <Button
+          onClick={() => setIsExpanded(!isExpanded)}
+          variant="outline"
+          size="icon"
+          className="rounded-full bg-primary text-white hover:bg-primary/90"
+          aria-label="Voice Guidance"
+        >
+          <Volume2 className="w-4 h-4" />
+        </Button>
       </div>
-      
-      {/* Current step indicator */}
-      <div className="mb-4 p-3 rounded-md bg-primary/10 border border-primary/20">
-        <div className="flex justify-between items-center mb-1">
-          <span className="text-sm font-medium">Current Step:</span>
-          <span className="text-sm">{currentStepIndex + 1} of {recipe.instructions.length}</span>
-        </div>
-        <p className="text-sm">
-          {isSpeaking ? recipe.instructions[currentStepIndex] : "Press play to start voice guidance"}
-        </p>
-      </div>
-      
-      {/* Controls */}
-      <div className="flex items-center justify-between mb-4">
-        <div className="flex items-center space-x-2">
-          <button 
-            onClick={prevStep} 
-            disabled={currentStepIndex === 0 || !isSpeaking}
-            className={`p-2 rounded-full ${
-              currentStepIndex === 0 || !isSpeaking
-                ? 'text-gray-400 bg-gray-100 dark:bg-gray-800 dark:text-gray-600' 
-                : 'text-gray-700 bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-200 dark:hover:bg-gray-700'
-            }`}
-            aria-label="Previous step"
-          >
-            <SkipBack size={18} />
-          </button>
-          
-          <button 
+
+      {/* Small floating play/pause button when minimized */}
+      {!isExpanded && (
+        <div className="absolute top-12 right-0">
+          <Button
             onClick={togglePlayPause}
-            className="p-3 rounded-full bg-primary text-white hover:bg-primary/90"
+            variant="outline" 
+            size="icon"
+            className={`rounded-full ${
+              isSpeaking 
+                ? 'bg-red-500 hover:bg-red-600' 
+                : 'bg-green-500 hover:bg-green-600'
+            } text-white`}
             aria-label={isSpeaking && !isPaused ? "Pause" : "Play"}
           >
-            {isSpeaking && !isPaused ? <Pause size={20} /> : <Play size={20} />}
-          </button>
-          
-          <button 
-            onClick={nextStep}
-            disabled={currentStepIndex === recipe.instructions.length - 1 || !isSpeaking}
-            className={`p-2 rounded-full ${
-              currentStepIndex === recipe.instructions.length - 1 || !isSpeaking
-                ? 'text-gray-400 bg-gray-100 dark:bg-gray-800 dark:text-gray-600' 
-                : 'text-gray-700 bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-200 dark:hover:bg-gray-700'
-            }`}
-            aria-label="Next step"
-          >
-            <SkipForward size={18} />
-          </button>
-          
-          <button 
-            onClick={stopSpeaking}
-            disabled={!isSpeaking}
-            className={`p-2 rounded-full ${
-              !isSpeaking
-                ? 'text-gray-400 bg-gray-100 dark:bg-gray-800 dark:text-gray-600' 
-                : 'text-red-600 bg-red-100 hover:bg-red-200 dark:bg-red-900/30 dark:text-red-400 dark:hover:bg-red-900/50'
-            }`}
-            aria-label="Stop"
-          >
-            <VolumeX size={18} />
-          </button>
+            {isSpeaking && !isPaused ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4" />}
+          </Button>
         </div>
-        
-        <div className="relative">
-          <button
-            onClick={() => setIsLanguageMenuOpen(!isLanguageMenuOpen)}
-            className="flex items-center space-x-1 p-2 rounded-md bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700"
-            aria-label="Select language"
-          >
-            <Globe size={16} />
-            <span className="text-sm">{selectedLanguage?.name || 'Select language'}</span>
-          </button>
+      )}
+
+      {/* Full voice guidance panel */}
+      {isExpanded && (
+        <div className="p-4 rounded-lg border border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-900">
+          <div className="flex justify-between items-center mb-4">
+            <h3 className="text-lg font-medium flex items-center">
+              <Volume2 className="w-5 h-5 mr-2 text-primary" />
+              Voice Guidance
+            </h3>
+            <Button
+              onClick={() => setIsExpanded(false)}
+              variant="outline"
+              size="sm"
+              className="text-gray-500"
+            >
+              Minimize
+            </Button>
+          </div>
           
-          {isLanguageMenuOpen && (
-            <div className="absolute right-0 mt-1 w-48 rounded-md shadow-lg bg-white dark:bg-gray-800 ring-1 ring-black ring-opacity-5 z-10 max-h-60 overflow-y-auto">
-              <div className="py-1">
-                {availableLanguages.map((language) => (
-                  <button
-                    key={language.code}
-                    onClick={() => changeLanguage(language)}
-                    className={`block w-full text-left px-4 py-2 text-sm ${
-                      selectedLanguage?.code === language.code 
-                        ? 'bg-primary/10 text-primary' 
-                        : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'
-                    }`}
-                  >
-                    {language.name}
-                  </button>
-                ))}
+          <div className="mb-4">
+            <p className="text-sm text-gray-600 dark:text-gray-300">
+              Listen to step-by-step instructions for this recipe
+            </p>
+          </div>
+          
+          {/* Current step indicator */}
+          <div className="mb-4 p-3 rounded-md bg-primary/10 border border-primary/20">
+            <div className="flex justify-between items-center mb-1">
+              <span className="text-sm font-medium">Current Step:</span>
+              <span className="text-sm">{currentStepIndex + 1} of {recipe.instructions.length}</span>
+            </div>
+            <p className="text-sm">
+              {isSpeaking ? recipe.instructions[currentStepIndex] : "Press play to start voice guidance"}
+            </p>
+          </div>
+          
+          {/* Controls */}
+          <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center space-x-2">
+              <Button 
+                onClick={prevStep} 
+                disabled={currentStepIndex === 0 || !isSpeaking}
+                variant="outline"
+                size="icon"
+                className={`rounded-full ${
+                  currentStepIndex === 0 || !isSpeaking
+                    ? 'text-gray-400 bg-gray-100 dark:bg-gray-800 dark:text-gray-600' 
+                    : 'text-gray-700 bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-200 dark:hover:bg-gray-700'
+                }`}
+                aria-label="Previous step"
+              >
+                <SkipBack size={18} />
+              </Button>
+              
+              <Button 
+                onClick={togglePlayPause}
+                variant="outline"
+                size="icon"
+                className="rounded-full bg-primary text-white hover:bg-primary/90"
+                aria-label={isSpeaking && !isPaused ? "Pause" : "Play"}
+              >
+                {isSpeaking && !isPaused ? <Pause size={18} /> : <Play size={18} />}
+              </Button>
+              
+              <Button 
+                onClick={nextStep}
+                disabled={currentStepIndex === recipe.instructions.length - 1 || !isSpeaking}
+                variant="outline"
+                size="icon"
+                className={`rounded-full ${
+                  currentStepIndex === recipe.instructions.length - 1 || !isSpeaking
+                    ? 'text-gray-400 bg-gray-100 dark:bg-gray-800 dark:text-gray-600' 
+                    : 'text-gray-700 bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-200 dark:hover:bg-gray-700'
+                }`}
+                aria-label="Next step"
+              >
+                <SkipForward size={18} />
+              </Button>
+              
+              <Button 
+                onClick={stopSpeaking}
+                disabled={!isSpeaking}
+                variant="outline"
+                size="icon"
+                className={`rounded-full ${
+                  !isSpeaking
+                    ? 'text-gray-400 bg-gray-100 dark:bg-gray-800 dark:text-gray-600' 
+                    : 'text-red-600 bg-red-100 hover:bg-red-200 dark:bg-red-900/30 dark:text-red-400 dark:hover:bg-red-900/50'
+                }`}
+                aria-label="Stop"
+              >
+                <VolumeX size={18} />
+              </Button>
+            </div>
+            
+            <div className="relative">
+              <Button
+                onClick={() => setIsLanguageMenuOpen(!isLanguageMenuOpen)}
+                variant="outline"
+                size="sm"
+                className="flex items-center space-x-1 rounded-md"
+                aria-label="Select language"
+              >
+                <Globe size={16} />
+                <span className="text-sm">{selectedLanguage?.name || 'Select language'}</span>
+              </Button>
+              
+              {isLanguageMenuOpen && (
+                <div className="absolute right-0 mt-1 w-48 rounded-md shadow-lg bg-white dark:bg-gray-800 ring-1 ring-black ring-opacity-5 z-10 max-h-60 overflow-y-auto">
+                  <div className="py-1">
+                    {availableLanguages.map((language) => (
+                      <button
+                        key={language.code}
+                        onClick={() => changeLanguage(language)}
+                        className={`block w-full text-left px-4 py-2 text-sm ${
+                          selectedLanguage?.code === language.code 
+                            ? 'bg-primary/10 text-primary' 
+                            : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'
+                        }`}
+                      >
+                        {language.name}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+          
+          {/* Settings */}
+          <div className="space-y-3">
+            <div>
+              <label htmlFor="volume" className="block text-sm font-medium mb-1">
+                Volume
+              </label>
+              <input
+                id="volume"
+                type="range"
+                min="0"
+                max="1"
+                step="0.1"
+                value={volume}
+                onChange={handleVolumeChange}
+                className="w-full h-2 rounded-full bg-gray-200 dark:bg-gray-700 appearance-none cursor-pointer"
+              />
+            </div>
+            
+            <div>
+              <label htmlFor="rate" className="block text-sm font-medium mb-1">
+                Speed
+              </label>
+              <input
+                id="rate"
+                type="range"
+                min="0.5"
+                max="2"
+                step="0.1"
+                value={speechRate}
+                onChange={handleRateChange}
+                className="w-full h-2 rounded-full bg-gray-200 dark:bg-gray-700 appearance-none cursor-pointer"
+              />
+              <div className="flex justify-between text-xs text-gray-500 mt-1">
+                <span>Slow</span>
+                <span>Normal</span>
+                <span>Fast</span>
               </div>
             </div>
-          )}
-        </div>
-      </div>
-      
-      {/* Settings */}
-      <div className="space-y-3">
-        <div>
-          <label htmlFor="volume" className="block text-sm font-medium mb-1">
-            Volume
-          </label>
-          <input
-            id="volume"
-            type="range"
-            min="0"
-            max="1"
-            step="0.1"
-            value={volume}
-            onChange={handleVolumeChange}
-            className="w-full h-2 rounded-full bg-gray-200 dark:bg-gray-700 appearance-none cursor-pointer"
-          />
-        </div>
-        
-        <div>
-          <label htmlFor="rate" className="block text-sm font-medium mb-1">
-            Speed
-          </label>
-          <input
-            id="rate"
-            type="range"
-            min="0.5"
-            max="2"
-            step="0.1"
-            value={speechRate}
-            onChange={handleRateChange}
-            className="w-full h-2 rounded-full bg-gray-200 dark:bg-gray-700 appearance-none cursor-pointer"
-          />
-          <div className="flex justify-between text-xs text-gray-500 mt-1">
-            <span>Slow</span>
-            <span>Normal</span>
-            <span>Fast</span>
           </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };

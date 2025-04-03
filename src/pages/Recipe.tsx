@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { ArrowLeft, Clock, Users, ChefHat, Heart, Share2 } from 'lucide-react';
@@ -40,6 +41,7 @@ const Recipe = () => {
         if (foundRecipe) {
           setRecipe(foundRecipe);
           setImageUrl(getRecipeImageUrl(foundRecipe.name));
+          setImageError(false); // Reset image error state when recipe changes
         } else {
           setRecipe(null);
         }
@@ -52,9 +54,11 @@ const Recipe = () => {
   }, [id]);
 
   const handleImageError = () => {
-    setImageError(true);
-    if (recipe) {
-      setImageUrl(getBackupImageUrl(recipe.name));
+    if (!imageError) {
+      setImageError(true);
+      if (recipe) {
+        setImageUrl(getBackupImageUrl(recipe.name));
+      }
     }
   };
 
@@ -152,8 +156,8 @@ const Recipe = () => {
           <span>Back to recipes</span>
         </button>
 
-        {/* Recipe image */}
-        <div className="mb-8 rounded-xl overflow-hidden">
+        {/* Recipe image with background fallback */}
+        <div className="mb-8 rounded-xl overflow-hidden bg-gray-200 dark:bg-gray-800">
           <img 
             src={imageUrl} 
             alt={recipe.name}
