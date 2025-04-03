@@ -7,6 +7,16 @@ import VoiceGuidance from '@/components/ui/VoiceGuidance';
 import { useToast } from "@/hooks/use-toast";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 
+const FOOD_PLACEHOLDERS = [
+  "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=1200&h=600&q=80",
+  "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=1200&h=600&q=80",
+  "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=1200&h=600&q=80",
+  "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=1200&h=600&q=80",
+  "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?auto=format&fit=crop&w=1200&h=600&q=80",
+  "https://images.unsplash.com/photo-1565958011703-44f9829ba187?auto=format&fit=crop&w=1200&h=600&q=80",
+  "https://images.unsplash.com/photo-1482049016688-2d3e1b311543?auto=format&fit=crop&w=1200&h=600&q=80"
+];
+
 const Recipe = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
@@ -18,22 +28,17 @@ const Recipe = () => {
   const [imageUrl, setImageUrl] = useState<string>('');
   const { toast } = useToast();
 
-  // Get recipe image URL with better fallback strategy
-  const getRecipeImageUrl = (recipeName: string) => {
-    // Try more specific search terms for better images
-    const searchQuery = recipeName.toLowerCase().replace(/[^\w\s]/gi, '').replace(/\s+/g, '+');
-    return `https://source.unsplash.com/featured/?${searchQuery},food,dish&fit=crop&w=1200&h=600&random=${Date.now()}`;
+  const getRecipeImageUrl = (recipe: RecipeType) => {
+    const mainKeyword = recipe.name.split(' ')[0].toLowerCase();
+    const secondaryKeyword = recipe.tags[0] || '';
+    const uniqueId = recipe.id || Date.now();
+    return `https://source.unsplash.com/featured/?${encodeURIComponent(mainKeyword)},${encodeURIComponent(secondaryKeyword)},food,dish&fit=crop&w=1200&h=600&random=${uniqueId}`;
   };
 
-  // Get a backup image if the first one fails
-  const getBackupImageUrl = () => {
-    // Use reliable food images that will always work
-    const reliableFoodImages = [
-      "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=1200&h=600&q=80",
-      "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=1200&h=600&q=80",
-      "https://images.unsplash.com/photo-1606787366850-de6330128bfc?auto=format&fit=crop&w=1200&h=600&q=80"
-    ];
-    return reliableFoodImages[Math.floor(Math.random() * reliableFoodImages.length)];
+  const getBackupImageUrl = (recipe: RecipeType) => {
+    const id = parseInt(recipe.id.toString());
+    const index = id % FOOD_PLACEHOLDERS.length;
+    return FOOD_PLACEHOLDERS[index];
   };
 
   useEffect(() => {
@@ -44,21 +49,18 @@ const Recipe = () => {
       setTimeout(() => {
         if (foundRecipe) {
           setRecipe(foundRecipe);
-          // Set a default placeholder while image is loading
           setImageUrl("https://placehold.co/1200x600/f8f9fa/6c757d?text=Loading+Recipe+Image...");
           setImageLoading(true);
           
-          // Load actual image with proper error handling
           const img = new Image();
-          img.src = getRecipeImageUrl(foundRecipe.name);
+          img.src = getRecipeImageUrl(foundRecipe);
           
-          // Set timeout for slow loading images
           const timeoutId = setTimeout(() => {
             if (imageLoading) {
-              setImageUrl(getBackupImageUrl());
+              setImageUrl(getBackupImageUrl(foundRecipe));
               setImageLoading(false);
             }
-          }, 5000);
+          }, 3000);
           
           img.onload = () => {
             clearTimeout(timeoutId);
@@ -68,7 +70,7 @@ const Recipe = () => {
           
           img.onerror = () => {
             clearTimeout(timeoutId);
-            setImageUrl(getBackupImageUrl());
+            setImageUrl(getBackupImageUrl(foundRecipe));
             setImageLoading(false);
           };
           
@@ -85,8 +87,11 @@ const Recipe = () => {
   }, [id]);
 
   const handleImageError = () => {
-    // If the image still fails, use another reliable backup
-    setImageUrl(getBackupImageUrl());
+    if (recipe) {
+      setImageUrl(getBackupImageUrl(recipe));
+    } else {
+      setImageUrl(FOOD_PLACEHOLDERS[0]);
+    }
     setImageLoading(false);
   };
 
@@ -184,12 +189,11 @@ const Recipe = () => {
           <span>Back to recipes</span>
         </button>
 
-        {/* Recipe image with reliable fallbacks and loading indicator */}
         <div className="mb-8 rounded-xl overflow-hidden bg-gray-200 dark:bg-gray-800">
           <AspectRatio ratio={21/9} className="bg-muted">
             <img 
               src={imageUrl} 
-              alt={recipe.name}
+              alt={recipe?.name}
               className="w-full h-full object-cover"
               onError={handleImageError}
               loading="lazy"
@@ -206,32 +210,32 @@ const Recipe = () => {
           background: 'linear-gradient(90deg, hsla(46, 73%, 75%, 1) 0%, hsla(176, 73%, 88%, 1) 100%)',
           color: '#333'
         }}>
-          <h1 className="text-3xl sm:text-4xl font-bold mb-3">{recipe.name}</h1>
-          <p className="text-lg mb-4">{recipe.description}</p>
+          <h1 className="text-3xl sm:text-4xl font-bold mb-3">{recipe?.name}</h1>
+          <p className="text-lg mb-4">{recipe?.description}</p>
           
           <div className="flex flex-wrap gap-4 text-sm">
-            {recipe.prepTime && recipe.cookTime && (
+            {recipe?.prepTime && recipe?.cookTime && (
               <div className="flex items-center">
                 <Clock size={16} className="mr-1" />
                 <span>Prep: {recipe.prepTime} | Cook: {recipe.cookTime}</span>
               </div>
             )}
             
-            {recipe.servings && (
+            {recipe?.servings && (
               <div className="flex items-center">
                 <Users size={16} className="mr-1" />
                 <span>Serves {recipe.servings}</span>
               </div>
             )}
             
-            {recipe.calories && (
+            {recipe?.calories && (
               <div className="flex items-center">
                 <ChefHat size={16} className="mr-1" />
                 <span>{recipe.calories} calories per serving</span>
               </div>
             )}
             
-            {recipe.difficulty && (
+            {recipe?.difficulty && (
               <div className="flex items-center">
                 <span className={`px-2 py-1 rounded-full text-xs font-medium
                   ${recipe.difficulty === 'Easy' ? 'bg-green-500 text-white' : 
@@ -248,7 +252,7 @@ const Recipe = () => {
         <div className="mb-8">
           <h3 className="text-lg font-medium mb-3">Tags</h3>
           <div className="flex flex-wrap gap-2 mb-6">
-            {recipe.tags.map((tag, index) => (
+            {recipe?.tags.map((tag, index) => (
               <span 
                 key={index} 
                 className="px-3 py-1 rounded-full text-sm"
@@ -328,7 +332,7 @@ const Recipe = () => {
                 <div>
                   <h2 className="text-xl font-bold mb-4">Ingredients</h2>
                   <ul className="space-y-3">
-                    {recipe.ingredients.map((ingredient, index) => (
+                    {recipe?.ingredients.map((ingredient, index) => (
                       <li key={index} className="flex items-start">
                         <div className="w-2 h-2 rounded-full bg-primary mt-2 mr-3"></div>
                         <span>{ingredient}</span>
@@ -345,7 +349,7 @@ const Recipe = () => {
                   </div>
                   
                   <ol className="space-y-6">
-                    {recipe.instructions.map((instruction, index) => (
+                    {recipe?.instructions.map((instruction, index) => (
                       <li key={index} className="flex">
                         <div className="flex-shrink-0 w-8 h-8 rounded-full text-white flex items-center justify-center mr-4"
                           style={{
@@ -367,7 +371,6 @@ const Recipe = () => {
         </div>
       </div>
       
-      {/* Voice guidance component - Now moved to a fixed position */}
       <VoiceGuidance recipe={recipe} />
     </>
   );

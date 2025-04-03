@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Clock, Users, ChefHat, Heart, Sparkles, Award } from 'lucide-react';
@@ -13,6 +12,16 @@ interface RecipeCardProps {
   onToggleFavorite?: (recipe: Recipe) => void;
 }
 
+const FOOD_PLACEHOLDERS = [
+  "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=600&h=350&q=80",
+  "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=600&h=350&q=80",
+  "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=600&h=350&q=80",
+  "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=600&h=350&q=80",
+  "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?auto=format&fit=crop&w=600&h=350&q=80",
+  "https://images.unsplash.com/photo-1565958011703-44f9829ba187?auto=format&fit=crop&w=600&h=350&q=80",
+  "https://images.unsplash.com/photo-1482049016688-2d3e1b311543?auto=format&fit=crop&w=600&h=350&q=80"
+];
+
 const RecipeCard = ({ recipe, isFavorite = false, onToggleFavorite }: RecipeCardProps) => {
   const [showSparkle, setShowSparkle] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
@@ -20,7 +29,6 @@ const RecipeCard = ({ recipe, isFavorite = false, onToggleFavorite }: RecipeCard
   const [imageLoading, setImageLoading] = useState(true);
   const [imageUrl, setImageUrl] = useState<string>('');
 
-  // Random color for recipe card gradient
   const getRandomGradient = () => {
     const gradients = [
       'recipe-gradient-1',
@@ -39,40 +47,43 @@ const RecipeCard = ({ recipe, isFavorite = false, onToggleFavorite }: RecipeCard
 
   const [gradientClass] = useState(getRandomGradient());
 
-  // Get recipe image URL based on recipe name with more reliable sources
-  const getRecipeImageUrl = (recipeName: string) => {
-    // Try multiple options to increase chances of getting an image
+  const getRecipeImageUrl = (recipe: Recipe) => {
+    const mainKeyword = recipe.name.split(' ')[0].toLowerCase();
+    const secondaryKeyword = recipe.tags[0] || '';
+    
+    const uniqueId = recipe.id || Date.now();
+    
     const options = [
-      `https://source.unsplash.com/featured/?${encodeURIComponent(recipeName)},food,dish&fit=crop&w=600&h=350&random=${Date.now()}`,
-      `https://source.unsplash.com/featured/?cooking,${encodeURIComponent(recipeName.split(' ')[0])}&fit=crop&w=600&h=350&random=${Date.now()}`,
-      `https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=600&h=350&q=80`, // Fallback food image
+      `https://source.unsplash.com/featured/?${encodeURIComponent(mainKeyword)},${encodeURIComponent(secondaryKeyword)},food&fit=crop&w=600&h=350&random=${uniqueId}`,
+      
+      `https://pixabay.com/api/?key=pixabay_api_key&q=${encodeURIComponent(recipe.name)}&image_type=photo&orientation=horizontal&per_page=3`,
+      
+      FOOD_PLACEHOLDERS[Math.floor(uniqueId % FOOD_PLACEHOLDERS.length)]
     ];
-    return options[0]; // Start with the first option
+    
+    return options[0];
   };
 
-  // Get a backup image if unsplash fails
-  const getBackupImageUrl = (recipeName: string) => {
-    return `https://placehold.co/600x350/f8f9fa/6c757d?text=${encodeURIComponent(recipeName)}`;
+  const getBackupImageUrl = (recipe: Recipe) => {
+    const id = parseInt(recipe.id.toString());
+    const index = id % FOOD_PLACEHOLDERS.length;
+    return FOOD_PLACEHOLDERS[index];
   };
   
-  // Load recipe image with reliable fallbacks
   useEffect(() => {
-    if (recipe.name) {
-      // Set a placeholder immediately
+    if (recipe && recipe.name) {
       setImageUrl("https://placehold.co/600x350/f8f9fa/6c757d?text=Loading...");
       setImageLoading(true);
       
-      // Try to load the actual image
       const img = new Image();
-      img.src = getRecipeImageUrl(recipe.name);
+      img.src = getRecipeImageUrl(recipe);
       
-      // Set a timeout to fall back if loading takes too long
       const timeoutId = setTimeout(() => {
         if (imageLoading) {
-          setImageUrl(getBackupImageUrl(recipe.name));
+          setImageUrl(getBackupImageUrl(recipe));
           setImageLoading(false);
         }
-      }, 5000);
+      }, 3000);
       
       img.onload = () => {
         clearTimeout(timeoutId);
@@ -82,30 +93,16 @@ const RecipeCard = ({ recipe, isFavorite = false, onToggleFavorite }: RecipeCard
       
       img.onerror = () => {
         clearTimeout(timeoutId);
-        // Try a different fallback food image
-        setImageUrl("https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=600&h=350&q=80");
+        setImageUrl(getBackupImageUrl(recipe));
         setImageLoading(false);
       };
       
       return () => clearTimeout(timeoutId);
     }
-  }, [recipe.name]);
-
-  useEffect(() => {
-    // Show sparkle animation occasionally
-    const sparkleTimer = setInterval(() => {
-      if (isHovered) {
-        setShowSparkle(true);
-        setTimeout(() => setShowSparkle(false), 1000);
-      }
-    }, 3000);
-
-    return () => clearInterval(sparkleTimer);
-  }, [isHovered]);
+  }, [recipe]);
 
   const handleImageError = () => {
-    // If the image still fails to load, use a reliable food placeholder
-    setImageUrl("https://images.unsplash.com/photo-1606787366850-de6330128bfc?auto=format&fit=crop&w=600&h=350&q=80");
+    setImageUrl(getBackupImageUrl(recipe));
   };
 
   const handleFavoriteToggle = (e: React.MouseEvent) => {
@@ -123,10 +120,8 @@ const RecipeCard = ({ recipe, isFavorite = false, onToggleFavorite }: RecipeCard
     }
   };
 
-  // Use title if available, otherwise use name for display
   const displayTitle = recipe.title || recipe.name;
 
-  // Generate AI enthusiasm rating - this is just for fun
   const getEnthusiasmRating = () => {
     const ratings = ["Intriguing!", "Must try!", "Chef's pick!", "Crowd pleaser!"];
     return ratings[Math.floor(Math.random() * ratings.length)];
@@ -147,7 +142,6 @@ const RecipeCard = ({ recipe, isFavorite = false, onToggleFavorite }: RecipeCard
         onMouseLeave={() => setIsHovered(false)}
       >
         <div className={`relative overflow-hidden rounded-xl border border-gray-200 dark:border-gray-800 ${isHovered ? 'shadow-lg shadow-primary/20 dark:shadow-primary/10' : 'shadow-sm'}`}>
-          {/* Recipe Image with AspectRatio */}
           <div className="overflow-hidden">
             <AspectRatio ratio={16 / 9} className="bg-muted">
               <img 
@@ -166,7 +160,6 @@ const RecipeCard = ({ recipe, isFavorite = false, onToggleFavorite }: RecipeCard
             </AspectRatio>
           </div>
 
-          {/* Content with gradient background */}
           <div className={`p-4 ${gradientClass} bg-opacity-20`}>
             <div className="absolute top-3 left-3 flex space-x-2">
               <span className={`px-3 py-1 rounded-full text-xs font-medium
@@ -183,7 +176,6 @@ const RecipeCard = ({ recipe, isFavorite = false, onToggleFavorite }: RecipeCard
               </span>
             </div>
             
-            {/* Favorite button */}
             <button
               onClick={handleFavoriteToggle}
               className={`absolute top-3 right-3 p-2 rounded-full transition-all ${
@@ -199,7 +191,6 @@ const RecipeCard = ({ recipe, isFavorite = false, onToggleFavorite }: RecipeCard
             <h3 className="font-bold text-lg mt-2 mb-1 line-clamp-1">{recipe.title || recipe.name}</h3>
             <p className="text-gray-600 dark:text-gray-300 text-sm mb-3 line-clamp-2">{recipe.description}</p>
             
-            {/* Recipe info */}
             <div className="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400">
               <div className="flex items-center">
                 <Clock size={14} className="mr-1" />
@@ -217,7 +208,6 @@ const RecipeCard = ({ recipe, isFavorite = false, onToggleFavorite }: RecipeCard
               </div>
             </div>
             
-            {/* AI enthusiasm rating */}
             <div className="mt-2 mb-2">
               <span className="text-xs flex items-center gap-1 text-purple-600 dark:text-purple-400">
                 <Award size={12} />
@@ -225,7 +215,6 @@ const RecipeCard = ({ recipe, isFavorite = false, onToggleFavorite }: RecipeCard
               </span>
             </div>
             
-            {/* Tags */}
             <div className="mt-3 flex flex-wrap gap-2">
               {recipe.tags.slice(0, 3).map((tag, index) => (
                 <span 
