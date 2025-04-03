@@ -1,9 +1,14 @@
 
 import React, { useState, useEffect, useRef } from 'react';
-import { VolumeX, Volume2, Pause, Play, SkipForward, SkipBack, Globe } from 'lucide-react';
+import { VolumeX, Volume2, Pause, Play, SkipForward, SkipBack, Globe, Settings, X } from 'lucide-react';
 import { Recipe } from '@/utils/moodRecipeData';
 import { useToast } from '@/hooks/use-toast';
 import { Button } from '@/components/ui/button';
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 
 interface VoiceGuidanceProps {
   recipe: Recipe;
@@ -25,7 +30,7 @@ const VoiceGuidance: React.FC<VoiceGuidanceProps> = ({ recipe }) => {
   const [speechRate, setSpeechRate] = useState(1);
   const [isLanguageMenuOpen, setIsLanguageMenuOpen] = useState(false);
   const [voicesLoaded, setVoicesLoaded] = useState(false);
-  const [isExpanded, setIsExpanded] = useState(false);
+  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const { toast } = useToast();
 
   const speechSynthRef = useRef(window.speechSynthesis);
@@ -61,12 +66,23 @@ const VoiceGuidance: React.FC<VoiceGuidanceProps> = ({ recipe }) => {
         voices.forEach(voice => {
           const langCode = voice.lang;
           if (!addedLanguageCodes.includes(langCode)) {
-            languages.push({
-              code: langCode,
-              name: new Intl.DisplayNames([navigator.language], { type: 'language' }).of(langCode.split('-')[0]) || langCode,
-              voice: voice
-            });
-            addedLanguageCodes.push(langCode);
+            try {
+              languages.push({
+                code: langCode,
+                name: new Intl.DisplayNames([navigator.language], { type: 'language' }).of(langCode.split('-')[0]) || langCode,
+                voice: voice
+              });
+              addedLanguageCodes.push(langCode);
+            } catch (e) {
+              console.log('Error getting language name:', e);
+              // Fallback for unsupported languages
+              languages.push({
+                code: langCode,
+                name: langCode,
+                voice: voice
+              });
+              addedLanguageCodes.push(langCode);
+            }
           }
         });
         
@@ -232,182 +248,150 @@ const VoiceGuidance: React.FC<VoiceGuidanceProps> = ({ recipe }) => {
 
   if (!voicesLoaded) {
     return (
-      <div className="my-6 text-center p-4 rounded-lg border border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-900">
-        <div className="animate-pulse">
-          <div className="h-6 w-3/4 mx-auto bg-gray-200 dark:bg-gray-700 rounded"></div>
-        </div>
+      <div className="fixed bottom-4 right-4 z-50">
+        <Button
+          variant="outline"
+          size="icon"
+          className="rounded-full shadow-md border-primary/30 bg-white dark:bg-gray-800"
+        >
+          <Volume2 className="w-4 h-4 text-primary animate-pulse" />
+        </Button>
       </div>
     );
   }
 
   return (
-    <div className="my-6 relative">
-      {/* Compact floating play button */}
-      <div className="absolute top-0 right-0">
-        <Button
-          onClick={() => setIsExpanded(!isExpanded)}
-          variant="outline"
-          size="icon"
-          className="rounded-full bg-primary text-white hover:bg-primary/90"
-          aria-label="Voice Guidance"
-        >
-          <Volume2 className="w-4 h-4" />
-        </Button>
-      </div>
-
-      {/* Small floating play/pause button when minimized */}
-      {!isExpanded && (
-        <div className="absolute top-12 right-0">
+    <div className="fixed bottom-4 right-4 z-50">
+      <Popover open={isSettingsOpen} onOpenChange={setIsSettingsOpen}>
+        <PopoverTrigger asChild>
           <Button
-            onClick={togglePlayPause}
-            variant="outline" 
+            onClick={() => !isSettingsOpen && togglePlayPause()}
+            variant="outline"
             size="icon"
-            className={`rounded-full ${
+            className={`rounded-full shadow-md border-primary/30 ${
               isSpeaking 
-                ? 'bg-red-500 hover:bg-red-600' 
-                : 'bg-green-500 hover:bg-green-600'
-            } text-white`}
-            aria-label={isSpeaking && !isPaused ? "Pause" : "Play"}
+                ? 'bg-primary text-white hover:bg-primary/90' 
+                : 'bg-white dark:bg-gray-800 text-primary hover:bg-gray-100 dark:hover:bg-gray-700'
+            } ${isSpeaking ? 'animate-pulse' : ''}`}
+            aria-label="Voice Guidance"
           >
-            {isSpeaking && !isPaused ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4" />}
+            {isSpeaking && isPaused ? (
+              <Play className="w-4 h-4" />
+            ) : isSpeaking ? (
+              <Pause className="w-4 h-4" />
+            ) : (
+              <Volume2 className="w-4 h-4" />
+            )}
           </Button>
-        </div>
-      )}
-
-      {/* Full voice guidance panel */}
-      {isExpanded && (
-        <div className="p-4 rounded-lg border border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-900">
-          <div className="flex justify-between items-center mb-4">
-            <h3 className="text-lg font-medium flex items-center">
-              <Volume2 className="w-5 h-5 mr-2 text-primary" />
-              Voice Guidance
+        </PopoverTrigger>
+        
+        <PopoverContent className="w-80 p-4">
+          <div className="flex justify-between items-center mb-2">
+            <h3 className="text-sm font-medium flex items-center">
+              <Volume2 className="w-4 h-4 mr-2 text-primary" />
+              Voice Guidance Settings
             </h3>
             <Button
-              onClick={() => setIsExpanded(false)}
-              variant="outline"
-              size="sm"
-              className="text-gray-500"
+              onClick={() => setIsSettingsOpen(false)}
+              variant="ghost"
+              size="icon"
+              className="h-6 w-6"
             >
-              Minimize
+              <X className="h-4 w-4" />
             </Button>
           </div>
           
-          <div className="mb-4">
-            <p className="text-sm text-gray-600 dark:text-gray-300">
-              Listen to step-by-step instructions for this recipe
-            </p>
-          </div>
-          
-          {/* Current step indicator */}
-          <div className="mb-4 p-3 rounded-md bg-primary/10 border border-primary/20">
-            <div className="flex justify-between items-center mb-1">
-              <span className="text-sm font-medium">Current Step:</span>
-              <span className="text-sm">{currentStepIndex + 1} of {recipe.instructions.length}</span>
+          {isSpeaking && (
+            <div className="mb-3 p-2 rounded-md bg-primary/10 border border-primary/20 text-xs">
+              <div className="flex justify-between items-center mb-1">
+                <span className="font-medium">Current Step:</span>
+                <span>{currentStepIndex + 1} of {recipe.instructions.length}</span>
+              </div>
+              <p className="line-clamp-2 text-gray-600 dark:text-gray-300">
+                {recipe.instructions[currentStepIndex]}
+              </p>
             </div>
-            <p className="text-sm">
-              {isSpeaking ? recipe.instructions[currentStepIndex] : "Press play to start voice guidance"}
-            </p>
-          </div>
+          )}
           
           {/* Controls */}
-          <div className="flex items-center justify-between mb-4">
-            <div className="flex items-center space-x-2">
-              <Button 
-                onClick={prevStep} 
-                disabled={currentStepIndex === 0 || !isSpeaking}
-                variant="outline"
-                size="icon"
-                className={`rounded-full ${
-                  currentStepIndex === 0 || !isSpeaking
-                    ? 'text-gray-400 bg-gray-100 dark:bg-gray-800 dark:text-gray-600' 
-                    : 'text-gray-700 bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-200 dark:hover:bg-gray-700'
-                }`}
-                aria-label="Previous step"
-              >
-                <SkipBack size={18} />
-              </Button>
-              
-              <Button 
-                onClick={togglePlayPause}
-                variant="outline"
-                size="icon"
-                className="rounded-full bg-primary text-white hover:bg-primary/90"
-                aria-label={isSpeaking && !isPaused ? "Pause" : "Play"}
-              >
-                {isSpeaking && !isPaused ? <Pause size={18} /> : <Play size={18} />}
-              </Button>
-              
-              <Button 
-                onClick={nextStep}
-                disabled={currentStepIndex === recipe.instructions.length - 1 || !isSpeaking}
-                variant="outline"
-                size="icon"
-                className={`rounded-full ${
-                  currentStepIndex === recipe.instructions.length - 1 || !isSpeaking
-                    ? 'text-gray-400 bg-gray-100 dark:bg-gray-800 dark:text-gray-600' 
-                    : 'text-gray-700 bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-200 dark:hover:bg-gray-700'
-                }`}
-                aria-label="Next step"
-              >
-                <SkipForward size={18} />
-              </Button>
-              
-              <Button 
-                onClick={stopSpeaking}
-                disabled={!isSpeaking}
-                variant="outline"
-                size="icon"
-                className={`rounded-full ${
-                  !isSpeaking
-                    ? 'text-gray-400 bg-gray-100 dark:bg-gray-800 dark:text-gray-600' 
-                    : 'text-red-600 bg-red-100 hover:bg-red-200 dark:bg-red-900/30 dark:text-red-400 dark:hover:bg-red-900/50'
-                }`}
-                aria-label="Stop"
-              >
-                <VolumeX size={18} />
-              </Button>
-            </div>
+          <div className="flex items-center justify-between mb-3 gap-1">
+            <Button 
+              onClick={prevStep} 
+              disabled={currentStepIndex === 0 || !isSpeaking}
+              variant="outline"
+              size="icon"
+              className="h-8 w-8 rounded-full"
+            >
+              <SkipBack size={14} />
+            </Button>
             
-            <div className="relative">
-              <Button
-                onClick={() => setIsLanguageMenuOpen(!isLanguageMenuOpen)}
-                variant="outline"
-                size="sm"
-                className="flex items-center space-x-1 rounded-md"
-                aria-label="Select language"
-              >
-                <Globe size={16} />
-                <span className="text-sm">{selectedLanguage?.name || 'Select language'}</span>
-              </Button>
-              
-              {isLanguageMenuOpen && (
-                <div className="absolute right-0 mt-1 w-48 rounded-md shadow-lg bg-white dark:bg-gray-800 ring-1 ring-black ring-opacity-5 z-10 max-h-60 overflow-y-auto">
-                  <div className="py-1">
-                    {availableLanguages.map((language) => (
-                      <button
-                        key={language.code}
-                        onClick={() => changeLanguage(language)}
-                        className={`block w-full text-left px-4 py-2 text-sm ${
-                          selectedLanguage?.code === language.code 
-                            ? 'bg-primary/10 text-primary' 
-                            : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'
-                        }`}
-                      >
-                        {language.name}
-                      </button>
-                    ))}
-                  </div>
+            <Button 
+              onClick={togglePlayPause}
+              variant="default"
+              size="icon"
+              className="h-10 w-10 rounded-full"
+            >
+              {isSpeaking && !isPaused ? <Pause size={16} /> : <Play size={16} />}
+            </Button>
+            
+            <Button 
+              onClick={nextStep}
+              disabled={currentStepIndex === recipe.instructions.length - 1 || !isSpeaking}
+              variant="outline"
+              size="icon"
+              className="h-8 w-8 rounded-full"
+            >
+              <SkipForward size={14} />
+            </Button>
+            
+            <Button 
+              onClick={stopSpeaking}
+              disabled={!isSpeaking}
+              variant="outline"
+              size="icon"
+              className="h-8 w-8 rounded-full"
+            >
+              <VolumeX size={14} />
+            </Button>
+            
+            <Popover>
+              <PopoverTrigger asChild>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="h-8 text-xs px-2"
+                >
+                  <Globe size={14} className="mr-1" />
+                  {selectedLanguage?.name?.slice(0, 6) || 'Lang'}
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="w-40 p-0 max-h-60 overflow-auto">
+                <div className="py-1">
+                  {availableLanguages.map((language) => (
+                    <button
+                      key={language.code}
+                      onClick={() => changeLanguage(language)}
+                      className={`block w-full text-left px-3 py-1.5 text-xs ${
+                        selectedLanguage?.code === language.code 
+                          ? 'bg-primary/10 text-primary' 
+                          : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'
+                      }`}
+                    >
+                      {language.name}
+                    </button>
+                  ))}
                 </div>
-              )}
-            </div>
+              </PopoverContent>
+            </Popover>
           </div>
           
           {/* Settings */}
-          <div className="space-y-3">
+          <div className="space-y-2 text-xs">
             <div>
-              <label htmlFor="volume" className="block text-sm font-medium mb-1">
-                Volume
-              </label>
+              <div className="flex justify-between mb-1">
+                <label htmlFor="volume" className="font-medium">Volume</label>
+                <span>{Math.round(volume * 100)}%</span>
+              </div>
               <input
                 id="volume"
                 type="range"
@@ -416,14 +400,15 @@ const VoiceGuidance: React.FC<VoiceGuidanceProps> = ({ recipe }) => {
                 step="0.1"
                 value={volume}
                 onChange={handleVolumeChange}
-                className="w-full h-2 rounded-full bg-gray-200 dark:bg-gray-700 appearance-none cursor-pointer"
+                className="w-full h-1.5 rounded-full bg-gray-200 dark:bg-gray-700 appearance-none cursor-pointer"
               />
             </div>
             
             <div>
-              <label htmlFor="rate" className="block text-sm font-medium mb-1">
-                Speed
-              </label>
+              <div className="flex justify-between mb-1">
+                <label htmlFor="rate" className="font-medium">Speed</label>
+                <span>{speechRate}x</span>
+              </div>
               <input
                 id="rate"
                 type="range"
@@ -432,17 +417,17 @@ const VoiceGuidance: React.FC<VoiceGuidanceProps> = ({ recipe }) => {
                 step="0.1"
                 value={speechRate}
                 onChange={handleRateChange}
-                className="w-full h-2 rounded-full bg-gray-200 dark:bg-gray-700 appearance-none cursor-pointer"
+                className="w-full h-1.5 rounded-full bg-gray-200 dark:bg-gray-700 appearance-none cursor-pointer"
               />
-              <div className="flex justify-between text-xs text-gray-500 mt-1">
+              <div className="flex justify-between text-[10px] text-gray-500 mt-0.5">
                 <span>Slow</span>
                 <span>Normal</span>
                 <span>Fast</span>
               </div>
             </div>
           </div>
-        </div>
-      )}
+        </PopoverContent>
+      </Popover>
     </div>
   );
 };

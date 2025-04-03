@@ -40,7 +40,14 @@ const Recipe = () => {
       setTimeout(() => {
         if (foundRecipe) {
           setRecipe(foundRecipe);
-          setImageUrl(getRecipeImageUrl(foundRecipe.name));
+          // Set a default placeholder while image is loading
+          setImageUrl("https://placehold.co/1200x600/f5f5f5/aaaaaa?text=Loading+Recipe+Image...");
+          
+          // Then set the real image URL with a slight delay to ensure UI is responsive
+          setTimeout(() => {
+            setImageUrl(getRecipeImageUrl(foundRecipe.name));
+          }, 100);
+          
           setImageError(false); // Reset image error state when recipe changes
         } else {
           setRecipe(null);
@@ -57,8 +64,15 @@ const Recipe = () => {
     if (!imageError) {
       setImageError(true);
       if (recipe) {
+        // Try a backup image
         setImageUrl(getBackupImageUrl(recipe.name));
+      } else {
+        // Fallback placeholder if recipe is not loaded yet
+        setImageUrl("https://placehold.co/1200x600/f5f5f5/555555?text=Recipe+Image+Not+Available");
       }
+    } else {
+      // If backup also fails, use a static placeholder
+      setImageUrl("https://placehold.co/1200x600/f0f0f0/555555?text=Recipe+Image+Not+Available");
     }
   };
 
@@ -209,29 +223,28 @@ const Recipe = () => {
           </div>
         </div>
         
-        {/* Voice guidance component */}
-        <VoiceGuidance recipe={recipe} />
+        <div className="mb-8">
+          <h3 className="text-lg font-medium mb-3">Tags</h3>
+          <div className="flex flex-wrap gap-2 mb-6">
+            {recipe.tags.map((tag, index) => (
+              <span 
+                key={index} 
+                className="px-3 py-1 rounded-full text-sm"
+                style={{
+                  background: `hsl(${(index * 25) % 360}, 70%, 85%)`,
+                  color: `hsl(${(index * 25) % 360}, 70%, 25%)`
+                }}
+              >
+                {tag}
+              </span>
+            ))}
+          </div>
+          
+          <RecipeAiFeatures recipe={recipe} />
+        </div>
         
-        <div className="grid md:grid-cols-2 gap-8 mb-8">
-          <div className="flex flex-col justify-between">
-            <div className="mb-6">
-              <h3 className="text-lg font-medium mb-3">Tags</h3>
-              <div className="flex flex-wrap gap-2">
-                {recipe.tags.map((tag, index) => (
-                  <span 
-                    key={index} 
-                    className="px-3 py-1 rounded-full text-sm"
-                    style={{
-                      background: `hsl(${(index * 25) % 360}, 70%, 85%)`,
-                      color: `hsl(${(index * 25) % 360}, 70%, 25%)`
-                    }}
-                  >
-                    {tag}
-                  </span>
-                ))}
-              </div>
-            </div>
-            
+        <div className="grid md:grid-cols-4 gap-8 mb-8">
+          <div className="md:col-span-1 flex flex-col justify-between">
             <div className="space-y-4">
               <button
                 onClick={toggleFavorite}
@@ -255,82 +268,85 @@ const Recipe = () => {
             </div>
           </div>
           
-          <RecipeAiFeatures recipe={recipe} />
-        </div>
-        
-        <div className="mb-6 border-b border-gray-200 dark:border-gray-800">
-          <div className="flex space-x-8">
-            <button
-              onClick={() => setActiveTab('ingredients')}
-              className={`pb-4 text-sm font-medium relative ${
-                activeTab === 'ingredients'
-                  ? 'text-primary'
-                  : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'
-              }`}
-            >
-              Ingredients
-              {activeTab === 'ingredients' && (
-                <span className="absolute bottom-0 left-0 w-full h-0.5 bg-primary"></span>
-              )}
-            </button>
+          <div className="md:col-span-3">
+            <div className="mb-6 border-b border-gray-200 dark:border-gray-800">
+              <div className="flex space-x-8">
+                <button
+                  onClick={() => setActiveTab('ingredients')}
+                  className={`pb-4 text-sm font-medium relative ${
+                    activeTab === 'ingredients'
+                      ? 'text-primary'
+                      : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'
+                  }`}
+                >
+                  Ingredients
+                  {activeTab === 'ingredients' && (
+                    <span className="absolute bottom-0 left-0 w-full h-0.5 bg-primary"></span>
+                  )}
+                </button>
+                
+                <button
+                  onClick={() => setActiveTab('instructions')}
+                  className={`pb-4 text-sm font-medium relative ${
+                    activeTab === 'instructions'
+                      ? 'text-primary'
+                      : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'
+                  }`}
+                >
+                  Instructions
+                  {activeTab === 'instructions' && (
+                    <span className="absolute bottom-0 left-0 w-full h-0.5 bg-primary"></span>
+                  )}
+                </button>
+              </div>
+            </div>
             
-            <button
-              onClick={() => setActiveTab('instructions')}
-              className={`pb-4 text-sm font-medium relative ${
-                activeTab === 'instructions'
-                  ? 'text-primary'
-                  : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'
-              }`}
-            >
-              Instructions
-              {activeTab === 'instructions' && (
-                <span className="absolute bottom-0 left-0 w-full h-0.5 bg-primary"></span>
+            <div className="mb-12 animate-fade-in">
+              {activeTab === 'ingredients' && (
+                <div>
+                  <h2 className="text-xl font-bold mb-4">Ingredients</h2>
+                  <ul className="space-y-3">
+                    {recipe.ingredients.map((ingredient, index) => (
+                      <li key={index} className="flex items-start">
+                        <div className="w-2 h-2 rounded-full bg-primary mt-2 mr-3"></div>
+                        <span>{ingredient}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               )}
-            </button>
+              
+              {activeTab === 'instructions' && (
+                <div>
+                  <div className="flex justify-between items-center mb-4">
+                    <h2 className="text-xl font-bold">Instructions</h2>
+                  </div>
+                  
+                  <ol className="space-y-6">
+                    {recipe.instructions.map((instruction, index) => (
+                      <li key={index} className="flex">
+                        <div className="flex-shrink-0 w-8 h-8 rounded-full text-white flex items-center justify-center mr-4"
+                          style={{
+                            background: `linear-gradient(90deg, hsla(${(index * 30) % 360}, 70%, 50%, 1) 0%, hsla(${(index * 30 + 20) % 360}, 70%, 60%, 1) 100%)`
+                          }}
+                        >
+                          {index + 1}
+                        </div>
+                        <div className="pt-1">
+                          <p>{instruction}</p>
+                        </div>
+                      </li>
+                    ))}
+                  </ol>
+                </div>
+              )}
+            </div>
           </div>
         </div>
-        
-        <div className="mb-12 animate-fade-in">
-          {activeTab === 'ingredients' && (
-            <div>
-              <h2 className="text-xl font-bold mb-4">Ingredients</h2>
-              <ul className="space-y-3">
-                {recipe.ingredients.map((ingredient, index) => (
-                  <li key={index} className="flex items-start">
-                    <div className="w-2 h-2 rounded-full bg-primary mt-2 mr-3"></div>
-                    <span>{ingredient}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
-          
-          {activeTab === 'instructions' && (
-            <div>
-              <div className="flex justify-between items-center mb-4">
-                <h2 className="text-xl font-bold">Instructions</h2>
-              </div>
-              
-              <ol className="space-y-6">
-                {recipe.instructions.map((instruction, index) => (
-                  <li key={index} className="flex">
-                    <div className="flex-shrink-0 w-8 h-8 rounded-full text-white flex items-center justify-center mr-4"
-                      style={{
-                        background: `linear-gradient(90deg, hsla(${(index * 30) % 360}, 70%, 50%, 1) 0%, hsla(${(index * 30 + 20) % 360}, 70%, 60%, 1) 100%)`
-                      }}
-                    >
-                      {index + 1}
-                    </div>
-                    <div className="pt-1">
-                      <p>{instruction}</p>
-                    </div>
-                  </li>
-                ))}
-              </ol>
-            </div>
-          )}
-        </div>
       </div>
+      
+      {/* Voice guidance component - Now moved to a fixed position */}
+      <VoiceGuidance recipe={recipe} />
     </>
   );
 };

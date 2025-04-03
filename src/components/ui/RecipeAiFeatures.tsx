@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Brain, ChevronDown, ChevronUp, Lightbulb, Utensils, ListPlus, Sparkles, Flame } from 'lucide-react';
 import { Recipe, getSimilarRecipes } from '@/utils/moodRecipeData';
 import { Link } from 'react-router-dom';
@@ -13,10 +13,10 @@ const RecipeAiFeatures = ({ recipe }: RecipeAiFeaturesProps) => {
   const similarRecipes = getSimilarRecipes(recipe.id);
   const [imageErrors, setImageErrors] = useState<Record<string, boolean>>({});
   const [recipeImages, setRecipeImages] = useState<Record<string, string>>({});
+  const imagesInitializedRef = useRef(false);
 
   // Get recipe image URL based on recipe name
   const getRecipeImageUrl = (recipeName: string, smallSize = false) => {
-    // Clean up recipe name to use in search query
     const searchQuery = recipeName.toLowerCase().replace(/[^\w\s]/gi, '').replace(/\s+/g, '+');
     const dimensions = smallSize ? 'w=400&h=200' : 'w=600&h=400';
     return `https://source.unsplash.com/featured/?${searchQuery},food,dish,recipe&fit=crop&${dimensions}`;
@@ -26,20 +26,27 @@ const RecipeAiFeatures = ({ recipe }: RecipeAiFeaturesProps) => {
   const getBackupImageUrl = (recipeName: string, smallSize = false) => {
     const searchQuery = recipeName.toLowerCase().replace(/[^\w\s]/gi, '').replace(/\s+/g, '+');
     const dimensions = smallSize ? 'w=400&h=200' : 'w=600&h=400';
-    // Adding random parameters to prevent caching and get a different image
     return `https://source.unsplash.com/random/?${searchQuery},food&fit=crop&${dimensions}&random=${Math.random()}`;
   };
 
   // Initialize images only once when the component mounts or recipe changes
   useEffect(() => {
-    const initialImages: Record<string, string> = {};
-    similarRecipes.forEach(similarRecipe => {
-      initialImages[similarRecipe.id] = getRecipeImageUrl(similarRecipe.name, true);
-    });
-    setRecipeImages(initialImages);
-    // Reset image errors when recipe changes
-    setImageErrors({});
-  }, [recipe.id]);
+    if (!imagesInitializedRef.current) {
+      const initialImages: Record<string, string> = {};
+      similarRecipes.forEach(similarRecipe => {
+        initialImages[similarRecipe.id] = getRecipeImageUrl(similarRecipe.name, true);
+      });
+      setRecipeImages(initialImages);
+      // Reset image errors when recipe changes
+      setImageErrors({});
+      imagesInitializedRef.current = true;
+    }
+    
+    return () => {
+      // Reset the ref when recipe changes
+      imagesInitializedRef.current = false;
+    };
+  }, [recipe.id, similarRecipes]);
 
   const handleImageError = (recipeId: string) => {
     // Only update if we haven't already tried for this image
@@ -55,57 +62,57 @@ const RecipeAiFeatures = ({ recipe }: RecipeAiFeaturesProps) => {
   };
 
   return (
-    <div className="my-8 rounded-xl overflow-hidden border border-primary/20">
+    <div className="rounded-xl overflow-hidden border border-primary/20">
       <div 
-        className="p-4 flex items-center justify-between cursor-pointer" 
+        className="p-3 flex items-center justify-between cursor-pointer" 
         onClick={() => setIsExpanded(!isExpanded)}
         style={{
           background: 'linear-gradient(90deg, hsla(259, 84%, 78%, 1) 0%, hsla(206, 67%, 75%, 1) 100%)',
         }}
       >
         <div className="flex items-center">
-          <Brain className="w-6 h-6 mr-3 text-white" />
-          <h3 className="text-lg font-bold text-white">AI-Powered Recipe Insights</h3>
+          <Brain className="w-5 h-5 mr-2 text-white" />
+          <h3 className="text-base font-bold text-white">AI-Powered Recipe Insights</h3>
         </div>
         <div className="flex items-center">
-          <span className="text-white text-sm mr-3 bg-white/20 px-2 py-1 rounded-full">
+          <span className="text-white text-xs mr-2 bg-white/20 px-2 py-0.5 rounded-full">
             <Sparkles className="w-3 h-3 inline mr-1" /> AI Enhanced
           </span>
           <button className="text-white">
-            {isExpanded ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+            {isExpanded ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
           </button>
         </div>
       </div>
       
       {isExpanded && (
-        <div className="p-6 bg-gray-50 dark:bg-gray-900">
+        <div className="p-4 bg-gray-50 dark:bg-gray-900">
           {/* AI Badge */}
           <div className="mb-4 flex justify-center">
-            <div className="px-4 py-2 bg-purple-100 dark:bg-purple-900 rounded-full flex items-center">
-              <Flame className="w-4 h-4 mr-2 text-purple-600 dark:text-purple-300" />
-              <span className="text-sm font-medium text-purple-700 dark:text-purple-300">AI-Analyzed Recipe</span>
+            <div className="px-3 py-1 bg-purple-100 dark:bg-purple-900 rounded-full flex items-center">
+              <Flame className="w-3 h-3 mr-2 text-purple-600 dark:text-purple-300" />
+              <span className="text-xs font-medium text-purple-700 dark:text-purple-300">AI-Analyzed Recipe</span>
             </div>
           </div>
           
           {/* AI Recipe Suggestion */}
-          <div className="mb-6">
-            <div className="flex items-center mb-3">
-              <Lightbulb className="w-5 h-5 mr-2 text-yellow-500" />
-              <h4 className="text-base font-medium">Chef's AI Suggestion</h4>
+          <div className="mb-4">
+            <div className="flex items-center mb-2">
+              <Lightbulb className="w-4 h-4 mr-2 text-yellow-500" />
+              <h4 className="text-sm font-medium">Chef's AI Suggestion</h4>
             </div>
-            <p className="text-gray-700 dark:text-gray-300 pl-7 bg-yellow-50 dark:bg-yellow-950/20 p-3 rounded-lg border border-yellow-100 dark:border-yellow-900/30">
+            <p className="text-gray-700 dark:text-gray-300 text-xs pl-6 bg-yellow-50 dark:bg-yellow-950/20 p-2 rounded-lg border border-yellow-100 dark:border-yellow-900/30">
               {recipe.aiSuggestion || "Our AI chef doesn't have any specific suggestions for this recipe."}
             </p>
           </div>
           
           {/* Nutrition Analysis */}
           {recipe.nutritionAnalysis && (
-            <div className="mb-6">
-              <div className="flex items-start mb-3">
-                <Utensils className="w-5 h-5 mr-2 text-green-500 flex-shrink-0 mt-1" />
-                <h4 className="text-base font-medium">Nutrition Insight</h4>
+            <div className="mb-4">
+              <div className="flex items-start mb-2">
+                <Utensils className="w-4 h-4 mr-2 text-green-500 flex-shrink-0 mt-0.5" />
+                <h4 className="text-sm font-medium">Nutrition Insight</h4>
               </div>
-              <p className="text-gray-700 dark:text-gray-300 pl-7 bg-green-50 dark:bg-green-950/20 p-3 rounded-lg border border-green-100 dark:border-green-900/30">
+              <p className="text-gray-700 dark:text-gray-300 text-xs pl-6 bg-green-50 dark:bg-green-950/20 p-2 rounded-lg border border-green-100 dark:border-green-900/30">
                 {recipe.nutritionAnalysis}
               </p>
             </div>
@@ -113,15 +120,15 @@ const RecipeAiFeatures = ({ recipe }: RecipeAiFeaturesProps) => {
           
           {/* Cooking Tips */}
           {recipe.cookingTips && recipe.cookingTips.length > 0 && (
-            <div className="mb-6">
-              <div className="flex items-start mb-3">
-                <ListPlus className="w-5 h-5 mr-2 text-blue-500 flex-shrink-0 mt-1" />
-                <h4 className="text-base font-medium">AI Cooking Tips</h4>
+            <div className="mb-4">
+              <div className="flex items-start mb-2">
+                <ListPlus className="w-4 h-4 mr-2 text-blue-500 flex-shrink-0 mt-0.5" />
+                <h4 className="text-sm font-medium">AI Cooking Tips</h4>
               </div>
-              <ul className="text-gray-700 dark:text-gray-300 pl-7 space-y-2 bg-blue-50 dark:bg-blue-950/20 p-3 rounded-lg border border-blue-100 dark:border-blue-900/30">
+              <ul className="text-gray-700 dark:text-gray-300 text-xs pl-6 space-y-1 bg-blue-50 dark:bg-blue-950/20 p-2 rounded-lg border border-blue-100 dark:border-blue-900/30">
                 {recipe.cookingTips.map((tip, index) => (
                   <li key={index} className="flex items-start">
-                    <span className="inline-block w-2 h-2 rounded-full bg-blue-500 mt-2 mr-2"></span>
+                    <span className="inline-block w-1.5 h-1.5 rounded-full bg-blue-500 mt-1.5 mr-1.5"></span>
                     <span>{tip}</span>
                   </li>
                 ))}
@@ -132,28 +139,28 @@ const RecipeAiFeatures = ({ recipe }: RecipeAiFeaturesProps) => {
           {/* Similar Recipes */}
           {similarRecipes.length > 0 && (
             <div>
-              <div className="flex items-center mb-3">
-                <Brain className="w-5 h-5 mr-2 text-purple-500" />
-                <h4 className="text-base font-medium">AI-Recommended Similar Recipes</h4>
+              <div className="flex items-center mb-2">
+                <Brain className="w-4 h-4 mr-2 text-purple-500" />
+                <h4 className="text-sm font-medium">AI-Recommended Similar Recipes</h4>
               </div>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pl-7">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-3 pl-6">
                 {similarRecipes.map(similarRecipe => (
                   <Link 
                     key={similarRecipe.id} 
                     to={`/recipe/${similarRecipe.id}`}
-                    className="block p-3 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+                    className="block p-2 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
                   >
-                    <div className="h-24 rounded-md overflow-hidden mb-2 bg-gray-200 dark:bg-gray-700">
+                    <div className="h-20 rounded-md overflow-hidden mb-2 bg-gray-200 dark:bg-gray-700">
                       <img 
-                        src={recipeImages[similarRecipe.id] || getRecipeImageUrl(similarRecipe.name, true)} 
-                        alt={similarRecipe.name} 
+                        src={recipeImages[similarRecipe.id] || "https://placehold.co/400x200/222/222?text=Loading..."} 
+                        alt={similarRecipe.name}
                         className="w-full h-full object-cover"
                         onError={() => handleImageError(similarRecipe.id)}
                         loading="lazy"
                       />
                     </div>
-                    <h5 className="font-medium text-sm">{similarRecipe.name}</h5>
-                    <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                    <h5 className="font-medium text-xs">{similarRecipe.name}</h5>
+                    <p className="text-xs text-gray-500 dark:text-gray-400 mt-1 truncate">
                       {similarRecipe.tags.slice(0, 2).join(', ')}
                     </p>
                   </Link>
