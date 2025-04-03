@@ -19,26 +19,48 @@ const RecipeAiFeatures = ({ recipe }: RecipeAiFeaturesProps) => {
   const getRecipeImageUrl = (recipeName: string, smallSize = false) => {
     const searchQuery = recipeName.toLowerCase().replace(/[^\w\s]/gi, '').replace(/\s+/g, '+');
     const dimensions = smallSize ? 'w=400&h=200' : 'w=600&h=400';
-    return `https://source.unsplash.com/featured/?${searchQuery},food,dish,recipe&fit=crop&${dimensions}`;
+    return `https://source.unsplash.com/featured/?${searchQuery},food&fit=crop&${dimensions}&random=${Math.random()}`;
   };
 
   // Get a backup image if the first one fails
   const getBackupImageUrl = (recipeName: string, smallSize = false) => {
     const searchQuery = recipeName.toLowerCase().replace(/[^\w\s]/gi, '').replace(/\s+/g, '+');
-    const dimensions = smallSize ? 'w=400&h=200' : 'w=600&h=400';
-    return `https://source.unsplash.com/random/?${searchQuery},food&fit=crop&${dimensions}&random=${Math.random()}`;
+    const dimensions = smallSize ? '400x200' : '600x400';
+    return `https://placehold.co/${dimensions}/f4f4f4/909090?text=${encodeURIComponent(recipeName)}`;
   };
 
   // Initialize images only once when the component mounts or recipe changes
   useEffect(() => {
     if (!imagesInitializedRef.current) {
       const initialImages: Record<string, string> = {};
+      
+      // Set initial placeholders for all similar recipes
       similarRecipes.forEach(similarRecipe => {
-        initialImages[similarRecipe.id] = getRecipeImageUrl(similarRecipe.name, true);
+        initialImages[similarRecipe.id] = "https://placehold.co/400x200/f5f5f5/a0a0a0?text=Loading...";
       });
       setRecipeImages(initialImages);
-      // Reset image errors when recipe changes
-      setImageErrors({});
+      
+      // Then load actual images one by one
+      similarRecipes.forEach(similarRecipe => {
+        const img = new Image();
+        img.src = getRecipeImageUrl(similarRecipe.name, true);
+        
+        img.onload = () => {
+          setRecipeImages(prev => ({
+            ...prev,
+            [similarRecipe.id]: img.src
+          }));
+        };
+        
+        img.onerror = () => {
+          setImageErrors(prev => ({ ...prev, [similarRecipe.id]: true }));
+          setRecipeImages(prev => ({
+            ...prev,
+            [similarRecipe.id]: getBackupImageUrl(similarRecipe.name, true)
+          }));
+        };
+      });
+      
       imagesInitializedRef.current = true;
     }
     
@@ -53,11 +75,13 @@ const RecipeAiFeatures = ({ recipe }: RecipeAiFeaturesProps) => {
     if (!imageErrors[recipeId]) {
       setImageErrors(prev => ({ ...prev, [recipeId]: true }));
       
-      // Try to get a backup image
-      setRecipeImages(prev => ({
-        ...prev,
-        [recipeId]: getBackupImageUrl(similarRecipes.find(r => r.id === recipeId)?.name || '', true)
-      }));
+      const similarRecipe = similarRecipes.find(r => r.id === recipeId);
+      if (similarRecipe) {
+        setRecipeImages(prev => ({
+          ...prev,
+          [recipeId]: getBackupImageUrl(similarRecipe.name, true)
+        }));
+      }
     }
   };
 
@@ -152,7 +176,7 @@ const RecipeAiFeatures = ({ recipe }: RecipeAiFeaturesProps) => {
                   >
                     <div className="h-20 rounded-md overflow-hidden mb-2 bg-gray-200 dark:bg-gray-700">
                       <img 
-                        src={recipeImages[similarRecipe.id] || "https://placehold.co/400x200/222/222?text=Loading..."} 
+                        src={recipeImages[similarRecipe.id] || "https://placehold.co/400x200/f5f5f5/a0a0a0?text=Loading..."}
                         alt={similarRecipe.name}
                         className="w-full h-full object-cover"
                         onError={() => handleImageError(similarRecipe.id)}

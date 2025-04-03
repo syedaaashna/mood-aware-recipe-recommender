@@ -42,19 +42,34 @@ const RecipeCard = ({ recipe, isFavorite = false, onToggleFavorite }: RecipeCard
   const getRecipeImageUrl = (recipeName: string) => {
     // Clean up recipe name to use in search query
     const searchQuery = recipeName.toLowerCase().replace(/[^\w\s]/gi, '').replace(/\s+/g, '+');
-    return `https://source.unsplash.com/featured/?${searchQuery},food,dish,recipe&fit=crop&w=600&h=350`;
+    // Add a cache-busting parameter to prevent cached responses
+    return `https://source.unsplash.com/featured/?${searchQuery},food,dish&fit=crop&w=600&h=350&random=${Math.random()}`;
   };
 
   // Get a backup image if the first one fails
   const getBackupImageUrl = (recipeName: string) => {
+    // Use a different search query for backup image
     const searchQuery = recipeName.toLowerCase().replace(/[^\w\s]/gi, '').replace(/\s+/g, '+');
-    // Adding random parameters to prevent caching and get a different image
-    return `https://source.unsplash.com/random/?${searchQuery},food&fit=crop&w=600&h=350&random=${Math.random()}`;
+    return `https://placehold.co/600x350/f4f4f4/909090?text=${searchQuery}`;
   };
   
   useEffect(() => {
-    // Initial image URL
-    setImageUrl(getRecipeImageUrl(recipe.name));
+    if (recipe.name) {
+      // Set a placeholder while loading
+      setImageUrl("https://placehold.co/600x350/f5f5f5/a0a0a0?text=Loading...");
+      
+      // Then attempt to load the actual image
+      const img = new Image();
+      img.src = getRecipeImageUrl(recipe.name);
+      img.onload = () => {
+        setImageUrl(img.src);
+        setImageError(false);
+      };
+      img.onerror = () => {
+        setImageError(true);
+        setImageUrl(getBackupImageUrl(recipe.name));
+      };
+    }
   }, [recipe.name]);
 
   useEffect(() => {
@@ -72,7 +87,7 @@ const RecipeCard = ({ recipe, isFavorite = false, onToggleFavorite }: RecipeCard
   const handleImageError = () => {
     if (!imageError) {
       setImageError(true);
-      // Try a different query to get another image
+      // Fall back to placeholder
       setImageUrl(getBackupImageUrl(recipe.name));
     }
   };
@@ -118,13 +133,20 @@ const RecipeCard = ({ recipe, isFavorite = false, onToggleFavorite }: RecipeCard
         <div className={`relative overflow-hidden rounded-xl border border-gray-200 dark:border-gray-800 ${isHovered ? 'shadow-lg shadow-primary/20 dark:shadow-primary/10' : 'shadow-sm'}`}>
           {/* Recipe Image */}
           <div className="h-48 overflow-hidden">
-            <img 
-              src={imageUrl}
-              alt={recipe.name}
-              className="w-full h-full object-cover transition-transform duration-300"
-              style={{ transform: isHovered ? 'scale(1.05)' : 'scale(1)' }}
-              onError={handleImageError}
-            />
+            {imageUrl ? (
+              <img 
+                src={imageUrl}
+                alt={recipe.name}
+                className="w-full h-full object-cover transition-transform duration-300"
+                style={{ transform: isHovered ? 'scale(1.05)' : 'scale(1)' }}
+                onError={handleImageError}
+                loading="lazy"
+              />
+            ) : (
+              <div className="w-full h-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center">
+                <span className="text-gray-400 dark:text-gray-500">Loading image...</span>
+              </div>
+            )}
           </div>
 
           {/* Content with gradient background */}

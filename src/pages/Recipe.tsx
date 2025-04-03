@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { ArrowLeft, Clock, Users, ChefHat, Heart, Share2 } from 'lucide-react';
@@ -22,14 +21,14 @@ const Recipe = () => {
   const getRecipeImageUrl = (recipeName: string) => {
     // Clean up recipe name to use in search query
     const searchQuery = recipeName.toLowerCase().replace(/[^\w\s]/gi, '').replace(/\s+/g, '+');
-    return `https://source.unsplash.com/featured/?${searchQuery},food,dish,recipe&fit=crop&w=1200&h=600`;
+    // Add a cache-busting parameter
+    return `https://source.unsplash.com/featured/?${searchQuery},food,dish&fit=crop&w=1200&h=600&random=${Math.random()}`;
   };
 
   // Get a backup image if the first one fails
   const getBackupImageUrl = (recipeName: string) => {
     const searchQuery = recipeName.toLowerCase().replace(/[^\w\s]/gi, '').replace(/\s+/g, '+');
-    // Adding random parameters to prevent caching and get a different image
-    return `https://source.unsplash.com/random/?${searchQuery},food,cooking&fit=crop&w=1200&h=600&random=${Math.random()}`;
+    return `https://placehold.co/1200x600/f4f4f4/909090?text=${encodeURIComponent(recipeName)}`;
   };
 
   useEffect(() => {
@@ -41,14 +40,21 @@ const Recipe = () => {
         if (foundRecipe) {
           setRecipe(foundRecipe);
           // Set a default placeholder while image is loading
-          setImageUrl("https://placehold.co/1200x600/f5f5f5/aaaaaa?text=Loading+Recipe+Image...");
+          setImageUrl("https://placehold.co/1200x600/f5f5f5/a0a0a0?text=Loading+Recipe+Image...");
           
-          // Then set the real image URL with a slight delay to ensure UI is responsive
-          setTimeout(() => {
-            setImageUrl(getRecipeImageUrl(foundRecipe.name));
-          }, 100);
+          // Load actual image with proper error handling
+          const img = new Image();
+          img.src = getRecipeImageUrl(foundRecipe.name);
           
-          setImageError(false); // Reset image error state when recipe changes
+          img.onload = () => {
+            setImageUrl(img.src);
+            setImageError(false);
+          };
+          
+          img.onerror = () => {
+            setImageError(true);
+            setImageUrl(getBackupImageUrl(foundRecipe.name));
+          };
         } else {
           setRecipe(null);
         }
@@ -61,18 +67,9 @@ const Recipe = () => {
   }, [id]);
 
   const handleImageError = () => {
-    if (!imageError) {
+    if (!imageError && recipe) {
       setImageError(true);
-      if (recipe) {
-        // Try a backup image
-        setImageUrl(getBackupImageUrl(recipe.name));
-      } else {
-        // Fallback placeholder if recipe is not loaded yet
-        setImageUrl("https://placehold.co/1200x600/f5f5f5/555555?text=Recipe+Image+Not+Available");
-      }
-    } else {
-      // If backup also fails, use a static placeholder
-      setImageUrl("https://placehold.co/1200x600/f0f0f0/555555?text=Recipe+Image+Not+Available");
+      setImageUrl(getBackupImageUrl(recipe.name));
     }
   };
 
@@ -172,12 +169,19 @@ const Recipe = () => {
 
         {/* Recipe image with background fallback */}
         <div className="mb-8 rounded-xl overflow-hidden bg-gray-200 dark:bg-gray-800">
-          <img 
-            src={imageUrl} 
-            alt={recipe.name}
-            className="w-full h-64 sm:h-80 object-cover"
-            onError={handleImageError}
-          />
+          {imageUrl ? (
+            <img 
+              src={imageUrl} 
+              alt={recipe.name}
+              className="w-full h-64 sm:h-80 object-cover"
+              onError={handleImageError}
+              loading="lazy"
+            />
+          ) : (
+            <div className="w-full h-64 sm:h-80 bg-gray-300 dark:bg-gray-700 flex items-center justify-center">
+              <span className="text-gray-500 dark:text-gray-400">Loading image...</span>
+            </div>
+          )}
         </div>
         
         <div className="mb-8 p-6 rounded-xl" style={{
