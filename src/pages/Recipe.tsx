@@ -7,7 +7,7 @@ import RecipeAiFeatures from '@/components/ui/RecipeAiFeatures';
 import VoiceGuidance from '@/components/ui/VoiceGuidance';
 import { useToast } from "@/hooks/use-toast";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
-import getRecipeImage from '@/utils/recipeImageMapping';
+import { getRecipeImagePath } from '@/utils/recipeImageHelper';
 
 const Recipe = () => {
   const { id } = useParams<{ id: string }>();
@@ -123,7 +123,7 @@ const Recipe = () => {
   }
 
   // Get the appropriate image from our mapping
-  const recipeImage = getRecipeImage(recipe);
+  const recipeImage = recipe ? getRecipeImagePath(recipe.id) : '';
 
   const handleImageError = () => {
     setImageError(true);

@@ -4,7 +4,7 @@ import { Brain, ChevronDown, ChevronUp, Lightbulb, Utensils, ListPlus, Sparkles,
 import { Recipe, getSimilarRecipes } from '@/utils/moodRecipeData';
 import { Link } from 'react-router-dom';
 import { AspectRatio } from "@/components/ui/aspect-ratio";
-import getRecipeImage from '@/utils/recipeImageMapping';
+import { getRecipeImagePath } from '@/utils/recipeImageHelper';
 
 interface RecipeAiFeaturesProps {
   recipe: Recipe;
@@ -107,7 +107,7 @@ const RecipeAiFeatures = ({ recipe }: RecipeAiFeaturesProps) => {
                     <div className="rounded-md overflow-hidden mb-2 bg-gray-200 dark:bg-gray-700">
                       <AspectRatio ratio={2/1}>
                         <img 
-                          src={getRecipeImage(similarRecipe)}
+                          src={getRecipeImagePath(similarRecipe.id)}
                           alt={similarRecipe.name}
                           className="w-full h-full object-cover"
                           loading="lazy"

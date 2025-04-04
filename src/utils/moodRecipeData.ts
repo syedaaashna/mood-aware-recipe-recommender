@@ -1584,7 +1584,8 @@ export const getAllRecipes = (): Recipe[] => {
 };
 
 // Function to get similar recipes based on tags and mood
-export const getSimilarRecipes = (recipe: Recipe, limit: number = 3): Recipe[] => {
+export const getSimilarRecipes = (recipeId: string, limit: number = 3): Recipe[] => {
+  const recipe = getRecipeById(recipeId);
   if (!recipe) return [];
   
   // Find recipes with similar tags or from the same mood category

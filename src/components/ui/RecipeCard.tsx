@@ -6,7 +6,7 @@ import { Recipe } from '@/utils/moodRecipeData';
 import { useToast } from "@/hooks/use-toast";
 import { motion } from "framer-motion";
 import { AspectRatio } from "./aspect-ratio";
-import getRecipeImage from '@/utils/recipeImageMapping';
+import { getRecipeImagePath } from '@/utils/recipeImageHelper';
 
 interface RecipeCardProps {
   recipe: Recipe;
@@ -60,7 +60,7 @@ const RecipeCard = ({ recipe, isFavorite = false, onToggleFavorite }: RecipeCard
   };
 
   // Get the appropriate image from our mapping
-  const recipeImage = getRecipeImage(recipe);
+  const recipeImage = getRecipeImagePath(recipe.id);
 
   const handleImageError = () => {
     setImageError(true);
