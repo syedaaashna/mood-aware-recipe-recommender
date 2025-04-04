@@ -1,7 +1,7 @@
 
 import { 
-  Angry, Confused, Sad, Surprised, Scared, 
-  Stressed, Excited, Bored, Calm, Exhausted 
+  Cloud, CloudRain, Coffee, Cookie, Frown, Heart, Laugh, 
+  Meh, Smile, Sun, Zap, HelpCircle, Flame
 } from 'lucide-react';
 
 export interface Mood {
@@ -1573,3 +1573,73 @@ export const searchRecipes = (searchTerm: string): Recipe[] => {
   );
 };
 
+// Function to get a recipe by ID
+export const getRecipeById = (id: string): Recipe | undefined => {
+  return recipes.find(recipe => recipe.id === id);
+};
+
+// Function to get all recipes
+export const getAllRecipes = (): Recipe[] => {
+  return recipes;
+};
+
+// Function to get similar recipes based on tags and mood
+export const getSimilarRecipes = (recipe: Recipe, limit: number = 3): Recipe[] => {
+  if (!recipe) return [];
+  
+  // Find recipes with similar tags or from the same mood category
+  const similarRecipes = recipes.filter(r => 
+    r.id !== recipe.id && // Not the same recipe
+    (
+      r.mood.some(mood => recipe.mood.includes(mood)) || // Same mood
+      r.tags.some(tag => recipe.tags.includes(tag)) // Similar tags
+    )
+  );
+  
+  // Return random selection of similar recipes
+  return similarRecipes
+    .sort(() => 0.5 - Math.random()) // Shuffle
+    .slice(0, limit); // Limit to specified number
+};
+
+// Function to get chatbot response based on mood
+export const getChatbotResponse = (currentMood: string | null): string => {
+  if (!currentMood) {
+    return "Hello! I'm your recipe assistant. How can I help you today?";
+  }
+
+  switch (currentMood) {
+    case "happy":
+      return "You're feeling happy! How about a celebratory recipe to match your mood?";
+    case "sad":
+      return "I notice you're feeling down. Would you like a comforting recipe to cheer you up?";
+    case "angry":
+      return "Feeling angry? I have some spicy recipes that might help you channel that energy!";
+    case "confused":
+      return "Confused about what to cook? I can suggest some simple, foolproof recipes to make decision-making easier.";
+    case "exhausted":
+      return "You seem tired. Let me recommend some quick and easy recipes that require minimal effort.";
+    case "surprised":
+      return "In the mood for something unexpected? I have recipes with surprising flavor combinations!";
+    case "scared":
+      return "When you're feeling anxious, familiar comfort food can help. Would you like some cozy recipe ideas?";
+    case "stressed":
+      return "Stress calls for calming, nourishing foods. I can suggest recipes with stress-reducing ingredients.";
+    case "excited":
+      return "Your excitement is contagious! How about trying something adventurous in the kitchen?";
+    case "bored":
+      return "Bored? Let's spice things up with a challenging recipe that will keep you engaged!";
+    case "calm":
+      return "In a peaceful mood? I can suggest mindful cooking recipes that maintain your tranquility.";
+    case "hungry":
+      return "Hungry? I've got quick recipes that can satisfy your appetite in no time!";
+    case "nostalgic":
+      return "Feeling nostalgic? Let me suggest classic recipes that might bring back fond memories.";
+    case "adventurous":
+      return "In an adventurous mood! Let's explore cuisines from around the world!";
+    case "cozy":
+      return "Looking for something cozy? I have perfect recipes for a warm, comforting meal.";
+    default:
+      return "I'd be happy to suggest recipes tailored to your current mood. What are you in the mood for?";
+  }
+};
