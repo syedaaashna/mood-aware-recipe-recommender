@@ -1,3 +1,4 @@
+
 import comfort1 from '@/assets/images/recipes/comfort1.jpg';
 import comfort2 from '@/assets/images/recipes/comfort2.jpg';
 import comfort3 from '@/assets/images/recipes/comfort3.jpg';
@@ -527,4 +528,112 @@ const recipesData: { [key: string]: Recipe[] } = {
       name: 'Stir Fry',
       description: 'Quick and easy stir fry',
       ingredients: ['1 lb protein (chicken, beef, tofu)', '1 tbsp olive oil', '1 onion, chopped', '2 cloves garlic, minced', '1 lb mixed vegetables, chopped (broccoli, carrots, bell peppers, etc.)', '1/4 cup soy sauce', '1 tbsp honey', '1 tbsp cornstarch', 'Salt and pepper to taste'],
-      instructions: ['In a bowl, mix together the soy sauce, honey, and cornstarch.', 'Heat the olive oil in
+      instructions: ['In a bowl, mix together the soy sauce, honey, and cornstarch.', 'Heat the olive oil in a wok or large skillet over high heat.', 'Add the protein and cook until browned.', 'Add the onion and garlic and cook until softened.', 'Add the mixed vegetables and cook until tender-crisp.', 'Pour the sauce over the protein and vegetables and cook until thickened.', 'Serve over rice or noodles.'],
+      prepTime: '15 mins',
+      cookTime: '20 mins',
+      servings: 4,
+      calories: 450,
+      tags: ['asian', 'stir-fry', 'easy'],
+      difficulty: "Easy",
+      mood: 'happy',
+      aiSuggestion: "Add a pinch of red pepper flakes for a spicy kick.",
+      nutritionAnalysis: "High in protein and vitamins.",
+      cookingTips: ["Use a wok for best results.", "Serve with a side of steamed rice."]
+    },
+    {
+      id: 'mediterranean1',
+      name: 'Greek Salad',
+      description: 'Classic Greek salad',
+      ingredients: ['1 cucumber, chopped', '2 tomatoes, chopped', '1 red onion, sliced', '1/2 cup Kalamata olives', '4 oz feta cheese, crumbled', '2 tablespoons olive oil', '1 tablespoon red wine vinegar', 'Salt and pepper to taste'],
+      instructions: ['In a large bowl, combine the cucumber, tomatoes, red onion, and olives.', 'In a small bowl, whisk together the olive oil, red wine vinegar, salt, and pepper.', 'Pour the dressing over the salad and toss to combine.', 'Top with crumbled feta cheese.', 'Serve immediately.'],
+      prepTime: '15 mins',
+      cookTime: '0 mins',
+      servings: 4,
+      calories: 200,
+      tags: ['mediterranean', 'vegetarian', 'easy'],
+      difficulty: "Easy",
+      mood: 'relaxed',
+      aiSuggestion: "Add a squeeze of lemon juice for extra brightness.",
+      nutritionAnalysis: "High in healthy fats and vitamins.",
+      cookingTips: ["Use high-quality feta cheese for best results.", "Serve with a side of pita bread."]
+    },
+    {
+      id: 'mediterranean2',
+      name: 'Hummus',
+      description: 'Homemade hummus',
+      ingredients: ['1 can chickpeas, drained and rinsed', '2 tablespoons tahini', '2 tablespoons olive oil', '2 tablespoons lemon juice', '1 clove garlic, minced', 'Salt to taste'],
+      instructions: ['In a food processor, combine the chickpeas, tahini, olive oil, lemon juice, garlic, and salt.', 'Process until smooth.', 'If the hummus is too thick, add a tablespoon of water at a time until desired consistency is reached.', 'Serve with pita chips or vegetables.'],
+      prepTime: '10 mins',
+      cookTime: '0 mins',
+      servings: 6,
+      calories: 150,
+      tags: ['mediterranean', 'vegetarian', 'easy'],
+      difficulty: "Easy",
+      mood: 'relaxed',
+      aiSuggestion: "Add a pinch of cumin for extra flavor.",
+      nutritionAnalysis: "High in protein and fiber.",
+      cookingTips: ["Use high-quality tahini for best results.", "Serve with a drizzle of olive oil on top."]
+    },
+  ],
+};
+
+// Define the Recipe interface
+export interface Recipe {
+  id: string;
+  name: string;
+  description: string;
+  ingredients: string[];
+  instructions: string[];
+  prepTime: string;
+  cookTime: string;
+  servings: number;
+  calories: number;
+  tags: string[];
+  difficulty: "Easy" | "Medium" | "Hard";
+  mood: string;
+  aiSuggestion: string;
+  nutritionAnalysis: string;
+  cookingTips: string[];
+}
+
+// Function to get all recipes
+export const getAllRecipes = (): Recipe[] => {
+  let allRecipes: Recipe[] = [];
+  for (const category in recipesData) {
+    allRecipes = [...allRecipes, ...recipesData[category]];
+  }
+  return allRecipes;
+};
+
+// Function to get recipes by mood
+export const getRecipesByMood = (mood: string): Recipe[] => {
+  const allRecipes = getAllRecipes();
+  return allRecipes.filter(recipe => recipe.mood === mood);
+};
+
+// Function to get recipes by category
+export const getRecipesByCategory = (category: string): Recipe[] => {
+  return recipesData[category] || [];
+};
+
+// Function to get recipe by ID
+export const getRecipeById = (id: string): Recipe | undefined => {
+  const allRecipes = getAllRecipes();
+  return allRecipes.find(recipe => recipe.id === id);
+};
+
+// Function to get similar recipes
+export const getSimilarRecipes = (recipeId: string, limit = 3): Recipe[] => {
+  const recipe = getRecipeById(recipeId);
+  if (!recipe) return [];
+  
+  const allRecipes = getAllRecipes();
+  const similarRecipes = allRecipes
+    .filter(r => r.id !== recipeId && r.tags.some(tag => recipe.tags.includes(tag)))
+    .sort(() => 0.5 - Math.random())
+    .slice(0, limit);
+  
+  return similarRecipes;
+};
+
+export default recipesData;
