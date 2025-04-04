@@ -47,6 +47,78 @@ import drink2 from '@/assets/images/recipes/sweet2.jpg';
 import drink3 from '@/assets/images/recipes/healthy1.jpg';
 import appetizer1 from '@/assets/images/recipes/snack3.jpg';
 
+// Define the Mood interface
+export interface Mood {
+  id: string;
+  name: string;
+  icon: string;
+  description: string;
+}
+
+// Define moods array
+export const moods: Mood[] = [
+  {
+    id: 'happy',
+    name: 'Happy',
+    icon: '😊',
+    description: 'Feeling cheerful and content'
+  },
+  {
+    id: 'sad',
+    name: 'Sad',
+    icon: '😢',
+    description: 'Feeling down or blue'
+  },
+  {
+    id: 'energetic',
+    name: 'Energetic',
+    icon: '⚡',
+    description: 'Full of energy and ready to go'
+  },
+  {
+    id: 'tired',
+    name: 'Tired',
+    icon: '😴',
+    description: 'Feeling exhausted or sleepy'
+  },
+  {
+    id: 'stressed',
+    name: 'Stressed',
+    icon: '😰',
+    description: 'Feeling overwhelmed or anxious'
+  },
+  {
+    id: 'relaxed',
+    name: 'Relaxed',
+    icon: '😌',
+    description: 'Feeling calm and at ease'
+  },
+  {
+    id: 'hungry',
+    name: 'Hungry',
+    icon: '🍽️',
+    description: 'Ready for a satisfying meal'
+  },
+  {
+    id: 'nostalgic',
+    name: 'Nostalgic',
+    icon: '🕰️',
+    description: 'Reminiscing about the past'
+  },
+  {
+    id: 'adventurous',
+    name: 'Adventurous',
+    icon: '🌎',
+    description: 'Ready to try something new'
+  },
+  {
+    id: 'festive',
+    name: 'Festive',
+    icon: '🎉',
+    description: 'In a celebratory mood'
+  }
+];
+
 // Recipe data
 const recipesData: { [key: string]: Recipe[] } = {
   comfort: [
@@ -634,6 +706,47 @@ export const getSimilarRecipes = (recipeId: string, limit = 3): Recipe[] => {
     .slice(0, limit);
   
   return similarRecipes;
+};
+
+// Function to search recipes by term
+export const searchRecipes = (term: string): Recipe[] => {
+  if (!term) return [];
+  
+  const searchTerm = term.toLowerCase();
+  const allRecipes = getAllRecipes();
+  
+  return allRecipes.filter(recipe => 
+    recipe.name.toLowerCase().includes(searchTerm) ||
+    recipe.description.toLowerCase().includes(searchTerm) ||
+    recipe.tags.some(tag => tag.toLowerCase().includes(searchTerm)) ||
+    recipe.ingredients.some(ingredient => ingredient.toLowerCase().includes(searchTerm))
+  );
+};
+
+// Function to get chatbot response
+export const getChatbotResponse = (userQuery: string, currentMood: string | null): string => {
+  // Simple chatbot response logic
+  if (userQuery.toLowerCase().includes('hello') || userQuery.toLowerCase().includes('hi')) {
+    return "Hello! How can I help you with your recipe needs today?";
+  }
+  
+  if (userQuery.toLowerCase().includes('recommend') || userQuery.toLowerCase().includes('suggestion')) {
+    if (currentMood) {
+      return `Based on your ${currentMood} mood, I recommend checking out our selection of recipes above. They're specifically chosen to match how you're feeling!`;
+    } else {
+      return "I'd be happy to recommend something! First, why don't you select your current mood using the mood selector?";
+    }
+  }
+  
+  if (userQuery.toLowerCase().includes('ingredient') || userQuery.toLowerCase().includes('substitution')) {
+    return "For ingredient substitutions, you can usually replace butter with oil, regular flour with almond flour for gluten-free options, or dairy milk with plant-based alternatives. Anything specific you're looking to substitute?";
+  }
+  
+  if (userQuery.toLowerCase().includes('cook') || userQuery.toLowerCase().includes('preparation')) {
+    return "For cooking tips, make sure to read through the recipe completely before starting. Prep all ingredients in advance (mise en place) and taste as you go to adjust seasonings. Do you need help with a specific recipe?";
+  }
+  
+  return "I'm here to help with recipe suggestions, cooking tips, and answer any food-related questions. What would you like to know about?";
 };
 
 export default recipesData;

@@ -1,3 +1,4 @@
+
 import { useState, useEffect, useRef } from 'react';
 import { Search, X } from 'lucide-react';
 import { moods, Mood } from '@/utils/moodRecipeData';
