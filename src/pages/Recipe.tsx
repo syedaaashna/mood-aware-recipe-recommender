@@ -6,16 +6,7 @@ import RecipeAiFeatures from '@/components/ui/RecipeAiFeatures';
 import VoiceGuidance from '@/components/ui/VoiceGuidance';
 import { useToast } from "@/hooks/use-toast";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
-
-const FOOD_PLACEHOLDERS = [
-  "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=1200&h=600&q=80",
-  "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=1200&h=600&q=80",
-  "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=1200&h=600&q=80",
-  "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=1200&h=600&q=80",
-  "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?auto=format&fit=crop&w=1200&h=600&q=80",
-  "https://images.unsplash.com/photo-1565958011703-44f9829ba187?auto=format&fit=crop&w=1200&h=600&q=80",
-  "https://images.unsplash.com/photo-1482049016688-2d3e1b311543?auto=format&fit=crop&w=1200&h=600&q=80"
-];
+import getRecipeImage from '@/utils/recipeImageMapping';
 
 const Recipe = () => {
   const { id } = useParams<{ id: string }>();
@@ -24,22 +15,7 @@ const Recipe = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [isFavorite, setIsFavorite] = useState(false);
   const [activeTab, setActiveTab] = useState<'ingredients' | 'instructions'>('ingredients');
-  const [imageLoading, setImageLoading] = useState(true);
-  const [imageUrl, setImageUrl] = useState<string>('');
   const { toast } = useToast();
-
-  const getRecipeImageUrl = (recipe: RecipeType) => {
-    const mainKeyword = recipe.name.split(' ')[0].toLowerCase();
-    const secondaryKeyword = recipe.tags[0] || '';
-    const uniqueId = recipe.id || Date.now();
-    return `https://source.unsplash.com/featured/?${encodeURIComponent(mainKeyword)},${encodeURIComponent(secondaryKeyword)},food,dish&fit=crop&w=1200&h=600&random=${uniqueId}`;
-  };
-
-  const getBackupImageUrl = (recipe: RecipeType) => {
-    const id = parseInt(recipe.id.toString());
-    const index = id % FOOD_PLACEHOLDERS.length;
-    return FOOD_PLACEHOLDERS[index];
-  };
 
   useEffect(() => {
     if (id) {
@@ -49,32 +25,6 @@ const Recipe = () => {
       setTimeout(() => {
         if (foundRecipe) {
           setRecipe(foundRecipe);
-          setImageUrl("https://placehold.co/1200x600/f8f9fa/6c757d?text=Loading+Recipe+Image...");
-          setImageLoading(true);
-          
-          const img = new Image();
-          img.src = getRecipeImageUrl(foundRecipe);
-          
-          const timeoutId = setTimeout(() => {
-            if (imageLoading) {
-              setImageUrl(getBackupImageUrl(foundRecipe));
-              setImageLoading(false);
-            }
-          }, 3000);
-          
-          img.onload = () => {
-            clearTimeout(timeoutId);
-            setImageUrl(img.src);
-            setImageLoading(false);
-          };
-          
-          img.onerror = () => {
-            clearTimeout(timeoutId);
-            setImageUrl(getBackupImageUrl(foundRecipe));
-            setImageLoading(false);
-          };
-          
-          return () => clearTimeout(timeoutId);
         } else {
           setRecipe(null);
         }
@@ -85,15 +35,6 @@ const Recipe = () => {
       setIsFavorite(favorites.includes(id));
     }
   }, [id]);
-
-  const handleImageError = () => {
-    if (recipe) {
-      setImageUrl(getBackupImageUrl(recipe));
-    } else {
-      setImageUrl(FOOD_PLACEHOLDERS[0]);
-    }
-    setImageLoading(false);
-  };
 
   const toggleFavorite = () => {
     const favorites = JSON.parse(localStorage.getItem('favoriteRecipes') || '[]');
@@ -178,6 +119,9 @@ const Recipe = () => {
     );
   }
 
+  // Get the appropriate image from our mapping
+  const recipeImage = getRecipeImage(recipe);
+
   return (
     <>
       <div className="min-h-screen pt-20 pb-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto animate-fade-in">
@@ -192,17 +136,11 @@ const Recipe = () => {
         <div className="mb-8 rounded-xl overflow-hidden bg-gray-200 dark:bg-gray-800">
           <AspectRatio ratio={21/9} className="bg-muted">
             <img 
-              src={imageUrl} 
+              src={recipeImage} 
               alt={recipe?.name}
               className="w-full h-full object-cover"
-              onError={handleImageError}
               loading="lazy"
             />
-            {imageLoading && (
-              <div className="absolute inset-0 flex items-center justify-center bg-gray-100/80 dark:bg-gray-800/80">
-                <div className="w-10 h-10 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>
-              </div>
-            )}
           </AspectRatio>
         </div>
         

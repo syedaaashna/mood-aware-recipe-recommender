@@ -1,9 +1,10 @@
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import { Brain, ChevronDown, ChevronUp, Lightbulb, Utensils, ListPlus, Sparkles, Flame } from 'lucide-react';
 import { Recipe, getSimilarRecipes } from '@/utils/moodRecipeData';
 import { Link } from 'react-router-dom';
 import { AspectRatio } from "@/components/ui/aspect-ratio";
+import getRecipeImage from '@/utils/recipeImageMapping';
 
 interface RecipeAiFeaturesProps {
   recipe: Recipe;
@@ -12,101 +13,7 @@ interface RecipeAiFeaturesProps {
 const RecipeAiFeatures = ({ recipe }: RecipeAiFeaturesProps) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const similarRecipes = getSimilarRecipes(recipe.id);
-  const [imageLoading, setImageLoading] = useState<Record<string, boolean>>({});
-  const [recipeImages, setRecipeImages] = useState<Record<string, string>>({});
   const imagesInitializedRef = useRef(false);
-
-  // Get recipe image URL with reliable alternatives
-  const getRecipeImageUrl = (recipeName: string) => {
-    const searchQuery = recipeName.toLowerCase().replace(/[^\w\s]/gi, '').replace(/\s+/g, '+');
-    return `https://source.unsplash.com/featured/?${searchQuery},food&fit=crop&w=400&h=200&random=${Date.now()}`;
-  };
-
-  // Get a backup image using reliable food images
-  const getBackupImageUrl = (recipeId: string) => {
-    // Reliable food images that should always work
-    const reliableFoodImages = [
-      "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=400&h=200&q=80",
-      "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=400&h=200&q=80", 
-      "https://images.unsplash.com/photo-1606787366850-de6330128bfc?auto=format&fit=crop&w=400&h=200&q=80",
-      "https://images.unsplash.com/photo-1505253716362-afaea1d3d1af?auto=format&fit=crop&w=400&h=200&q=80"
-    ];
-    
-    // Use recipe ID to consistently select the same image for the same recipe
-    const index = parseInt(recipeId.replace(/\D/g, '')) % reliableFoodImages.length;
-    return reliableFoodImages[Math.abs(index)];
-  };
-
-  // Initialize images for all similar recipes
-  useEffect(() => {
-    if (!imagesInitializedRef.current && similarRecipes.length > 0) {
-      // Set initial placeholders and loading states for all similar recipes
-      const initialImages: Record<string, string> = {};
-      const initialLoadingStates: Record<string, boolean> = {};
-      
-      similarRecipes.forEach(similarRecipe => {
-        initialImages[similarRecipe.id] = "https://placehold.co/400x200/f8f9fa/6c757d?text=Loading...";
-        initialLoadingStates[similarRecipe.id] = true;
-      });
-      
-      setRecipeImages(initialImages);
-      setImageLoading(initialLoadingStates);
-      
-      // Load actual images one by one
-      similarRecipes.forEach(similarRecipe => {
-        // First try with Unsplash
-        const img = new Image();
-        img.src = getRecipeImageUrl(similarRecipe.name);
-        
-        // Set a timeout for slow-loading images
-        const timeoutId = setTimeout(() => {
-          if (imageLoading[similarRecipe.id]) {
-            setRecipeImages(prev => ({
-              ...prev,
-              [similarRecipe.id]: getBackupImageUrl(similarRecipe.id)
-            }));
-            setImageLoading(prev => ({ ...prev, [similarRecipe.id]: false }));
-          }
-        }, 5000);
-        
-        img.onload = () => {
-          clearTimeout(timeoutId);
-          setRecipeImages(prev => ({
-            ...prev,
-            [similarRecipe.id]: img.src
-          }));
-          setImageLoading(prev => ({ ...prev, [similarRecipe.id]: false }));
-        };
-        
-        img.onerror = () => {
-          clearTimeout(timeoutId);
-          setRecipeImages(prev => ({
-            ...prev,
-            [similarRecipe.id]: getBackupImageUrl(similarRecipe.id)
-          }));
-          setImageLoading(prev => ({ ...prev, [similarRecipe.id]: false }));
-        };
-        
-        return () => clearTimeout(timeoutId);
-      });
-      
-      imagesInitializedRef.current = true;
-    }
-    
-    return () => {
-      // Reset the ref when recipe changes
-      imagesInitializedRef.current = false;
-    };
-  }, [recipe.id, similarRecipes]);
-
-  const handleImageError = (recipeId: string) => {
-    // Fall back to a reliable image if loading fails
-    setRecipeImages(prev => ({
-      ...prev,
-      [recipeId]: getBackupImageUrl(recipeId)
-    }));
-    setImageLoading(prev => ({ ...prev, [recipeId]: false }));
-  };
 
   return (
     <div className="rounded-xl overflow-hidden border border-primary/20">
@@ -200,17 +107,11 @@ const RecipeAiFeatures = ({ recipe }: RecipeAiFeaturesProps) => {
                     <div className="rounded-md overflow-hidden mb-2 bg-gray-200 dark:bg-gray-700">
                       <AspectRatio ratio={2/1}>
                         <img 
-                          src={recipeImages[similarRecipe.id] || "https://placehold.co/400x200/f8f9fa/6c757d?text=Loading..."}
+                          src={getRecipeImage(similarRecipe)}
                           alt={similarRecipe.name}
                           className="w-full h-full object-cover"
-                          onError={() => handleImageError(similarRecipe.id)}
                           loading="lazy"
                         />
-                        {imageLoading[similarRecipe.id] && (
-                          <div className="absolute inset-0 flex items-center justify-center bg-gray-100/80 dark:bg-gray-800/80">
-                            <div className="w-6 h-6 border-2 border-primary border-t-transparent rounded-full animate-spin"></div>
-                          </div>
-                        )}
                       </AspectRatio>
                     </div>
                     <h5 className="font-medium text-xs">{similarRecipe.name}</h5>

@@ -1,10 +1,12 @@
-import { useState, useEffect } from 'react';
+
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Clock, Users, ChefHat, Heart, Sparkles, Award } from 'lucide-react';
 import { Recipe } from '@/utils/moodRecipeData';
 import { useToast } from "@/hooks/use-toast";
 import { motion } from "framer-motion";
 import { AspectRatio } from "./aspect-ratio";
+import getRecipeImage from '@/utils/recipeImageMapping';
 
 interface RecipeCardProps {
   recipe: Recipe;
@@ -12,22 +14,9 @@ interface RecipeCardProps {
   onToggleFavorite?: (recipe: Recipe) => void;
 }
 
-const FOOD_PLACEHOLDERS = [
-  "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=600&h=350&q=80",
-  "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=600&h=350&q=80",
-  "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=600&h=350&q=80",
-  "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=600&h=350&q=80",
-  "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?auto=format&fit=crop&w=600&h=350&q=80",
-  "https://images.unsplash.com/photo-1565958011703-44f9829ba187?auto=format&fit=crop&w=600&h=350&q=80",
-  "https://images.unsplash.com/photo-1482049016688-2d3e1b311543?auto=format&fit=crop&w=600&h=350&q=80"
-];
-
 const RecipeCard = ({ recipe, isFavorite = false, onToggleFavorite }: RecipeCardProps) => {
-  const [showSparkle, setShowSparkle] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
   const { toast } = useToast();
-  const [imageLoading, setImageLoading] = useState(true);
-  const [imageUrl, setImageUrl] = useState<string>('');
 
   const getRandomGradient = () => {
     const gradients = [
@@ -46,64 +35,6 @@ const RecipeCard = ({ recipe, isFavorite = false, onToggleFavorite }: RecipeCard
   };
 
   const [gradientClass] = useState(getRandomGradient());
-
-  const getRecipeImageUrl = (recipe: Recipe) => {
-    const mainKeyword = recipe.name.split(' ')[0].toLowerCase();
-    const secondaryKeyword = recipe.tags[0] || '';
-    
-    const uniqueId = recipe.id || Date.now();
-    
-    const options = [
-      `https://source.unsplash.com/featured/?${encodeURIComponent(mainKeyword)},${encodeURIComponent(secondaryKeyword)},food&fit=crop&w=600&h=350&random=${uniqueId}`,
-      
-      `https://pixabay.com/api/?key=pixabay_api_key&q=${encodeURIComponent(recipe.name)}&image_type=photo&orientation=horizontal&per_page=3`,
-      
-      FOOD_PLACEHOLDERS[Math.floor(uniqueId % FOOD_PLACEHOLDERS.length)]
-    ];
-    
-    return options[0];
-  };
-
-  const getBackupImageUrl = (recipe: Recipe) => {
-    const id = parseInt(recipe.id.toString());
-    const index = id % FOOD_PLACEHOLDERS.length;
-    return FOOD_PLACEHOLDERS[index];
-  };
-  
-  useEffect(() => {
-    if (recipe && recipe.name) {
-      setImageUrl("https://placehold.co/600x350/f8f9fa/6c757d?text=Loading...");
-      setImageLoading(true);
-      
-      const img = new Image();
-      img.src = getRecipeImageUrl(recipe);
-      
-      const timeoutId = setTimeout(() => {
-        if (imageLoading) {
-          setImageUrl(getBackupImageUrl(recipe));
-          setImageLoading(false);
-        }
-      }, 3000);
-      
-      img.onload = () => {
-        clearTimeout(timeoutId);
-        setImageUrl(img.src);
-        setImageLoading(false);
-      };
-      
-      img.onerror = () => {
-        clearTimeout(timeoutId);
-        setImageUrl(getBackupImageUrl(recipe));
-        setImageLoading(false);
-      };
-      
-      return () => clearTimeout(timeoutId);
-    }
-  }, [recipe]);
-
-  const handleImageError = () => {
-    setImageUrl(getBackupImageUrl(recipe));
-  };
 
   const handleFavoriteToggle = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -127,6 +58,9 @@ const RecipeCard = ({ recipe, isFavorite = false, onToggleFavorite }: RecipeCard
     return ratings[Math.floor(Math.random() * ratings.length)];
   };
 
+  // Get the appropriate image from our mapping
+  const recipeImage = getRecipeImage(recipe);
+
   return (
     <motion.div
       whileHover={{ y: -8 }}
@@ -145,18 +79,12 @@ const RecipeCard = ({ recipe, isFavorite = false, onToggleFavorite }: RecipeCard
           <div className="overflow-hidden">
             <AspectRatio ratio={16 / 9} className="bg-muted">
               <img 
-                src={imageUrl}
+                src={recipeImage}
                 alt={recipe.name}
                 className="w-full h-full object-cover transition-transform duration-300"
                 style={{ transform: isHovered ? 'scale(1.05)' : 'scale(1)' }}
-                onError={handleImageError}
                 loading="lazy"
               />
-              {imageLoading && (
-                <div className="absolute inset-0 flex items-center justify-center bg-gray-100/80 dark:bg-gray-800/80">
-                  <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>
-                </div>
-              )}
             </AspectRatio>
           </div>
 
