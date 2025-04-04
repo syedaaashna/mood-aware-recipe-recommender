@@ -1,7 +1,7 @@
 
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Clock, Users, ChefHat, Heart, Sparkles, Award } from 'lucide-react';
+import { Clock, Users, ChefHat, Heart, Sparkles, Award, ImageOff } from 'lucide-react';
 import { Recipe } from '@/utils/moodRecipeData';
 import { useToast } from "@/hooks/use-toast";
 import { motion } from "framer-motion";
@@ -16,6 +16,7 @@ interface RecipeCardProps {
 
 const RecipeCard = ({ recipe, isFavorite = false, onToggleFavorite }: RecipeCardProps) => {
   const [isHovered, setIsHovered] = useState(false);
+  const [imageError, setImageError] = useState(false);
   const { toast } = useToast();
 
   const getRandomGradient = () => {
@@ -61,6 +62,10 @@ const RecipeCard = ({ recipe, isFavorite = false, onToggleFavorite }: RecipeCard
   // Get the appropriate image from our mapping
   const recipeImage = getRecipeImage(recipe);
 
+  const handleImageError = () => {
+    setImageError(true);
+  };
+
   return (
     <motion.div
       whileHover={{ y: -8 }}
@@ -78,13 +83,20 @@ const RecipeCard = ({ recipe, isFavorite = false, onToggleFavorite }: RecipeCard
         <div className={`relative overflow-hidden rounded-xl border border-gray-200 dark:border-gray-800 ${isHovered ? 'shadow-lg shadow-primary/20 dark:shadow-primary/10' : 'shadow-sm'}`}>
           <div className="overflow-hidden">
             <AspectRatio ratio={16 / 9} className="bg-muted">
-              <img 
-                src={recipeImage}
-                alt={recipe.name}
-                className="w-full h-full object-cover transition-transform duration-300"
-                style={{ transform: isHovered ? 'scale(1.05)' : 'scale(1)' }}
-                loading="lazy"
-              />
+              {imageError ? (
+                <div className="w-full h-full flex items-center justify-center bg-gray-100 dark:bg-gray-800">
+                  <ImageOff size={40} className="text-gray-400" />
+                </div>
+              ) : (
+                <img 
+                  src={recipeImage}
+                  alt={recipe.name}
+                  className="w-full h-full object-cover transition-transform duration-300"
+                  style={{ transform: isHovered ? 'scale(1.05)' : 'scale(1)' }}
+                  loading="lazy"
+                  onError={handleImageError}
+                />
+              )}
             </AspectRatio>
           </div>
 
@@ -139,7 +151,7 @@ const RecipeCard = ({ recipe, isFavorite = false, onToggleFavorite }: RecipeCard
             <div className="mt-2 mb-2">
               <span className="text-xs flex items-center gap-1 text-purple-600 dark:text-purple-400">
                 <Award size={12} />
-                <span className="font-medium">{Math.random() > 0.5 ? "Chef's pick!" : "Must try!"}</span>
+                <span className="font-medium">{getEnthusiasmRating()}</span>
               </span>
             </div>
             

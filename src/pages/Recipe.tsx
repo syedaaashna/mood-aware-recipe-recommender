@@ -1,6 +1,7 @@
+
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { ArrowLeft, Clock, Users, ChefHat, Heart, Share2 } from 'lucide-react';
+import { ArrowLeft, Clock, Users, ChefHat, Heart, Share2, ImageOff } from 'lucide-react';
 import { Recipe as RecipeType, getRecipeById } from '@/utils/moodRecipeData';
 import RecipeAiFeatures from '@/components/ui/RecipeAiFeatures';
 import VoiceGuidance from '@/components/ui/VoiceGuidance';
@@ -15,11 +16,13 @@ const Recipe = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [isFavorite, setIsFavorite] = useState(false);
   const [activeTab, setActiveTab] = useState<'ingredients' | 'instructions'>('ingredients');
+  const [imageError, setImageError] = useState(false);
   const { toast } = useToast();
 
   useEffect(() => {
     if (id) {
       setIsLoading(true);
+      setImageError(false);
       const foundRecipe = getRecipeById(id);
       
       setTimeout(() => {
@@ -122,6 +125,10 @@ const Recipe = () => {
   // Get the appropriate image from our mapping
   const recipeImage = getRecipeImage(recipe);
 
+  const handleImageError = () => {
+    setImageError(true);
+  };
+
   return (
     <>
       <div className="min-h-screen pt-20 pb-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto animate-fade-in">
@@ -135,12 +142,20 @@ const Recipe = () => {
 
         <div className="mb-8 rounded-xl overflow-hidden bg-gray-200 dark:bg-gray-800">
           <AspectRatio ratio={21/9} className="bg-muted">
-            <img 
-              src={recipeImage} 
-              alt={recipe?.name}
-              className="w-full h-full object-cover"
-              loading="lazy"
-            />
+            {imageError ? (
+              <div className="w-full h-full flex items-center justify-center bg-gray-100 dark:bg-gray-800">
+                <ImageOff size={60} className="text-gray-400" />
+                <p className="ml-2 text-gray-500">Image unavailable</p>
+              </div>
+            ) : (
+              <img 
+                src={recipeImage} 
+                alt={recipe?.name}
+                className="w-full h-full object-cover"
+                loading="lazy"
+                onError={handleImageError}
+              />
+            )}
           </AspectRatio>
         </div>
         
