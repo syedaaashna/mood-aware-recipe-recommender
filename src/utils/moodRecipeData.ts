@@ -229,7 +229,7 @@ const recipesData: { [key: string]: Recipe[] } = {
     {
       id: 'breakfast4',
       name: 'Trendy Avocado Toast',
-      description: 'Simple yet nutritious avocado toast that's perfect for a quick breakfast or light meal.',
+      description: 'Simple yet nutritious avocado toast that is perfect for a quick breakfast or light meal.',
       ingredients: ['1 slice of bread', '1/2 avocado, mashed', 'Salt and pepper to taste', 'Optional toppings: red pepper flakes, everything bagel seasoning, fried egg'],
       instructions: ['Toast the bread to your liking.', 'Mash the avocado in a bowl and season with salt and pepper.', 'Spread the mashed avocado on the toast.', 'Top with your choice of toppings.', 'Serve immediately.'],
       prepTime: '5 mins',
@@ -301,7 +301,7 @@ const recipesData: { [key: string]: Recipe[] } = {
     {
       id: 'dinner1',
       name: 'Spaghetti and Meatballs',
-      description: 'A classic Italian-American dish that's beloved by people of all ages.',
+      description: 'A classic Italian-American dish that is beloved by people of all ages.',
       ingredients: ['1 lb spaghetti', '1 lb ground beef', '1/2 cup breadcrumbs', '1/4 cup Parmesan cheese', '1 egg', '1 onion, chopped', '2 cloves garlic, minced', '28 oz canned crushed tomatoes', '1 tsp sugar', 'Salt and pepper to taste'],
       instructions: ['Cook spaghetti according to package directions.', 'In a bowl, mix together the ground beef, breadcrumbs, Parmesan cheese, egg, salt, and pepper.', 'Roll the mixture into meatballs.', 'In a pot, cook the onion and garlic until softened.', 'Stir in the crushed tomatoes, sugar, salt, and pepper.', 'Bring to a simmer and add the meatballs.', 'Cook for 20 minutes, or until the meatballs are cooked through.', 'Serve the meatballs and sauce over the spaghetti.'],
       prepTime: '20 mins',
@@ -318,7 +318,7 @@ const recipesData: { [key: string]: Recipe[] } = {
     {
       id: 'dinner2',
       name: 'Baked Salmon with Roasted Vegetables',
-      description: 'A healthy and flavorful dinner option that's high in omega-3 fatty acids.',
+      description: 'A healthy and flavorful dinner option that is high in omega-3 fatty acids.',
       ingredients: ['4 salmon fillets', '1 tbsp olive oil', '1 lemon, sliced', '1 lb mixed vegetables, chopped (broccoli, carrots, bell peppers, etc.)', 'Salt and pepper to taste'],
       instructions: ['Preheat oven to 400°F (200°C).', 'Place the salmon fillets on a baking sheet.', 'Drizzle with olive oil and top with lemon slices.', 'In a bowl, toss the mixed vegetables with olive oil, salt, and pepper.', 'Spread the vegetables around the salmon fillets on the baking sheet.', 'Bake for 15-20 minutes, or until the salmon is cooked through and the vegetables are tender.', 'Serve immediately.'],
       prepTime: '15 mins',
@@ -632,7 +632,7 @@ const recipesData: { [key: string]: Recipe[] } = {
     {
       id: 'mediterranean2',
       name: 'Classic Hummus with Pita',
-      description: 'Creamy, garlic-infused chickpea dip that's a staple of Mediterranean cuisine.',
+      description: 'Creamy, garlic-infused chickpea dip that is a staple of Mediterranean cuisine.',
       ingredients: ['1 can (15 oz) chickpeas, drained and rinsed', '1/4 cup tahini', '1/4 cup fresh lemon juice', '2 tbsp olive oil, plus more for serving', '2 garlic cloves, minced', '1/2 tsp ground cumin', 'Salt to taste', '2-3 tbsp water', 'Paprika and chopped parsley for garnish', 'Pita bread for serving'],
       instructions: ['Combine chickpeas, tahini, lemon juice, olive oil, garlic, cumin, and salt in a food processor.', 'Process until smooth, adding water as needed to reach desired consistency.', 'Taste and adjust seasonings if necessary.', 'Transfer to a serving bowl and create a shallow well in the center.', 'Pour additional olive oil into the well and sprinkle with paprika and parsley.', 'Serve with warm pita bread or fresh vegetables for dipping.'],
       prepTime: '10 mins',
@@ -795,15 +795,15 @@ const recipesData: { [key: string]: Recipe[] } = {
 
 // Modify recipes to ensure each mood has multiple unique recipes
 const moodRecipeMapping = {
-  'happy': ['breakfast1', 'lunch1', 'dinner1', 'dessert1', 'italian1'],
+  'happy': ['breakfast1', 'lunch1', 'dinner1', 'dessert1', 'italian1', 'vegan3'],
   'sad': ['comfort1', 'drink3', 'dessert3', 'quick2'],
-  'energetic': ['breakfast2', 'dinner3', 'snack1', 'drink2', 'asian2'],
+  'energetic': ['breakfast2', 'dinner3', 'snack1', 'drink2', 'asian2', 'vegan2'],
   'tired': ['comfort3', 'lunch3', 'quick1', 'mexican2'],
   'stressed': ['breakfast4', 'snack3', 'mediterranean2', 'drink1'],
-  'relaxed': ['dinner2', 'quick3', 'mediterranean1', 'vegan1'],
+  'relaxed': ['dinner2', 'quick3', 'mediterranean1', 'vegan1', 'italian2'],
   'hungry': ['breakfast3', 'quick2', 'dinner1', 'mexican1'],
   'nostalgic': ['comfort2', 'lunch2', 'dessert2', 'italian2'],
-  'adventurous': ['asian1', 'creative1', 'snack2', 'mexican1'],
+  'adventurous': ['asian1', 'creative1', 'snack2', 'mexican1', 'exotic1', 'exotic2'],
   'festive': ['dessert3', 'mexican1', 'appetizer1', 'drink1']
 };
 
