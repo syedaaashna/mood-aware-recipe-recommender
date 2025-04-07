@@ -1,4 +1,3 @@
-
 import comfort1 from '@/assets/images/recipes/comfort1.jpg';
 import comfort2 from '@/assets/images/recipes/comfort2.jpg';
 import comfort3 from '@/assets/images/recipes/comfort3.jpg';
@@ -47,7 +46,6 @@ import drink2 from '@/assets/images/recipes/sweet2.jpg';
 import drink3 from '@/assets/images/recipes/healthy1.jpg';
 import appetizer1 from '@/assets/images/recipes/snack3.jpg';
 
-// Define the Mood interface
 export interface Mood {
   id: string;
   name: string;
@@ -55,7 +53,6 @@ export interface Mood {
   description: string;
 }
 
-// Define moods array
 export const moods: Mood[] = [
   {
     id: 'happy',
@@ -119,7 +116,6 @@ export const moods: Mood[] = [
   }
 ];
 
-// Recipe data
 const recipesData: { [key: string]: Recipe[] } = {
   comfort: [
     {
@@ -388,7 +384,7 @@ const recipesData: { [key: string]: Recipe[] } = {
     {
       id: 'dessert3',
       name: 'Rich Chocolate Cake',
-      description: 'A decadent chocolate cake that's perfect for celebrations or any time a chocolate craving strikes.',
+      description: 'A decadent chocolate cake that is perfect for celebrations or any time a chocolate craving strikes.',
       ingredients: ['2 cups sugar', '1 3/4 cups flour', '3/4 cup cocoa powder', '1 1/2 tsp baking powder', '1 1/2 tsp baking soda', '1 tsp salt', '1 cup buttermilk', '1/2 cup vegetable oil', '2 eggs', '1 tsp vanilla extract', '1 cup boiling water'],
       instructions: ['Preheat oven to 350°F (175°C).', 'Grease and flour a 9x13 inch baking pan.', 'In a bowl, whisk together the sugar, flour, cocoa powder, baking powder, baking soda, and salt.', 'Add the buttermilk, vegetable oil, eggs, and vanilla extract and mix until combined.', 'Gradually add the boiling water, mixing until smooth.', 'Pour the batter into the prepared baking pan.', 'Bake for 30-35 minutes, or until a toothpick inserted into the center comes out clean.', 'Let cool completely before frosting.'],
       prepTime: '20 mins',
@@ -409,7 +405,7 @@ const recipesData: { [key: string]: Recipe[] } = {
       name: 'Five-Minute Quesadilla',
       description: 'The ultimate quick meal or snack that requires minimal ingredients and preparation.',
       ingredients: ['2 tortillas', '1/2 cup shredded cheese', 'Optional: diced vegetables, cooked protein, salsa'],
-      instructions: ['Place one tortilla in a non-stick pan over medium heat.', 'Sprinkle cheese and any optional ingredients over the tortilla.', 'Top with the second tortilla.', 'Cook for 2 minutes on each side or until golden and cheese is melted.', 'Cut into wedges and serve.'],
+      instructions: ['Place one tortilla in a non-stick pan over medium heat.', 'Sprinkle cheese and any optional ingredients over the tortilla.', 'Top with the other tortilla.', 'Cook for 2 minutes on each side or until golden and cheese is melted.', 'Cut into wedges and serve.'],
       prepTime: '2 mins',
       cookTime: '3 mins',
       servings: 1,
@@ -793,7 +789,6 @@ const recipesData: { [key: string]: Recipe[] } = {
   ]
 };
 
-// Modify recipes to ensure each mood has multiple unique recipes
 const moodRecipeMapping = {
   'happy': ['breakfast1', 'lunch1', 'dinner1', 'dessert1', 'italian1', 'vegan3'],
   'sad': ['comfort1', 'drink3', 'dessert3', 'quick2'],
@@ -807,7 +802,6 @@ const moodRecipeMapping = {
   'festive': ['dessert3', 'mexican1', 'appetizer1', 'drink1']
 };
 
-// Function to get all recipes
 export const getAllRecipes = (): Recipe[] => {
   let allRecipes: Recipe[] = [];
   for (const category in recipesData) {
@@ -816,25 +810,21 @@ export const getAllRecipes = (): Recipe[] => {
   return allRecipes;
 };
 
-// Function to get recipes by mood
 export const getRecipesByMood = (mood: string): Recipe[] => {
   const moodRecipeIds = moodRecipeMapping[mood] || [];
   const allRecipes = getAllRecipes();
   return allRecipes.filter(recipe => moodRecipeIds.includes(recipe.id));
 };
 
-// Function to get recipes by category
 export const getRecipesByCategory = (category: string): Recipe[] => {
   return recipesData[category] || [];
 };
 
-// Function to get recipe by ID
 export const getRecipeById = (id: string): Recipe | undefined => {
   const allRecipes = getAllRecipes();
   return allRecipes.find(recipe => recipe.id === id);
 };
 
-// Function to get similar recipes
 export const getSimilarRecipes = (recipeId: string, limit = 3): Recipe[] => {
   const recipe = getRecipeById(recipeId);
   if (!recipe) return [];
@@ -848,7 +838,6 @@ export const getSimilarRecipes = (recipeId: string, limit = 3): Recipe[] => {
   return similarRecipes;
 };
 
-// Function to search recipes by term
 export const searchRecipes = (term: string): Recipe[] => {
   if (!term) return [];
   
@@ -863,9 +852,7 @@ export const searchRecipes = (term: string): Recipe[] => {
   );
 };
 
-// Function to get chatbot response
 export const getChatbotResponse = (userQuery: string, currentMood: string | null): string => {
-  // Simple chatbot response logic
   if (userQuery.toLowerCase().includes('hello') || userQuery.toLowerCase().includes('hi')) {
     return "Hello! How can I help you with your recipe needs today?";
   }
@@ -889,7 +876,6 @@ export const getChatbotResponse = (userQuery: string, currentMood: string | null
   return "I'm here to help with recipe suggestions, cooking tips, and answer any food-related questions. What would you like to know about?";
 };
 
-// Define the Recipe interface
 export interface Recipe {
   id: string;
   name: string;
