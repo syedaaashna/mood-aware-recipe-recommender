@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Heart, Clock, ChefHat, Bookmark, Share2 } from 'lucide-react';
+import { Heart, Clock, ChefHat, Bookmark, Share2, ImageOff } from 'lucide-react';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Recipe } from '@/utils/moodRecipeData';
 import { getRecipeImagePath } from '@/utils/recipeImageHelper';
@@ -17,6 +17,7 @@ interface RecipeCardProps {
 
 const RecipeCard = ({ recipe, isFavorite, onToggleFavorite }: RecipeCardProps) => {
   const [isShareDialogOpen, setIsShareDialogOpen] = useState(false);
+  const [imageError, setImageError] = useState(false);
   const { toast } = useToast();
 
   const handleCopyLink = () => {
@@ -46,14 +47,30 @@ const RecipeCard = ({ recipe, isFavorite, onToggleFavorite }: RecipeCardProps) =
     }
   };
 
+  const handleImageError = () => {
+    console.warn(`Image failed to load for recipe: ${recipe.id}`);
+    setImageError(true);
+  };
+
+  // Always get the correct image path for this specific recipe
+  const recipeImageSrc = getRecipeImagePath(recipe.id);
+
   return (
     <Card className="overflow-hidden transition-all duration-300 hover:shadow-lg dark:hover:shadow-primary/10 h-full flex flex-col">
       <div className="relative overflow-hidden aspect-video">
-        <img
-          src={getRecipeImagePath(recipe.id)}
-          alt={recipe.name}
-          className="object-cover w-full h-full transition-transform duration-300 hover:scale-105"
-        />
+        {imageError ? (
+          <div className="w-full h-full flex flex-col items-center justify-center bg-gray-100 dark:bg-gray-800 text-gray-500">
+            <ImageOff className="h-8 w-8 mb-2" />
+            <span className="text-sm">Image unavailable</span>
+          </div>
+        ) : (
+          <img
+            src={recipeImageSrc}
+            alt={recipe.name}
+            className="object-cover w-full h-full transition-transform duration-300 hover:scale-105"
+            onError={handleImageError}
+          />
+        )}
         <button
           onClick={() => onToggleFavorite(recipe)}
           className="absolute top-2 right-2 p-2 bg-white/80 dark:bg-gray-800/80 rounded-full shadow-sm hover:bg-white dark:hover:bg-gray-700 transition-colors"
