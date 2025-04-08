@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -18,15 +17,34 @@ interface RecipeCardProps {
 const RecipeCard = ({ recipe, isFavorite, onToggleFavorite }: RecipeCardProps) => {
   const [isShareDialogOpen, setIsShareDialogOpen] = useState(false);
   const [imageError, setImageError] = useState(false);
-  const [imageSrc, setImageSrc] = useState('/placeholder.svg');
+  const [imageSrc, setImageSrc] = useState('');
+  const [imageRetries, setImageRetries] = useState(0);
   const { toast } = useToast();
 
   // Set up image sources and fallbacks
   useEffect(() => {
     if (recipe) {
+      // Reset error state when recipe changes
+      setImageError(false);
+      setImageRetries(0);
+      
       // Get image path and set as primary source
       const primaryImageSrc = getRecipeImagePath(recipe.id);
       setImageSrc(primaryImageSrc);
+      
+      // Preload the image to check if it exists
+      const img = new Image();
+      img.onload = () => {
+        // Image loaded successfully
+        setImageError(false);
+      };
+      img.onerror = () => {
+        // Try fallback
+        const fallbackImg = getFallbackImage(recipe.id);
+        console.log(`Primary image failed for ${recipe.id}, trying fallback:`, fallbackImg);
+        setImageSrc(fallbackImg);
+      };
+      img.src = primaryImageSrc;
     }
   }, [recipe]);
 
@@ -58,15 +76,24 @@ const RecipeCard = ({ recipe, isFavorite, onToggleFavorite }: RecipeCardProps) =
   };
 
   const handleImageError = () => {
-    console.warn(`Image failed to load for recipe: ${recipe.id}`);
-    // Try fallback image first
-    const fallbackImg = getFallbackImage(recipe.id);
-    
-    if (imageSrc !== fallbackImg) {
-      setImageSrc(fallbackImg);
-    } else {
-      // If fallback also fails, show error state
+    // If we've already tried a few times, just show error state
+    if (imageRetries >= 2) {
       setImageError(true);
+      return;
+    }
+    
+    setImageRetries(prevRetries => prevRetries + 1);
+    
+    // Try category-based fallback first
+    if (imageRetries === 0) {
+      const fallbackImg = getFallbackImage(recipe.id);
+      console.log(`Image error for ${recipe.id}, trying category fallback:`, fallbackImg);
+      setImageSrc(fallbackImg);
+    } 
+    // Then try a reliable default
+    else if (imageRetries === 1) {
+      console.log(`Fallback also failed for ${recipe.id}, using reliable default`);
+      setImageSrc('/src/assets/images/recipes/comfort1.jpg');
     }
   };
 
@@ -87,6 +114,7 @@ const RecipeCard = ({ recipe, isFavorite, onToggleFavorite }: RecipeCardProps) =
             loading="lazy"
           />
         )}
+        
         <button
           onClick={() => onToggleFavorite(recipe)}
           className="absolute top-2 right-2 p-2 bg-white/80 dark:bg-gray-800/80 rounded-full shadow-sm hover:bg-white dark:hover:bg-gray-700 transition-colors"

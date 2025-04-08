@@ -1,3 +1,4 @@
+
 import recipeImageMapping from './recipeImageMapping';
 
 /**
@@ -22,12 +23,21 @@ export const getRecipeImagePath = (imageKey: string): string => {
       return recipeImageMapping[matchingKey];
     }
     
-    // If nothing matches, return the default image
-    console.warn(`No suitable image found for "${imageKey}", using default image`);
-    return '/placeholder.svg'; // Use public folder placeholder image
+    // If nothing matches, choose a random food image from our collection
+    const foodImages = [
+      '/src/assets/images/recipes/comfort1.jpg',
+      '/src/assets/images/recipes/breakfast1.jpg',
+      '/src/assets/images/recipes/lunch1.jpg',
+      '/src/assets/images/recipes/dinner1.jpg',
+      '/src/assets/images/recipes/dessert1.jpg'
+    ];
+    
+    const randomIndex = Math.floor(Math.random() * foodImages.length);
+    console.log(`Using random image for ${imageKey}`);
+    return foodImages[randomIndex];
   } catch (error) {
     console.error('Error in getRecipeImagePath:', error);
-    return '/placeholder.svg';
+    return '/src/assets/images/recipes/comfort1.jpg'; // Fallback to a reliable image
   }
 };
 
@@ -47,29 +57,29 @@ export const getFallbackImage = (recipeId: string): string => {
   // Extract category from recipe ID (e.g., "comfort1" -> "comfort")
   const category = recipeId.replace(/[0-9]+$/, '');
   
-  // Map categories to general image types
+  // Map categories to reliable image paths
   switch (category) {
     case 'breakfast':
-      return '/images/breakfast-default.jpg';
+      return '/src/assets/images/recipes/breakfast1.jpg';
     case 'lunch':
-      return '/images/lunch-default.jpg';
+      return '/src/assets/images/recipes/lunch1.jpg';
     case 'dinner':
-      return '/images/dinner-default.jpg';
+      return '/src/assets/images/recipes/dinner1.jpg';
     case 'dessert':
-      return '/images/dessert-default.jpg';
+      return '/src/assets/images/recipes/dessert1.jpg';
     case 'comfort':
-      return '/images/comfort-default.jpg';
+      return '/src/assets/images/recipes/comfort1.jpg';
     case 'quick':
-      return '/images/quick-default.jpg';
+      return '/src/assets/images/recipes/quick1.jpg';
     case 'snack':
-      return '/images/snack-default.jpg';
+      return '/src/assets/images/recipes/snack1.jpg';
     case 'drink':
-      return '/images/drink-default.jpg';
+      return '/src/assets/images/recipes/dessert2.jpg'; // Fallback to dessert2
     case 'vegan':
-      return '/images/vegan-default.jpg';
+      return '/src/assets/images/recipes/vegan1.jpg';
     case 'appetizer':
-      return '/images/appetizer-default.jpg';
+      return '/src/assets/images/recipes/lunch1.jpg'; // Fallback to lunch1
     default:
-      return '/placeholder.svg';
+      return '/src/assets/images/recipes/comfort1.jpg'; // Default to comfort1
   }
 };
