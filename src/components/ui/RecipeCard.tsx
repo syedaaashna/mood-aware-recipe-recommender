@@ -1,12 +1,12 @@
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Heart, Clock, ChefHat, Bookmark, Share2, ImageOff } from 'lucide-react';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Recipe } from '@/utils/moodRecipeData';
-import { getRecipeImagePath } from '@/utils/recipeImageHelper';
+import { getRecipeImagePath, getFallbackImage } from '@/utils/recipeImageHelper';
 import { useToast } from "@/hooks/use-toast";
 
 interface RecipeCardProps {
@@ -18,7 +18,17 @@ interface RecipeCardProps {
 const RecipeCard = ({ recipe, isFavorite, onToggleFavorite }: RecipeCardProps) => {
   const [isShareDialogOpen, setIsShareDialogOpen] = useState(false);
   const [imageError, setImageError] = useState(false);
+  const [imageSrc, setImageSrc] = useState('/placeholder.svg');
   const { toast } = useToast();
+
+  // Set up image sources and fallbacks
+  useEffect(() => {
+    if (recipe) {
+      // Get image path and set as primary source
+      const primaryImageSrc = getRecipeImagePath(recipe.id);
+      setImageSrc(primaryImageSrc);
+    }
+  }, [recipe]);
 
   const handleCopyLink = () => {
     const recipeUrl = `${window.location.origin}/recipe/${recipe.id}`;
@@ -49,11 +59,16 @@ const RecipeCard = ({ recipe, isFavorite, onToggleFavorite }: RecipeCardProps) =
 
   const handleImageError = () => {
     console.warn(`Image failed to load for recipe: ${recipe.id}`);
-    setImageError(true);
+    // Try fallback image first
+    const fallbackImg = getFallbackImage(recipe.id);
+    
+    if (imageSrc !== fallbackImg) {
+      setImageSrc(fallbackImg);
+    } else {
+      // If fallback also fails, show error state
+      setImageError(true);
+    }
   };
-
-  // Always get the correct image path for this specific recipe
-  const recipeImageSrc = getRecipeImagePath(recipe.id);
 
   return (
     <Card className="overflow-hidden transition-all duration-300 hover:shadow-lg dark:hover:shadow-primary/10 h-full flex flex-col">
@@ -61,14 +76,15 @@ const RecipeCard = ({ recipe, isFavorite, onToggleFavorite }: RecipeCardProps) =
         {imageError ? (
           <div className="w-full h-full flex flex-col items-center justify-center bg-gray-100 dark:bg-gray-800 text-gray-500">
             <ImageOff className="h-8 w-8 mb-2" />
-            <span className="text-sm">Image unavailable</span>
+            <span className="text-sm">{recipe.name}</span>
           </div>
         ) : (
           <img
-            src={recipeImageSrc}
+            src={imageSrc}
             alt={recipe.name}
             className="object-cover w-full h-full transition-transform duration-300 hover:scale-105"
             onError={handleImageError}
+            loading="lazy"
           />
         )}
         <button
