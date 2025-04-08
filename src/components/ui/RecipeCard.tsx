@@ -40,9 +40,8 @@ const RecipeCard = ({ recipe, isFavorite, onToggleFavorite }: RecipeCardProps) =
       };
       img.onerror = () => {
         // Try fallback
-        const fallbackImg = getFallbackImage(recipe.id);
-        console.log(`Primary image failed for ${recipe.id}, trying fallback:`, fallbackImg);
-        setImageSrc(fallbackImg);
+        console.log(`Primary image failed for ${recipe.id}, trying fallback:`, getFallbackImage(recipe.id));
+        setImageSrc(getFallbackImage(recipe.id));
       };
       img.src = primaryImageSrc;
     }
@@ -93,7 +92,7 @@ const RecipeCard = ({ recipe, isFavorite, onToggleFavorite }: RecipeCardProps) =
     // Then try a reliable default
     else if (imageRetries === 1) {
       console.log(`Fallback also failed for ${recipe.id}, using reliable default`);
-      setImageSrc('/src/assets/images/recipes/comfort1.jpg');
+      setImageSrc('https://images.unsplash.com/photo-1506368249639-73a05d6f6488?w=800&auto=format&fit=crop');
     }
   };
 

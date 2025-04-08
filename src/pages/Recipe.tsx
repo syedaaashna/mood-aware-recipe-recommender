@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { ArrowLeft, Clock, Users, ChefHat, Heart, Share2, ImageOff } from 'lucide-react';
@@ -7,7 +6,7 @@ import RecipeAiFeatures from '@/components/ui/RecipeAiFeatures';
 import VoiceGuidance from '@/components/ui/VoiceGuidance';
 import { useToast } from "@/hooks/use-toast";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
-import { getRecipeImagePath } from '@/utils/recipeImageHelper';
+import { getRecipeImagePath, getFallbackImage } from '@/utils/recipeImageHelper';
 
 const Recipe = () => {
   const { id } = useParams<{ id: string }>();
@@ -17,6 +16,7 @@ const Recipe = () => {
   const [isFavorite, setIsFavorite] = useState(false);
   const [activeTab, setActiveTab] = useState<'ingredients' | 'instructions'>('ingredients');
   const [imageError, setImageError] = useState(false);
+  const [imageSrc, setImageSrc] = useState('');
   const { toast } = useToast();
 
   useEffect(() => {
@@ -28,6 +28,32 @@ const Recipe = () => {
       setTimeout(() => {
         if (foundRecipe) {
           setRecipe(foundRecipe);
+          
+          // Set up image with fallback
+          const primaryImageSrc = getRecipeImagePath(foundRecipe.id);
+          setImageSrc(primaryImageSrc);
+          
+          // Preload image
+          const img = new Image();
+          img.onload = () => {
+            setImageError(false);
+          };
+          img.onerror = () => {
+            // Try fallback
+            const fallbackSrc = getFallbackImage(foundRecipe.id);
+            console.log(`Recipe page: Primary image failed, trying fallback:`, fallbackSrc);
+            setImageSrc(fallbackSrc);
+            
+            // Preload fallback
+            const fallbackImg = new Image();
+            fallbackImg.onerror = () => {
+              // Ultimate fallback
+              console.log('Recipe page: Fallback also failed, using reliable default');
+              setImageSrc('https://images.unsplash.com/photo-1506368249639-73a05d6f6488?w=800&auto=format&fit=crop');
+            };
+            fallbackImg.src = fallbackSrc;
+          };
+          img.src = primaryImageSrc;
         } else {
           setRecipe(null);
         }
@@ -38,6 +64,14 @@ const Recipe = () => {
       setIsFavorite(favorites.includes(id));
     }
   }, [id]);
+
+  const handleImageError = () => {
+    if (!imageError) {
+      console.log('Recipe page: Image error, using reliable default');
+      setImageSrc('https://images.unsplash.com/photo-1506368249639-73a05d6f6488?w=800&auto=format&fit=crop');
+      setImageError(true);
+    }
+  };
 
   const toggleFavorite = () => {
     const favorites = JSON.parse(localStorage.getItem('favoriteRecipes') || '[]');
@@ -122,12 +156,7 @@ const Recipe = () => {
     );
   }
 
-  // Get the appropriate image from our mapping
   const recipeImage = recipe ? getRecipeImagePath(recipe.id) : '';
-
-  const handleImageError = () => {
-    setImageError(true);
-  };
 
   return (
     <>
@@ -149,7 +178,7 @@ const Recipe = () => {
               </div>
             ) : (
               <img 
-                src={recipeImage} 
+                src={imageSrc} 
                 alt={recipe?.name}
                 className="w-full h-full object-cover"
                 loading="lazy"

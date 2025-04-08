@@ -11,23 +11,14 @@ document.addEventListener('error', function(e) {
     
     // Check if it's a recipe image path
     const src = (target as HTMLImageElement).src;
-    const isRecipeImage = src.includes('recipes') || src.includes('placeholder');
+    const isRecipeImage = src.includes('recipes') || src.includes('unsplash') || src.includes('placeholder');
     
     if (isRecipeImage) {
-      // For recipe images, try different fallback strategies
-      if (src.includes('assets/images/recipes')) {
-        // Try a different recipe image
-        (target as HTMLImageElement).src = '/src/assets/images/recipes/comfort1.jpg';
-      } else if (src.includes('placeholder.svg')) {
-        // If placeholder fails, use a direct image path
-        (target as HTMLImageElement).src = '/src/assets/images/recipes/comfort1.jpg';
-      } else {
-        // Last resort fallback
-        (target as HTMLImageElement).src = '/src/assets/images/recipes/comfort1.jpg';
-      }
+      // For recipe images, use a reliable fallback
+      (target as HTMLImageElement).src = 'https://images.unsplash.com/photo-1506368249639-73a05d6f6488?w=800&auto=format&fit=crop';
     } else {
       // Non-recipe images
-      (target as HTMLImageElement).src = '/placeholder.svg';
+      (target as HTMLImageElement).src = 'https://images.unsplash.com/photo-1506368249639-73a05d6f6488?w=800&auto=format&fit=crop';
     }
     
     // Add styling to show this is a fallback

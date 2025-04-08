@@ -25,11 +25,11 @@ export const getRecipeImagePath = (imageKey: string): string => {
     
     // If nothing matches, choose a random food image from our collection
     const foodImages = [
-      '/src/assets/images/recipes/comfort1.jpg',
-      '/src/assets/images/recipes/breakfast1.jpg',
-      '/src/assets/images/recipes/lunch1.jpg',
-      '/src/assets/images/recipes/dinner1.jpg',
-      '/src/assets/images/recipes/dessert1.jpg'
+      'https://images.unsplash.com/photo-1547592180-85f173990554?w=800&auto=format&fit=crop', // comfort
+      'https://images.unsplash.com/photo-1533089860892-a9b969df67a3?w=800&auto=format&fit=crop', // breakfast
+      'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=800&auto=format&fit=crop', // lunch
+      'https://images.unsplash.com/photo-1559847844-5315695dadae?w=800&auto=format&fit=crop', // dinner
+      'https://images.unsplash.com/photo-1563729784474-d77dbb933a9e?w=800&auto=format&fit=crop'  // dessert
     ];
     
     const randomIndex = Math.floor(Math.random() * foodImages.length);
@@ -37,7 +37,7 @@ export const getRecipeImagePath = (imageKey: string): string => {
     return foodImages[randomIndex];
   } catch (error) {
     console.error('Error in getRecipeImagePath:', error);
-    return '/src/assets/images/recipes/comfort1.jpg'; // Fallback to a reliable image
+    return 'https://images.unsplash.com/photo-1547592180-85f173990554?w=800&auto=format&fit=crop'; // Fallback to a reliable image
   }
 };
 
@@ -60,26 +60,26 @@ export const getFallbackImage = (recipeId: string): string => {
   // Map categories to reliable image paths
   switch (category) {
     case 'breakfast':
-      return '/src/assets/images/recipes/breakfast1.jpg';
+      return 'https://images.unsplash.com/photo-1533089860892-a9b969df67a3?w=800&auto=format&fit=crop';
     case 'lunch':
-      return '/src/assets/images/recipes/lunch1.jpg';
+      return 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=800&auto=format&fit=crop';
     case 'dinner':
-      return '/src/assets/images/recipes/dinner1.jpg';
+      return 'https://images.unsplash.com/photo-1559847844-5315695dadae?w=800&auto=format&fit=crop';
     case 'dessert':
-      return '/src/assets/images/recipes/dessert1.jpg';
+      return 'https://images.unsplash.com/photo-1563729784474-d77dbb933a9e?w=800&auto=format&fit=crop';
     case 'comfort':
-      return '/src/assets/images/recipes/comfort1.jpg';
+      return 'https://images.unsplash.com/photo-1547592180-85f173990554?w=800&auto=format&fit=crop';
     case 'quick':
-      return '/src/assets/images/recipes/quick1.jpg';
+      return 'https://images.unsplash.com/photo-1536304993881-ff6e9eefa2a6?w=800&auto=format&fit=crop';
     case 'snack':
-      return '/src/assets/images/recipes/snack1.jpg';
+      return 'https://images.unsplash.com/photo-1566478989037-eec170784d0b?w=800&auto=format&fit=crop';
     case 'drink':
-      return '/src/assets/images/recipes/dessert2.jpg'; // Fallback to dessert2
+      return 'https://images.unsplash.com/photo-1551024709-8f23befc6f87?w=800&auto=format&fit=crop';
     case 'vegan':
-      return '/src/assets/images/recipes/vegan1.jpg';
+      return 'https://images.unsplash.com/photo-1582284540020-8acbe03f4924?w=800&auto=format&fit=crop';
     case 'appetizer':
-      return '/src/assets/images/recipes/lunch1.jpg'; // Fallback to lunch1
+      return 'https://images.unsplash.com/photo-1536304993881-ff6e9eefa2a6?w=800&auto=format&fit=crop';
     default:
-      return '/src/assets/images/recipes/comfort1.jpg'; // Default to comfort1
+      return 'https://images.unsplash.com/photo-1547592180-85f173990554?w=800&auto=format&fit=crop';
   }
 };
