@@ -1,79 +1,79 @@
 
-// Map recipe image names to actual image paths with accurate food representations
+// Map recipe image names to carefully curated image paths that accurately match each dish
 const recipeImageMapping: Record<string, string> = {
-  // Comfort food
-  'comfort1': 'https://images.unsplash.com/photo-1484723091739-30a097e8f929?w=800&auto=format&fit=crop', // Pancakes
-  'comfort2': 'https://images.unsplash.com/photo-1547592180-85f173990554?w=800&auto=format&fit=crop', // Mac and cheese
-  'comfort3': 'https://images.unsplash.com/photo-1564671165093-20688ff1fffa?w=800&auto=format&fit=crop', // Chicken soup
+  // Comfort food - Images that clearly show comfort dishes
+  'comfort1': 'https://images.unsplash.com/photo-1574894709920-11b28e7367e3?w=800&auto=format&fit=crop', // Mac and cheese
+  'comfort2': 'https://images.unsplash.com/photo-1588280991458-d759882787cf?w=800&auto=format&fit=crop', // Homemade soup
+  'comfort3': 'https://images.unsplash.com/photo-1549203532-cc889bb25c9e?w=800&auto=format&fit=crop', // Mashed potatoes
   
-  // Breakfast
+  // Breakfast - Clear breakfast dish images
   'breakfast1': 'https://images.unsplash.com/photo-1533089860892-a9b969df67a3?w=800&auto=format&fit=crop', // Avocado toast
-  'breakfast2': 'https://images.unsplash.com/photo-1618160702438-9b02ab6515c9?w=800&auto=format&fit=crop', // Yogurt granola bowl
-  'breakfast3': 'https://images.unsplash.com/photo-1495214783159-3503fd1b572d?w=800&auto=format&fit=crop', // Breakfast burrito
-  'breakfast4': 'https://images.unsplash.com/photo-1484723091739-30a097e8f929?w=800&auto=format&fit=crop', // Pancakes
+  'breakfast2': 'https://images.unsplash.com/photo-1525351484163-7529414344d8?w=800&auto=format&fit=crop', // Yogurt granola bowl
+  'breakfast3': 'https://images.unsplash.com/photo-1608649226842-f39257c9085f?w=800&auto=format&fit=crop', // Breakfast burrito
+  'breakfast4': 'https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?w=800&auto=format&fit=crop', // Pancakes with berries
   
-  // Lunch
-  'lunch1': 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=800&auto=format&fit=crop', // Salad bowl
-  'lunch2': 'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=800&auto=format&fit=crop', // Veggie lunch
-  'lunch3': 'https://images.unsplash.com/photo-1551248429-40975aa4de74?w=800&auto=format&fit=crop', // Sandwich
+  // Lunch - Specific lunch meal images
+  'lunch1': 'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=800&auto=format&fit=crop', // Healthy lunch bowl
+  'lunch2': 'https://images.unsplash.com/photo-1600335895229-6e75511892c8?w=800&auto=format&fit=crop', // Fresh salad
+  'lunch3': 'https://images.unsplash.com/photo-1509722747041-616f39b57569?w=800&auto=format&fit=crop', // Sandwich with side
   
-  // Dinner
-  'dinner1': 'https://images.unsplash.com/photo-1559847844-5315695dadae?w=800&auto=format&fit=crop', // Salmon dinner
-  'dinner2': 'https://images.unsplash.com/photo-1574484284002-952d92456975?w=800&auto=format&fit=crop', // Pasta
-  'dinner3': 'https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=800&auto=format&fit=crop', // Steak
+  // Dinner - Clear dinner plate images
+  'dinner1': 'https://images.unsplash.com/photo-1467003909585-2f8a72700288?w=800&auto=format&fit=crop', // Salmon dinner
+  'dinner2': 'https://images.unsplash.com/photo-1563379926898-05f4575a45d8?w=800&auto=format&fit=crop', // Pasta dinner
+  'dinner3': 'https://images.unsplash.com/photo-1544025162-d76694265947?w=800&auto=format&fit=crop', // Steak dinner
   
-  // Dessert
-  'dessert1': 'https://images.unsplash.com/photo-1563729784474-d77dbb933a9e?w=800&auto=format&fit=crop', // Cake
-  'dessert2': 'https://images.unsplash.com/photo-1514326640560-7d063ef2aed5?w=800&auto=format&fit=crop', // Ice cream
-  'dessert3': 'https://images.unsplash.com/photo-1551024601-bec78aea704b?w=800&auto=format&fit=crop', // Cookies
+  // Dessert - Close-up dessert images
+  'dessert1': 'https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=800&auto=format&fit=crop', // Chocolate cake
+  'dessert2': 'https://images.unsplash.com/photo-1563805042-7684c019e1cb?w=800&auto=format&fit=crop', // Ice cream
+  'dessert3': 'https://images.unsplash.com/photo-1499636136210-6f4ee915583e?w=800&auto=format&fit=crop', // Cookies
   
-  // Quick
-  'quick1': 'https://images.unsplash.com/photo-1536304993881-ff6e9eefa2a6?w=800&auto=format&fit=crop', // Quick meal
-  'quick2': 'https://images.unsplash.com/photo-1565299507177-b0ac66763828?w=800&auto=format&fit=crop', // Quick pasta
-  'quick3': 'https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?w=800&auto=format&fit=crop', // Veggie bowl
+  // Quick - Easy to identify quick meal images
+  'quick1': 'https://images.unsplash.com/photo-1482049016688-2d3e1b311543?w=800&auto=format&fit=crop', // Quick sandwich
+  'quick2': 'https://images.unsplash.com/photo-1598866594230-a7c12756260f?w=800&auto=format&fit=crop', // Quick pasta
+  'quick3': 'https://images.unsplash.com/photo-1505253758473-96b7015fcd40?w=800&auto=format&fit=crop', // Quick salad
   
-  // Snack
-  'snack1': 'https://images.unsplash.com/photo-1566478989037-eec170784d0b?w=800&auto=format&fit=crop', // Popcorn
-  'snack2': 'https://images.unsplash.com/photo-1558961363-fa8fdf82db35?w=800&auto=format&fit=crop', // Nuts and fruit
-  'snack3': 'https://images.unsplash.com/photo-1457296898342-cdd24585d095?w=800&auto=format&fit=crop', // Mixed berries
+  // Snack - Clear snack images
+  'snack1': 'https://images.unsplash.com/photo-1621939514649-280e2ee25f60?w=800&auto=format&fit=crop', // Popcorn
+  'snack2': 'https://images.unsplash.com/photo-1536304993881-ff6e9eefa2a6?w=800&auto=format&fit=crop', // Trail mix
+  'snack3': 'https://images.unsplash.com/photo-1532499016263-f2c3e89de9cd?w=800&auto=format&fit=crop', // Mixed berries
   
-  // Ethnic
-  'italian1': 'https://images.unsplash.com/photo-1595295333158-4742f28fbd85?w=800&auto=format&fit=crop', // Pizza
-  'italian2': 'https://images.unsplash.com/photo-1597393353415-b3730f3110a4?w=800&auto=format&fit=crop', // Pasta
-  'mexican1': 'https://images.unsplash.com/photo-1586511925558-a4c6376fe65f?w=800&auto=format&fit=crop', // Tacos
-  'mexican2': 'https://images.unsplash.com/photo-1599974579688-8dbdd335c77f?w=800&auto=format&fit=crop', // Mexican bowl
-  'asian1': 'https://images.unsplash.com/photo-1617692855027-33b14f061079?w=800&auto=format&fit=crop', // Ramen
-  'asian2': 'https://images.unsplash.com/photo-1562967914-608f82629710?w=800&auto=format&fit=crop', // Sushi
+  // Ethnic cuisine - Authentic ethnic food images
+  'italian1': 'https://images.unsplash.com/photo-1513104890138-7c749659a591?w=800&auto=format&fit=crop', // Authentic pizza
+  'italian2': 'https://images.unsplash.com/photo-1551183053-bf91a1d81141?w=800&auto=format&fit=crop', // Italian pasta
+  'mexican1': 'https://images.unsplash.com/photo-1615870216519-2f9fa575fa5c?w=800&auto=format&fit=crop', // Authentic tacos
+  'mexican2': 'https://images.unsplash.com/photo-1633632566177-39afa5f38b21?w=800&auto=format&fit=crop', // Mexican bowl with guacamole
+  'asian1': 'https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=800&auto=format&fit=crop', // Authentic ramen
+  'asian2': 'https://images.unsplash.com/photo-1579871494447-9811cf80d66c?w=800&auto=format&fit=crop', // Sushi platter
   'mediterranean1': 'https://images.unsplash.com/photo-1594671676120-4e333282a5f9?w=800&auto=format&fit=crop', // Mediterranean platter
-  'mediterranean2': 'https://images.unsplash.com/photo-1505576633757-0ac1084f4754?w=800&auto=format&fit=crop', // Mediterranean salad
+  'mediterranean2': 'https://images.unsplash.com/photo-1551006917-3b4c078c47c9?w=800&auto=format&fit=crop', // Greek salad
   
-  // Special diets
-  'vegan1': 'https://images.unsplash.com/photo-1583224874248-9d7e72f74e20?w=800&auto=format&fit=crop', // Vegan bowl
-  'vegan2': 'https://images.unsplash.com/photo-1598532213005-76c8bd158348?w=800&auto=format&fit=crop', // Vegan sandwich
-  'vegan3': 'https://images.unsplash.com/photo-1612439805305-f446090b682c?w=800&auto=format&fit=crop', // Vegan salad
+  // Special diets - Clear dietary-specific images
+  'vegan1': 'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=800&auto=format&fit=crop', // Colorful vegan bowl
+  'vegan2': 'https://images.unsplash.com/photo-1540420773420-3366772f4999?w=800&auto=format&fit=crop', // Vegan sandwich
+  'vegan3': 'https://images.unsplash.com/photo-1572449043416-55f4685c9bb7?w=800&auto=format&fit=crop', // Vegan salad
   
-  // Flavors
+  // Flavors - Distinct flavor profile images
   'spicy1': 'https://images.unsplash.com/photo-1625937286074-9ca519d5d9df?w=800&auto=format&fit=crop', // Spicy noodles
-  'spicy2': 'https://images.unsplash.com/photo-1536184071535-78906f7172c2?w=800&auto=format&fit=crop', // Peppers
-  'sweet1': 'https://images.unsplash.com/photo-1583224874248-9d7e72f74e20?w=800&auto=format&fit=crop', // Sweet bowl
-  'sweet2': 'https://images.unsplash.com/photo-1562176566-e9afd27531d2?w=800&auto=format&fit=crop', // Sweet pastry
+  'spicy2': 'https://images.unsplash.com/photo-1613479205646-c0dc1ee8511f?w=800&auto=format&fit=crop', // Hot peppers dish
+  'sweet1': 'https://images.unsplash.com/photo-1488477181946-6428a0291777?w=800&auto=format&fit=crop', // Sweet fruit bowl
+  'sweet2': 'https://images.unsplash.com/photo-1551504734-5ee1c4a1479b?w=800&auto=format&fit=crop', // Sweet pastries
   
-  // Healthy
-  'healthy1': 'https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=800&auto=format&fit=crop', // Healthy bowl
-  'healthy2': 'https://images.unsplash.com/photo-1564093497595-593b96d80180?w=800&auto=format&fit=crop', // Healthy salad
-  'healthy3': 'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=800&auto=format&fit=crop', // Healthy mix
+  // Healthy - Visibly healthy food images
+  'healthy1': 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=800&auto=format&fit=crop', // Healthy colorful bowl
+  'healthy2': 'https://images.unsplash.com/photo-1547496502-affa22d38842?w=800&auto=format&fit=crop', // Healthy protein bowl
+  'healthy3': 'https://images.unsplash.com/photo-1493770348161-369560ae357d?w=800&auto=format&fit=crop', // Fresh healthy smoothie bowl
   
-  // Exotic
-  'exotic1': 'https://images.unsplash.com/photo-1563590656268-5c41997321a6?w=800&auto=format&fit=crop', // Exotic fruit
-  'exotic2': 'https://images.unsplash.com/photo-1617692855027-33b14f061079?w=800&auto=format&fit=crop', // Exotic dish
+  // Exotic - Visually distinct exotic foods
+  'exotic1': 'https://images.unsplash.com/photo-1546548970-71785318a17b?w=800&auto=format&fit=crop', // Dragon fruit and tropical fruits
+  'exotic2': 'https://images.unsplash.com/photo-1583119022894-919a68a3d0e3?w=800&auto=format&fit=crop', // Exotic curry dish
   
   // Additional recipes
-  'default': 'https://images.unsplash.com/photo-1505935428862-770b6f24f629?w=800&auto=format&fit=crop', // General food
-  'creative1': 'https://images.unsplash.com/photo-1619096552086-4697acb90be3?w=800&auto=format&fit=crop', // Creative dish
-  'drink1': 'https://images.unsplash.com/photo-1551024709-8f23befc6f87?w=800&auto=format&fit=crop', // Smoothie
-  'drink2': 'https://images.unsplash.com/photo-1536935338788-846bb9981813?w=800&auto=format&fit=crop', // Cocktail
-  'drink3': 'https://images.unsplash.com/photo-1544145945-f90425340c7e?w=800&auto=format&fit=crop', // Hot beverage
-  'appetizer1': 'https://images.unsplash.com/photo-1626516002742-46d8a1677ade?w=800&auto=format&fit=crop', // Appetizer platter
+  'default': 'https://images.unsplash.com/photo-1498837167922-ddd27525d352?w=800&auto=format&fit=crop', // Beautiful food plating
+  'creative1': 'https://images.unsplash.com/photo-1547573854-74d2a71d0826?w=800&auto=format&fit=crop', // Creative plating
+  'drink1': 'https://images.unsplash.com/photo-1622483767028-3f66f32aef97?w=800&auto=format&fit=crop', // Colorful smoothie
+  'drink2': 'https://images.unsplash.com/photo-1562708294-4df8650ae9b3?w=800&auto=format&fit=crop', // Cocktail with garnish
+  'drink3': 'https://images.unsplash.com/photo-1544787219-7f47ccb76574?w=800&auto=format&fit=crop', // Latte art
+  'appetizer1': 'https://images.unsplash.com/photo-1541529086526-db283c563270?w=800&auto=format&fit=crop', // Bruschetta appetizer
 };
 
 export default recipeImageMapping;

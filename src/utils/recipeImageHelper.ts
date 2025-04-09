@@ -27,7 +27,7 @@ export const getRecipeImagePath = (imageKey: string): string => {
     return getFallbackImage(imageKey);
   } catch (error) {
     console.error('Error in getRecipeImagePath:', error);
-    return 'https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=800&auto=format&fit=crop'; // Reliable fallback
+    return 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=800&auto=format&fit=crop'; // Reliable fallback
   }
 };
 
@@ -47,46 +47,46 @@ export const getFallbackImage = (recipeId: string): string => {
   // Extract category from recipe ID (e.g., "comfort1" -> "comfort")
   const category = recipeId.replace(/[0-9]+$/, '').toLowerCase();
   
-  // Map categories to accurate image paths for each dish type
+  // Map categories to carefully selected images that accurately represent each dish type
   switch (category) {
     case 'breakfast':
-      return 'https://images.unsplash.com/photo-1533089860892-a9b969df67a3?w=800&auto=format&fit=crop'; // Breakfast bowl
+      return 'https://images.unsplash.com/photo-1533089860892-a9b969df67a3?w=800&auto=format&fit=crop'; // Avocado toast
     case 'lunch':
-      return 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=800&auto=format&fit=crop'; // Lunch salad
+      return 'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=800&auto=format&fit=crop'; // Healthy lunch bowl
     case 'dinner':
-      return 'https://images.unsplash.com/photo-1559847844-5315695dadae?w=800&auto=format&fit=crop'; // Dinner plate
+      return 'https://images.unsplash.com/photo-1544025162-d76694265947?w=800&auto=format&fit=crop'; // Steak dinner
     case 'dessert':
-      return 'https://images.unsplash.com/photo-1563729784474-d77dbb933a9e?w=800&auto=format&fit=crop'; // Dessert cake
+      return 'https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=800&auto=format&fit=crop'; // Chocolate cake
     case 'comfort':
-      return 'https://images.unsplash.com/photo-1547592180-85f173990554?w=800&auto=format&fit=crop'; // Comfort food
+      return 'https://images.unsplash.com/photo-1574894709920-11b28e7367e3?w=800&auto=format&fit=crop'; // Mac and cheese
     case 'quick':
-      return 'https://images.unsplash.com/photo-1536304993881-ff6e9eefa2a6?w=800&auto=format&fit=crop'; // Quick meal
+      return 'https://images.unsplash.com/photo-1482049016688-2d3e1b311543?w=800&auto=format&fit=crop'; // Quick sandwich
     case 'snack':
-      return 'https://images.unsplash.com/photo-1566478989037-eec170784d0b?w=800&auto=format&fit=crop'; // Snack bowl
+      return 'https://images.unsplash.com/photo-1621939514649-280e2ee25f60?w=800&auto=format&fit=crop'; // Popcorn
     case 'drink':
-      return 'https://images.unsplash.com/photo-1551024709-8f23befc6f87?w=800&auto=format&fit=crop'; // Smoothie
+      return 'https://images.unsplash.com/photo-1622483767028-3f66f32aef97?w=800&auto=format&fit=crop'; // Colorful smoothie
     case 'vegan':
-      return 'https://images.unsplash.com/photo-1583224874248-9d7e72f74e20?w=800&auto=format&fit=crop'; // Vegan bowl
+      return 'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=800&auto=format&fit=crop'; // Vegan bowl
     case 'appetizer':
-      return 'https://images.unsplash.com/photo-1626516002742-46d8a1677ade?w=800&auto=format&fit=crop'; // Appetizer platter
+      return 'https://images.unsplash.com/photo-1541529086526-db283c563270?w=800&auto=format&fit=crop'; // Bruschetta appetizer
     case 'italian':
-      return 'https://images.unsplash.com/photo-1595295333158-4742f28fbd85?w=800&auto=format&fit=crop'; // Italian pizza
+      return 'https://images.unsplash.com/photo-1513104890138-7c749659a591?w=800&auto=format&fit=crop'; // Authentic pizza
     case 'mexican':
-      return 'https://images.unsplash.com/photo-1586511925558-a4c6376fe65f?w=800&auto=format&fit=crop'; // Mexican tacos
+      return 'https://images.unsplash.com/photo-1615870216519-2f9fa575fa5c?w=800&auto=format&fit=crop'; // Authentic tacos
     case 'asian':
-      return 'https://images.unsplash.com/photo-1617692855027-33b14f061079?w=800&auto=format&fit=crop'; // Asian ramen
+      return 'https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=800&auto=format&fit=crop'; // Authentic ramen
     case 'mediterranean':
       return 'https://images.unsplash.com/photo-1594671676120-4e333282a5f9?w=800&auto=format&fit=crop'; // Mediterranean platter
     case 'healthy':
-      return 'https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=800&auto=format&fit=crop'; // Healthy bowl
+      return 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=800&auto=format&fit=crop'; // Healthy colorful bowl
     case 'spicy':
-      return 'https://images.unsplash.com/photo-1625937286074-9ca519d5d9df?w=800&auto=format&fit=crop'; // Spicy dish
+      return 'https://images.unsplash.com/photo-1625937286074-9ca519d5d9df?w=800&auto=format&fit=crop'; // Spicy noodles
     case 'sweet':
-      return 'https://images.unsplash.com/photo-1562176566-e9afd27531d2?w=800&auto=format&fit=crop'; // Sweet pastry
+      return 'https://images.unsplash.com/photo-1488477181946-6428a0291777?w=800&auto=format&fit=crop'; // Sweet fruit bowl
     case 'exotic':
-      return 'https://images.unsplash.com/photo-1563590656268-5c41997321a6?w=800&auto=format&fit=crop'; // Exotic fruits
+      return 'https://images.unsplash.com/photo-1546548970-71785318a17b?w=800&auto=format&fit=crop'; // Dragon fruit and tropical fruits
     default:
       // For unknown categories, return a reliable general food image
-      return 'https://images.unsplash.com/photo-1505935428862-770b6f24f629?w=800&auto=format&fit=crop';
+      return 'https://images.unsplash.com/photo-1498837167922-ddd27525d352?w=800&auto=format&fit=crop'; // Beautiful food plating
   }
 };
