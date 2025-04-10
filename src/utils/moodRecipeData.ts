@@ -1,4 +1,3 @@
-
 import comfort1 from '@/assets/images/recipes/comfort1.jpg';
 import comfort2 from '@/assets/images/recipes/comfort2.jpg';
 import comfort3 from '@/assets/images/recipes/comfort3.jpg';
@@ -144,6 +143,37 @@ export const moods: Mood[] = [
     name: 'Indulgent',
     icon: '🍫',
     description: 'Treating yourself to something special'
+  },
+  // New moods
+  {
+    id: 'celebratory',
+    name: 'Celebratory',
+    icon: '🎊',
+    description: 'Commemorating a special occasion'
+  },
+  {
+    id: 'curious',
+    name: 'Curious',
+    icon: '🧐',
+    description: 'Interested in exploring new flavors'
+  },
+  {
+    id: 'sophisticated',
+    name: 'Sophisticated',
+    icon: '🥂',
+    description: 'In the mood for something elegant'
+  },
+  {
+    id: 'healthy-minded',
+    name: 'Health-Conscious',
+    icon: '🥗',
+    description: 'Focused on nutrition and wellbeing'
+  },
+  {
+    id: 'nostalgic-childhood',
+    name: 'Childhood Memories',
+    icon: '👶',
+    description: 'Craving foods from your youth'
   }
 ];
 
@@ -532,399 +562,4 @@ const recipesData: { [key: string]: Recipe[] } = {
       calories: 300,
       tags: ['snack', 'easy', 'healthy'],
       difficulty: "Easy",
-      mood: 'adventurous',
-      aiSuggestion: "Add a pinch of sea salt to enhance the sweet and savory flavors.",
-      nutritionAnalysis: "High in protein and healthy fats from nuts, natural sugars from dried fruit.",
-      cookingTips: ["Roast the nuts briefly for enhanced flavor.", "Balance the ratio of nuts to dried fruit to chocolate based on your preferences."]
-    },
-    {
-      id: 'snack3',
-      name: 'Apple Slices with Peanut Butter',
-      description: 'A classic combination that offers the perfect balance of sweet, crisp and creamy textures.',
-      ingredients: ['1 apple, sliced', '2 tablespoons peanut butter', 'Optional toppings: granola, chocolate chips, cinnamon'],
-      instructions: ['Wash and slice the apple into wedges.', 'Arrange the slices on a plate.', 'Spread or dollop peanut butter onto each slice.', 'Add optional toppings if desired.', 'Serve immediately.'],
-      prepTime: '5 mins',
-      cookTime: '0 mins',
-      servings: 1,
-      calories: 200,
-      tags: ['snack', 'healthy', 'easy'],
-      difficulty: "Easy",
-      mood: 'stressed',
-      aiSuggestion: "Sprinkle with cinnamon for added flavor and blood sugar regulation.",
-      nutritionAnalysis: "High in fiber from apple, protein and healthy fats from peanut butter.",
-      cookingTips: ["Squeeze lemon juice on apple slices to prevent browning.", "Try different nut butters for variety."]
-    }
-  ],
-  // Add more categories for Indian, American, Chinese, Korean, Asian and Continental dishes
-  indian: [
-    {
-      id: 'indian1',
-      name: 'Butter Chicken',
-      description: 'A rich and creamy North Indian curry with tender chicken pieces in a tomato-based sauce.',
-      ingredients: ['1 lb boneless chicken', '1/4 cup yogurt', '1 tbsp ginger-garlic paste', '1 cup tomato puree', '1/4 cup butter', '1/4 cup heavy cream', '1 tsp garam masala', '1 tsp turmeric', '1 tsp cumin powder', 'Salt to taste'],
-      instructions: ['Marinate chicken in yogurt, ginger-garlic paste, and spices for at least 30 minutes.', 'Cook marinated chicken in a pan until done.', 'In another pan, melt butter and add tomato puree, cooking until oil separates.', 'Add cooked chicken and simmer for 10 minutes.', 'Finish with heavy cream and garnish with chopped cilantro.', 'Serve hot with naan or rice.'],
-      prepTime: '40 mins',
-      cookTime: '30 mins',
-      servings: 4,
-      calories: 450,
-      tags: ['indian', 'curry', 'chicken', 'dinner'],
-      difficulty: "Medium",
-      mood: 'indulgent',
-      aiSuggestion: "Add a touch of kasuri methi (dried fenugreek leaves) for authentic flavor.",
-      nutritionAnalysis: "High in protein from chicken, rich in calcium from cream.",
-      cookingTips: ["Let the chicken marinate overnight for deeper flavor.", "Adjust cream amount for desired richness."]
-    },
-    {
-      id: 'indian2',
-      name: 'Vegetable Biryani',
-      description: 'A fragrant rice dish cooked with mixed vegetables and aromatic spices.',
-      ingredients: ['2 cups basmati rice', '2 cups mixed vegetables (carrots, peas, beans)', '1 onion, sliced', '2 tomatoes, chopped', '2 tbsp biryani masala', '1/4 cup yogurt', '2 tbsp ghee', 'Whole spices (cinnamon, cardamom, cloves)', 'Fresh mint and cilantro', 'Saffron soaked in milk (optional)'],
-      instructions: ['Soak rice for 30 minutes and par-boil it.', 'In a separate pot, sauté onions until golden brown.', 'Add vegetables and spices, cooking until vegetables are tender.', 'Layer par-boiled rice over vegetables.', 'Pour saffron milk and garnish with herbs.', 'Cover with tight lid and cook on low heat for 20 minutes.', 'Mix gently before serving.'],
-      prepTime: '45 mins',
-      cookTime: '30 mins',
-      servings: 6,
-      calories: 300,
-      tags: ['indian', 'rice', 'vegetarian', 'dinner'],
-      difficulty: "Medium",
-      mood: 'festive',
-      aiSuggestion: "Add fried cashews and raisins on top for a sweet and crunchy element.",
-      nutritionAnalysis: "Balanced carbohydrates from rice, vitamins from mixed vegetables.",
-      cookingTips: ["Use long-grain aged basmati rice for best results.", "Let the biryani rest for 10 minutes after cooking."]
-    }
-  ],
-  chinese: [
-    {
-      id: 'chinese1',
-      name: 'Kung Pao Chicken',
-      description: 'A spicy stir-fry dish with chicken, peanuts, vegetables, and chili peppers.',
-      ingredients: ['1 lb chicken breast, cubed', '1/2 cup peanuts', '2 bell peppers, diced', '3 dried red chilies', '3 cloves garlic, minced', '1 tbsp ginger, minced', '2 tbsp soy sauce', '1 tbsp vinegar', '1 tbsp brown sugar', '1 tbsp cornstarch'],
-      instructions: ['Mix chicken with cornstarch, salt, and pepper.', 'Heat oil in a wok and stir-fry chicken until golden.', 'Remove chicken and add dried chilies, garlic, and ginger to the wok.', 'Add bell peppers and stir-fry for 2 minutes.', 'Return chicken to wok and add sauce ingredients.', 'Toss in peanuts and cook until sauce thickens.', 'Serve hot with steamed rice.'],
-      prepTime: '15 mins',
-      cookTime: '15 mins',
-      servings: 4,
-      calories: 350,
-      tags: ['chinese', 'stir-fry', 'spicy', 'chicken'],
-      difficulty: "Medium",
-      mood: 'adventurous',
-      aiSuggestion: "Use Sichuan peppercorns for authentic numbing flavor.",
-      nutritionAnalysis: "High in protein from chicken and peanuts, low in carbohydrates.",
-      cookingTips: ["Have all ingredients prepared before starting to cook.", "Adjust chili amount based on spice preference."]
-    },
-    {
-      id: 'chinese2',
-      name: 'Vegetable Fried Rice',
-      description: 'A classic Chinese dish made with rice, mixed vegetables, and soy sauce.',
-      ingredients: ['3 cups cooked rice (preferably day-old)', '1 cup mixed vegetables (carrots, peas, corn)', '2 eggs, beaten', '3 cloves garlic, minced', '3 tbsp soy sauce', '1 tbsp sesame oil', '2 green onions, chopped'],
-      instructions: ['Heat oil in a wok over high heat.', 'Add garlic and stir-fry for 30 seconds.', 'Add vegetables and stir-fry until crisp-tender.', 'Push vegetables to the side and scramble eggs in the empty space.', 'Add rice and break up any clumps.', 'Pour in soy sauce and sesame oil, stirring to combine.', 'Garnish with green onions before serving.'],
-      prepTime: '10 mins',
-      cookTime: '10 mins',
-      servings: 4,
-      calories: 300,
-      tags: ['chinese', 'rice', 'easy', 'vegetarian'],
-      difficulty: "Easy",
-      mood: 'tired',
-      aiSuggestion: "Add a dash of white pepper for authentic flavor.",
-      nutritionAnalysis: "Balanced carbohydrates from rice, protein from eggs.",
-      cookingTips: ["Use cold, day-old rice for best texture.", "Cook on high heat to prevent soggy rice."]
-    }
-  ],
-  korean: [
-    {
-      id: 'korean1',
-      name: 'Kimchi Fried Rice',
-      description: 'A flavorful and spicy Korean dish made with kimchi, rice, and various toppings.',
-      ingredients: ['3 cups cooked rice', '1 cup kimchi, chopped', '1/4 cup kimchi juice', '1/2 cup pork belly or spam, diced', '2 tbsp gochujang (Korean chili paste)', '2 tsp sesame oil', '2 green onions, chopped', '1 fried egg (optional)'],
-      instructions: ['Cook diced meat in a pan until crispy.', 'Add kimchi and stir-fry for 2-3 minutes.', 'Add rice, breaking up any clumps.', 'Pour in kimchi juice and gochujang, mixing well.', 'Drizzle with sesame oil and garnish with green onions.', 'Top with a fried egg if desired.', 'Serve hot.'],
-      prepTime: '10 mins',
-      cookTime: '15 mins',
-      servings: 2,
-      calories: 450,
-      tags: ['korean', 'rice', 'spicy', 'easy'],
-      difficulty: "Easy",
-      mood: 'adventurous',
-      aiSuggestion: "Add a sprinkle of seaweed flakes for umami flavor.",
-      nutritionAnalysis: "High in probiotics from kimchi, balanced with carbohydrates from rice.",
-      cookingTips: ["Use aged kimchi for deeper flavor.", "Don't skip the kimchi juice - it adds essential tanginess."]
-    },
-    {
-      id: 'korean2',
-      name: 'Bibimbap',
-      description: 'A colorful Korean rice bowl topped with assorted vegetables, meat, egg, and gochujang sauce.',
-      ingredients: ['3 cups cooked rice', '1/2 lb beef, thinly sliced', '1 cup spinach, blanched', '1 cup bean sprouts, blanched', '1 carrot, julienned', '1 zucchini, julienned', '4 eggs', '4 tbsp gochujang sauce', '2 tbsp sesame oil', 'Salt to taste'],
-      instructions: ['Season beef with soy sauce and garlic, then sauté until cooked.', 'Sauté each vegetable separately with salt.', 'Fry eggs sunny-side up.', 'Place warm rice in bowls.', 'Arrange beef and vegetables in sections around the rice.', 'Place fried egg on top.', 'Serve with gochujang sauce and sesame oil on the side.', 'Mix everything together before eating.'],
-      prepTime: '30 mins',
-      cookTime: '20 mins',
-      servings: 4,
-      calories: 500,
-      tags: ['korean', 'rice bowl', 'healthy', 'colorful'],
-      difficulty: "Medium",
-      mood: 'energetic',
-      aiSuggestion: "Add a tablespoon of crispy rice or nurungji for texture contrast.",
-      nutritionAnalysis: "Well-balanced meal with protein, vegetables, and carbohydrates.",
-      cookingTips: ["Prepare all components before assembly.", "Traditional bibimbap is served in a hot stone bowl (dolsot) for crispy rice."]
-    }
-  ],
-  american: [
-    {
-      id: 'american1',
-      name: 'Classic Cheeseburger',
-      description: 'A juicy beef patty topped with melted cheese, fresh vegetables, and condiments in a soft bun.',
-      ingredients: ['1 lb ground beef (80/20)', '4 hamburger buns', '4 slices American cheese', '1 tomato, sliced', '1 onion, sliced', 'Lettuce leaves', 'Pickles', 'Ketchup, mustard, mayonnaise', 'Salt and pepper to taste'],
-      instructions: ['Divide beef into 4 equal portions and form into patties.', 'Season patties with salt and pepper.', 'Cook on a hot grill or skillet for 4-5 minutes per side.', 'Top with cheese during the last minute of cooking.', 'Toast buns lightly.', 'Assemble burgers with condiments and toppings.', 'Serve immediately.'],
-      prepTime: '15 mins',
-      cookTime: '10 mins',
-      servings: 4,
-      calories: 550,
-      tags: ['american', 'beef', 'burger', 'comfort food'],
-      difficulty: "Easy",
-      mood: 'hungry',
-      aiSuggestion: "Add a fried egg for an extra level of richness.",
-      nutritionAnalysis: "High in protein from beef, provides complete macronutrients.",
-      cookingTips: ["Make a small indentation in the center of the patty to prevent it from puffing up.", "Don't press down on the patty while cooking to keep it juicy."]
-    },
-    {
-      id: 'american2',
-      name: 'Southern Fried Chicken',
-      description: 'Crispy, golden-brown chicken with a seasoned coating and tender, juicy meat inside.',
-      ingredients: ['1 whole chicken, cut into pieces', '2 cups buttermilk', '2 cups all-purpose flour', '1 tbsp paprika', '1 tbsp garlic powder', '1 tbsp onion powder', '1 tsp cayenne pepper', 'Salt and pepper to taste', 'Vegetable oil for frying'],
-      instructions: ['Soak chicken in buttermilk for at least 4 hours or overnight.', 'Mix flour with all spices in a large bowl.', 'Remove chicken from buttermilk and dredge in seasoned flour.', 'Heat oil to 350°F in a large deep skillet.', 'Fry chicken in batches until golden brown and cooked through, about 15 minutes.', 'Drain on paper towels.', 'Serve hot or cold.'],
-      prepTime: '20 mins (plus marinating time)',
-      cookTime: '30 mins',
-      servings: 6,
-      calories: 450,
-      tags: ['american', 'southern', 'chicken', 'comfort food'],
-      difficulty: "Medium",
-      mood: 'nostalgic',
-      aiSuggestion: "Add a touch of honey to the buttermilk marinade for subtle sweetness.",
-      nutritionAnalysis: "High in protein from chicken, contains fat from frying process.",
-      cookingTips: ["Maintain oil temperature between 325-350°F for even cooking.", "Let chicken rest at room temperature for 30 minutes before frying."]
-    }
-  ],
-  continental: [
-    {
-      id: 'continental1',
-      name: 'Beef Wellington',
-      description: 'A decadent dish featuring beef tenderloin coated with pâté and mushroom duxelles, wrapped in puff pastry.',
-      ingredients: ['2 lb beef tenderloin', '1/2 lb mushrooms, finely chopped', '4 slices prosciutto', '2 tbsp Dijon mustard', '1 sheet puff pastry', '1 egg, beaten', '2 tbsp butter', '2 cloves garlic, minced', 'Fresh thyme', 'Salt and pepper to taste'],
-      instructions: ['Sear the beef tenderloin on all sides in a hot pan.', 'Brush with Dijon mustard and let cool.', 'Sauté mushrooms, garlic, and thyme until moisture evaporates.', 'Lay out plastic wrap and arrange prosciutto slices.', 'Spread mushroom mixture over prosciutto.', 'Place beef on top and wrap tightly.', 'Roll out puff pastry and wrap around the beef.', 'Brush with beaten egg and score the top.', 'Bake at 425°F for 40-45 minutes until pastry is golden.', 'Rest for 10 minutes before slicing.'],
-      prepTime: '45 mins',
-      cookTime: '45 mins',
-      servings: 6,
-      calories: 650,
-      tags: ['continental', 'beef', 'elegant', 'special occasion'],
-      difficulty: "Hard",
-      mood: 'festive',
-      aiSuggestion: "For extra flavor, add a layer of foie gras between the beef and mushroom mixture.",
-      nutritionAnalysis: "High in protein from beef, contains significant fat from pastry and meat.",
-      cookingTips: ["Use a meat thermometer to ensure perfect doneness.", "Let the assembled Wellington chill before baking for best results."]
-    },
-    {
-      id: 'continental2',
-      name: 'Coq au Vin',
-      description: 'A classic French dish of chicken braised with wine, bacon, mushrooms, and garlic.',
-      ingredients: ['1 whole chicken, cut into pieces', '2 cups red wine', '1/4 lb bacon, diced', '1 cup pearl onions', '1 cup mushrooms, quartered', '2 cloves garlic, minced', '1 tbsp tomato paste', '2 tbsp flour', 'Fresh thyme and bay leaf', 'Salt and pepper to taste'],
-      instructions: ['Brown bacon in a large Dutch oven.', 'Remove bacon and brown chicken pieces in the fat.', 'Add garlic and sauté briefly.', 'Sprinkle flour over chicken and cook for 1 minute.', 'Pour in wine and add tomato paste, herbs, bacon, onions, and mushrooms.', 'Bring to a simmer, cover, and cook for 1 hour or until chicken is tender.', 'Adjust seasoning and serve hot with crusty bread or potatoes.'],
-      prepTime: '30 mins',
-      cookTime: '1 hour 15 mins',
-      servings: 6,
-      calories: 450,
-      tags: ['continental', 'french', 'chicken', 'wine'],
-      difficulty: "Medium",
-      mood: 'romantic',
-      aiSuggestion: "Marinate the chicken in wine overnight for deeper flavor.",
-      nutritionAnalysis: "High in protein from chicken, contains antioxidants from red wine.",
-      cookingTips: ["Use a good quality wine that you would drink.", "For more flavor, brown the chicken pieces well before braising."]
-    }
-  ],
-  unique: [
-    {
-      id: 'unique1',
-      name: 'Chocolate Avocado Mousse',
-      description: 'A surprisingly delicious and healthy dessert made with ripe avocados and dark chocolate.',
-      ingredients: ['2 ripe avocados', '1/2 cup cocoa powder', '1/2 cup maple syrup or honey', '1 tsp vanilla extract', '1/4 cup almond milk', 'Pinch of salt', 'Berries for garnish'],
-      instructions: ['Scoop avocado flesh into a food processor.', 'Add cocoa powder, sweetener, vanilla, milk, and salt.', 'Blend until completely smooth, scraping down sides as needed.', 'Taste and adjust sweetness if necessary.', 'Chill for at least 2 hours.', 'Serve in individual cups, garnished with berries.'],
-      prepTime: '10 mins',
-      cookTime: '0 mins',
-      servings: 4,
-      calories: 250,
-      tags: ['unique', 'dessert', 'healthy', 'vegan'],
-      difficulty: "Easy",
-      mood: 'creative',
-      aiSuggestion: "Add a pinch of cinnamon or chili powder for interesting flavor notes.",
-      nutritionAnalysis: "High in healthy fats from avocado, antioxidants from cocoa.",
-      cookingTips: ["Use very ripe avocados for the creamiest texture.", "For best results, chill thoroughly before serving."]
-    },
-    {
-      id: 'unique2',
-      name: 'Watermelon Pizza',
-      description: 'A refreshing, no-bake "pizza" made with watermelon as the base and topped with yogurt and fruits.',
-      ingredients: ['1 large round watermelon slice (1-inch thick)', '1 cup Greek yogurt', '1/4 cup honey', 'Assorted fresh fruits (berries, kiwi, peaches)', '1/4 cup chopped nuts', 'Fresh mint leaves'],
-      instructions: ['Cut a 1-inch thick round slice from the center of a watermelon.', 'Pat the watermelon dry with paper towels.', 'Spread Greek yogurt over the watermelon slice.', 'Drizzle with honey.', 'Arrange fruits decoratively on top.', 'Sprinkle with chopped nuts.', 'Garnish with mint leaves.', 'Slice into wedges and serve immediately.'],
-      prepTime: '15 mins',
-      cookTime: '0 mins',
-      servings: 6,
-      calories: 150,
-      tags: ['unique', 'fruit', 'healthy', 'no-cook'],
-      difficulty: "Easy",
-      mood: 'creative',
-      aiSuggestion: "For a more dessert-like version, use sweetened whipped cream instead of yogurt.",
-      nutritionAnalysis: "High in vitamins from fruits, probiotics from yogurt.",
-      cookingTips: ["Choose a firm, ripe watermelon for best results.", "Serve immediately after assembly to prevent sogginess."]
-    }
-  ]
-};
-
-// Define utility functions that need to be exported
-
-// Function to get recipes by mood
-export const getRecipesByMood = (moodId: string): Recipe[] => {
-  // Flatten all recipe categories into a single array
-  const allRecipes = Object.values(recipesData).flat();
-  
-  // Filter recipes that match the given mood
-  return allRecipes.filter(recipe => recipe.mood === moodId);
-};
-
-// Function to get a recipe by ID
-export const getRecipeById = (id: string): Recipe | null => {
-  // Flatten all recipe categories into a single array
-  const allRecipes = Object.values(recipesData).flat();
-  
-  // Find the recipe with the matching ID
-  const recipe = allRecipes.find(recipe => recipe.id === id);
-  
-  return recipe || null;
-};
-
-// Function to get all recipes
-export const getAllRecipes = (): Recipe[] => {
-  // Flatten all recipe categories into a single array
-  return Object.values(recipesData).flat();
-};
-
-// Function to search recipes by name, ingredients, or tags
-export const searchRecipes = (searchTerm: string): Recipe[] => {
-  const allRecipes = getAllRecipes();
-  const term = searchTerm.toLowerCase();
-  
-  return allRecipes.filter(recipe => {
-    // Search in name
-    if (recipe.name.toLowerCase().includes(term)) return true;
-    
-    // Search in description
-    if (recipe.description.toLowerCase().includes(term)) return true;
-    
-    // Search in ingredients
-    if (recipe.ingredients.some(ing => ing.toLowerCase().includes(term))) return true;
-    
-    // Search in tags
-    if (recipe.tags.some(tag => tag.toLowerCase().includes(term))) return true;
-    
-    return false;
-  });
-};
-
-// Function to get similar recipes
-export const getSimilarRecipes = (recipeId: string, limit: number = 3): Recipe[] => {
-  const currentRecipe = getRecipeById(recipeId);
-  if (!currentRecipe) return [];
-  
-  const allRecipes = getAllRecipes();
-  
-  // Filter out the current recipe
-  const otherRecipes = allRecipes.filter(recipe => recipe.id !== recipeId);
-  
-  // Score each recipe based on similarity (shared tags, mood, etc.)
-  const scoredRecipes = otherRecipes.map(recipe => {
-    let score = 0;
-    
-    // Score based on shared tags
-    const sharedTags = recipe.tags.filter(tag => currentRecipe.tags.includes(tag));
-    score += sharedTags.length * 2;
-    
-    // Score based on same mood
-    if (recipe.mood === currentRecipe.mood) {
-      score += 3;
-    }
-    
-    // Score based on similar difficulty
-    if (recipe.difficulty === currentRecipe.difficulty) {
-      score += 1;
-    }
-    
-    return { recipe, score };
-  });
-  
-  // Sort by score (highest first) and return the top N recipes
-  return scoredRecipes
-    .sort((a, b) => b.score - a.score)
-    .slice(0, limit)
-    .map(item => item.recipe);
-};
-
-// Function to get chatbot response
-export const getChatbotResponse = (query: string, moodId: string | null): string => {
-  query = query.toLowerCase();
-  
-  // Check for general questions and provide responses
-  if (query.includes('hello') || query.includes('hi') || query.includes('hey')) {
-    return "Hello! I'm your recipe assistant. How can I help you today?";
-  }
-  
-  if (query.includes('how are you')) {
-    return "I'm doing great, thanks for asking! Ready to help you with recipe ideas and cooking tips.";
-  }
-  
-  // Recipe recommendations based on mood
-  if (moodId && (query.includes('recommend') || query.includes('suggestion') || query.includes('what should i cook'))) {
-    const moodRecipes = getRecipesByMood(moodId);
-    
-    if (moodRecipes.length > 0) {
-      const randomIndex = Math.floor(Math.random() * moodRecipes.length);
-      const recommendation = moodRecipes[randomIndex];
-      return `Based on your ${moodId} mood, I recommend trying ${recommendation.name}. It's a ${recommendation.difficulty.toLowerCase()} recipe that takes ${recommendation.prepTime} to prepare and ${recommendation.cookTime} to cook.`;
-    } else {
-      return "I don't have any specific recommendations for your current mood, but I can help you find recipes based on ingredients or cuisine preferences. What are you in the mood for?";
-    }
-  }
-  
-  // Questions about ingredients or recipe variations
-  if (query.includes('substitute') || query.includes('replacement') || query.includes('instead of')) {
-    return "There are many possible substitutions in cooking. Could you tell me which ingredient you're looking to replace, and I can suggest alternatives?";
-  }
-  
-  // Cooking technique questions
-  if (query.includes('how to') || query.includes('technique') || query.includes('method')) {
-    if (query.includes('boil') || query.includes('boiling')) {
-      return "For boiling, use a large pot with plenty of water. For pasta, add salt to the water once it's boiling, then add pasta. Different foods have different boiling times, so check specific instructions for what you're cooking.";
-    }
-    if (query.includes('fry') || query.includes('frying')) {
-      return "For pan-frying, heat the pan before adding oil, then add food once the oil is hot. For deep frying, use a thermometer to ensure proper oil temperature (usually 350-375°F). Don't overcrowd the pan, and drain fried foods on paper towels.";
-    }
-    if (query.includes('bake') || query.includes('baking')) {
-      return "For baking, always preheat your oven. Position racks appropriately: middle rack for even cooking, top rack for browning, lower rack for bottom heat. Use the correct bakeware for your recipe.";
-    }
-    return "That's a good cooking question! Could you provide more details about what you're trying to cook, and I can give you specific techniques?";
-  }
-  
-  // Meal planning questions
-  if (query.includes('meal plan') || query.includes('weekly menu') || query.includes('meal prep')) {
-    return "Meal planning can save time and money! Start by picking 4-5 recipes for the week, make a shopping list of all ingredients, and consider batch cooking on weekends. Would you like specific meal prep recipe suggestions?";
-  }
-  
-  // Dietary restriction questions
-  if (query.includes('vegan') || query.includes('vegetarian') || query.includes('gluten-free') || query.includes('dairy-free')) {
-    let dietType = '';
-    if (query.includes('vegan')) dietType = 'vegan';
-    else if (query.includes('vegetarian')) dietType = 'vegetarian';
-    else if (query.includes('gluten-free')) dietType = 'gluten-free';
-    else if (query.includes('dairy-free')) dietType = 'dairy-free';
-    
-    return `For ${dietType} cooking, focus on whole foods and appropriate substitutes. I can help you adapt recipes or find ones that already meet your dietary needs. What type of dish are you interested in making?`;
-  }
-  
-  // Default response if no specific pattern is matched
-  return "I'd be happy to help with recipe suggestions, cooking tips, or answering food-related questions. Could you provide more details about what you're looking for?";
-};
-
-export default recipesData;
+      mood: 'advent

@@ -105,8 +105,45 @@ export const getFallbackImage = (recipeId: string): string => {
       return 'https://images.unsplash.com/photo-1544148103-0773bf10d330?w=800&auto=format&fit=crop'; // Elegant plated dish
     case 'unique':
       return 'https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=800&auto=format&fit=crop'; // Creative dish
+    case 'thai':
+      return 'https://images.unsplash.com/photo-1559314809-0d155014e29e?w=800&auto=format&fit=crop'; // Thai curry
+    case 'japanese':
+      return 'https://images.unsplash.com/photo-1580822184713-fc5400e7fe10?w=800&auto=format&fit=crop'; // Sushi
+    case 'vietnamese':
+      return 'https://images.unsplash.com/photo-1503764654157-72d979d9af2f?w=800&auto=format&fit=crop'; // Pho
+    case 'fusion':
+      return 'https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=800&auto=format&fit=crop'; // Fusion dish
+    case 'seasonal':
+      return 'https://images.unsplash.com/photo-1506976785307-8732e854ad03?w=800&auto=format&fit=crop'; // Seasonal produce
+    case 'celebrity':
+      return 'https://images.unsplash.com/photo-1541614101331-1a5a3a194e92?w=800&auto=format&fit=crop'; // Elegant dish
+    case 'party':
+      return 'https://images.unsplash.com/photo-1536392706853-c9e63a903ff5?w=800&auto=format&fit=crop'; // Party spread
+    case 'breakfast_sweets':
+      return 'https://images.unsplash.com/photo-1484723091739-30a097e8f929?w=800&auto=format&fit=crop'; // Sweet breakfast
     default:
       // For unknown categories, return a high-quality food image
       return 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=800&auto=format&fit=crop';
+  }
+};
+
+// Add a try-catch version of image loading to handle errors more gracefully
+export const getRecipeImageWithErrorHandling = (imageKey: string): string => {
+  try {
+    const imagePath = getRecipeImagePath(imageKey);
+    
+    // Add error handling for the image loading
+    const img = new Image();
+    img.onerror = () => {
+      console.log(`Image error for ${imageKey}, trying category fallback: ${getFallbackImage(imageKey)}`);
+      return getFallbackImage(imageKey);
+    };
+    img.src = imagePath;
+    
+    return imagePath;
+  } catch (error) {
+    console.log(`Using reliable general food image fallback`);
+    console.log(`Fallback also failed for ${imageKey}, using reliable default`);
+    return 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=800&auto=format&fit=crop';
   }
 };
