@@ -1,3 +1,4 @@
+
 import comfort1 from '@/assets/images/recipes/comfort1.jpg';
 import comfort2 from '@/assets/images/recipes/comfort2.jpg';
 import comfort3 from '@/assets/images/recipes/comfort3.jpg';
@@ -579,4 +580,304 @@ const recipesData: { [key: string]: Recipe[] } = {
       mood: 'energetic',
       aiSuggestion: "Add a sprinkle of chia seeds or flaxseeds for extra nutrition.",
       nutritionAnalysis: "High in protein from Greek yogurt, antioxidants from berries.",
-      cookingTips: ["Use frozen berries if fresh aren't available.", "Keep granola
+      cookingTips: ["Use frozen berries if fresh aren't available.", "Keep granola separate until serving to maintain crunchiness."]
+    },
+    {
+      id: 'snack2',
+      name: 'Homemade Trail Mix',
+      description: 'A customizable snack that provides a good balance of protein, carbs, and healthy fats.',
+      ingredients: ['1/2 cup nuts (almonds, walnuts, cashews, etc.)', '1/2 cup dried fruit (raisins, cranberries, apricots, etc.)', '1/4 cup seeds (pumpkin, sunflower, etc.)', '1/4 cup dark chocolate chips (optional)'],
+      instructions: ['Combine all ingredients in a bowl and mix well.', 'Store in an airtight container for up to two weeks.', 'Portion into small bags for on-the-go snacking.'],
+      prepTime: '5 mins',
+      cookTime: '0 mins',
+      servings: 4,
+      calories: 200,
+      tags: ['snack', 'healthy', 'easy'],
+      difficulty: "Easy",
+      mood: 'adventurous',
+      aiSuggestion: "Add a pinch of cinnamon or sea salt for extra flavor.",
+      nutritionAnalysis: "Good source of protein, healthy fats, and fiber. Energy-dense.",
+      cookingTips: ["Toast nuts before mixing for enhanced flavor.", "Balance sweet and savory components for the best taste."]
+    },
+    {
+      id: 'snack3',
+      name: 'Crispy Chickpeas',
+      description: 'A crunchy, protein-packed snack that satisfies savory cravings.',
+      ingredients: ['1 can chickpeas, drained and rinsed', '1 tbsp olive oil', '1/2 tsp salt', 'Optional seasonings: paprika, cumin, garlic powder, etc.'],
+      instructions: ['Preheat oven to 400°F (200°C).', 'Pat chickpeas dry with a paper towel, removing any loose skins.', 'Toss with olive oil and seasonings.', 'Spread in a single layer on a baking sheet.', 'Bake for 20-30 minutes, or until golden and crispy, shaking the pan halfway through.', 'Let cool completely before storing in an airtight container.'],
+      prepTime: '5 mins',
+      cookTime: '25 mins',
+      servings: 2,
+      calories: 150,
+      tags: ['snack', 'savory', 'healthy'],
+      difficulty: "Easy",
+      mood: 'hungry',
+      aiSuggestion: "Try different spice blends like curry powder or taco seasoning for variety.",
+      nutritionAnalysis: "High in fiber and plant-based protein. Good source of minerals.",
+      cookingTips: ["Make sure chickpeas are completely dry before baking for maximum crispiness.", "They're done when they sound like marbles when shaken on the baking sheet."]
+    },
+  ],
+  italian: [
+    {
+      id: 'italian1',
+      name: 'Classic Margherita Pizza',
+      description: 'A simple yet delicious pizza featuring the colors of the Italian flag.',
+      ingredients: ['1 pizza dough', '1/4 cup tomato sauce', '8 oz fresh mozzarella, sliced', 'Fresh basil leaves', '2 tbsp olive oil', 'Salt to taste'],
+      instructions: ['Preheat oven to 475°F (245°C).', 'Roll out pizza dough on a floured surface.', 'Spread tomato sauce evenly over the dough.', 'Arrange mozzarella slices on top.', 'Bake for 10-12 minutes until crust is golden and cheese is bubbly.', 'Remove from oven and immediately top with fresh basil leaves.', 'Drizzle with olive oil and sprinkle with salt.', 'Slice and serve immediately.'],
+      prepTime: '15 mins',
+      cookTime: '12 mins',
+      servings: 4,
+      calories: 300,
+      tags: ['italian', 'dinner', 'vegetarian'],
+      difficulty: "Medium",
+      mood: 'romantic',
+      aiSuggestion: "Add a drizzle of balsamic glaze for a sweet and tangy finish.",
+      nutritionAnalysis: "Good source of calcium from cheese. Balanced carbohydrates and protein.",
+      cookingTips: ["Use a pizza stone if available for a crispier crust.", "Less is more with toppings - don't overload the pizza."]
+    },
+    {
+      id: 'italian2',
+      name: 'Authentic Risotto',
+      description: 'A creamy, luxurious rice dish that's worth the effort of constant stirring.',
+      ingredients: ['1 1/2 cups Arborio rice', '6 cups chicken or vegetable broth, heated', '1/2 cup white wine', '1 onion, finely diced', '2 cloves garlic, minced', '3 tbsp butter', '1/2 cup grated Parmesan cheese', 'Salt and pepper to taste'],
+      instructions: ['In a large pot, keep broth warm over low heat.', 'In a separate large pan, melt 2 tbsp butter over medium heat.', 'Add onion and cook until translucent, about 3 minutes.', 'Add garlic and cook for 30 seconds.', 'Add rice and stir for 1-2 minutes until grains are translucent at edges.', 'Add wine and stir until absorbed.', 'Begin adding hot broth 1/2 cup at a time, stirring constantly and allowing liquid to absorb before adding more.', 'Continue this process for about 18-20 minutes until rice is creamy but still al dente.', 'Remove from heat and stir in remaining butter and Parmesan cheese.', 'Season with salt and pepper to taste.', 'Let rest for 2 minutes before serving.'],
+      prepTime: '10 mins',
+      cookTime: '30 mins',
+      servings: 4,
+      calories: 380,
+      tags: ['italian', 'dinner', 'comfort food'],
+      difficulty: "Medium",
+      mood: 'sophisticated',
+      aiSuggestion: "Add sautéed mushrooms or peas for extra flavor and texture.",
+      nutritionAnalysis: "High in carbohydrates. Good source of calcium from cheese.",
+      cookingTips: ["Never rinse the rice - you need the starch for creaminess.", "Keep the broth hot to maintain consistent cooking temperature."]
+    }
+  ],
+  mexican: [
+    {
+      id: 'mexican1',
+      name: 'Authentic Guacamole',
+      description: 'The perfect chunky guacamole with just the right amount of heat and zest.',
+      ingredients: ['3 ripe avocados', '1 lime, juiced', '1/2 red onion, finely diced', '2 Roma tomatoes, diced', '1 jalapeño, seeds removed and minced', '1/4 cup cilantro, chopped', 'Salt to taste'],
+      instructions: ['Cut avocados in half, remove pits, and scoop flesh into a bowl.', 'Mash avocados with a fork, leaving some chunks.', 'Add lime juice and mix to combine.', 'Fold in onion, tomatoes, jalapeño, and cilantro.', 'Season with salt to taste.', 'Serve immediately or cover tightly with plastic wrap (pressed directly onto the surface) and refrigerate.'],
+      prepTime: '15 mins',
+      cookTime: '0 mins',
+      servings: 4,
+      calories: 150,
+      tags: ['mexican', 'appetizer', 'healthy'],
+      difficulty: "Easy",
+      mood: 'festive',
+      aiSuggestion: "Add a pinch of cumin for extra depth of flavor.",
+      nutritionAnalysis: "High in healthy fats from avocados. Good source of vitamins and minerals.",
+      cookingTips: ["Use ripe but firm avocados for the best texture.", "Leave the avocado pit in the guacamole to help prevent browning."]
+    },
+    {
+      id: 'mexican2',
+      name: 'Street-Style Tacos',
+      description: 'Simple, authentic tacos with fresh toppings and vibrant flavors.',
+      ingredients: ['1 lb skirt steak, thinly sliced', '8 small corn tortillas', '1 white onion, diced', '1/2 cup cilantro, chopped', '2 limes, cut into wedges', '2 tbsp vegetable oil', '2 tsp chili powder', '1 tsp cumin', '1 tsp garlic powder', 'Salt and pepper to taste'],
+      instructions: ['In a bowl, mix together chili powder, cumin, garlic powder, salt, and pepper.', 'Toss the sliced steak with the spice mixture.', 'Heat oil in a large skillet over high heat.', 'Add steak and cook for 3-4 minutes until browned and cooked through.', 'Warm tortillas in a dry skillet or directly over a gas flame.', 'Serve steak on tortillas, topped with diced onion and cilantro.', 'Serve with lime wedges on the side.'],
+      prepTime: '15 mins',
+      cookTime: '10 mins',
+      servings: 4,
+      calories: 320,
+      tags: ['mexican', 'dinner', 'quick'],
+      difficulty: "Easy",
+      mood: 'adventurous',
+      aiSuggestion: "Make a quick salsa with charred tomatoes, jalapeños, and onions for extra flavor.",
+      nutritionAnalysis: "High in protein from steak. Moderate carbohydrates from tortillas.",
+      cookingTips: ["Don't overcrowd the pan when cooking the steak to ensure proper browning.", "Double-stack the tortillas for authentic street-style presentation."]
+    }
+  ],
+  asian: [
+    {
+      id: 'asian1',
+      name: 'Easy Vegetable Stir-Fry',
+      description: 'A quick and colorful stir-fry loaded with crisp vegetables in a savory sauce.',
+      ingredients: ['2 cups mixed vegetables (bell peppers, broccoli, carrots, snap peas, etc.)', '2 tbsp vegetable oil', '2 cloves garlic, minced', '1 tbsp ginger, grated', '3 tbsp soy sauce', '1 tbsp honey', '1 tsp sesame oil', '1 tbsp cornstarch mixed with 2 tbsp water', 'Sesame seeds for garnish'],
+      instructions: ['Prepare all vegetables by cutting into similar-sized pieces.', 'In a small bowl, whisk together soy sauce, honey, sesame oil, and cornstarch mixture.', 'Heat vegetable oil in a wok or large skillet over high heat.', 'Add garlic and ginger and stir-fry for 30 seconds until fragrant.', 'Add vegetables, starting with the firmer ones (carrots, broccoli), and stir-fry for 2 minutes.', 'Add the softer vegetables and continue to stir-fry for 2-3 more minutes until crisp-tender.', 'Pour in the sauce and stir continuously until sauce thickens, about 1 minute.', 'Garnish with sesame seeds and serve over rice or noodles.'],
+      prepTime: '15 mins',
+      cookTime: '8 mins',
+      servings: 4,
+      calories: 180,
+      tags: ['asian', 'healthy', 'vegetarian', 'quick'],
+      difficulty: "Easy",
+      mood: 'healthy-minded',
+      aiSuggestion: "Add tofu or edamame for extra protein.",
+      nutritionAnalysis: "Low in calories, high in vitamins and minerals from vegetables.",
+      cookingTips: ["Cut vegetables in uniform sizes for even cooking.", "Don't overcook - vegetables should remain crisp and colorful."]
+    },
+    {
+      id: 'asian2',
+      name: 'Homemade Ramen',
+      description: 'A comforting bowl of ramen with rich broth and customizable toppings.',
+      ingredients: ['4 cups chicken or vegetable broth', '2 packages ramen noodles (discard seasoning packets)', '2 cloves garlic, minced', '1 tbsp ginger, grated', '2 tbsp soy sauce', '1 tbsp miso paste', '1 tbsp sesame oil', 'Toppings: soft-boiled eggs, sliced green onions, corn, bean sprouts, nori sheets, etc.'],
+      instructions: ['In a large pot, bring broth to a simmer.', 'Add garlic, ginger, soy sauce, and miso paste. Simmer for 10 minutes.', 'Meanwhile, cook ramen noodles according to package instructions, minus 1 minute.', 'Drain noodles and divide between serving bowls.', 'Ladle hot broth over noodles.', 'Arrange your choice of toppings on top.', 'Drizzle with sesame oil and serve immediately.'],
+      prepTime: '15 mins',
+      cookTime: '15 mins',
+      servings: 2,
+      calories: 400,
+      tags: ['asian', 'comfort food', 'soup'],
+      difficulty: "Medium",
+      mood: 'cozy',
+      aiSuggestion: "Add a tablespoon of tahini to the broth for extra richness.",
+      nutritionAnalysis: "Moderate in carbohydrates from noodles. Good balance of proteins and vegetables with toppings.",
+      cookingTips: ["Don't overcook the noodles as they'll continue cooking in the hot broth.", "For a spicy version, add chili oil or sriracha."]
+    }
+  ],
+  mediterranean: [
+    {
+      id: 'mediterranean1',
+      name: 'Greek Salad',
+      description: 'A refreshing and colorful salad featuring the bright flavors of the Mediterranean.',
+      ingredients: ['1 English cucumber, diced', '2 large tomatoes, diced', '1 red onion, thinly sliced', '1 cup kalamata olives', '8 oz feta cheese, cubed', '1/4 cup extra virgin olive oil', '2 tbsp red wine vinegar', '1 tsp dried oregano', 'Salt and pepper to taste'],
+      instructions: ['Combine cucumber, tomatoes, red onion, and olives in a large bowl.', 'In a small bowl, whisk together olive oil, red wine vinegar, oregano, salt, and pepper.', 'Pour dressing over the salad and toss gently to combine.', 'Add feta cheese and toss very gently.', 'Let sit for 10 minutes to allow flavors to meld.', 'Serve at room temperature for best flavor.'],
+      prepTime: '15 mins',
+      cookTime: '0 mins',
+      servings: 4,
+      calories: 280,
+      tags: ['mediterranean', 'healthy', 'salad', 'vegetarian'],
+      difficulty: "Easy",
+      mood: 'relaxed',
+      aiSuggestion: "Add a pinch of sumac for authentic Mediterranean flavor.",
+      nutritionAnalysis: "Good source of healthy fats from olive oil and feta. Rich in vitamins from fresh vegetables.",
+      cookingTips: ["Use the freshest vegetables possible for best flavor.", "Don't substitute the kalamata olives - they're essential for authentic flavor."]
+    },
+    {
+      id: 'mediterranean2',
+      name: 'Homemade Hummus',
+      description: 'Creamy, smooth hummus that's better than store-bought and perfect for dipping or spreading.',
+      ingredients: ['1 can (15 oz) chickpeas, drained and rinsed', '1/4 cup tahini', '2 tbsp olive oil, plus more for serving', '2 cloves garlic', 'Juice of 1 lemon', '1/2 tsp ground cumin', '2-3 tbsp cold water', 'Salt to taste', 'Paprika and chopped parsley for garnish'],
+      instructions: ['Combine chickpeas, tahini, olive oil, garlic, lemon juice, and cumin in a food processor.', 'Process until smooth, adding cold water as needed to reach desired consistency.', 'Season with salt to taste.', 'Transfer to a serving bowl and create a shallow well in the center.', 'Drizzle with additional olive oil and sprinkle with paprika and chopped parsley.', 'Serve with pita bread, vegetable sticks, or as a spread.'],
+      prepTime: '10 mins',
+      cookTime: '0 mins',
+      servings: 4,
+      calories: 200,
+      tags: ['mediterranean', 'appetizer', 'healthy', 'vegetarian'],
+      difficulty: "Easy",
+      mood: 'healthy-minded',
+      aiSuggestion: "For extra smooth hummus, remove the skins from the chickpeas before processing.",
+      nutritionAnalysis: "Good source of plant-based protein and fiber. Healthy fats from tahini and olive oil.",
+      cookingTips: ["Use ice-cold water for the smoothest texture.", "Let the food processor run for a full 3-5 minutes for ultra-creamy hummus."]
+    }
+  ],
+  vegan: [
+    {
+      id: 'vegan1',
+      name: 'Buddha Bowl',
+      description: 'A nourishing, colorful bowl packed with plant-based goodness.',
+      ingredients: ['1 cup quinoa, cooked', '1 sweet potato, diced and roasted', '1 cup chickpeas, roasted', '1 avocado, sliced', '1 cup mixed greens', '1/2 cup red cabbage, shredded', '1/4 cup tahini', '2 tbsp lemon juice', '1 tbsp maple syrup', 'Water to thin', 'Salt and pepper to taste'],
+      instructions: ['Arrange quinoa in the bottom of two bowls.', 'Arrange sweet potato, chickpeas, avocado, mixed greens, and red cabbage on top.', 'In a small bowl, whisk together tahini, lemon juice, maple syrup, and enough water to create a pourable consistency.', 'Season dressing with salt and pepper.', 'Drizzle dressing over bowls and serve.'],
+      prepTime: '20 mins',
+      cookTime: '25 mins',
+      servings: 2,
+      calories: 550,
+      tags: ['vegan', 'healthy', 'dinner'],
+      difficulty: "Easy",
+      mood: 'healthy-minded',
+      aiSuggestion: "Add a sprinkle of nutritional yeast for a cheesy flavor without dairy.",
+      nutritionAnalysis: "Well-balanced meal with protein from chickpeas and quinoa. Healthy fats from avocado.",
+      cookingTips: ["Batch roast sweet potatoes and chickpeas to make assembly quicker.", "Add a fermented element like sauerkraut for gut health benefits."]
+    },
+    {
+      id: 'vegan2',
+      name: 'Creamy Mushroom Pasta',
+      description: 'A rich, satisfying pasta dish that happens to be completely plant-based.',
+      ingredients: ['8 oz pasta of choice', '1 lb mushrooms, sliced', '1 onion, diced', '3 cloves garlic, minced', '1 cup cashews, soaked for 4 hours', '1 cup vegetable broth', '2 tbsp nutritional yeast', '1 tbsp lemon juice', '1 tsp thyme', 'Salt and pepper to taste', '2 tbsp olive oil'],
+      instructions: ['Cook pasta according to package instructions. Reserve 1/2 cup pasta water.', 'In a blender, combine soaked cashews, vegetable broth, nutritional yeast, and lemon juice. Blend until completely smooth.', 'Heat olive oil in a large skillet over medium heat.', 'Add onion and cook until translucent, about 5 minutes.', 'Add garlic and cook for 30 seconds.', 'Add mushrooms and cook until they release their liquid and begin to brown, about 7-8 minutes.', 'Pour in cashew cream sauce and thyme. Stir to combine.', 'Simmer for 5 minutes until slightly thickened.', 'Add cooked pasta and toss to coat, adding reserved pasta water if needed to thin the sauce.', 'Season with salt and pepper to taste.'],
+      prepTime: '15 mins (plus cashew soaking time)',
+      cookTime: '20 mins',
+      servings: 4,
+      calories: 420,
+      tags: ['vegan', 'dinner', 'pasta'],
+      difficulty: "Medium",
+      mood: 'indulgent',
+      aiSuggestion: "For a shortcut, pour boiling water over cashews and soak for 30 minutes instead of 4 hours.",
+      nutritionAnalysis: "Good source of plant-based protein from cashews. Rich in B vitamins from nutritional yeast.",
+      cookingTips: ["Don't crowd the mushrooms in the pan or they'll steam instead of brown.", "For extra umami flavor, add a tablespoon of miso paste to the sauce."]
+    },
+    {
+      id: 'vegan3',
+      name: 'Rainbow Spring Rolls',
+      description: 'Fresh, crunchy spring rolls filled with colorful vegetables and served with a zesty dipping sauce.',
+      ingredients: ['8 rice paper wrappers', '1 red bell pepper, julienned', '1 yellow bell pepper, julienned', '1 cucumber, julienned', '1 carrot, julienned', '1 avocado, sliced', '1 cup purple cabbage, shredded', '1 cup fresh herbs (mint, cilantro, basil)', 'For sauce: 3 tbsp peanut butter, 1 tbsp soy sauce, 1 tbsp lime juice, 1 tsp maple syrup, water to thin'],
+      instructions: ['Prepare all vegetables and arrange on a work surface.', 'Fill a large, shallow dish with warm water.', 'Dip one rice paper wrapper in water for 10-15 seconds until pliable.', 'Lay wrapper on a clean, damp surface.', 'Arrange a small amount of each vegetable and herb in the center of the wrapper.', 'Fold in the sides, then roll tightly from the bottom up.', 'Repeat with remaining wrappers.', 'For the sauce, whisk together peanut butter, soy sauce, lime juice, and maple syrup. Add water as needed for desired consistency.', 'Serve spring rolls with dipping sauce.'],
+      prepTime: '30 mins',
+      cookTime: '0 mins',
+      servings: 4,
+      calories: 180,
+      tags: ['vegan', 'appetizer', 'healthy', 'raw'],
+      difficulty: "Medium",
+      mood: 'creative',
+      aiSuggestion: "Add thin slices of mango for a sweet-savory contrast.",
+      nutritionAnalysis: "Low in calories, high in fiber and vitamins from fresh vegetables.",
+      cookingTips: ["Don't oversoak the rice paper or it will tear easily.", "Double up on rice papers for stronger rolls if you're new to rolling."]
+    }
+  ],
+};
+
+// Function to get all recipes from all categories
+export const getAllRecipes = (): Recipe[] => {
+  const allRecipes: Recipe[] = [];
+  
+  for (const category in recipesData) {
+    if (Object.prototype.hasOwnProperty.call(recipesData, category)) {
+      allRecipes.push(...recipesData[category]);
+    }
+  }
+  
+  return allRecipes;
+};
+
+// Function to get recipes by mood
+export const getRecipesByMood = (mood: string): Recipe[] => {
+  const allRecipes = getAllRecipes();
+  return allRecipes.filter(recipe => recipe.mood === mood);
+};
+
+// Function to search recipes by name, ingredients, or tags
+export const searchRecipes = (searchTerm: string): Recipe[] => {
+  const allRecipes = getAllRecipes();
+  const term = searchTerm.toLowerCase();
+  
+  return allRecipes.filter(recipe => {
+    const nameMatch = recipe.name.toLowerCase().includes(term);
+    const descriptionMatch = recipe.description.toLowerCase().includes(term);
+    const ingredientsMatch = recipe.ingredients.some(ingredient => ingredient.toLowerCase().includes(term));
+    const tagsMatch = recipe.tags.some(tag => tag.toLowerCase().includes(term));
+    
+    return nameMatch || descriptionMatch || ingredientsMatch || tagsMatch;
+  });
+};
+
+// Function to get similar recipes based on tags
+export const getSimilarRecipes = (recipeId: string, limit: number = 3): Recipe[] => {
+  const allRecipes = getAllRecipes();
+  const currentRecipe = allRecipes.find(recipe => recipe.id === recipeId);
+  
+  if (!currentRecipe) {
+    return [];
+  }
+  
+  // Get recipes with similar tags, excluding the current recipe
+  const similarRecipes = allRecipes
+    .filter(recipe => recipe.id !== recipeId)
+    .map(recipe => {
+      // Count how many tags match
+      const matchingTags = recipe.tags.filter(tag => currentRecipe.tags.includes(tag));
+      return {
+        recipe,
+        matchCount: matchingTags.length
+      };
+    })
+    .filter(item => item.matchCount > 0) // Only include recipes with at least one matching tag
+    .sort((a, b) => b.matchCount - a.matchCount) // Sort by number of matching tags
+    .map(item => item.recipe) // Get just the recipe objects
+    .slice(0, limit); // Limit the number of results
+  
+  return similarRecipes;
+};
+
+// Export the recipes data for direct access
+export { recipesData };
+
