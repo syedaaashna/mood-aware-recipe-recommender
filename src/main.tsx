@@ -20,37 +20,46 @@ document.addEventListener('error', function(e) {
       
       // First try our premium Unsplash collection with reliable food images
       if (src.includes('unsplash.com')) {
-        // If an Unsplash image failed, try our super-reliable backup
-        imgElement.src = 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=800&auto=format&fit=crop';
+        // Try another high-quality Unsplash image if the current one failed
+        const newUnsplashId = '1546069901-ba9599a7e63c'; // Reliable colorful healthy food bowl
+        imgElement.src = `https://images.unsplash.com/photo-${newUnsplashId}?w=800&auto=format&fit=crop`;
         console.log('Using reliable general food image fallback');
         return;
       }
       
-      // Choose a reliable fallback based on alt text keywords
-      if (altText.toLowerCase().includes('breakfast')) {
-        imgElement.src = 'https://images.unsplash.com/photo-1528207776546-365bb710ee93?w=800&auto=format&fit=crop'; // Pancakes
-      } else if (altText.toLowerCase().includes('lunch')) {
-        imgElement.src = 'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=800&auto=format&fit=crop'; // Lunch bowl
-      } else if (altText.toLowerCase().includes('dinner')) {
-        imgElement.src = 'https://images.unsplash.com/photo-1600891964599-f61ba0e24092?w=800&auto=format&fit=crop'; // Dinner plate
-      } else if (altText.toLowerCase().includes('dessert') || altText.toLowerCase().includes('sweet')) {
+      // Choose a reliable fallback based on alt text keywords for accurate dish representation
+      if (altText.toLowerCase().includes('pancake') || altText.toLowerCase().includes('breakfast')) {
+        imgElement.src = 'https://images.unsplash.com/photo-1567599672391-17b31d92e9e4?w=800&auto=format&fit=crop'; // Pancakes
+      } else if (altText.toLowerCase().includes('salad') || altText.toLowerCase().includes('lunch')) {
+        imgElement.src = 'https://images.unsplash.com/photo-1505253716362-afaea1d3d1af?w=800&auto=format&fit=crop'; // Lunch bowl
+      } else if (altText.toLowerCase().includes('steak') || altText.toLowerCase().includes('dinner')) {
+        imgElement.src = 'https://images.unsplash.com/photo-1588778272105-1ff4b1c491e9?w=800&auto=format&fit=crop'; // Steak dinner
+      } else if (altText.toLowerCase().includes('cake') || altText.toLowerCase().includes('dessert') || altText.toLowerCase().includes('sweet')) {
         imgElement.src = 'https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=800&auto=format&fit=crop'; // Chocolate cake
+      } else if (altText.toLowerCase().includes('mac') || altText.toLowerCase().includes('cheese') || altText.toLowerCase().includes('comfort')) {
+        imgElement.src = 'https://images.unsplash.com/photo-1548340748-6d2b7c7a0d7a?w=800&auto=format&fit=crop'; // Mac and cheese
       } else if (altText.toLowerCase().includes('pasta') || altText.toLowerCase().includes('italian')) {
-        imgElement.src = 'https://images.unsplash.com/photo-1473093226795-af9932fe5856?w=800&auto=format&fit=crop'; // Pasta
-      } else if (altText.toLowerCase().includes('mexican') || altText.toLowerCase().includes('taco')) {
-        imgElement.src = 'https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=800&auto=format&fit=crop'; // Tacos
-      } else if (altText.toLowerCase().includes('comfort')) {
-        imgElement.src = 'https://images.unsplash.com/photo-1543339520-51ebf2897090?w=800&auto=format&fit=crop'; // Mac and cheese
-      } else if (altText.toLowerCase().includes('healthy')) {
-        imgElement.src = 'https://images.unsplash.com/photo-1546793665-c74683f339c1?w=800&auto=format&fit=crop'; // Healthy bowls
+        imgElement.src = 'https://images.unsplash.com/photo-1628840042765-356cda07504e?w=800&auto=format&fit=crop'; // Pasta
+      } else if (altText.toLowerCase().includes('taco') || altText.toLowerCase().includes('mexican')) {
+        imgElement.src = 'https://images.unsplash.com/photo-1551504734-5ee1c4a1479b?w=800&auto=format&fit=crop'; // Tacos
       } else if (altText.toLowerCase().includes('vegan')) {
-        imgElement.src = 'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=800&auto=format&fit=crop'; // Vegan bowl
+        imgElement.src = 'https://images.unsplash.com/photo-1543339308-43e59d6b73a6?w=800&auto=format&fit=crop'; // Vegan bowl
       } else if (altText.toLowerCase().includes('asian') || altText.toLowerCase().includes('ramen')) {
         imgElement.src = 'https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=800&auto=format&fit=crop'; // Ramen bowl
       } else if (altText.toLowerCase().includes('sandwich') || altText.toLowerCase().includes('quick')) {
-        imgElement.src = 'https://images.unsplash.com/photo-1554433607-66b5efe9d304?w=800&auto=format&fit=crop'; // Sandwich
+        imgElement.src = 'https://images.unsplash.com/photo-1567620832903-9fc6debc209f?w=800&auto=format&fit=crop'; // Sandwich
+      } else if (altText.toLowerCase().includes('smoothie') || altText.toLowerCase().includes('drink')) {
+        imgElement.src = 'https://images.unsplash.com/photo-1615478503562-ec2d8aa0e24e?w=800&auto=format&fit=crop'; // Smoothie
+      } else if (altText.toLowerCase().includes('healthy')) {
+        imgElement.src = 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=800&auto=format&fit=crop'; // Healthy bowls
+      } else if (altText.toLowerCase().includes('spicy')) {
+        imgElement.src = 'https://images.unsplash.com/photo-1567157577867-05ccb1388e66?w=800&auto=format&fit=crop'; // Spicy dish
+      } else if (altText.toLowerCase().includes('fruit')) {
+        imgElement.src = 'https://images.unsplash.com/photo-1616684000067-36952fde56ec?w=800&auto=format&fit=crop'; // Fruit bowl
+      } else if (altText.toLowerCase().includes('exotic')) {
+        imgElement.src = 'https://images.unsplash.com/photo-1603569283847-aa295f0d016a?w=800&auto=format&fit=crop'; // Dragon fruit
       } else {
-        // Super reliable general food fallback
+        // Super reliable general food fallback - colorful healthy bowl
         imgElement.src = 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=800&auto=format&fit=crop';
       }
       
