@@ -774,4 +774,157 @@ const recipesData: { [key: string]: Recipe[] } = {
   ]
 };
 
+// Define utility functions that need to be exported
+
+// Function to get recipes by mood
+export const getRecipesByMood = (moodId: string): Recipe[] => {
+  // Flatten all recipe categories into a single array
+  const allRecipes = Object.values(recipesData).flat();
+  
+  // Filter recipes that match the given mood
+  return allRecipes.filter(recipe => recipe.mood === moodId);
+};
+
+// Function to get a recipe by ID
+export const getRecipeById = (id: string): Recipe | null => {
+  // Flatten all recipe categories into a single array
+  const allRecipes = Object.values(recipesData).flat();
+  
+  // Find the recipe with the matching ID
+  const recipe = allRecipes.find(recipe => recipe.id === id);
+  
+  return recipe || null;
+};
+
+// Function to get all recipes
+export const getAllRecipes = (): Recipe[] => {
+  // Flatten all recipe categories into a single array
+  return Object.values(recipesData).flat();
+};
+
+// Function to search recipes by name, ingredients, or tags
+export const searchRecipes = (searchTerm: string): Recipe[] => {
+  const allRecipes = getAllRecipes();
+  const term = searchTerm.toLowerCase();
+  
+  return allRecipes.filter(recipe => {
+    // Search in name
+    if (recipe.name.toLowerCase().includes(term)) return true;
+    
+    // Search in description
+    if (recipe.description.toLowerCase().includes(term)) return true;
+    
+    // Search in ingredients
+    if (recipe.ingredients.some(ing => ing.toLowerCase().includes(term))) return true;
+    
+    // Search in tags
+    if (recipe.tags.some(tag => tag.toLowerCase().includes(term))) return true;
+    
+    return false;
+  });
+};
+
+// Function to get similar recipes
+export const getSimilarRecipes = (recipeId: string, limit: number = 3): Recipe[] => {
+  const currentRecipe = getRecipeById(recipeId);
+  if (!currentRecipe) return [];
+  
+  const allRecipes = getAllRecipes();
+  
+  // Filter out the current recipe
+  const otherRecipes = allRecipes.filter(recipe => recipe.id !== recipeId);
+  
+  // Score each recipe based on similarity (shared tags, mood, etc.)
+  const scoredRecipes = otherRecipes.map(recipe => {
+    let score = 0;
+    
+    // Score based on shared tags
+    const sharedTags = recipe.tags.filter(tag => currentRecipe.tags.includes(tag));
+    score += sharedTags.length * 2;
+    
+    // Score based on same mood
+    if (recipe.mood === currentRecipe.mood) {
+      score += 3;
+    }
+    
+    // Score based on similar difficulty
+    if (recipe.difficulty === currentRecipe.difficulty) {
+      score += 1;
+    }
+    
+    return { recipe, score };
+  });
+  
+  // Sort by score (highest first) and return the top N recipes
+  return scoredRecipes
+    .sort((a, b) => b.score - a.score)
+    .slice(0, limit)
+    .map(item => item.recipe);
+};
+
+// Function to get chatbot response
+export const getChatbotResponse = (query: string, moodId: string | null): string => {
+  query = query.toLowerCase();
+  
+  // Check for general questions and provide responses
+  if (query.includes('hello') || query.includes('hi') || query.includes('hey')) {
+    return "Hello! I'm your recipe assistant. How can I help you today?";
+  }
+  
+  if (query.includes('how are you')) {
+    return "I'm doing great, thanks for asking! Ready to help you with recipe ideas and cooking tips.";
+  }
+  
+  // Recipe recommendations based on mood
+  if (moodId && (query.includes('recommend') || query.includes('suggestion') || query.includes('what should i cook'))) {
+    const moodRecipes = getRecipesByMood(moodId);
+    
+    if (moodRecipes.length > 0) {
+      const randomIndex = Math.floor(Math.random() * moodRecipes.length);
+      const recommendation = moodRecipes[randomIndex];
+      return `Based on your ${moodId} mood, I recommend trying ${recommendation.name}. It's a ${recommendation.difficulty.toLowerCase()} recipe that takes ${recommendation.prepTime} to prepare and ${recommendation.cookTime} to cook.`;
+    } else {
+      return "I don't have any specific recommendations for your current mood, but I can help you find recipes based on ingredients or cuisine preferences. What are you in the mood for?";
+    }
+  }
+  
+  // Questions about ingredients or recipe variations
+  if (query.includes('substitute') || query.includes('replacement') || query.includes('instead of')) {
+    return "There are many possible substitutions in cooking. Could you tell me which ingredient you're looking to replace, and I can suggest alternatives?";
+  }
+  
+  // Cooking technique questions
+  if (query.includes('how to') || query.includes('technique') || query.includes('method')) {
+    if (query.includes('boil') || query.includes('boiling')) {
+      return "For boiling, use a large pot with plenty of water. For pasta, add salt to the water once it's boiling, then add pasta. Different foods have different boiling times, so check specific instructions for what you're cooking.";
+    }
+    if (query.includes('fry') || query.includes('frying')) {
+      return "For pan-frying, heat the pan before adding oil, then add food once the oil is hot. For deep frying, use a thermometer to ensure proper oil temperature (usually 350-375°F). Don't overcrowd the pan, and drain fried foods on paper towels.";
+    }
+    if (query.includes('bake') || query.includes('baking')) {
+      return "For baking, always preheat your oven. Position racks appropriately: middle rack for even cooking, top rack for browning, lower rack for bottom heat. Use the correct bakeware for your recipe.";
+    }
+    return "That's a good cooking question! Could you provide more details about what you're trying to cook, and I can give you specific techniques?";
+  }
+  
+  // Meal planning questions
+  if (query.includes('meal plan') || query.includes('weekly menu') || query.includes('meal prep')) {
+    return "Meal planning can save time and money! Start by picking 4-5 recipes for the week, make a shopping list of all ingredients, and consider batch cooking on weekends. Would you like specific meal prep recipe suggestions?";
+  }
+  
+  // Dietary restriction questions
+  if (query.includes('vegan') || query.includes('vegetarian') || query.includes('gluten-free') || query.includes('dairy-free')) {
+    let dietType = '';
+    if (query.includes('vegan')) dietType = 'vegan';
+    else if (query.includes('vegetarian')) dietType = 'vegetarian';
+    else if (query.includes('gluten-free')) dietType = 'gluten-free';
+    else if (query.includes('dairy-free')) dietType = 'dairy-free';
+    
+    return `For ${dietType} cooking, focus on whole foods and appropriate substitutes. I can help you adapt recipes or find ones that already meet your dietary needs. What type of dish are you interested in making?`;
+  }
+  
+  // Default response if no specific pattern is matched
+  return "I'd be happy to help with recipe suggestions, cooking tips, or answering food-related questions. Could you provide more details about what you're looking for?";
+};
+
 export default recipesData;
