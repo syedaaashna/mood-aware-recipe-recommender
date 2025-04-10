@@ -93,6 +93,18 @@ export const getFallbackImage = (recipeId: string): string => {
       return 'https://images.unsplash.com/photo-1616684000067-36952fde56ec?w=800&auto=format&fit=crop'; // Sweet fruit bowl
     case 'exotic':
       return 'https://images.unsplash.com/photo-1603569283847-aa295f0d016a?w=800&auto=format&fit=crop'; // Dragon fruit
+    case 'indian':
+      return 'https://images.unsplash.com/photo-1505253758473-96b7015fcd40?w=800&auto=format&fit=crop'; // Indian curry
+    case 'american':
+      return 'https://images.unsplash.com/photo-1550547660-d9450f859349?w=800&auto=format&fit=crop'; // Burger
+    case 'chinese':
+      return 'https://images.unsplash.com/photo-1563245372-f21724e3856d?w=800&auto=format&fit=crop'; // Chinese stir fry
+    case 'korean':
+      return 'https://images.unsplash.com/photo-1590301157890-4810ed352733?w=800&auto=format&fit=crop'; // Korean food
+    case 'continental':
+      return 'https://images.unsplash.com/photo-1544148103-0773bf10d330?w=800&auto=format&fit=crop'; // Elegant plated dish
+    case 'unique':
+      return 'https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=800&auto=format&fit=crop'; // Creative dish
     default:
       // For unknown categories, return a high-quality food image
       return 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=800&auto=format&fit=crop';
