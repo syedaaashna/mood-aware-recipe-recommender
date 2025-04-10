@@ -121,6 +121,12 @@ export const getFallbackImage = (recipeId: string): string => {
       return 'https://images.unsplash.com/photo-1536392706853-c9e63a903ff5?w=800&auto=format&fit=crop'; // Party spread
     case 'breakfast_sweets':
       return 'https://images.unsplash.com/photo-1484723091739-30a097e8f929?w=800&auto=format&fit=crop'; // Sweet breakfast
+    case 'caribbean':
+      return 'https://images.unsplash.com/photo-1570197571499-166b36435e9f?w=800&auto=format&fit=crop'; // Caribbean food
+    case 'middleeastern':
+      return 'https://images.unsplash.com/photo-1628840042765-356cda07504e?w=800&auto=format&fit=crop'; // Middle Eastern food
+    case 'african':
+      return 'https://images.unsplash.com/photo-1571407970349-bc81e7e96d47?w=800&auto=format&fit=crop'; // African food
     default:
       // For unknown categories, return a high-quality food image
       return 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=800&auto=format&fit=crop';
