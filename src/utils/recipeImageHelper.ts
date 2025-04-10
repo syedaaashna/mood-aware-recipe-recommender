@@ -1,3 +1,4 @@
+
 import recipeImageMapping from './recipeImageMapping';
 
 /**
@@ -33,7 +34,7 @@ export const getRecipeImagePath = (imageKey: string): string => {
   } catch (error) {
     console.error('Error in getRecipeImagePath:', error);
     // Use a highly reliable default image as last resort
-    return 'https://images.unsplash.com/photo-1515003197210-e0cd71810b5f?w=800&auto=format&fit=crop';
+    return 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=800&auto=format&fit=crop';
   }
 };
 
@@ -57,27 +58,27 @@ export const getFallbackImage = (recipeId: string): string => {
   // Map categories to carefully selected images
   switch (category) {
     case 'breakfast':
-      return 'https://images.unsplash.com/photo-1533089860892-a9b969df67a3?w=800&auto=format&fit=crop'; // Breakfast spread
+      return 'https://images.unsplash.com/photo-1528207776546-365bb710ee93?w=800&auto=format&fit=crop'; // Pancakes
     case 'lunch':
       return 'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=800&auto=format&fit=crop'; // Lunch bowl
     case 'dinner':
-      return 'https://images.unsplash.com/photo-1558030006-450675393462?w=800&auto=format&fit=crop'; // Dinner plate
+      return 'https://images.unsplash.com/photo-1600891964599-f61ba0e24092?w=800&auto=format&fit=crop'; // Steak dinner
     case 'dessert':
-      return 'https://images.unsplash.com/photo-1551529834-525807d6b4f3?w=800&auto=format&fit=crop'; // Chocolate cake
+      return 'https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=800&auto=format&fit=crop'; // Chocolate cake
     case 'comfort':
       return 'https://images.unsplash.com/photo-1543339520-51ebf2897090?w=800&auto=format&fit=crop'; // Mac and cheese
     case 'quick':
-      return 'https://images.unsplash.com/photo-1603046891249-70088f7cae2f?w=800&auto=format&fit=crop'; // Quick sandwich
+      return 'https://images.unsplash.com/photo-1554433607-66b5efe9d304?w=800&auto=format&fit=crop'; // Quick sandwich
     case 'snack':
       return 'https://images.unsplash.com/photo-1575576941698-03e072cec81d?w=800&auto=format&fit=crop'; // Popcorn
     case 'drink':
       return 'https://images.unsplash.com/photo-1595981267035-7b04ca84a82d?w=800&auto=format&fit=crop'; // Colorful smoothie
     case 'vegan':
-      return 'https://images.unsplash.com/photo-1546693951-b13c0abf92e7?w=800&auto=format&fit=crop'; // Vegan bowl
+      return 'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=800&auto=format&fit=crop'; // Vegan bowl
     case 'appetizer':
-      return 'https://images.unsplash.com/photo-1662487034139-71c4ea17415a?w=800&auto=format&fit=crop'; // Bruschetta
+      return 'https://images.unsplash.com/photo-1626200758640-6b843464e41f?w=800&auto=format&fit=crop'; // Bruschetta
     case 'italian':
-      return 'https://images.unsplash.com/photo-1604068549290-dea0e4a305ca?w=800&auto=format&fit=crop'; // Pizza
+      return 'https://images.unsplash.com/photo-1622973536968-3ead9e780960?w=800&auto=format&fit=crop'; // Spaghetti
     case 'mexican':
       return 'https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=800&auto=format&fit=crop'; // Tacos
     case 'asian':
@@ -89,11 +90,11 @@ export const getFallbackImage = (recipeId: string): string => {
     case 'spicy':
       return 'https://images.unsplash.com/photo-1625220194771-7ebdea0b70b9?w=800&auto=format&fit=crop'; // Spicy noodles
     case 'sweet':
-      return 'https://images.unsplash.com/photo-1470119693884-47d3a1d1f180?w=800&auto=format&fit=crop'; // Sweet fruit bowl
+      return 'https://images.unsplash.com/photo-1488462237308-ecaa28b729d7?w=800&auto=format&fit=crop'; // Sweet fruit bowl
     case 'exotic':
       return 'https://images.unsplash.com/photo-1551445523-324a0fdab051?w=800&auto=format&fit=crop'; // Dragon fruit
     default:
       // For unknown categories, return a high-quality food image
-      return 'https://images.unsplash.com/photo-1515003197210-e0cd71810b5f?w=800&auto=format&fit=crop';
+      return 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=800&auto=format&fit=crop'; // Pasta dish
   }
 };
