@@ -1,3 +1,4 @@
+
 import comfort1 from '@/assets/images/recipes/comfort1.jpg';
 import comfort2 from '@/assets/images/recipes/comfort2.jpg';
 import comfort3 from '@/assets/images/recipes/comfort3.jpg';
@@ -174,6 +175,37 @@ export const moods: Mood[] = [
     name: 'Childhood Memories',
     icon: '👶',
     description: 'Craving foods from your youth'
+  },
+  // Additional multicultural moods
+  {
+    id: 'wanderlust',
+    name: 'Wanderlust',
+    icon: '✈️',
+    description: 'Craving flavors from around the world'
+  },
+  {
+    id: 'fusion',
+    name: 'Fusion Explorer',
+    icon: '🔄',
+    description: 'Excited about mixed cultural cuisines'
+  },
+  {
+    id: 'traditional',
+    name: 'Traditional',
+    icon: '📜',
+    description: 'Appreciating authentic cultural dishes'
+  },
+  {
+    id: 'spice-lover',
+    name: 'Spice Lover',
+    icon: '🌶️',
+    description: 'Craving bold, spicy flavors'
+  },
+  {
+    id: 'comfort-seeker',
+    name: 'Comfort Seeker',
+    icon: '🧸',
+    description: 'Looking for familiar, soothing foods'
   }
 ];
 
@@ -562,4 +594,423 @@ const recipesData: { [key: string]: Recipe[] } = {
       calories: 300,
       tags: ['snack', 'easy', 'healthy'],
       difficulty: "Easy",
-      mood: 'advent
+      mood: 'adventurous',
+      aiSuggestion: "Add spices like cinnamon or cardamom for extra flavor.",
+      nutritionAnalysis: "High in healthy fats and fiber. Good source of energy.",
+      cookingTips: ["Toast nuts for enhanced flavor.", "Customize with your favorite mix-ins."]
+    },
+    {
+      id: 'snack3',
+      name: 'Crispy Baked Chickpeas',
+      description: 'A crunchy, savory snack that's packed with protein and fiber.',
+      ingredients: ['1 can chickpeas, drained and rinsed', '1 tbsp olive oil', '1/2 tsp salt', 'Optional seasonings: paprika, cumin, garlic powder'],
+      instructions: ['Preheat oven to 400°F (200°C).', 'Pat chickpeas dry with paper towels.', 'Toss chickpeas with olive oil and seasonings.', 'Spread in a single layer on a baking sheet.', 'Bake for 20-30 minutes, stirring halfway through, until crispy.', 'Let cool completely for maximum crispness.'],
+      prepTime: '5 mins',
+      cookTime: '25 mins',
+      servings: 2,
+      calories: 150,
+      tags: ['snack', 'healthy', 'vegan'],
+      difficulty: "Easy",
+      mood: 'stressed',
+      aiSuggestion: "Try different seasoning combinations like ranch or taco seasoning.",
+      nutritionAnalysis: "High in protein and fiber. Low in fat.",
+      cookingTips: ["Make sure to dry chickpeas thoroughly.", "Store in an airtight container to maintain crispness."]
+    }
+  ],
+  // New multicuisine recipes
+  italian: [
+    {
+      id: 'italian1',
+      name: 'Authentic Margherita Pizza',
+      description: 'A classic Italian pizza featuring the colors of the Italian flag: red tomatoes, white mozzarella, and green basil.',
+      ingredients: ['Pizza dough', 'San Marzano tomatoes', 'Fresh mozzarella', 'Fresh basil leaves', 'Extra virgin olive oil', 'Salt'],
+      instructions: ['Preheat oven to 500°F (260°C) with a pizza stone if available.', 'Stretch the pizza dough into a 12-inch circle.', 'Spread crushed San Marzano tomatoes over the dough.', 'Tear fresh mozzarella into pieces and distribute over the pizza.', 'Bake for 8-10 minutes until crust is golden and cheese is bubbly.', 'Top with fresh basil leaves and a drizzle of olive oil.', 'Slice and serve immediately.'],
+      prepTime: '15 mins',
+      cookTime: '10 mins',
+      servings: 2,
+      calories: 350,
+      tags: ['italian', 'dinner', 'vegetarian'],
+      difficulty: "Medium",
+      mood: 'wanderlust',
+      aiSuggestion: "Use high-quality ingredients for authentic Italian flavor.",
+      nutritionAnalysis: "Good source of carbohydrates and calcium. Moderate in calories.",
+      cookingTips: ["A hot oven is key to great pizza.", "Don't overload with toppings for best results."]
+    },
+    {
+      id: 'italian2',
+      name: 'Creamy Risotto with Mushrooms',
+      description: 'A northern Italian rice dish cooked slowly to creamy perfection with earthy mushrooms.',
+      ingredients: ['1½ cups Arborio rice', '4 cups vegetable or chicken broth', '½ cup white wine', '1 onion, finely diced', '2 cups mushrooms, sliced', '½ cup Parmesan cheese', '2 tbsp butter', 'Fresh parsley', 'Salt and pepper'],
+      instructions: ['Heat broth in a separate pot and keep warm.', 'Sauté onions in butter until translucent.', 'Add mushrooms and cook until softened.', 'Add rice and stir for 1-2 minutes to toast.', 'Add wine and stir until absorbed.', 'Add hot broth one ladle at a time, stirring constantly until liquid is absorbed before adding more.', 'Continue until rice is creamy and al dente, about 20 minutes.', 'Stir in Parmesan cheese and parsley. Season with salt and pepper.', 'Serve immediately.'],
+      prepTime: '10 mins',
+      cookTime: '30 mins',
+      servings: 4,
+      calories: 380,
+      tags: ['italian', 'dinner', 'vegetarian'],
+      difficulty: "Medium",
+      mood: 'sophisticated',
+      aiSuggestion: "Add a drizzle of truffle oil for an elegant finish.",
+      nutritionAnalysis: "Rich in carbohydrates. Good source of protein from cheese.",
+      cookingTips: ["Constant stirring is key to creamy risotto.", "Keep broth hot for proper cooking."]
+    }
+  ],
+  mexican: [
+    {
+      id: 'mexican1',
+      name: 'Street-Style Tacos',
+      description: 'Authentic Mexican street tacos with simple, fresh ingredients and bold flavors.',
+      ingredients: ['1 lb skirt steak', 'Corn tortillas', '1 onion, diced', 'Fresh cilantro, chopped', '2 limes', 'Salt', 'Optional: salsa verde'],
+      instructions: ['Season steak with salt and grill to medium-rare.', 'Let meat rest, then dice into small pieces.', 'Warm corn tortillas on a hot griddle.', 'Fill tortillas with meat, diced onion, and cilantro.', 'Serve with lime wedges and optional salsa verde.'],
+      prepTime: '15 mins',
+      cookTime: '10 mins',
+      servings: 4,
+      calories: 320,
+      tags: ['mexican', 'dinner', 'meat'],
+      difficulty: "Easy",
+      mood: 'adventurous',
+      aiSuggestion: "Add a pinch of cumin to the meat for extra flavor.",
+      nutritionAnalysis: "High in protein. Good source of fiber from corn tortillas.",
+      cookingTips: ["Don't overcook the meat for tender tacos.", "Double-stack tortillas for authentic street style."]
+    },
+    {
+      id: 'mexican2',
+      name: 'Guacamole from Scratch',
+      description: 'Fresh, vibrant guacamole made with ripe avocados and traditional ingredients.',
+      ingredients: ['3 ripe avocados', '1 lime, juiced', '1 small onion, finely diced', '1 jalapeño, seeds removed and minced', '2 tablespoons cilantro, chopped', 'Salt to taste'],
+      instructions: ['Cut avocados in half and remove pits.', 'Scoop flesh into a bowl and mash to desired consistency.', 'Add lime juice, onion, jalapeño, and cilantro.', 'Mix well and season with salt.', 'Serve immediately with tortilla chips.'],
+      prepTime: '10 mins',
+      cookTime: '0 mins',
+      servings: 4,
+      calories: 200,
+      tags: ['mexican', 'appetizer', 'vegetarian'],
+      difficulty: "Easy",
+      mood: 'happy',
+      aiSuggestion: "Add diced tomatoes for color and freshness.",
+      nutritionAnalysis: "High in healthy fats. Good source of fiber and vitamins.",
+      cookingTips: ["Use ripe but not overly soft avocados.", "Keep the pit in leftover guacamole to prevent browning."]
+    }
+  ],
+  asian: [
+    {
+      id: 'asian1',
+      name: 'Authentic Pad Thai',
+      description: 'Thailand\'s famous stir-fried noodle dish with the perfect balance of sweet, sour, and savory flavors.',
+      ingredients: ['8 oz rice noodles', '2 tbsp vegetable oil', '2 eggs, beaten', '1 cup firm tofu, cubed', '2 cloves garlic, minced', '1/4 cup tamarind paste', '3 tbsp fish sauce', '3 tbsp palm sugar', 'Bean sprouts', 'Green onions', 'Crushed peanuts', 'Lime wedges'],
+      instructions: ['Soak rice noodles in warm water until soft, about 15 minutes, then drain.', 'Heat oil in a wok over high heat. Add garlic and stir-fry briefly.', 'Add tofu and cook until golden.', 'Push ingredients to one side and pour in beaten eggs. Scramble until set.', 'Add noodles and toss to combine.', 'Mix in tamarind paste, fish sauce, and palm sugar. Stir-fry until noodles are coated.', 'Add bean sprouts and green onions. Toss quickly.', 'Serve topped with crushed peanuts and lime wedges.'],
+      prepTime: '20 mins',
+      cookTime: '15 mins',
+      servings: 2,
+      calories: 420,
+      tags: ['asian', 'thai', 'dinner'],
+      difficulty: "Medium",
+      mood: 'wanderlust',
+      aiSuggestion: "Add shrimp or chicken for additional protein.",
+      nutritionAnalysis: "High in carbohydrates with balanced protein. Good source of minerals.",
+      cookingTips: ["Have all ingredients ready before cooking, as the process moves quickly.", "Adjust fish sauce and sugar to taste for perfect balance."]
+    },
+    {
+      id: 'asian2',
+      name: 'Japanese Miso Soup',
+      description: 'A traditional Japanese soup with umami flavor from fermented soybean paste.',
+      ingredients: ['4 cups dashi stock', '3 tbsp miso paste', '1/2 block soft tofu, cubed', '2 green onions, thinly sliced', '1/4 cup wakame seaweed, rehydrated'],
+      instructions: ['Heat dashi stock in a pot, but do not boil.', 'Place miso paste in a small bowl and add some hot dashi. Whisk until smooth.', 'Return miso mixture to the pot and stir to combine.', 'Add tofu and wakame. Simmer gently for 2 minutes.', 'Garnish with green onions and serve immediately.'],
+      prepTime: '5 mins',
+      cookTime: '10 mins',
+      servings: 4,
+      calories: 80,
+      tags: ['asian', 'japanese', 'soup'],
+      difficulty: "Easy",
+      mood: 'relaxed',
+      aiSuggestion: "Add shitake mushrooms for additional flavor and texture.",
+      nutritionAnalysis: "Low in calories. Good source of protein from tofu and minerals from seaweed.",
+      cookingTips: ["Never boil miso soup after adding the paste to preserve probiotics.", "Use white miso for milder flavor, red miso for stronger taste."]
+    }
+  ],
+  indian: [
+    {
+      id: 'indian1',
+      name: 'Butter Chicken (Murgh Makhani)',
+      description: 'Tender chicken in a rich, creamy tomato sauce that\'s a favorite in Indian restaurants worldwide.',
+      ingredients: ['1.5 lbs chicken thighs, cut into pieces', '1 cup yogurt', '2 tbsp garam masala', '1 tbsp ginger paste', '1 tbsp garlic paste', '1 can tomato sauce', '1/2 cup heavy cream', '1/4 cup butter', '1 tsp turmeric', '1 tsp cumin', 'Fresh cilantro'],
+      instructions: ['Marinate chicken in yogurt, ginger, garlic, and 1 tbsp garam masala for at least 1 hour.', 'Grill or bake chicken until cooked through.', 'In a pot, melt butter and add remaining spices. Cook for 1 minute until fragrant.', 'Add tomato sauce and simmer for 10 minutes.', 'Stir in heavy cream and cooked chicken. Simmer for 5 more minutes.', 'Garnish with fresh cilantro and serve with naan or rice.'],
+      prepTime: '15 mins (plus marinating time)',
+      cookTime: '30 mins',
+      servings: 4,
+      calories: 450,
+      tags: ['indian', 'dinner', 'meat'],
+      difficulty: "Medium",
+      mood: 'indulgent',
+      aiSuggestion: "Add a dash of kasoori methi (dried fenugreek leaves) for authentic flavor.",
+      nutritionAnalysis: "High in protein and fat. Rich source of vitamins from tomato sauce.",
+      cookingTips: ["Marinate chicken overnight for best flavor.", "Adjust cream to your preference for richness."]
+    },
+    {
+      id: 'indian2',
+      name: 'Vegetable Biryani',
+      description: 'Aromatic basmati rice dish layered with spiced vegetables and fragrant herbs.',
+      ingredients: ['2 cups basmati rice', '3 cups mixed vegetables (carrots, peas, potatoes, beans)', '1 onion, sliced', '3 tbsp biryani masala', '1/4 cup yogurt', '1/4 cup mint leaves', '1/4 cup cilantro', 'Pinch of saffron soaked in warm milk', 'Ghee or oil for cooking'],
+      instructions: ['Wash rice and soak for 30 minutes, then drain.', 'Parboil rice until 70% cooked, then drain.', 'Sauté onions until golden, then add vegetables and spices.', 'Cook vegetables until tender, then add yogurt.', 'In a heavy pot, layer half the rice, then all the vegetable mixture, then remaining rice.', 'Pour saffron milk over top and sprinkle with herbs.', 'Cover tightly and cook on low heat for 20 minutes.', 'Mix gently before serving.'],
+      prepTime: '20 mins (plus soaking time)',
+      cookTime: '40 mins',
+      servings: 6,
+      calories: 320,
+      tags: ['indian', 'vegetarian', 'dinner'],
+      difficulty: "Medium",
+      mood: 'festive',
+      aiSuggestion: "Add fried cashews and raisins for traditional garnish.",
+      nutritionAnalysis: "High in complex carbohydrates. Good source of fiber and vitamins.",
+      cookingTips: ["Use aged basmati rice for best aroma.", "The tight seal during final cooking is crucial - use dough to seal pot if needed."]
+    }
+  ],
+  mediterranean: [
+    {
+      id: 'mediterranean1',
+      name: 'Greek Salad',
+      description: 'A refreshing, crisp salad with chunky vegetables, feta cheese, and Greek dressing.',
+      ingredients: ['1 cucumber, chopped', '2 tomatoes, chopped', '1 red onion, sliced', '1 green bell pepper, chopped', '1/2 cup kalamata olives', '200g feta cheese, cubed', '2 tbsp extra virgin olive oil', '1 tbsp red wine vinegar', '1 tsp dried oregano', 'Salt and pepper to taste'],
+      instructions: ['Combine cucumber, tomatoes, onion, bell pepper, and olives in a large bowl.', 'In a small bowl, whisk together olive oil, vinegar, oregano, salt, and pepper.', 'Pour dressing over vegetables and toss gently.', 'Top with cubed feta cheese.', 'Serve immediately or chill for 30 minutes to allow flavors to meld.'],
+      prepTime: '15 mins',
+      cookTime: '0 mins',
+      servings: 4,
+      calories: 220,
+      tags: ['mediterranean', 'greek', 'salad', 'vegetarian'],
+      difficulty: "Easy",
+      mood: 'healthy-minded',
+      aiSuggestion: "Add a pinch of sumac for authentic Mediterranean flavor.",
+      nutritionAnalysis: "High in healthy fats from olive oil and feta. Rich in vitamins and minerals.",
+      cookingTips: ["Use the freshest vegetables you can find.", "Don't mix the feta into the salad - leave it on top for presentation."]
+    },
+    {
+      id: 'mediterranean2',
+      name: 'Hummus with Fresh Pita',
+      description: 'Creamy chickpea dip with tahini, lemon, and garlic served with warm pita bread.',
+      ingredients: ['1 can chickpeas, drained and rinsed', '1/4 cup tahini', '3 tbsp extra virgin olive oil, plus more for serving', '3 tbsp lemon juice', '2 garlic cloves, minced', '1/2 tsp ground cumin', 'Salt to taste', 'Paprika for garnish', 'Fresh pita bread'],
+      instructions: ['Combine chickpeas, tahini, olive oil, lemon juice, garlic, and cumin in a food processor.', 'Blend until smooth, adding water if needed to reach desired consistency.', 'Season with salt to taste.', 'Transfer to a serving bowl, create a well in the center, and fill with olive oil.', 'Sprinkle with paprika.', 'Serve with warm pita bread.'],
+      prepTime: '10 mins',
+      cookTime: '0 mins',
+      servings: 6,
+      calories: 180,
+      tags: ['mediterranean', 'appetizer', 'vegetarian'],
+      difficulty: "Easy",
+      mood: 'relaxed',
+      aiSuggestion: "Add roasted red peppers for a colorful and flavorful variation.",
+      nutritionAnalysis: "High in plant protein and fiber. Good source of healthy fats.",
+      cookingTips: ["Reserve some chickpea liquid to adjust consistency.", "Warm the pita bread for best experience."]
+    }
+  ],
+  fusion: [
+    {
+      id: 'fusion1',
+      name: 'Korean-Mexican Bulgogi Tacos',
+      description: 'Soft corn tortillas filled with sweet and savory Korean marinated beef, topped with kimchi slaw.',
+      ingredients: ['1 lb thinly sliced beef ribeye or sirloin', '1/4 cup soy sauce', '2 tbsp brown sugar', '1 tbsp sesame oil', '3 cloves garlic, minced', '1 tbsp ginger, grated', '1 cup cabbage kimchi, chopped', '1/2 cup cabbage, shredded', '8 corn tortillas', 'Sesame seeds and cilantro for garnish'],
+      instructions: ['Combine soy sauce, brown sugar, sesame oil, garlic, and ginger in a bowl.', 'Add beef and marinate for at least 1 hour.', 'Mix chopped kimchi with shredded cabbage for the slaw.', 'Heat a skillet over high heat and cook marinated beef until caramelized.', 'Warm corn tortillas on a dry skillet.', 'Fill tortillas with bulgogi beef and top with kimchi slaw.', 'Garnish with sesame seeds and cilantro.'],
+      prepTime: '15 mins (plus marinating time)',
+      cookTime: '10 mins',
+      servings: 4,
+      calories: 350,
+      tags: ['fusion', 'korean', 'mexican', 'dinner'],
+      difficulty: "Medium",
+      mood: 'adventurous',
+      aiSuggestion: "Add a drizzle of gochujang mayo for extra flavor and creaminess.",
+      nutritionAnalysis: "High in protein and complex flavors. Moderate in carbohydrates.",
+      cookingTips: ["Freeze meat for 30 minutes before slicing for thinner cuts.", "Don't overcook the beef - it should be tender and juicy."]
+    },
+    {
+      id: 'fusion2',
+      name: 'Mediterranean-Asian Glazed Salmon',
+      description: 'Salmon fillet glazed with miso and honey, served with a Mediterranean herb salad.',
+      ingredients: ['4 salmon fillets', '2 tbsp white miso paste', '1 tbsp honey', '1 tbsp olive oil', '1 lemon, zested and juiced', '1 cucumber, diced', '1 cup cherry tomatoes, halved', '1/4 cup kalamata olives, pitted', '1/4 cup feta cheese', 'Fresh herbs (mint, parsley, dill)'],
+      instructions: ['Whisk together miso paste, honey, 1 tsp olive oil, and half the lemon juice.', 'Brush salmon fillets with the miso glaze.', 'Broil or grill salmon for 8-10 minutes until cooked through.', 'In a bowl, combine cucumber, tomatoes, olives, and herbs.', 'Dress the salad with remaining olive oil, lemon juice, and zest.', 'Sprinkle with feta cheese.', 'Serve salmon with the Mediterranean salad on the side.'],
+      prepTime: '15 mins',
+      cookTime: '10 mins',
+      servings: 4,
+      calories: 380,
+      tags: ['fusion', 'mediterranean', 'asian', 'dinner'],
+      difficulty: "Medium",
+      mood: 'sophisticated',
+      aiSuggestion: "Add a sprinkle of toasted sesame seeds to the salmon for extra texture.",
+      nutritionAnalysis: "High in omega-3 fatty acids and protein. Good balance of healthy fats.",
+      cookingTips: ["Don't overcook the salmon - it should be just opaque in the center.", "You can substitute miso with tahini for a more Mediterranean version."]
+    }
+  ],
+  caribbean: [
+    {
+      id: 'caribbean1',
+      name: 'Jamaican Jerk Chicken',
+      description: 'Spicy and aromatic grilled chicken with authentic Jamaican jerk seasoning.',
+      ingredients: ['8 chicken thighs', '4 green onions', '4 garlic cloves', '2 habanero peppers', '1 tbsp allspice', '1 tbsp thyme', '1 tbsp brown sugar', '1 tsp cinnamon', '1/2 tsp nutmeg', '2 tbsp soy sauce', '2 tbsp lime juice', '1/4 cup olive oil'],
+      instructions: ['Blend green onions, garlic, habaneros, spices, soy sauce, lime juice, and oil into a paste.', 'Score chicken thighs and rub with jerk paste. Marinate for at least 4 hours, preferably overnight.', 'Preheat grill to medium-high heat.', 'Grill chicken for 6-8 minutes per side until cooked through.', 'Let rest for 5 minutes before serving.', 'Serve with rice and peas or grilled pineapple.'],
+      prepTime: '20 mins (plus marinating time)',
+      cookTime: '20 mins',
+      servings: 4,
+      calories: 410,
+      tags: ['caribbean', 'jamaican', 'dinner', 'spicy'],
+      difficulty: "Medium",
+      mood: 'adventurous',
+      aiSuggestion: "Serve with a side of cooling mango salsa to balance the heat.",
+      nutritionAnalysis: "High in protein. Rich in vitamins from spices.",
+      cookingTips: ["Adjust habanero peppers to your preferred spice level.", "Use bone-in chicken for more flavor."]
+    },
+    {
+      id: 'caribbean2',
+      name: 'Cuban Black Bean Soup',
+      description: 'Hearty, flavorful soup with black beans, peppers, and traditional Cuban spices.',
+      ingredients: ['1 lb dried black beans, soaked overnight', '1 onion, diced', '1 green bell pepper, diced', '4 cloves garlic, minced', '1 tbsp cumin', '1 tbsp oregano', '1 bay leaf', '2 tbsp olive oil', '1/4 cup sherry vinegar', 'Salt and pepper to taste', 'Sour cream and cilantro for garnish'],
+      instructions: ['Drain soaked beans and place in a large pot with 8 cups water.', 'Bring to a boil, then reduce heat and simmer for 1 hour.', 'In a separate pan, sauté onion, bell pepper, and garlic in olive oil until soft.', 'Add cumin and oregano to vegetables and cook for 1 minute until fragrant.', 'Add vegetable mixture to beans along with bay leaf.', 'Simmer for another hour or until beans are very tender.', 'Remove bay leaf and puree half the soup for thicker consistency.', 'Stir in sherry vinegar and season with salt and pepper.', 'Serve with a dollop of sour cream and fresh cilantro.'],
+      prepTime: '15 mins (plus soaking time)',
+      cookTime: '2 hours',
+      servings: 6,
+      calories: 280,
+      tags: ['caribbean', 'cuban', 'soup', 'vegetarian'],
+      difficulty: "Medium",
+      mood: 'nostalgic',
+      aiSuggestion: "Serve with a side of white rice for an authentic Cuban meal.",
+      nutritionAnalysis: "High in fiber and plant protein. Low in fat.",
+      cookingTips: ["Don't skip the soaking step for beans - it reduces cooking time.", "The soup tastes even better the next day."]
+    }
+  ],
+  vegan: [
+    {
+      id: 'vegan1',
+      name: 'Creamy Vegan Mushroom Risotto',
+      description: 'A plant-based version of the Italian classic with rich mushroom flavor and no dairy.',
+      ingredients: ['1 1/2 cups arborio rice', '6 cups vegetable broth', '2 cups mixed mushrooms, sliced', '1 onion, finely diced', '3 cloves garlic, minced', '1/2 cup nutritional yeast', '1/4 cup coconut cream', '1/2 cup white wine', '2 tbsp olive oil', 'Fresh thyme', 'Salt and pepper to taste'],
+      instructions: ['Heat vegetable broth in a separate pot and keep warm.', 'In a large skillet, sauté mushrooms until golden. Set aside half for topping.', 'In the same skillet, sauté onion and garlic in olive oil until translucent.', 'Add rice and stir for 1-2 minutes until lightly toasted.', 'Add wine and stir until absorbed.', 'Add hot broth one ladle at a time, stirring constantly until liquid is absorbed before adding more.', 'Continue until rice is creamy and al dente, about 20 minutes.', 'Stir in nutritional yeast, coconut cream, and remaining mushrooms.', 'Garnish with fresh thyme and serve immediately.'],
+      prepTime: '15 mins',
+      cookTime: '30 mins',
+      servings: 4,
+      calories: 320,
+      tags: ['vegan', 'italian', 'dinner'],
+      difficulty: "Medium",
+      mood: 'sophisticated',
+      aiSuggestion: "Add a handful of spinach at the end for extra nutrition and color.",
+      nutritionAnalysis: "Rich in B vitamins from nutritional yeast. Good source of complex carbohydrates.",
+      cookingTips: ["Use a variety of mushrooms for complex flavor.", "The risotto should be creamy but not mushy - keep it al dente."]
+    },
+    {
+      id: 'vegan2',
+      name: 'Buddha Bowl with Tahini Dressing',
+      description: 'A nourishing bowl filled with colorful vegetables, grains, and protein-rich legumes.',
+      ingredients: ['1 cup quinoa', '1 sweet potato, cubed', '1 cup chickpeas', '2 cups kale, chopped', '1 avocado, sliced', '1/4 cup tahini', '2 tbsp lemon juice', '1 tbsp maple syrup', 'Water to thin', 'Salt and pepper to taste', 'Sesame seeds for garnish'],
+      instructions: ['Cook quinoa according to package directions.', 'Toss sweet potato cubes with olive oil, salt, and pepper. Roast at 400°F for 25 minutes.', 'Drain and rinse chickpeas, toss with spices of choice, and roast for 15 minutes until crispy.', 'Massage kale with a bit of olive oil and salt until tender.', 'Whisk together tahini, lemon juice, maple syrup, and enough water to create a pourable consistency.', 'Assemble bowls with quinoa, roasted sweet potatoes, chickpeas, kale, and avocado.', 'Drizzle with tahini dressing and sprinkle with sesame seeds.'],
+      prepTime: '15 mins',
+      cookTime: '25 mins',
+      servings: 2,
+      calories: 540,
+      tags: ['vegan', 'healthy', 'dinner'],
+      difficulty: "Easy",
+      mood: 'healthy-minded',
+      aiSuggestion: "Add fermented vegetables like kimchi or sauerkraut for gut-healthy probiotics.",
+      nutritionAnalysis: "Excellent balance of protein, complex carbs, and healthy fats. Rich in vitamins and minerals.",
+      cookingTips: ["Prep components ahead of time for quick assembly.", "Customize with seasonal vegetables."]
+    },
+    {
+      id: 'vegan3',
+      name: 'Spicy West African Peanut Stew',
+      description: 'A hearty plant-based stew with rich peanut flavor and warming spices.',
+      ingredients: ['1 onion, diced', '3 cloves garlic, minced', '1 tbsp ginger, grated', '1 sweet potato, cubed', '1 red bell pepper, diced', '1 can diced tomatoes', '4 cups vegetable broth', '1/2 cup natural peanut butter', '2 cups chopped collard greens', '1 tsp cumin', '1 tsp coriander', '1/2 tsp cayenne pepper', 'Cilantro and chopped peanuts for garnish'],
+      instructions: ['Sauté onion, garlic, and ginger in a large pot until soft.', 'Add sweet potato and bell pepper, cook for 5 minutes.', 'Stir in spices and cook until fragrant, about 1 minute.', 'Add tomatoes and vegetable broth, bring to a simmer.', 'Cook until sweet potatoes are almost tender, about 15 minutes.', 'Whisk in peanut butter until well incorporated.', 'Add collard greens and simmer for 5 more minutes.', 'Serve hot, garnished with cilantro and chopped peanuts.'],
+      prepTime: '15 mins',
+      cookTime: '30 mins',
+      servings: 6,
+      calories: 280,
+      tags: ['vegan', 'african', 'dinner', 'spicy'],
+      difficulty: "Medium",
+      mood: 'adventurous',
+      aiSuggestion: "Serve over brown rice or with flatbread for a complete meal.",
+      nutritionAnalysis: "High in plant protein from peanuts. Rich source of vitamins A and C.",
+      cookingTips: ["Use natural peanut butter without added sugar.", "Adjust cayenne to your preferred spice level."]
+    }
+  ]
+};
+
+// Helper function to get recipes by mood
+export const getRecipesByMood = (moodId: string) => {
+  let allRecipes: Recipe[] = [];
+  Object.values(recipesData).forEach(recipeArray => {
+    allRecipes = [...allRecipes, ...recipeArray];
+  });
+  
+  return allRecipes.filter(recipe => recipe.mood === moodId);
+};
+
+// Helper function to get recipe by ID
+export const getRecipeById = (id: string) => {
+  let allRecipes: Recipe[] = [];
+  Object.values(recipesData).forEach(recipeArray => {
+    allRecipes = [...allRecipes, ...recipeArray];
+  });
+  
+  return allRecipes.find(recipe => recipe.id === id);
+};
+
+// Helper function to get all recipes
+export const getAllRecipes = () => {
+  let allRecipes: Recipe[] = [];
+  Object.values(recipesData).forEach(recipeArray => {
+    allRecipes = [...allRecipes, ...recipeArray];
+  });
+  
+  return allRecipes;
+};
+
+// Helper function to search recipes
+export const searchRecipes = (query: string) => {
+  const allRecipes = getAllRecipes();
+  const searchTerm = query.toLowerCase();
+  
+  return allRecipes.filter(recipe => 
+    recipe.name.toLowerCase().includes(searchTerm) || 
+    recipe.description.toLowerCase().includes(searchTerm) ||
+    recipe.tags.some(tag => tag.toLowerCase().includes(searchTerm))
+  );
+};
+
+// Helper function to get similar recipes
+export const getSimilarRecipes = (recipeId: string, limit: number = 3) => {
+  const allRecipes = getAllRecipes();
+  const currentRecipe = getRecipeById(recipeId);
+  
+  if (!currentRecipe) return [];
+  
+  const similar = allRecipes
+    .filter(recipe => recipe.id !== recipeId)
+    .sort((a, b) => {
+      const aMatchingTags = a.tags.filter(tag => currentRecipe.tags.includes(tag)).length;
+      const bMatchingTags = b.tags.filter(tag => currentRecipe.tags.includes(tag)).length;
+      return bMatchingTags - aMatchingTags;
+    })
+    .slice(0, limit);
+  
+  return similar;
+};
+
+// Helper function for chatbot responses
+export const getChatbotResponse = (query: string) => {
+  const searchTerm = query.toLowerCase();
+  
+  // Quick suggestions for common recipe questions
+  if (searchTerm.includes('breakfast') || searchTerm.includes('morning')) {
+    return "For breakfast, I'd recommend trying our Fluffy Pancakes or Trendy Avocado Toast. Both are quick to make and delicious!";
+  }
+  
+  if (searchTerm.includes('dinner') || searchTerm.includes('evening meal')) {
+    return "For dinner, our Spaghetti and Meatballs is a classic choice, or try Baked Salmon with Roasted Vegetables for a healthier option.";
+  }
+  
+  if (searchTerm.includes('vegetarian') || searchTerm.includes('plant')) {
+    return "We have several vegetarian options! Our Creamy Vegan Mushroom Risotto and Buddha Bowl with Tahini Dressing are very popular.";
+  }
+  
+  if (searchTerm.includes('quick') || searchTerm.includes('fast') || searchTerm.includes('hurry')) {
+    return "If you need something quick, try our Five-Minute Quesadilla or Gourmet Microwave Popcorn. Both take less than 10 minutes total!";
+  }
+  
+  if (searchTerm.includes('healthy') || searchTerm.includes('diet') || searchTerm.includes('nutrition')) {
+    return "For healthy options, check out our Buddha Bowl with Tahini Dressing or Trendy Avocado Toast. Both are nutritious and satisfying!";
+  }
+  
+  // Default response
+  return "I'd be happy to help you find a recipe! You can search by meal type (breakfast, lunch, dinner), dietary preference (vegetarian, vegan), or mood (happy, sad, tired). What are you in the mood for today?";
+};
