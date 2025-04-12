@@ -620,6 +620,95 @@ const recipesData: { [key: string]: Recipe[] } = {
   // Add remaining recipe categories here (if any)
 };
 
+// Add the missing export functions
+export const getAllRecipes = (): Recipe[] => {
+  // Flatten all recipe arrays into a single array
+  return Object.values(recipesData).flat();
+};
+
+export const getRecipeById = (id: string): Recipe | null => {
+  // Search through all categories for a recipe with the given id
+  for (const recipes of Object.values(recipesData)) {
+    const found = recipes.find(recipe => recipe.id === id);
+    if (found) return found;
+  }
+  return null;
+};
+
+export const getRecipesByMood = (moodId: string): Recipe[] => {
+  // Filter all recipes by the given mood
+  return getAllRecipes().filter(recipe => recipe.mood === moodId);
+};
+
+export const searchRecipes = (searchTerm: string): Recipe[] => {
+  // Convert search term to lowercase for case-insensitive search
+  const lowerSearchTerm = searchTerm.toLowerCase();
+  
+  return getAllRecipes().filter(recipe => {
+    // Search in name and description
+    if (recipe.name.toLowerCase().includes(lowerSearchTerm) || 
+        recipe.description.toLowerCase().includes(lowerSearchTerm)) {
+      return true;
+    }
+    
+    // Search in ingredients
+    if (recipe.ingredients.some(ingredient => 
+      ingredient.toLowerCase().includes(lowerSearchTerm)
+    )) {
+      return true;
+    }
+    
+    // Search in tags
+    if (recipe.tags.some(tag => 
+      tag.toLowerCase().includes(lowerSearchTerm)
+    )) {
+      return true;
+    }
+    
+    return false;
+  });
+};
+
+export const getChatbotResponse = (query: string, currentMood: string | null): string => {
+  // Simple implementation for the chatbot response
+  query = query.toLowerCase();
+  
+  // Respond to mood-specific questions
+  if (currentMood && query.includes('recommend') || query.includes('suggest') || query.includes('what should i')) {
+    const moodRecipes = getRecipesByMood(currentMood);
+    if (moodRecipes.length > 0) {
+      const randomRecipe = moodRecipes[Math.floor(Math.random() * moodRecipes.length)];
+      return `Based on your ${currentMood} mood, I recommend trying ${randomRecipe.name}. It's ${randomRecipe.description}`;
+    }
+  }
+  
+  // Respond to questions about cooking tips
+  if (query.includes('how do i') || query.includes('how to')) {
+    if (query.includes('pasta') || query.includes('spaghetti')) {
+      return "For perfect pasta, salt your water generously, cook until al dente, and save some pasta water to finish your sauce.";
+    }
+    if (query.includes('steak') || query.includes('meat')) {
+      return "For a great steak, let it come to room temperature before cooking, season generously, and let it rest for 5-10 minutes after cooking.";
+    }
+  }
+  
+  // Respond to questions about ingredients
+  if (query.includes('substitute') || query.includes('replacement')) {
+    return "Many ingredients can be substituted! Let me know what specific ingredient you need to replace, and I can give you alternatives.";
+  }
+  
+  // Default responses
+  const defaultResponses = [
+    "I'd be happy to help you find a recipe. What kind of meal are you looking for?",
+    "Looking for cooking inspiration? Try filtering recipes by your current mood!",
+    "If you have specific ingredients you want to use, I can help you find recipes for them.",
+    "Need cooking tips or have questions about a recipe? Feel free to ask!",
+    "Want to try something new? Ask me for recipe suggestions based on cuisines you enjoy."
+  ];
+  
+  return defaultResponses[Math.floor(Math.random() * defaultResponses.length)];
+};
+
 // Export a function to get similar recipes based on a recipe ID
 export const getSimilarRecipes = (recipeId: string): Recipe[] => {
   // Find the recipe with the given ID
