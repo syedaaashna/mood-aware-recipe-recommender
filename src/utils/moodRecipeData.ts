@@ -1,3 +1,4 @@
+
 import comfort1 from '@/assets/images/recipes/comfort1.jpg';
 import comfort2 from '@/assets/images/recipes/comfort2.jpg';
 import comfort3 from '@/assets/images/recipes/comfort3.jpg';
@@ -579,4 +580,115 @@ const recipesData: { [key: string]: Recipe[] } = {
       mood: 'energetic',
       aiSuggestion: "Add a sprinkle of chia seeds or flaxseeds for extra nutrition.",
       nutritionAnalysis: "High in protein from Greek yogurt, antioxidants from berries.",
-      cookingTips: ["Use frozen berries if fresh aren't available.", "Keep granola
+      cookingTips: ["Use frozen berries if fresh aren't available.", "Keep granola separate until serving to maintain crunchiness."]
+    },
+    {
+      id: 'snack2',
+      name: 'Hummus and Veggie Platter',
+      description: 'A healthy and satisfying snack that is perfect for sharing.',
+      ingredients: ['1 cup hummus', '1 cup sliced bell peppers', '1 cup sliced carrots', '1 cup sliced cucumbers', '1 cup cherry tomatoes', 'Optional: pita bread or crackers'],
+      instructions: ['Arrange the hummus in a small bowl or ramekin.', 'Arrange the sliced vegetables around the hummus.', 'Serve with pita bread or crackers if desired.'],
+      prepTime: '10 mins',
+      cookTime: '0 mins',
+      servings: 4,
+      calories: 150,
+      tags: ['snack', 'healthy', 'vegetarian'],
+      difficulty: "Easy",
+      mood: 'healthy-minded',
+      aiSuggestion: "Add a drizzle of olive oil and a sprinkle of paprika to the hummus for extra flavor.",
+      nutritionAnalysis: "High in fiber and protein. Good source of vitamins and minerals.",
+      cookingTips: ["Use store-bought hummus to save time.", "Slice vegetables ahead of time and store in water to keep them fresh."]
+    },
+    {
+      id: 'snack3',
+      name: 'Baked Kale Chips',
+      description: 'A crispy and nutritious alternative to potato chips.',
+      ingredients: ['1 bunch kale, washed and dried', '1 tbsp olive oil', 'Salt to taste', 'Optional: nutritional yeast, garlic powder, or other seasonings'],
+      instructions: ['Preheat oven to 300°F (150°C).', 'Remove the stems from the kale and tear the leaves into bite-sized pieces.', 'In a bowl, toss the kale with olive oil and salt.', 'Spread the kale in a single layer on a baking sheet.', 'Bake for 10-15 minutes, or until the edges are brown but not burnt.', 'Let cool before serving.'],
+      prepTime: '10 mins',
+      cookTime: '15 mins',
+      servings: 2,
+      calories: 100,
+      tags: ['snack', 'healthy', 'vegetarian'],
+      difficulty: "Easy",
+      mood: 'health-conscious',
+      aiSuggestion: "Try different flavor combinations like nutritional yeast for a cheesy flavor or smoked paprika for a smoky flavor.",
+      nutritionAnalysis: "High in vitamins A, C, and K. Low in calories and high in fiber.",
+      cookingTips: ["Ensure the kale is completely dry before baking to get them crispy.", "Watch them closely as they can burn quickly."]
+    }
+  ],
+  // Add remaining recipe categories here (if any)
+};
+
+// Export a function to get similar recipes based on a recipe ID
+export const getSimilarRecipes = (recipeId: string): Recipe[] => {
+  // Find the recipe with the given ID
+  let targetRecipe: Recipe | null = null;
+  let category: string = "";
+  
+  // Search through all categories to find the recipe
+  for (const [cat, recipes] of Object.entries(recipesData)) {
+    const found = recipes.find(recipe => recipe.id === recipeId);
+    if (found) {
+      targetRecipe = found;
+      category = cat;
+      break;
+    }
+  }
+  
+  if (!targetRecipe) {
+    return []; // Recipe not found
+  }
+  
+  // Get all recipes (excluding the target recipe)
+  const allRecipes: Recipe[] = [];
+  for (const [cat, recipes] of Object.entries(recipesData)) {
+    if (cat === category) {
+      // Add recipes from the same category (excluding the target recipe)
+      allRecipes.push(...recipes.filter(recipe => recipe.id !== recipeId));
+    } else {
+      // Add a random sample of recipes from other categories
+      const randomRecipes = recipes.slice(0, 1); // Just take the first recipe from each other category
+      allRecipes.push(...randomRecipes);
+    }
+  }
+  
+  // Score recipes based on similarity to the target recipe
+  const scoredRecipes = allRecipes.map(recipe => {
+    let score = 0;
+    
+    // Same mood: +3 points
+    if (recipe.mood === targetRecipe!.mood) {
+      score += 3;
+    }
+    
+    // Shared tags: +1 point per shared tag
+    const sharedTags = recipe.tags.filter(tag => targetRecipe!.tags.includes(tag));
+    score += sharedTags.length;
+    
+    // Similar difficulty: +1 point
+    if (recipe.difficulty === targetRecipe!.difficulty) {
+      score += 1;
+    }
+    
+    // Similar preparation time: +1 point
+    const targetPrepTime = parseInt(targetRecipe!.prepTime);
+    const recipePrepTime = parseInt(recipe.prepTime);
+    if (!isNaN(targetPrepTime) && !isNaN(recipePrepTime) && Math.abs(targetPrepTime - recipePrepTime) <= 10) {
+      score += 1;
+    }
+    
+    // Same category: +2 points
+    if (recipe.id.split('1')[0] === targetRecipe!.id.split('1')[0]) {
+      score += 2;
+    }
+    
+    return { recipe, score };
+  });
+  
+  // Sort by score (descending) and return the top 3 recipes
+  scoredRecipes.sort((a, b) => b.score - a.score);
+  return scoredRecipes.slice(0, 3).map(item => item.recipe);
+};
+
+export default recipesData;
