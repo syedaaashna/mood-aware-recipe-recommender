@@ -1,4 +1,3 @@
-
 import comfort1 from '@/assets/images/recipes/comfort1.jpg';
 import comfort2 from '@/assets/images/recipes/comfort2.jpg';
 import comfort3 from '@/assets/images/recipes/comfort3.jpg';
@@ -145,7 +144,7 @@ export const moods: Mood[] = [
     icon: '🍫',
     description: 'Treating yourself to something special'
   },
-  // New moods
+  // Previously added moods
   {
     id: 'celebratory',
     name: 'Celebratory',
@@ -176,7 +175,6 @@ export const moods: Mood[] = [
     icon: '👶',
     description: 'Craving foods from your youth'
   },
-  // Additional multicultural moods
   {
     id: 'wanderlust',
     name: 'Wanderlust',
@@ -206,6 +204,67 @@ export const moods: Mood[] = [
     name: 'Comfort Seeker',
     icon: '🧸',
     description: 'Looking for familiar, soothing foods'
+  },
+  // New moods
+  {
+    id: 'proud',
+    name: 'Proud',
+    icon: '🏆',
+    description: 'Celebrating achievements and milestones'
+  },
+  {
+    id: 'mindful',
+    name: 'Mindful',
+    icon: '🧘',
+    description: 'Being present and conscious of choices'
+  },
+  {
+    id: 'decadent',
+    name: 'Decadent',
+    icon: '✨',
+    description: 'Seeking rich, luxurious experiences'
+  },
+  {
+    id: 'nostalgic-travel',
+    name: 'Travel Memories',
+    icon: '🗺️',
+    description: 'Reminiscing about food from past travels'
+  },
+  {
+    id: 'seasonal',
+    name: 'Seasonal',
+    icon: '🍂',
+    description: 'Enjoying foods from the current season'
+  },
+  {
+    id: 'social',
+    name: 'Social',
+    icon: '👥',
+    description: 'Foods perfect for sharing with friends'
+  },
+  {
+    id: 'comforting',
+    name: 'Comforting',
+    icon: '🛋️',
+    description: 'Seeking emotional comfort through food'
+  },
+  {
+    id: 'inspired',
+    name: 'Inspired',
+    icon: '💫',
+    description: 'Ready to create something impressive'
+  },
+  {
+    id: 'time-pressed',
+    name: 'Time-Pressed',
+    icon: '⏱️',
+    description: 'Need something quick but satisfying'
+  },
+  {
+    id: 'refreshed',
+    name: 'Refreshed',
+    icon: '🌿',
+    description: 'Craving something cool and revitalizing'
   }
 ];
 
@@ -281,7 +340,59 @@ const recipesData: { [key: string]: Recipe[] } = {
       nutritionAnalysis: "High in protein and carbohydrates. Provides a good source of iron.",
       cookingTips: ["Use leftover mashed potatoes to save time.", "Top with a sprinkle of paprika for added flavor."]
     },
+    {
+      id: 'comfort4',
+      name: 'Creamy Tomato Soup',
+      description: 'A rich and velvety tomato soup that pairs perfectly with a grilled cheese sandwich.',
+      ingredients: ['2 tbsp olive oil', '1 onion, chopped', '2 cloves garlic, minced', '2 (28 oz) cans crushed tomatoes', '2 cups vegetable broth', '1/2 cup heavy cream', '2 tbsp butter', '2 tbsp sugar', 'Salt and pepper to taste'],
+      instructions: ['Heat olive oil in a large pot over medium heat. Add onion and cook until softened, about 5 minutes.', 'Add garlic and cook for 1 minute more.', 'Add crushed tomatoes, vegetable broth, and sugar. Bring to a simmer.', 'Reduce heat and simmer for 15 minutes.', 'Use an immersion blender to puree the soup until smooth.', 'Stir in heavy cream and butter until melted and combined.', 'Season with salt and pepper to taste.', 'Serve hot, garnished with fresh basil if desired.'],
+      prepTime: '10 mins',
+      cookTime: '25 mins',
+      servings: 6,
+      calories: 220,
+      tags: ['comfort food', 'soup', 'vegetarian', 'easy'],
+      difficulty: "Easy",
+      mood: 'homesick',
+      aiSuggestion: "For a rustic version, leave some chunks instead of blending completely smooth.",
+      nutritionAnalysis: "Good source of vitamins A and C from tomatoes. Contains calcium from cream.",
+      cookingTips: ["Use fire-roasted tomatoes for a deeper flavor.", "Make it vegan by substituting coconut cream for heavy cream."]
+    },
+    {
+      id: 'comfort5',
+      name: 'Homestyle Meatloaf',
+      description: 'A classic American comfort food that brings back memories of family dinners.',
+      ingredients: ['2 lbs ground beef', '1 onion, finely chopped', '2 cloves garlic, minced', '2 eggs', '1 cup breadcrumbs', '1/2 cup milk', '1/3 cup ketchup', '2 tbsp Worcestershire sauce', '1 tsp dried thyme', 'Salt and pepper to taste', '1/4 cup ketchup (for topping)'],
+      instructions: ['Preheat oven to 350°F (175°C).', 'In a large bowl, combine all ingredients except the topping ketchup.', 'Mix well but don\'t overmix, which can make the meatloaf tough.', 'Shape the mixture into a loaf and place in a loaf pan or on a rimmed baking sheet.', 'Spread ketchup on top of the meatloaf.', 'Bake for 1 hour to 1 hour 15 minutes, or until the internal temperature reaches 160°F (71°C).', 'Let rest for 10 minutes before slicing and serving.'],
+      prepTime: '15 mins',
+      cookTime: '1 hour 15 mins',
+      servings: 8,
+      calories: 380,
+      tags: ['comfort food', 'meat', 'dinner', 'american'],
+      difficulty: "Easy",
+      mood: 'nostalgic-childhood',
+      aiSuggestion: "Add grated carrots or zucchini for extra vegetables and moisture.",
+      nutritionAnalysis: "High in protein and iron. Good source of B vitamins.",
+      cookingTips: ["Use a mix of ground beef and pork for more flavor.", "Line your loaf pan with parchment paper for easy removal."]
+    },
+    {
+      id: 'comfort6',
+      name: 'Loaded Baked Potato Soup',
+      description: 'A hearty soup that transforms the beloved loaded baked potato into a comforting bowl of goodness.',
+      ingredients: ['4 large russet potatoes, peeled and diced', '4 tbsp butter', '1/2 cup chopped onion', '1/4 cup flour', '4 cups chicken broth', '2 cups milk', '1 cup sour cream', '1 cup shredded cheddar cheese', '8 slices bacon, cooked and crumbled', '4 green onions, sliced', 'Salt and pepper to taste'],
+      instructions: ['In a large pot, melt butter over medium heat. Add onion and cook until tender.', 'Add flour to the pot and stir until smooth. Gradually add chicken broth and milk, stirring constantly.', 'Add potatoes and bring to a boil. Reduce heat and simmer until potatoes are tender, about 15-20 minutes.', 'Mash some of the potatoes in the pot to thicken the soup. Stir in sour cream and half of the cheese.', 'Season with salt and pepper to taste.', 'Serve hot, topped with remaining cheese, bacon, and green onions.'],
+      prepTime: '15 mins',
+      cookTime: '30 mins',
+      servings: 6,
+      calories: 420,
+      tags: ['comfort food', 'soup', 'potatoes', 'easy'],
+      difficulty: "Easy",
+      mood: 'cozy',
+      aiSuggestion: "For extra indulgence, add a swirl of truffle oil on top before serving.",
+      nutritionAnalysis: "High in calcium and potassium. Contains significant amount of protein.",
+      cookingTips: ["Leave the skin on some potatoes for added texture and nutrition.", "For a lighter version, use turkey bacon and low-fat sour cream."]
+    }
   ],
+  
   breakfast: [
     {
       id: 'breakfast1',
@@ -351,7 +462,76 @@ const recipesData: { [key: string]: Recipe[] } = {
       nutritionAnalysis: "High in healthy fats and fiber. Good source of vitamins.",
       cookingTips: ["Use a ripe avocado for best results.", "Toast the bread to your preference for ideal texture."]
     },
+    {
+      id: 'breakfast5',
+      name: 'Eggs Benedict',
+      description: 'A classic brunch dish featuring poached eggs, Canadian bacon, and hollandaise sauce on an English muffin.',
+      ingredients: ['4 English muffins, split', '8 slices Canadian bacon', '8 eggs', '2 tsp white vinegar', '4 egg yolks', '1 tbsp lemon juice', '1/2 cup unsalted butter, melted', 'Pinch of cayenne pepper', 'Salt to taste', 'Chopped fresh parsley for garnish'],
+      instructions: ['For the hollandaise sauce: Whisk egg yolks and lemon juice in a stainless steel bowl. Place the bowl over a saucepan containing barely simmering water. Whisk rapidly while slowly drizzling in the melted butter. Continue whisking until the sauce thickens. Remove from heat and add cayenne and salt.', 'Fill a large saucepan with 3-4 inches of water. Add vinegar and bring to a simmer. Crack an egg into a small bowl and carefully slide it into the simmering water. Repeat with remaining eggs. Cook for 2-3 minutes. Remove with a slotted spoon.', 'Toast the English muffins and lightly butter them. Top each muffin half with a slice of Canadian bacon.', 'Place a poached egg on top of each muffin half and drizzle with hollandaise sauce.', 'Garnish with chopped parsley and serve immediately.'],
+      prepTime: '15 mins',
+      cookTime: '15 mins',
+      servings: 4,
+      calories: 450,
+      tags: ['breakfast', 'brunch', 'eggs', 'special occasion'],
+      difficulty: "Medium",
+      mood: 'sophisticated',
+      aiSuggestion: "Try using smoked salmon instead of Canadian bacon for a luxurious twist.",
+      nutritionAnalysis: "High in protein and healthy fats. Good source of vitamin D and calcium.",
+      cookingTips: ["The key to perfect poached eggs is using fresh eggs and maintaining a gentle simmer.", "For a foolproof hollandaise, you can use a blender method."]
+    },
+    {
+      id: 'breakfast6',
+      name: 'Overnight Oats',
+      description: 'A make-ahead breakfast that\'s perfect for busy mornings and can be customized with your favorite toppings.',
+      ingredients: ['1 cup rolled oats', '1 cup milk or plant-based alternative', '1 tbsp chia seeds', '1 tbsp honey or maple syrup', '1/2 tsp vanilla extract', 'Pinch of salt', 'Toppings: fresh fruit, nuts, seeds, nut butter'],
+      instructions: ['In a jar or container, combine oats, milk, chia seeds, honey or maple syrup, vanilla extract, and salt.', 'Stir well to combine.', 'Cover and refrigerate overnight, or for at least 4 hours.', 'In the morning, add your favorite toppings and enjoy cold or warm it up if preferred.'],
+      prepTime: '5 mins',
+      cookTime: '0 mins (4 hours soaking)',
+      servings: 1,
+      calories: 350,
+      tags: ['breakfast', 'healthy', 'easy', 'make-ahead'],
+      difficulty: "Easy",
+      mood: 'busy',
+      aiSuggestion: "Prepare multiple jars at once for breakfast throughout the week.",
+      nutritionAnalysis: "High in fiber and complex carbohydrates. Good source of protein when made with dairy milk.",
+      cookingTips: ["Use a ratio of 1:1 oats to liquid for the perfect consistency.", "Toast the oats before soaking for a nuttier flavor."]
+    },
+    {
+      id: 'breakfast7',
+      name: 'Breakfast Smoothie Bowl',
+      description: 'A nutritious and beautiful breakfast option that combines the convenience of a smoothie with the satisfaction of eating with a spoon.',
+      ingredients: ['1 frozen banana', '1 cup frozen mixed berries', '1/2 cup Greek yogurt', '1/4 cup milk or plant-based alternative', '1 tbsp honey or maple syrup', 'Toppings: granola, fresh fruit, coconut flakes, nuts, seeds'],
+      instructions: ['In a blender, combine frozen banana, berries, yogurt, milk, and sweetener.', 'Blend until smooth, but still thick. Add more liquid if needed, but keep it thick enough to eat with a spoon.', 'Pour into a bowl and artfully arrange toppings on top.', 'Eat immediately before it melts.'],
+      prepTime: '10 mins',
+      cookTime: '0 mins',
+      servings: 1,
+      calories: 300,
+      tags: ['breakfast', 'healthy', 'fruit', 'easy'],
+      difficulty: "Easy",
+      mood: 'energetic',
+      aiSuggestion: "Add a handful of spinach for extra nutrients without changing the taste significantly.",
+      nutritionAnalysis: "Rich in antioxidants from berries. Good source of protein from Greek yogurt.",
+      cookingTips: ["Freeze bananas when they're getting too ripe for the perfect smoothie base.", "Use frozen fruit instead of ice for a creamier texture."]
+    },
+    {
+      id: 'breakfast8',
+      name: 'Shakshuka',
+      description: 'A Middle Eastern dish of eggs poached in a spiced tomato sauce, perfect for a hearty breakfast or brunch.',
+      ingredients: ['2 tbsp olive oil', '1 onion, diced', '1 red bell pepper, diced', '2 cloves garlic, minced', '1 tsp cumin', '1 tsp paprika', '1/4 tsp cayenne pepper', '1 (28 oz) can diced tomatoes', 'Salt and pepper to taste', '6 eggs', '1/4 cup crumbled feta cheese', 'Fresh cilantro or parsley for garnish', 'Bread for serving'],
+      instructions: ['Heat olive oil in a large skillet over medium heat. Add onion and bell pepper and cook until softened, about 5 minutes.', 'Add garlic, cumin, paprika, and cayenne and cook for 1 minute more.', 'Pour in diced tomatoes and their juices. Season with salt and pepper and simmer for 10 minutes.', 'Make 6 wells in the sauce and crack an egg into each well.', 'Cover and cook until eggs are set to your liking, about 5-8 minutes.', 'Sprinkle with feta cheese and cilantro or parsley. Serve hot with bread for dipping.'],
+      prepTime: '10 mins',
+      cookTime: '25 mins',
+      servings: 6,
+      calories: 200,
+      tags: ['breakfast', 'brunch', 'mediterranean', 'eggs'],
+      difficulty: "Medium",
+      mood: 'adventurous',
+      aiSuggestion: "Add spinach or kale to the tomato sauce for extra nutrients.",
+      nutritionAnalysis: "High in protein from eggs. Good source of vitamins A and C from tomatoes and peppers.",
+      cookingTips: ["Use a lid to help the eggs cook evenly.", "Serve with crusty bread or pita for soaking up the delicious sauce."]
+    }
   ],
+  
   lunch: [
     {
       id: 'lunch1',
@@ -404,380 +584,8 @@ const recipesData: { [key: string]: Recipe[] } = {
       nutritionAnalysis: "High in protein and calcium. Good source of carbohydrates.",
       cookingTips: ["Use a variety of cheeses for a more complex flavor.", "Serve with a side of salsa or guacamole for dipping."]
     },
-  ],
-  dinner: [
     {
-      id: 'dinner1',
-      name: 'Spaghetti and Meatballs',
-      description: 'A classic Italian-American dish that is beloved by people of all ages.',
-      ingredients: ['1 lb spaghetti', '1 lb ground beef', '1/2 cup breadcrumbs', '1/4 cup Parmesan cheese', '1 egg', '1 onion, chopped', '2 cloves garlic, minced', '28 oz canned crushed tomatoes', '1 tsp sugar', 'Salt and pepper to taste'],
-      instructions: ['Cook spaghetti according to package directions.', 'In a bowl, mix together the ground beef, breadcrumbs, Parmesan cheese, egg, salt, and pepper.', 'Roll the mixture into meatballs.', 'In a pot, cook the onion and garlic until softened.', 'Stir in the crushed tomatoes, sugar, salt, and pepper.', 'Bring to a simmer and add the meatballs.', 'Cook for 20 minutes, or until the meatballs are cooked through.', 'Serve the meatballs and sauce over the spaghetti.'],
-      prepTime: '20 mins',
-      cookTime: '40 mins',
-      servings: 6,
-      calories: 550,
-      tags: ['dinner', 'meat', 'pasta', 'comfort food'],
-      difficulty: "Medium",
-      mood: 'happy',
-      aiSuggestion: "Add a pinch of red pepper flakes for a spicy kick.",
-      nutritionAnalysis: "High in protein and carbohydrates. Good source of iron.",
-      cookingTips: ["Use high-quality canned tomatoes for best results.", "Serve with a side of garlic bread for a complete meal."]
-    },
-    {
-      id: 'dinner2',
-      name: 'Baked Salmon with Roasted Vegetables',
-      description: 'A healthy and flavorful dinner option that is high in omega-3 fatty acids.',
-      ingredients: ['4 salmon fillets', '1 tbsp olive oil', '1 lemon, sliced', '1 lb mixed vegetables, chopped (broccoli, carrots, bell peppers, etc.)', 'Salt and pepper to taste'],
-      instructions: ['Preheat oven to 400°F (200°C).', 'Place the salmon fillets on a baking sheet.', 'Drizzle with olive oil and top with lemon slices.', 'In a bowl, toss the mixed vegetables with olive oil, salt, and pepper.', 'Spread the vegetables around the salmon fillets on the baking sheet.', 'Bake for 15-20 minutes, or until the salmon is cooked through and the vegetables are tender.', 'Serve immediately.'],
-      prepTime: '15 mins',
-      cookTime: '20 mins',
-      servings: 4,
-      calories: 400,
-      tags: ['dinner', 'fish', 'healthy', 'easy'],
-      difficulty: "Easy",
-      mood: 'relaxed',
-      aiSuggestion: "Add a sprinkle of herbs de Provence for extra flavor.",
-      nutritionAnalysis: "High in protein and omega-3 fatty acids. Good source of vitamins.",
-      cookingTips: ["Use fresh, high-quality salmon for best results.", "Serve with a side of quinoa or brown rice for a complete meal."]
-    },
-    {
-      id: 'dinner3',
-      name: 'Quick Chicken Stir-Fry',
-      description: 'A versatile stir-fry that can be customized with your favorite vegetables and proteins.',
-      ingredients: ['1 lb chicken breast, cut into bite-sized pieces', '1 tbsp olive oil', '1 onion, chopped', '2 cloves garlic, minced', '1 lb mixed vegetables, chopped (broccoli, carrots, bell peppers, etc.)', '1/4 cup soy sauce', '1 tbsp honey', '1 tbsp cornstarch', 'Salt and pepper to taste'],
-      instructions: ['In a bowl, mix together the soy sauce, honey, and cornstarch.', 'Heat the olive oil in a wok or large skillet over high heat.', 'Add the chicken and cook until browned.', 'Add the onion and garlic and cook until softened.', 'Add the mixed vegetables and cook until tender-crisp.', 'Pour the sauce over the chicken and vegetables and cook until thickened.', 'Serve over rice or noodles.'],
-      prepTime: '15 mins',
-      cookTime: '20 mins',
-      servings: 4,
-      calories: 450,
-      tags: ['dinner', 'meat', 'asian', 'easy'],
-      difficulty: "Easy",
-      mood: 'energetic',
-      aiSuggestion: "Add a pinch of red pepper flakes for a spicy kick.",
-      nutritionAnalysis: "High in protein and vitamins. Moderate in carbohydrates.",
-      cookingTips: ["Use a wok for best results.", "Serve with a side of steamed rice or noodles."]
-    },
-  ],
-  dessert: [
-    {
-      id: 'dessert1',
-      name: 'Classic Chocolate Chip Cookies',
-      description: 'Irresistible cookies with the perfect balance of chewy centers and crisp edges.',
-      ingredients: ['1 cup butter, softened', '3/4 cup sugar', '3/4 cup brown sugar', '2 eggs', '1 tsp vanilla extract', '2 1/4 cups flour', '1 tsp baking soda', '1 tsp salt', '2 cups chocolate chips'],
-      instructions: ['Preheat oven to 375°F (190°C).', 'In a bowl, cream together the butter, sugar, and brown sugar.', 'Beat in the eggs and vanilla extract.', 'In a separate bowl, whisk together the flour, baking soda, and salt.', 'Gradually add the dry ingredients to the wet ingredients, mixing until just combined.', 'Stir in the chocolate chips.', 'Drop by rounded tablespoons onto a baking sheet.', 'Bake for 9-11 minutes, or until golden brown.', 'Let cool on the baking sheet for a few minutes before transferring to a wire rack to cool completely.'],
-      prepTime: '15 mins',
-      cookTime: '10 mins',
-      servings: 24,
-      calories: 150,
-      tags: ['dessert', 'sweet', 'easy'],
-      difficulty: "Easy",
-      mood: 'happy',
-      aiSuggestion: "Add a pinch of sea salt for extra flavor contrast.",
-      nutritionAnalysis: "High in sugar and fat. Source of quick energy.",
-      cookingTips: ["Use high-quality chocolate chips for best results.", "Don't overbake the cookies to keep them chewy."]
-    },
-    {
-      id: 'dessert2',
-      name: 'Homemade Apple Pie',
-      description: 'A classic American dessert with a flaky crust and sweet apple filling.',
-      ingredients: ['1 box refrigerated pie crusts', '6 apples, peeled and sliced', '3/4 cup sugar', '1/4 cup flour', '1 tsp cinnamon', '1/4 tsp nutmeg', '2 tbsp butter, cut into small pieces'],
-      instructions: ['Preheat oven to 375°F (190°C).', 'Line a pie plate with one of the pie crusts.', 'In a bowl, mix together the apples, sugar, flour, cinnamon, and nutmeg.', 'Pour the apple mixture into the pie crust.', 'Dot with butter.', 'Top with the other pie crust.', 'Cut slits in the top crust to allow steam to escape.', 'Bake for 45-50 minutes, or until the crust is golden brown and the filling is bubbly.', 'Let cool completely before serving.'],
-      prepTime: '20 mins',
-      cookTime: '50 mins',
-      servings: 8,
-      calories: 350,
-      tags: ['dessert', 'sweet', 'comfort food'],
-      difficulty: "Medium",
-      mood: 'nostalgic',
-      aiSuggestion: "Add a scoop of vanilla ice cream for extra indulgence.",
-      nutritionAnalysis: "High in sugar and carbohydrates. Good source of fiber from apples.",
-      cookingTips: ["Use a variety of apples for a more complex flavor.", "Serve warm with a scoop of vanilla ice cream."]
-    },
-    {
-      id: 'dessert3',
-      name: 'Rich Chocolate Cake',
-      description: 'A decadent chocolate cake that is perfect for celebrations or any time a chocolate craving strikes.',
-      ingredients: ['2 cups sugar', '1 3/4 cups flour', '3/4 cup cocoa powder', '1 1/2 tsp baking powder', '1 1/2 tsp baking soda', '1 tsp salt', '1 cup buttermilk', '1/2 cup vegetable oil', '2 eggs', '1 tsp vanilla extract', '1 cup boiling water'],
-      instructions: ['Preheat oven to 350°F (175°C).', 'Grease and flour a 9x13 inch baking pan.', 'In a bowl, whisk together the sugar, flour, cocoa powder, baking powder, baking soda, and salt.', 'Add the buttermilk, vegetable oil, eggs, and vanilla extract and mix until combined.', 'Gradually add the boiling water, mixing until smooth.', 'Pour the batter into the prepared baking pan.', 'Bake for 30-35 minutes, or until a toothpick inserted into the center comes out clean.', 'Let cool completely before frosting.'],
-      prepTime: '20 mins',
-      cookTime: '35 mins',
-      servings: 12,
-      calories: 400,
-      tags: ['dessert', 'sweet', 'chocolate'],
-      difficulty: "Medium",
-      mood: 'festive',
-      aiSuggestion: "Add a layer of chocolate ganache for extra richness.",
-      nutritionAnalysis: "High in sugar and fat. Good source of quick energy.",
-      cookingTips: ["Use high-quality cocoa powder for best results.", "Serve with a scoop of vanilla ice cream or whipped cream."]
-    },
-  ],
-  quick: [
-    {
-      id: 'quick1',
-      name: 'Five-Minute Quesadilla',
-      description: 'The ultimate quick meal or snack that requires minimal ingredients and preparation.',
-      ingredients: ['2 tortillas', '1/2 cup shredded cheese', 'Optional: diced vegetables, cooked protein, salsa'],
-      instructions: ['Place one tortilla in a non-stick pan over medium heat.', 'Sprinkle cheese and any optional ingredients over the tortilla.', 'Top with the other tortilla.', 'Cook for 2 minutes on each side or until golden and cheese is melted.', 'Cut into wedges and serve.'],
-      prepTime: '2 mins',
-      cookTime: '3 mins',
-      servings: 1,
-      calories: 300,
-      tags: ['quick', 'easy', 'lunch'],
-      difficulty: "Easy",
-      mood: 'tired',
-      aiSuggestion: "Add salsa or guacamole for extra flavor.",
-      nutritionAnalysis: "High in calcium and protein from cheese.",
-      cookingTips: ["Use a non-stick pan to prevent sticking.", "Keep heat medium to avoid burning."]
-    },
-    {
-      id: 'quick2',
-      name: 'Classic Peanut Butter Sandwich',
-      description: 'The simplest comfort food that takes seconds to prepare but always satisfies.',
-      ingredients: ['2 slices of bread', '2 tablespoons peanut butter', 'Optional: jelly, honey, or banana slices'],
-      instructions: ['Spread peanut butter evenly on one slice of bread.', 'Add optional toppings if desired.', 'Top with the other slice of bread.', 'Cut in half if preferred.', 'Serve immediately.'],
-      prepTime: '2 mins',
-      cookTime: '0 mins',
-      servings: 1,
-      calories: 200,
-      tags: ['quick', 'easy', 'lunch'],
-      difficulty: "Easy",
-      mood: 'hungry',
-      aiSuggestion: "Add jelly for a classic PB&J or banana slices for extra nutrition.",
-      nutritionAnalysis: "High in protein and healthy fats from peanut butter.",
-      cookingTips: ["Use your favorite type of bread.", "Toast the bread for extra texture."]
-    },
-    {
-      id: 'quick3',
-      name: 'Gourmet Microwave Popcorn',
-      description: 'Transform plain microwave popcorn into a gourmet snack with creative seasonings.',
-      ingredients: ['1 bag microwave popcorn', 'Optional toppings: melted butter, salt, nutritional yeast, herbs, spices'],
-      instructions: ['Place the bag in the microwave and cook according to package directions.', 'Carefully open the bag when done, watch for hot steam.', 'Pour popcorn into a large bowl.', 'Add your preferred seasonings and toss to coat evenly.', 'Serve immediately.'],
-      prepTime: '1 mins',
-      cookTime: '3 mins',
-      servings: 2,
-      calories: 150,
-      tags: ['quick', 'easy', 'snack'],
-      difficulty: "Easy",
-      mood: 'relaxed',
-      aiSuggestion: "Try different flavor combinations like Parmesan and herbs or cinnamon sugar.",
-      nutritionAnalysis: "High in fiber, low in calories when not heavily buttered.",
-      cookingTips: ["Listen carefully to avoid burning.", "Shake seasonings while popcorn is still hot so they stick better."]
-    },
-  ],
-  snack: [
-    {
-      id: 'snack1',
-      name: 'Layered Yogurt Parfait',
-      description: 'A nutritious and visually appealing snack that can double as a light breakfast.',
-      ingredients: ['1 cup Greek yogurt', '1/4 cup granola', '1/4 cup mixed berries', 'Optional: honey or maple syrup for sweetness'],
-      instructions: ['In a glass or jar, add a layer of yogurt.', 'Top with a sprinkle of granola.', 'Add a layer of mixed berries.', 'Repeat layers until ingredients are used up.', 'Drizzle with honey or maple syrup if desired.', 'Serve immediately.'],
-      prepTime: '5 mins',
-      cookTime: '0 mins',
-      servings: 1,
-      calories: 200,
-      tags: ['snack', 'healthy', 'easy'],
-      difficulty: "Easy",
-      mood: 'energetic',
-      aiSuggestion: "Add a sprinkle of chia seeds or flaxseeds for extra nutrition.",
-      nutritionAnalysis: "High in protein from Greek yogurt, antioxidants from berries.",
-      cookingTips: ["Use frozen berries if fresh aren't available.", "Keep granola separate until serving to maintain crunchiness."]
-    },
-    {
-      id: 'snack2',
-      name: 'Hummus and Veggie Platter',
-      description: 'A healthy and satisfying snack that is perfect for sharing.',
-      ingredients: ['1 cup hummus', '1 cup sliced bell peppers', '1 cup sliced carrots', '1 cup sliced cucumbers', '1 cup cherry tomatoes', 'Optional: pita bread or crackers'],
-      instructions: ['Arrange the hummus in a small bowl or ramekin.', 'Arrange the sliced vegetables around the hummus.', 'Serve with pita bread or crackers if desired.'],
-      prepTime: '10 mins',
-      cookTime: '0 mins',
-      servings: 4,
-      calories: 150,
-      tags: ['snack', 'healthy', 'vegetarian'],
-      difficulty: "Easy",
-      mood: 'healthy-minded',
-      aiSuggestion: "Add a drizzle of olive oil and a sprinkle of paprika to the hummus for extra flavor.",
-      nutritionAnalysis: "High in fiber and protein. Good source of vitamins and minerals.",
-      cookingTips: ["Use store-bought hummus to save time.", "Slice vegetables ahead of time and store in water to keep them fresh."]
-    },
-    {
-      id: 'snack3',
-      name: 'Baked Kale Chips',
-      description: 'A crispy and nutritious alternative to potato chips.',
-      ingredients: ['1 bunch kale, washed and dried', '1 tbsp olive oil', 'Salt to taste', 'Optional: nutritional yeast, garlic powder, or other seasonings'],
-      instructions: ['Preheat oven to 300°F (150°C).', 'Remove the stems from the kale and tear the leaves into bite-sized pieces.', 'In a bowl, toss the kale with olive oil and salt.', 'Spread the kale in a single layer on a baking sheet.', 'Bake for 10-15 minutes, or until the edges are brown but not burnt.', 'Let cool before serving.'],
-      prepTime: '10 mins',
-      cookTime: '15 mins',
-      servings: 2,
-      calories: 100,
-      tags: ['snack', 'healthy', 'vegetarian'],
-      difficulty: "Easy",
-      mood: 'health-conscious',
-      aiSuggestion: "Try different flavor combinations like nutritional yeast for a cheesy flavor or smoked paprika for a smoky flavor.",
-      nutritionAnalysis: "High in vitamins A, C, and K. Low in calories and high in fiber.",
-      cookingTips: ["Ensure the kale is completely dry before baking to get them crispy.", "Watch them closely as they can burn quickly."]
-    }
-  ],
-  // Add remaining recipe categories here (if any)
-};
-
-// Add the missing export functions
-export const getAllRecipes = (): Recipe[] => {
-  // Flatten all recipe arrays into a single array
-  return Object.values(recipesData).flat();
-};
-
-export const getRecipeById = (id: string): Recipe | null => {
-  // Search through all categories for a recipe with the given id
-  for (const recipes of Object.values(recipesData)) {
-    const found = recipes.find(recipe => recipe.id === id);
-    if (found) return found;
-  }
-  return null;
-};
-
-export const getRecipesByMood = (moodId: string): Recipe[] => {
-  // Filter all recipes by the given mood
-  return getAllRecipes().filter(recipe => recipe.mood === moodId);
-};
-
-export const searchRecipes = (searchTerm: string): Recipe[] => {
-  // Convert search term to lowercase for case-insensitive search
-  const lowerSearchTerm = searchTerm.toLowerCase();
-  
-  return getAllRecipes().filter(recipe => {
-    // Search in name and description
-    if (recipe.name.toLowerCase().includes(lowerSearchTerm) || 
-        recipe.description.toLowerCase().includes(lowerSearchTerm)) {
-      return true;
-    }
-    
-    // Search in ingredients
-    if (recipe.ingredients.some(ingredient => 
-      ingredient.toLowerCase().includes(lowerSearchTerm)
-    )) {
-      return true;
-    }
-    
-    // Search in tags
-    if (recipe.tags.some(tag => 
-      tag.toLowerCase().includes(lowerSearchTerm)
-    )) {
-      return true;
-    }
-    
-    return false;
-  });
-};
-
-export const getChatbotResponse = (query: string, currentMood: string | null): string => {
-  // Simple implementation for the chatbot response
-  query = query.toLowerCase();
-  
-  // Respond to mood-specific questions
-  if (currentMood && query.includes('recommend') || query.includes('suggest') || query.includes('what should i')) {
-    const moodRecipes = getRecipesByMood(currentMood);
-    if (moodRecipes.length > 0) {
-      const randomRecipe = moodRecipes[Math.floor(Math.random() * moodRecipes.length)];
-      return `Based on your ${currentMood} mood, I recommend trying ${randomRecipe.name}. It's ${randomRecipe.description}`;
-    }
-  }
-  
-  // Respond to questions about cooking tips
-  if (query.includes('how do i') || query.includes('how to')) {
-    if (query.includes('pasta') || query.includes('spaghetti')) {
-      return "For perfect pasta, salt your water generously, cook until al dente, and save some pasta water to finish your sauce.";
-    }
-    if (query.includes('steak') || query.includes('meat')) {
-      return "For a great steak, let it come to room temperature before cooking, season generously, and let it rest for 5-10 minutes after cooking.";
-    }
-  }
-  
-  // Respond to questions about ingredients
-  if (query.includes('substitute') || query.includes('replacement')) {
-    return "Many ingredients can be substituted! Let me know what specific ingredient you need to replace, and I can give you alternatives.";
-  }
-  
-  // Default responses
-  const defaultResponses = [
-    "I'd be happy to help you find a recipe. What kind of meal are you looking for?",
-    "Looking for cooking inspiration? Try filtering recipes by your current mood!",
-    "If you have specific ingredients you want to use, I can help you find recipes for them.",
-    "Need cooking tips or have questions about a recipe? Feel free to ask!",
-    "Want to try something new? Ask me for recipe suggestions based on cuisines you enjoy."
-  ];
-  
-  return defaultResponses[Math.floor(Math.random() * defaultResponses.length)];
-};
-
-// Export a function to get similar recipes based on a recipe ID
-export const getSimilarRecipes = (recipeId: string): Recipe[] => {
-  // Find the recipe with the given ID
-  let targetRecipe: Recipe | null = null;
-  let category: string = "";
-  
-  // Search through all categories to find the recipe
-  for (const [cat, recipes] of Object.entries(recipesData)) {
-    const found = recipes.find(recipe => recipe.id === recipeId);
-    if (found) {
-      targetRecipe = found;
-      category = cat;
-      break;
-    }
-  }
-  
-  if (!targetRecipe) {
-    return []; // Recipe not found
-  }
-  
-  // Get all recipes (excluding the target recipe)
-  const allRecipes: Recipe[] = [];
-  for (const [cat, recipes] of Object.entries(recipesData)) {
-    if (cat === category) {
-      // Add recipes from the same category (excluding the target recipe)
-      allRecipes.push(...recipes.filter(recipe => recipe.id !== recipeId));
-    } else {
-      // Add a random sample of recipes from other categories
-      const randomRecipes = recipes.slice(0, 1); // Just take the first recipe from each other category
-      allRecipes.push(...randomRecipes);
-    }
-  }
-  
-  // Score recipes based on similarity to the target recipe
-  const scoredRecipes = allRecipes.map(recipe => {
-    let score = 0;
-    
-    // Same mood: +3 points
-    if (recipe.mood === targetRecipe!.mood) {
-      score += 3;
-    }
-    
-    // Shared tags: +1 point per shared tag
-    const sharedTags = recipe.tags.filter(tag => targetRecipe!.tags.includes(tag));
-    score += sharedTags.length;
-    
-    // Similar difficulty: +1 point
-    if (recipe.difficulty === targetRecipe!.difficulty) {
-      score += 1;
-    }
-    
-    // Similar preparation time: +1 point
-    const targetPrepTime = parseInt(targetRecipe!.prepTime);
-    const recipePrepTime = parseInt(recipe.prepTime);
-    if (!isNaN(targetPrepTime) && !isNaN(recipePrepTime) && Math.abs(targetPrepTime - recipePrepTime) <= 10) {
-      score += 1;
-    }
-    
-    // Same category: +2 points
-    if (recipe.id.split('1')[0] === targetRecipe!.id.split('1')[0]) {
-      score += 2;
-    }
-    
-    return { recipe, score };
-  });
-  
-  // Sort by score (descending) and return the top 3 recipes
-  scoredRecipes.sort((a, b) => b.score - a.score);
-  return scoredRecipes.slice(0, 3).map(item => item.recipe);
-};
-
-export default recipesData;
+      id: 'lunch4',
+      name: 'Vietnamese Banh Mi Sandwich',
+      description: 'A flavorful fusion sandwich featuring marinated protein, pickled vegetables, and fresh herbs on a crusty baguette.',
+      ingredients: ['1 baguette, cut into sandwich-sized portions', '1/2 lb thinly sliced pork, chicken, or tofu, marinated and cooked', '1 carrot, julienned and pickled', '1/2 cucumber, thinly sliced', '1/4 cup cilantro
