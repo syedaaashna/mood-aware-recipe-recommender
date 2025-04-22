@@ -1,4 +1,3 @@
-
 import React, { useState, useRef } from 'react';
 import { Volume2, Pause, Play, Settings, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -123,14 +122,15 @@ const VoiceGuidance: React.FC<VoiceGuidanceProps> = ({ recipe }) => {
   };
 
   const changeLanguage = (language: typeof selectedLanguage) => {
-    if (language) {
-      setSelectedLanguage(language);
-      if (isSpeaking) {
-        stopSpeaking();
-        setTimeout(() => {
-          speakStep(currentStepIndex);
-        }, 100);
-      }
+    if (!language) return;
+    setSelectedLanguage(language);
+    if (isSpeaking) {
+      speechSynthRef.current.cancel();
+      setIsSpeaking(false);
+      setIsPaused(false);
+      setTimeout(() => {
+        speakStep(currentStepIndex);
+      }, 150);
     }
   };
 

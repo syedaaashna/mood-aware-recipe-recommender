@@ -1,14 +1,13 @@
-
 import { useState, useEffect, useRef } from 'react';
 import { Language } from '@/types/voice';
 import { useToast } from '@/hooks/use-toast';
 
-// Allow only these 4 languages
+// Allow only these 4 languages: English, French, Chinese, German (Hindi removed, German added)
 const LANGUAGE_WHITELIST = [
   { code: "en-US", label: "English" },
-  { code: "hi-IN", label: "Hindi" },
   { code: "fr-FR", label: "French" },
   { code: "zh-CN", label: "Chinese" },
+  { code: "de-DE", label: "German" }, // NEW: Add German
 ];
 
 export const useVoiceSynthesis = () => {
