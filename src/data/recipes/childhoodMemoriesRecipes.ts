@@ -26,7 +26,8 @@ export const childhoodMemoriesRecipes: Recipe[] = [
     difficulty: 'Easy',
     mood: 'childhood memories',
     nutritionAnalysis: 'Cheesy memory lane.',
-    cookingTips: ['Use sharp cheddar for flavor.']
+    cookingTips: ['Use sharp cheddar for flavor.'],
+    image: 'https://images.unsplash.com/photo-1612152328178-91a1f8161fb3?w=800&auto=format&fit=crop&q=80'
   },
   {
     id: 'childhood-indian-bread-butter-jam',
@@ -50,7 +51,8 @@ export const childhoodMemoriesRecipes: Recipe[] = [
     difficulty: 'Easy',
     mood: 'childhood memories',
     nutritionAnalysis: 'Sugar rush nostalgia.',
-    cookingTips: ['Use homemade jam if possible.']
+    cookingTips: ['Use homemade jam if possible.'],
+    image: 'https://images.unsplash.com/photo-1484723091739-30a097e8f929?w=800&auto=format&fit=crop&q=80'
   },
   {
     id: 'childhood-thai-banana-pancakes',
@@ -77,6 +79,7 @@ export const childhoodMemoriesRecipes: Recipe[] = [
     difficulty: 'Easy',
     mood: 'childhood memories',
     nutritionAnalysis: 'Sweet childhood memories.',
-    cookingTips: ['Use ripe banana.']
+    cookingTips: ['Use ripe banana.'],
+    image: 'https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?w=800&auto=format&fit=crop&q=80'
   }
 ];

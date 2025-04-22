@@ -1,3 +1,4 @@
+
 import { Recipe } from '@/types/recipe';
 
 export const comfortSeekerRecipes: Recipe[] = [
@@ -26,7 +27,8 @@ export const comfortSeekerRecipes: Recipe[] = [
     difficulty: 'Easy',
     mood: 'comfort seeker',
     nutritionAnalysis: 'Ultimate home comfort.',
-    cookingTips: ['Rest before slicing.']
+    cookingTips: ['Rest before slicing.'],
+    image: 'https://images.unsplash.com/photo-1600891963781-9a952f3a0235?w=800&auto=format&fit=crop&q=80'
   },
   {
     id: 'comfort-seeker-british-bangers-mash',
@@ -53,7 +55,8 @@ export const comfortSeekerRecipes: Recipe[] = [
     difficulty: 'Easy',
     mood: 'comfort seeker',
     nutritionAnalysis: 'Starchy and hearty.',
-    cookingTips: ['Use quality sausages.']
+    cookingTips: ['Use quality sausages.'],
+    image: 'https://images.unsplash.com/photo-1577906096429-f73c2c312435?w=800&auto=format&fit=crop&q=80'
   },
   {
     id: 'comfort-seeker-french-gratin-dauphinois',
@@ -80,6 +83,7 @@ export const comfortSeekerRecipes: Recipe[] = [
     difficulty: 'Medium',
     mood: 'comfort seeker',
     nutritionAnalysis: 'Creamy and rich.',
-    cookingTips: ['Use starchy potatoes.']
+    cookingTips: ['Use starchy potatoes.'],
+    image: 'https://images.unsplash.com/photo-1633436375105-552cf1a43d58?w=800&auto=format&fit=crop&q=80'
   }
 ];

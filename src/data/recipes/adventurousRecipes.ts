@@ -27,7 +27,8 @@ export const adventurousRecipes: Recipe[] = [
     difficulty: 'Easy',
     mood: 'adventurous',
     nutritionAnalysis: 'Fermented, healthy.',
-    cookingTips: ['Top with extra sesame seeds.']
+    cookingTips: ['Top with extra sesame seeds.'],
+    image: 'https://images.unsplash.com/photo-1596456716127-452b23f82652?w=800&auto=format&fit=crop&q=80'
   },
   {
     id: 'adventurous-jackfruit-tacos',
@@ -55,6 +56,7 @@ export const adventurousRecipes: Recipe[] = [
     difficulty: 'Easy',
     mood: 'adventurous',
     nutritionAnalysis: 'Pulled jackfruit is fiber-rich.',
-    cookingTips: ['Drain jackfruit thoroughly.']
+    cookingTips: ['Drain jackfruit thoroughly.'],
+    image: 'https://images.unsplash.com/photo-1562967916-eb82221dfb92?w=800&auto=format&fit=crop&q=80'
   }
 ];

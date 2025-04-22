@@ -8,7 +8,39 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, Di
 import { Recipe } from '@/types/recipe';
 import { useToast } from "@/hooks/use-toast";
 import VoiceGuidance from './VoiceGuidance';
-import { getRecipeImageWithErrorHandling } from '@/utils/recipeImageHelper';
+
+// Reliable fallback image for each cuisine type
+const CUISINE_FALLBACK_IMAGES: Record<string, string> = {
+  'italian': 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=800&auto=format&fit=crop&q=80',
+  'french': 'https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=800&auto=format&fit=crop&q=80',
+  'indian': 'https://images.unsplash.com/photo-1585937421612-70a008356cf4?w=800&auto=format&fit=crop&q=80',
+  'chinese': 'https://images.unsplash.com/photo-1563245372-f21724e3856d?w=800&auto=format&fit=crop&q=80',
+  'japanese': 'https://images.unsplash.com/photo-1579584425555-c3ce17fd4351?w=800&auto=format&fit=crop&q=80',
+  'mexican': 'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=800&auto=format&fit=crop&q=80',
+  'american': 'https://images.unsplash.com/photo-1550547660-d9450f859349?w=800&auto=format&fit=crop&q=80',
+  'korean': 'https://images.unsplash.com/photo-1498654896293-37aacf113fd9?w=800&auto=format&fit=crop&q=80',
+  'thai': 'https://images.unsplash.com/photo-1559847844-5315695dadae?w=800&auto=format&fit=crop&q=80',
+  'spanish': 'https://images.unsplash.com/photo-1515443961218-a51367888e4b?w=800&auto=format&fit=crop&q=80',
+  'british': 'https://images.unsplash.com/photo-1577906096429-f73c2c312435?w=800&auto=format&fit=crop&q=80',
+  'vietnamese': 'https://images.unsplash.com/photo-1576577445504-6af96477db52?w=800&auto=format&fit=crop&q=80',
+  'middle eastern': 'https://images.unsplash.com/photo-1540914124281-342587941389?w=800&auto=format&fit=crop&q=80',
+  'greek': 'https://images.unsplash.com/photo-1551248429-40975aa4de74?w=800&auto=format&fit=crop&q=80',
+  'default': 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=800&auto=format&fit=crop&q=80'
+};
+
+// Default images by recipe type
+const RECIPE_TYPE_IMAGES: Record<string, string> = {
+  'soup': 'https://images.unsplash.com/photo-1547592166-23ac45744acd?w=800&auto=format&fit=crop&q=80',
+  'salad': 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=800&auto=format&fit=crop&q=80',
+  'pasta': 'https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=800&auto=format&fit=crop&q=80',
+  'dessert': 'https://images.unsplash.com/photo-1551024506-0bccd828d307?w=800&auto=format&fit=crop&q=80',
+  'drink': 'https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?w=800&auto=format&fit=crop&q=80',
+  'breakfast': 'https://images.unsplash.com/photo-1533089860892-a9b969ced0ac?w=800&auto=format&fit=crop&q=80',
+  'sandwich': 'https://images.unsplash.com/photo-1528736235302-52922df5c122?w=800&auto=format&fit=crop&q=80',
+  'curry': 'https://images.unsplash.com/photo-1585937421612-70a008356cf4?w=800&auto=format&fit=crop&q=80',
+  'rice': 'https://images.unsplash.com/photo-1596456716127-452b23f82652?w=800&auto=format&fit=crop&q=80',
+  'stew': 'https://images.unsplash.com/photo-1588166524941-3bf61a9c41db?w=800&auto=format&fit=crop&q=80'
+};
 
 interface RecipeCardProps {
   recipe: Recipe;
@@ -48,13 +80,41 @@ const RecipeCard = ({ recipe, isFavorite, onToggleFavorite }: RecipeCardProps) =
     }
   };
 
-  // Get the image URL with fallback handling
-  const imageUrl = recipe.image;
+  // Get the best image URL with fallbacks
+  const getImageUrl = () => {
+    // First try the recipe's own image
+    if (recipe.image && !imageError) {
+      return recipe.image;
+    }
+
+    // Try to determine cuisine from tags
+    const cuisineTags = recipe.tags.filter(tag => 
+      Object.keys(CUISINE_FALLBACK_IMAGES).includes(tag.toLowerCase())
+    );
+    
+    if (cuisineTags.length > 0) {
+      return CUISINE_FALLBACK_IMAGES[cuisineTags[0].toLowerCase()] || CUISINE_FALLBACK_IMAGES['default'];
+    }
+    
+    // Try to determine recipe type from tags
+    const typeTags = recipe.tags.filter(tag => 
+      Object.keys(RECIPE_TYPE_IMAGES).includes(tag.toLowerCase())
+    );
+    
+    if (typeTags.length > 0) {
+      return RECIPE_TYPE_IMAGES[typeTags[0].toLowerCase()] || CUISINE_FALLBACK_IMAGES['default'];
+    }
+    
+    // Default fallback
+    return CUISINE_FALLBACK_IMAGES['default'];
+  };
+
+  const imageUrl = getImageUrl();
 
   return (
     <Card className="overflow-hidden transition-all duration-300 hover:shadow-lg dark:hover:shadow-primary/10 h-full flex flex-col">
       <div className="relative overflow-hidden aspect-video bg-gray-100 dark:bg-gray-800 flex items-center justify-center">
-        {imageUrl && !imageError ? (
+        {imageUrl ? (
           <img 
             src={imageUrl} 
             alt={recipe.name}

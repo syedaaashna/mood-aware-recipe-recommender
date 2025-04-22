@@ -1,3 +1,4 @@
+
 import { Recipe } from '@/types/recipe';
 
 export const hungryRecipes: Recipe[] = [
@@ -27,7 +28,8 @@ export const hungryRecipes: Recipe[] = [
     difficulty: 'Easy',
     mood: 'hungry',
     nutritionAnalysis: 'High protein meal.',
-    cookingTips: ["Don't press burgers while cooking."]
+    cookingTips: ["Don't press burgers while cooking."],
+    image: 'https://images.unsplash.com/photo-1550547660-d9450f859349?w=800&auto=format&fit=crop&q=80'
   },
   {
     id: 'hungry-indian-butter-chicken',
@@ -54,7 +56,8 @@ export const hungryRecipes: Recipe[] = [
     difficulty: 'Medium',
     mood: 'hungry',
     nutritionAnalysis: 'Filling and comforting.',
-    cookingTips: ['Garnish with cilantro.']
+    cookingTips: ['Garnish with cilantro.'],
+    image: 'https://images.unsplash.com/photo-1565557623262-b51c2513a641?w=800&auto=format&fit=crop&q=80'
   },
   {
     id: 'hungry-italian-carbonara',
@@ -80,6 +83,7 @@ export const hungryRecipes: Recipe[] = [
     difficulty: 'Medium',
     mood: 'hungry',
     nutritionAnalysis: 'Rich and satisfying.',
-    cookingTips: ['Stir quickly to prevent scrambling eggs.']
+    cookingTips: ['Stir quickly to prevent scrambling eggs.'],
+    image: 'https://images.unsplash.com/photo-1585672840563-f2af2ced55c9?w=800&auto=format&fit=crop&q=80'
   }
 ];

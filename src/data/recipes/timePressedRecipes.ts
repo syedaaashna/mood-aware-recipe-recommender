@@ -27,7 +27,7 @@ export const timePressedRecipes: Recipe[] = [
     tags: ['chinese', 'fried rice', 'quick'],
     difficulty: 'Easy',
     mood: 'time pressed',
-    image: 'https://images.unsplash.com/photo-1603133872878-684f208fb84b?w=800&auto=format&fit=crop',
+    image: 'https://images.unsplash.com/photo-1603133872878-684f208fb84b?w=800&auto=format&fit=crop&q=80',
     nutritionAnalysis: 'Fast and filling.',
     cookingTips: ['Use leftover rice for the best texture.']
   },
@@ -55,7 +55,7 @@ export const timePressedRecipes: Recipe[] = [
     tags: ['indian', 'omelette', 'fast'],
     difficulty: 'Easy',
     mood: 'time pressed',
-    image: 'https://images.unsplash.com/photo-1600326145405-b8c7285d4042?w=800&auto=format&fit=crop',
+    image: 'https://images.unsplash.com/photo-1600326145405-b8c7285d4042?w=800&auto=format&fit=crop&q=80',
     nutritionAnalysis: 'High protein snack.',
     cookingTips: ['Serve with bread for a meal.']
   },
@@ -83,7 +83,7 @@ export const timePressedRecipes: Recipe[] = [
     tags: ['european', 'toast', 'quick'],
     difficulty: 'Easy',
     mood: 'time pressed',
-    image: 'https://images.unsplash.com/photo-1592417817098-8fd3d9eb14a5?w=800&auto=format&fit=crop',
+    image: 'https://images.unsplash.com/photo-1592417817098-8fd3d9eb14a5?w=800&auto=format&fit=crop&q=80',
     nutritionAnalysis: 'Light and quick.',
     cookingTips: ['Best with ripe tomatoes.']
   }

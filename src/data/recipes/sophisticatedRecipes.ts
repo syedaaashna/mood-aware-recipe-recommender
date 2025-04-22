@@ -27,7 +27,7 @@ export const sophisticatedRecipes: Recipe[] = [
     tags: ['french', 'stew', 'sophisticated'],
     difficulty: 'Hard',
     mood: 'sophisticated',
-    image: 'https://images.unsplash.com/photo-1590788354590-dad24d8ca315?w=800&auto=format&fit=crop',
+    image: 'https://images.unsplash.com/photo-1590788354590-dad24d8ca315?w=800&auto=format&fit=crop&q=80',
     nutritionAnalysis: 'Rich and complex.',
     cookingTips: ['Marinate overnight for more flavor.']
   }
