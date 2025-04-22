@@ -34,7 +34,7 @@ export const sadRecipes: Recipe[] = [
       'Reserve some pasta water for adjusting sauce consistency',
       'Add breadcrumbs on top for extra crunch'
     ],
-    image: 'https://images.unsplash.com/photo-1519864600265-abb23847ef2c?w=800&auto=format&fit=crop&q=80'
+    image: 'https://images.unsplash.com/photo-1543352634-99a5d50ae78e?w=800&auto=format&fit=crop'
   },
   {
     id: 'sad-ramen',
@@ -100,7 +100,7 @@ export const sadRecipes: Recipe[] = [
     tags: ['italian', 'comfort', 'creamy', 'vegetarian'],
     difficulty: 'Medium',
     mood: 'sad',
-    image: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=800&auto=format&fit=crop&q=80',
+    image: 'https://images.unsplash.com/photo-1648748011617-32e6ca805611?w=800&auto=format&fit=crop',
     nutritionAnalysis: 'Rich in carbohydrates and protein',
     cookingTips: [
       'Keep stock hot',
@@ -172,7 +172,7 @@ export const sadRecipes: Recipe[] = [
     tags: ['french', 'soup', 'comfort', 'cheese'],
     difficulty: 'Medium',
     mood: 'sad',
-    image: 'https://images.unsplash.com/photo-1519864600265-abb23847ef2c?w=800&auto=format&fit=crop&q=80',
+    image: 'https://images.unsplash.com/photo-1574484284002-952d92456975?w=800&auto=format&fit=crop',
     nutritionAnalysis: 'Rich in flavor and comfort',
     cookingTips: [
       'Take time with onions',
