@@ -144,7 +144,6 @@ export const moods: Mood[] = [
     icon: '🍫',
     description: 'Treating yourself to something special'
   },
-  // Previously added moods
   {
     id: 'celebratory',
     name: 'Celebratory',
@@ -205,7 +204,6 @@ export const moods: Mood[] = [
     icon: '🧸',
     description: 'Looking for familiar, soothing foods'
   },
-  // New moods
   {
     id: 'proud',
     name: 'Proud',
@@ -588,4 +586,296 @@ const recipesData: { [key: string]: Recipe[] } = {
       id: 'lunch4',
       name: 'Vietnamese Banh Mi Sandwich',
       description: 'A flavorful fusion sandwich featuring marinated protein, pickled vegetables, and fresh herbs on a crusty baguette.',
-      ingredients: ['1 baguette, cut into sandwich-sized portions', '1/2 lb thinly sliced pork, chicken, or tofu, marinated and cooked', '1 carrot, julienned and pickled', '1/2 cucumber, thinly sliced', '1/4 cup cilantro
+      ingredients: ['1 baguette, cut into sandwich-sized portions', '1/2 lb thinly sliced pork, chicken, or tofu, marinated and cooked', '1 carrot, julienned and pickled', '1/2 cucumber, thinly sliced', '1/4 cup cilantro, chopped', '2 tbsp mayonnaise', '1 tbsp sriracha or hot sauce (optional)', '1 tbsp soy sauce', '1 lime, juiced', 'Salt and pepper to taste'],
+      instructions: ['Slice the baguette lengthwise, leaving one side attached as a hinge.', 'Spread mayonnaise on both sides of the bread.', 'Layer the cooked protein on the bottom half.', 'Top with pickled carrots, cucumber slices, and cilantro.', 'Drizzle with a mixture of soy sauce, lime juice, and sriracha if using.', 'Season with salt and pepper.', 'Close the sandwich and cut into portions.', 'Serve immediately.'],
+      prepTime: '15 mins',
+      cookTime: '5 mins',
+      servings: 2,
+      calories: 450,
+      tags: ['lunch', 'sandwich', 'vietnamese', 'fusion'],
+      difficulty: "Medium",
+      mood: 'adventurous',
+      aiSuggestion: "Add pickled daikon radish for authentic flavor.",
+      nutritionAnalysis: "Good balance of protein and carbohydrates. Fresh vegetables provide vitamins and fiber.",
+      cookingTips: ["Toast the baguette lightly for extra crunch.", "The pickled vegetables can be made a day ahead for better flavor."]
+    }
+  ],
+  
+  dinner: [
+    {
+      id: 'dinner1',
+      name: 'Classic Beef Stew',
+      description: 'A hearty and comforting stew that is perfect for a cozy dinner.',
+      ingredients: ['1 lb beef chuck', '1 onion, chopped', '2 carrots, chopped', '2 celery stalks, chopped', '1/2 cup tomato paste', '1 cup beef broth', '1/2 cup red wine', '1/2 cup beef stock', '1/2 cup heavy cream', '1/2 cup chopped parsley', 'Salt and pepper to taste'],
+      instructions: ['In a large pot, brown beef chuck over medium heat. Drain off any excess fat.', 'Add onion, carrots, and celery to the pot and cook until softened, about 5 minutes.', 'Stir in tomato paste and cook for 1 minute more.', 'Pour in beef broth, red wine, and beef stock. Season with salt and pepper.', 'Bring to a simmer and cook for 1 hour.', 'Stir in heavy cream and parsley. Cook for an additional 10 minutes.', 'Serve hot.'],
+      prepTime: '15 mins',
+      cookTime: '1 hour 10 mins',
+      servings: 6,
+      calories: 450,
+      tags: ['dinner', 'meat', 'comfort', 'easy'],
+      difficulty: "Easy",
+      mood: 'tired',
+      aiSuggestion: "Add a pinch of cumin for extra flavor.",
+      nutritionAnalysis: "High in protein and carbohydrates. Provides a good source of iron.",
+      cookingTips: ["Use a slow cooker for a more tender stew.", "Serve with a side of crusty bread for dipping."]
+    },
+    {
+      id: 'dinner2',
+      name: 'Vegetable Stir-Fry',
+      description: 'A quick and easy stir-fry that is perfect for a busy dinner.',
+      ingredients: ['1 lb mixed vegetables (e.g. bell peppers, broccoli, carrots)', '1 tbsp olive oil', '1 onion, chopped', '2 cloves garlic, minced', '1/2 cup soy sauce', '1/2 cup oyster sauce', '1/2 cup brown sugar', '1/4 cup cornstarch', '1/4 cup water', 'Salt and pepper to taste'],
+      instructions: ['In a wok or large skillet, heat olive oil over high heat.', 'Add onion and garlic and cook until softened, about 1 minute.', 'Add mixed vegetables and stir-fry for 5 minutes.', 'Stir in soy sauce, oyster sauce, brown sugar, cornstarch, and water. Cook for an additional 2-3 minutes.', 'Season with salt and pepper to taste.', 'Serve hot.'],
+      prepTime: '10 mins',
+      cookTime: '10 mins',
+      servings: 4,
+      calories: 200,
+      tags: ['dinner', 'vegetarian', 'easy'],
+      difficulty: "Easy",
+      mood: 'hungry',
+      aiSuggestion: "Add a handful of green onions for extra flavor.",
+      nutritionAnalysis: "Good source of vitamins and minerals. Low in calories.",
+      cookingTips: ["Use a wok for the best stir-fry results.", "Serve with a side of rice or noodles."]
+    },
+    {
+      id: 'dinner3',
+      name: 'Chicken and Rice',
+      description: 'A classic American dish that is perfect for a cozy dinner.',
+      ingredients: ['1 lb boneless, skinless chicken breasts', '1 cup cooked rice', '1/2 cup soy sauce', '1/2 cup brown sugar', '1/4 cup cornstarch', '1/4 cup water', 'Salt and pepper to taste'],
+      instructions: ['In a wok or large skillet, heat olive oil over high heat.', 'Add chicken and cook until browned on both sides, about 5 minutes.', 'Stir in soy sauce, brown sugar, cornstarch, and water. Cook for an additional 2-3 minutes.', 'Season with salt and pepper to taste.', 'Serve hot with rice.'],
+      prepTime: '10 mins',
+      cookTime: '10 mins',
+      servings: 4,
+      calories: 300,
+      tags: ['dinner', 'meat', 'american', 'easy'],
+      difficulty: "Easy",
+      mood: 'relaxed',
+      aiSuggestion: "Add a pinch of ginger for extra flavor.",
+      nutritionAnalysis: "High in protein and carbohydrates. Provides a good source of iron.",
+      cookingTips: ["Use a wok for the best stir-fry results.", "Serve with a side of steamed vegetables."]
+    }
+  ],
+  
+  dessert: [
+    {
+      id: 'dessert1',
+      name: 'Chocolate Cake',
+      description: 'A rich and decadent chocolate cake that is perfect for a special occasion.',
+      ingredients: ['1 cup all-purpose flour', '1/2 cup unsalted butter', '1/2 cup granulated sugar', '1/2 cup dark chocolate chips', '1/2 cup cocoa powder', '1 tsp baking soda', '1 tsp baking powder', '1/2 tsp salt', '1/2 cup milk', '1/2 cup vegetable oil', '2 large eggs', '1 tsp vanilla extract', '1/2 cup boiling water'],
+      instructions: ['Preheat oven to 350°F (175°C).', 'In a large bowl, whisk together flour, butter, sugar, dark chocolate chips, cocoa powder, baking soda, baking powder, and salt.', 'In a separate bowl, whisk together milk, vegetable oil, eggs, and vanilla extract.', 'Gradually add wet ingredients to dry ingredients, stirring until just combined.', 'Pour batter into a greased 9x13 inch baking dish.', 'Bake for 30-35 minutes, or until a toothpick inserted into the center comes out clean.', 'Let cool completely before slicing and serving.'],
+      prepTime: '15 mins',
+      cookTime: '30 mins',
+      servings: 8,
+      calories: 400,
+      tags: ['dessert', 'chocolate', 'easy'],
+      difficulty: "Easy",
+      mood: 'proud',
+      aiSuggestion: "Add a sprinkle of cocoa powder on top for extra flavor.",
+      nutritionAnalysis: "High in carbohydrates and fat. Provides a good source of protein.",
+      cookingTips: ["Use a stand mixer for easier mixing.", "Let the cake cool completely before frosting."]
+    },
+    {
+      id: 'dessert2',
+      name: 'Banana Bread',
+      description: 'A moist and flavorful banana bread that is perfect for a weekend breakfast or snack.',
+      ingredients: ['1 1/2 cups mashed ripe bananas', '1/2 cup granulated sugar', '1/2 cup all-purpose flour', '1/2 tsp baking soda', '1/2 tsp salt', '1/2 cup vegetable oil', '1 tsp vanilla extract'],
+      instructions: ['Preheat oven to 350°F (175°C).', 'In a large bowl, mix together mashed bananas, sugar, flour, baking soda, and salt.', 'In a separate bowl, whisk together vegetable oil and vanilla extract.', 'Gradually add wet ingredients to dry ingredients, stirring until just combined.', 'Pour batter into a greased 9x5 inch loaf pan.', 'Bake for 50-55 minutes, or until a toothpick inserted into the center comes out clean.', 'Let cool completely before slicing and serving.'],
+      prepTime: '10 mins',
+      cookTime: '50 mins',
+      servings: 6,
+      calories: 200,
+      tags: ['dessert', 'banana', 'easy'],
+      difficulty: "Easy",
+      mood: 'happy',
+      aiSuggestion: "Add a sprinkle of cinnamon for extra flavor.",
+      nutritionAnalysis: "High in carbohydrates and fiber. Provides a good source of vitamins.",
+      cookingTips: ["Use ripe bananas for the best flavor.", "Let the bread cool completely before slicing."]
+    },
+    {
+      id: 'dessert3',
+      name: 'Strawberry Shortcake',
+      description: 'A classic dessert that is perfect for a summer afternoon.',
+      ingredients: ['1 cup sliced strawberries', '1/2 cup granulated sugar', '1/2 cup all-purpose flour', '1/2 tsp baking soda', '1/2 tsp salt', '1/2 cup vegetable oil', '1 tsp vanilla extract'],
+      instructions: ['Preheat oven to 350°F (175°C).', 'In a large bowl, mix together sliced strawberries, sugar, flour, baking soda, and salt.', 'In a separate bowl, whisk together vegetable oil and vanilla extract.', 'Gradually add wet ingredients to dry ingredients, stirring until just combined.', 'Pour batter into a greased 9x5 inch loaf pan.', 'Bake for 50-55 minutes, or until a toothpick inserted into the center comes out clean.', 'Let cool completely before slicing and serving.'],
+      prepTime: '10 mins',
+      cookTime: '50 mins',
+      servings: 6,
+      calories: 200,
+      tags: ['dessert', 'strawberry', 'easy'],
+      difficulty: "Easy",
+      mood: 'relaxed',
+      aiSuggestion: "Add a sprinkle of cinnamon for extra flavor.",
+      nutritionAnalysis: "High in carbohydrates and fiber. Provides a good source of vitamins.",
+      cookingTips: ["Use ripe strawberries for the best flavor.", "Let the cake cool completely before frosting."]
+    }
+  ],
+  
+  quick: [
+    {
+      id: 'quick1',
+      name: 'Quick Oatmeal',
+      description: 'A quick and easy breakfast that is perfect for a busy morning.',
+      ingredients: ['1 cup rolled oats', '1 cup milk or plant-based alternative', '1 tbsp chia seeds', '1 tbsp honey or maple syrup', '1/2 tsp vanilla extract', 'Pinch of salt'],
+      instructions: ['In a jar or container, combine oats, milk, chia seeds, honey or maple syrup, vanilla extract, and salt.', 'Stir well to combine.', 'Cover and refrigerate overnight, or for at least 4 hours.', 'In the morning, add your favorite toppings and enjoy cold or warm it up if preferred.'],
+      prepTime: '5 mins',
+      cookTime: '0 mins (4 hours soaking)',
+      servings: 1,
+      calories: 350,
+      tags: ['quick', 'breakfast', 'healthy', 'easy', 'make-ahead'],
+      difficulty: "Easy",
+      mood: 'busy',
+      aiSuggestion: "Prepare multiple jars at once for breakfast throughout the week.",
+      nutritionAnalysis: "High in fiber and complex carbohydrates. Good source of protein when made with dairy milk.",
+      cookingTips: ["Use a ratio of 1:1 oats to liquid for the perfect consistency.", "Toast the oats before soaking for a nuttier flavor."]
+    },
+    {
+      id: 'quick2',
+      name: 'Quick Peanut Butter Banana Smoothie',
+      description: 'A quick and easy smoothie that is perfect for a busy morning.',
+      ingredients: ['1 banana', '1/2 cup peanut butter', '1/2 cup milk or plant-based alternative', '1/2 cup ice', '1/2 tsp honey or maple syrup'],
+      instructions: ['In a blender, combine banana, peanut butter, milk, ice, and sweetener.', 'Blend until smooth, but still thick. Add more liquid if needed, but keep it thick enough to eat with a spoon.', 'Pour into a bowl and artfully arrange toppings on top.', 'Eat immediately before it melts.'],
+      prepTime: '10 mins',
+      cookTime: '0 mins',
+      servings: 1,
+      calories: 300,
+      tags: ['quick', 'smoothie', 'healthy', 'easy'],
+      difficulty: "Easy",
+      mood: 'energetic',
+      aiSuggestion: "Add a handful of spinach for extra nutrients without changing the taste significantly.",
+      nutritionAnalysis: "Rich in antioxidants from berries. Good source of protein from Greek yogurt.",
+      cookingTips: ["Freeze bananas when they're getting too ripe for the perfect smoothie base.", "Use frozen fruit instead of ice for a creamier texture."]
+    },
+    {
+      id: 'quick3',
+      name: 'Quick Tomato Soup',
+      description: 'A quick and easy tomato soup that is perfect for a busy morning.',
+      ingredients: ['1 tbsp olive oil', '1 onion, chopped', '2 cloves garlic, minced', '28 oz canned crushed tomatoes', '4 cups vegetable broth', '1 tsp sugar', 'Salt and pepper to taste'],
+      instructions: ['Heat olive oil in a pot over medium heat.', 'Add the onion and garlic and cook until softened, about 5 minutes.', 'Stir in the crushed tomatoes, vegetable broth, and sugar.', 'Season with salt and pepper.', 'Bring to a simmer and cook for 15 minutes.', 'Blend the soup with an immersion blender until smooth.', 'Serve hot.'],
+      prepTime: '10 mins',
+      cookTime: '20 mins',
+      servings: 4,
+      calories: 150,
+      tags: ['quick', 'soup', 'vegetarian', 'easy'],
+      difficulty: "Easy",
+      mood: 'nostalgic',
+      aiSuggestion: "Add a pinch of red pepper flakes for a spicy kick.",
+      nutritionAnalysis: "High in vitamins and antioxidants. Low in calories.",
+      cookingTips: ["Use high-quality canned tomatoes for best results.", "Serve with a grilled cheese sandwich for a complete meal."]
+    }
+  ],
+  
+  snack: [
+    {
+      id: 'snack1',
+      name: 'Cheese and Crackers',
+      description: 'A classic snack that is perfect for a quick and satisfying treat.',
+      ingredients: ['1 cup cheese', '1 cup crackers'],
+      instructions: ['Serve cheese and crackers on a plate.', 'Enjoy immediately.'],
+      prepTime: '0 mins',
+      cookTime: '0 mins',
+      servings: 1,
+      calories: 200,
+      tags: ['snack', 'cheese', 'crackers', 'easy'],
+      difficulty: "Easy",
+      mood: 'hungry',
+      aiSuggestion: "Add a sprinkle of cheddar cheese for extra flavor.",
+      nutritionAnalysis: "High in carbohydrates and fat. Provides a good source of protein.",
+      cookingTips: ["Use a variety of cheeses for a more complex flavor."]
+    },
+    {
+      id: 'snack2',
+      name: 'Apple Slices',
+      description: 'A healthy and refreshing snack that is perfect for a quick and satisfying treat.',
+      ingredients: ['1 apple', '1 tbsp peanut butter', '1 tbsp honey or maple syrup'],
+      instructions: ['Slice the apple and spread peanut butter on one side.', 'Top with honey or maple syrup.', 'Enjoy immediately.'],
+      prepTime: '5 mins',
+      cookTime: '0 mins',
+      servings: 1,
+      calories: 150,
+      tags: ['snack', 'apple', 'healthy', 'easy'],
+      difficulty: "Easy",
+      mood: 'stressed',
+      aiSuggestion: "Add a sprinkle of cinnamon for extra flavor.",
+      nutritionAnalysis: "High in carbohydrates and fiber. Provides a good source of vitamins.",
+      cookingTips: ["Use a ripe apple for the best flavor."]
+    },
+    {
+      id: 'snack3',
+      name: 'Greek Yogurt and Granola',
+      description: 'A healthy and satisfying snack that is perfect for a quick and satisfying treat.',
+      ingredients: ['1 cup Greek yogurt', '1/2 cup granola', '1/2 cup honey or maple syrup'],
+      instructions: ['In a bowl, mix together Greek yogurt, granola, and honey or maple syrup.', 'Enjoy immediately.'],
+      prepTime: '5 mins',
+      cookTime: '0 mins',
+      servings: 1,
+      calories: 300,
+      tags: ['snack', 'yogurt', 'granola', 'healthy', 'easy'],
+      difficulty: "Easy",
+      mood: 'relaxed',
+      aiSuggestion: "Add a sprinkle of chia seeds for extra fiber.",
+      nutritionAnalysis: "High in carbohydrates and protein. Provides a good source of vitamins.",
+      cookingTips: ["Use a variety of granola for a more complex flavor."]
+    }
+  ]
+};
+
+export const getAllRecipes = (): Recipe[] => {
+  const allRecipes: Recipe[] = [];
+  Object.values(recipesData).forEach(categoryRecipes => {
+    allRecipes.push(...categoryRecipes);
+  });
+  return allRecipes;
+};
+
+export const getRecipeById = (id: string): Recipe | null => {
+  const allRecipes = getAllRecipes();
+  return allRecipes.find(recipe => recipe.id === id) || null;
+};
+
+export const getRecipesByMood = (moodId: string): Recipe[] => {
+  return getAllRecipes().filter(recipe => recipe.mood === moodId);
+};
+
+export const searchRecipes = (query: string): Recipe[] => {
+  const searchTerm = query.toLowerCase();
+  return getAllRecipes().filter(recipe => 
+    recipe.name.toLowerCase().includes(searchTerm) ||
+    recipe.description.toLowerCase().includes(searchTerm) ||
+    recipe.ingredients.some(ingredient => ingredient.toLowerCase().includes(searchTerm)) ||
+    recipe.tags.some(tag => tag.toLowerCase().includes(searchTerm))
+  );
+};
+
+export const getChatbotResponse = (message: string, moodId: string | null): string => {
+  const lowerMessage = message.toLowerCase();
+  
+  if (moodId) {
+    const mood = moods.find(m => m.id === moodId);
+    if (mood) {
+      if (lowerMessage.includes('recommend') || lowerMessage.includes('suggestion')) {
+        const recipes = getRecipesByMood(moodId);
+        if (recipes.length > 0) {
+          const randomRecipe = recipes[Math.floor(Math.random() * recipes.length)];
+          return `Based on your ${mood.name.toLowerCase()} mood, I recommend trying "${randomRecipe.name}". It's a great choice when you're feeling this way.`;
+        }
+      }
+    }
+  }
+  
+  if (lowerMessage.includes('hello') || lowerMessage.includes('hi')) {
+    return 'Hello! How can I help with your recipe needs today?';
+  } else if (lowerMessage.includes('help')) {
+    return 'I can suggest recipes based on your mood, answer cooking questions, or help you find specific ingredients. Just ask!';
+  } else if (lowerMessage.includes('thank')) {
+    return "You're welcome! Enjoy your cooking and let me know if you need anything else.";
+  } else if (lowerMessage.includes('ingredient') || lowerMessage.includes('substitute')) {
+    return 'For ingredient substitutions, you can often use what you have on hand. For example, yogurt can replace sour cream, and different vegetables can be swapped based on what's available.';
+  } else if (lowerMessage.includes('time') || lowerMessage.includes('quick')) {
+    return 'Looking for something quick? Check out the recipes tagged "easy" or "quick" - they typically take less than 30 minutes to prepare.';
+  } else if (lowerMessage.includes('difficul') || lowerMessage.includes('hard')) {
+    return 'If you\'re new to cooking, start with recipes marked "Easy". Work your way up to "Medium" difficulty as you gain confidence.';
+  }
+  
+  return "I'm here to help with recipe suggestions and cooking tips. Let me know if you're looking for something specific!";
+};
+
+export default recipesData;
