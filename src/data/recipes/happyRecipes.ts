@@ -27,7 +27,7 @@ export const happyRecipes: Recipe[] = [
     tags: ['fresh', 'fruity', 'healthy', 'quick'],
     difficulty: 'Easy',
     mood: 'happy',
-    image: 'https://images.unsplash.com/photo-1464305795204-6f5bbfc7fb81?w=800&auto=format&fit=crop',
+    image: 'https://images.unsplash.com/photo-1565895405227-0d3481048efb?w=800&auto=format&fit=crop',
     nutritionAnalysis: 'High in vitamin C and antioxidants, perfect for boosting mood and energy',
     cookingTips: [
       'Use room temperature fruit for better flavor',
@@ -64,11 +64,11 @@ export const happyRecipes: Recipe[] = [
     tags: ['spanish', 'seafood', 'rice', 'celebration'],
     difficulty: 'Medium',
     mood: 'happy',
-    image: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=800&auto=format&fit=crop',
+    image: 'https://images.unsplash.com/photo-1611489142329-5f62cfa43e6e?w=800&auto=format&fit=crop',
     nutritionAnalysis: 'Rich in protein and omega-3 fatty acids',
     cookingTips: [
       'Use the correct rice-to-liquid ratio',
-      'Don\'t stir after adding rice',
+      "Don't stir after adding rice",
       'Let it rest before serving'
     ]
   },
@@ -100,7 +100,7 @@ export const happyRecipes: Recipe[] = [
     tags: ['japanese', 'fish', 'fresh', 'colorful'],
     difficulty: 'Medium',
     mood: 'happy',
-    image: 'https://images.unsplash.com/photo-1648147610171-9df0c06bf365?w=800&auto=format&fit=crop',
+    image: 'https://images.unsplash.com/photo-1579871494447-9811cf80d66c?w=800&auto=format&fit=crop',
     nutritionAnalysis: 'High in protein and healthy fats',
     cookingTips: [
       'Use sharp knife for clean cuts',
@@ -141,7 +141,7 @@ export const happyRecipes: Recipe[] = [
     cookingTips: [
       'Use fresh curry paste',
       'Add softer vegetables last',
-      'Don\'t overcook the vegetables'
+      "Don't overcook the vegetables"
     ]
   },
   {
