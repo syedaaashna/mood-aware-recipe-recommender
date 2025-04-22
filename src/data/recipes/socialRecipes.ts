@@ -25,7 +25,7 @@ export const socialRecipes: Recipe[] = [
     tags: ['spanish', 'tapas', 'social'],
     difficulty: 'Easy',
     mood: 'social',
-    image: 'https://images.unsplash.com/photo-1626200935028-1eed42b8dd83?w=800&auto=format&fit=crop',
+    image: 'https://images.unsplash.com/photo-1620060301898-cf0ae2c9fa86?w=800&auto=format&fit=crop',
     nutritionAnalysis: 'Snacks for sharing.',
     cookingTips: ['Add cured ham for variety.']
   },
@@ -53,7 +53,7 @@ export const socialRecipes: Recipe[] = [
     tags: ['american', 'wings', 'social'],
     difficulty: 'Medium',
     mood: 'social',
-    image: 'https://images.unsplash.com/photo-1588315029754-2dd089d39a1a?w=800&auto=format&fit=crop',
+    image: 'https://images.unsplash.com/photo-1608039755401-742074f0548d?w=800&auto=format&fit=crop',
     nutritionAnalysis: 'Perfect party food.',
     cookingTips: ['Fry in small batches for crispiness.']
   },
@@ -81,7 +81,7 @@ export const socialRecipes: Recipe[] = [
     tags: ['british', 'fish and chips', 'social'],
     difficulty: 'Medium',
     mood: 'social',
-    image: 'https://images.unsplash.com/photo-1562967914-01efa7e87832?w=800&auto=format&fit=crop',
+    image: 'https://images.unsplash.com/photo-1579208030886-b937da0925dc?w=800&auto=format&fit=crop',
     nutritionAnalysis: 'Crispy and savory.',
     cookingTips: ['Dry fish thoroughly before battering.']
   }

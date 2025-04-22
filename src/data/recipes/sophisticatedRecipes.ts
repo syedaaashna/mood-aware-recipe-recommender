@@ -27,7 +27,7 @@ export const sophisticatedRecipes: Recipe[] = [
     tags: ['french', 'stew', 'sophisticated'],
     difficulty: 'Hard',
     mood: 'sophisticated',
-    image: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=800&auto=format&fit=crop',
+    image: 'https://images.unsplash.com/photo-1605122596411-f5ea71a1d6a0?w=800&auto=format&fit=crop',
     nutritionAnalysis: 'Decadent and complex.',
     cookingTips: ['Use good red wine.']
   },
@@ -55,7 +55,7 @@ export const sophisticatedRecipes: Recipe[] = [
     tags: ['japanese', 'sushi', 'sophisticated'],
     difficulty: 'Hard',
     mood: 'sophisticated',
-    image: 'https://images.unsplash.com/photo-1648147610171-9df0c06bf365?w=800&auto=format&fit=crop',
+    image: 'https://images.unsplash.com/photo-1579871494447-9811cf80d66c?w=800&auto=format&fit=crop',
     nutritionAnalysis: 'Fresh and sophisticated.',
     cookingTips: ['Work with very fresh fish.']
   },
@@ -83,7 +83,7 @@ export const sophisticatedRecipes: Recipe[] = [
     tags: ['british', 'roast', 'sophisticated'],
     difficulty: 'Medium',
     mood: 'sophisticated',
-    image: 'https://images.unsplash.com/photo-1517677208171-0bc6725a3e60?w=800&auto=format&fit=crop',
+    image: 'https://images.unsplash.com/photo-1544025162-d76694265947?w=800&auto=format&fit=crop',
     nutritionAnalysis: 'Classic and refined meal.',
     cookingTips: ['Rest beef before slicing.']
   }

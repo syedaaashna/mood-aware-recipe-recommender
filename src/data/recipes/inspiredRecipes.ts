@@ -28,7 +28,7 @@ export const inspiredRecipes: Recipe[] = [
     tags: ['korean', 'rice bowl', 'creative'],
     difficulty: 'Medium',
     mood: 'inspired',
-    image: 'https://images.unsplash.com/photo-1590301157890-4810ed352733?w=800&auto=format&fit=crop',
+    image: 'https://images.unsplash.com/photo-1553163147-622ab57be1c7?w=800&auto=format&fit=crop',
     nutritionAnalysis: 'Balanced and hearty.',
     cookingTips: ['Use colorful vegetables for presentation.']
   },
@@ -56,7 +56,7 @@ export const inspiredRecipes: Recipe[] = [
     tags: ['italian', 'risotto', 'inspired'],
     difficulty: 'Medium',
     mood: 'inspired',
-    image: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=800&auto=format&fit=crop',
+    image: 'https://images.unsplash.com/photo-1633964913295-ceb43826e7c9?w=800&auto=format&fit=crop',
     nutritionAnalysis: 'Rich and wholesome.',
     cookingTips: ['Stir constantly for creaminess.']
   },
@@ -85,7 +85,7 @@ export const inspiredRecipes: Recipe[] = [
     tags: ['american', 'taco', 'bowl'],
     difficulty: 'Easy',
     mood: 'inspired',
-    image: 'https://images.unsplash.com/photo-1603046891681-9de56a6e849d?w=800&auto=format&fit=crop',
+    image: 'https://images.unsplash.com/photo-1513456852971-30c0b8199d4d?w=800&auto=format&fit=crop',
     nutritionAnalysis: 'Easy protein meal.',
     cookingTips: ['Make with turkey for a lighter option.']
   }

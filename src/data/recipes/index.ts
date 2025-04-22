@@ -36,6 +36,7 @@ import { comfortSeekerRecipes } from './comfortSeekerRecipes';
 import { decadentRecipes } from './decadentRecipes';
 import { seasonalRecipes } from './seasonalRecipes';
 import { socialRecipes } from './socialRecipes';
+import { comfortingRecipes } from './comfortingRecipes';
 
 export const recipesData = {
   happy: happyRecipes,
@@ -75,6 +76,7 @@ export const recipesData = {
   decadent: decadentRecipes,
   seasonal: seasonalRecipes,
   social: socialRecipes,
+  comforting: comfortingRecipes,
 };
 
 export default recipesData;

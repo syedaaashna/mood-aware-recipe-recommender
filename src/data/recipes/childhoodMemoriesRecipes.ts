@@ -25,7 +25,7 @@ export const childhoodMemoriesRecipes: Recipe[] = [
     tags: ['american', 'childhood', 'mac'],
     difficulty: 'Easy',
     mood: 'childhood memories',
-    image: 'https://images.unsplash.com/photo-1548340748-6d2b7c7a0d7a?w=800&auto=format&fit=crop',
+    image: 'https://images.unsplash.com/photo-1543339308-43e59d6b73a6?w=800&auto=format&fit=crop',
     nutritionAnalysis: 'Cheesy memory lane.',
     cookingTips: ['Use sharp cheddar for flavor.']
   },
@@ -50,7 +50,7 @@ export const childhoodMemoriesRecipes: Recipe[] = [
     tags: ['indian', 'snack', 'childhood'],
     difficulty: 'Easy',
     mood: 'childhood memories',
-    image: 'https://images.unsplash.com/photo-1519864600265-abb23847ef2c?w=800&auto=format&fit=crop',
+    image: 'https://images.unsplash.com/photo-1593584785033-9c7604d0863f?w=800&auto=format&fit=crop',
     nutritionAnalysis: 'Sugar rush nostalgia.',
     cookingTips: ['Use homemade jam if possible.']
   },
@@ -78,7 +78,7 @@ export const childhoodMemoriesRecipes: Recipe[] = [
     tags: ['thai', 'pancakes', 'childhood'],
     difficulty: 'Easy',
     mood: 'childhood memories',
-    image: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=800&auto=format&fit=crop',
+    image: 'https://images.unsplash.com/photo-1565299507177-b0ac66763828?w=800&auto=format&fit=crop',
     nutritionAnalysis: 'Sweet childhood memories.',
     cookingTips: ['Use ripe banana.']
   }

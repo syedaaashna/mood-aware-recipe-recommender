@@ -26,7 +26,7 @@ export const seasonalRecipes: Recipe[] = [
     tags: ['french', 'vegetarian', 'seasonal'],
     difficulty: 'Medium',
     mood: 'seasonal',
-    image: 'https://images.unsplash.com/photo-1559847844-5315695dadae?w=800&auto=format&fit=crop',
+    image: 'https://images.unsplash.com/photo-1615368942847-413b1a09d039?w=800&auto=format&fit=crop',
     nutritionAnalysis: 'Vibrant seasonal veggies.',
     cookingTips: ['Use ripe local produce.']
   },
@@ -52,7 +52,7 @@ export const seasonalRecipes: Recipe[] = [
     tags: ['japanese', 'seasonal', 'rice'],
     difficulty: 'Medium',
     mood: 'seasonal',
-    image: 'https://images.unsplash.com/photo-1464306076886-debca5e8a6b0?w=800&auto=format&fit=crop',
+    image: 'https://images.unsplash.com/photo-1617196035154-1e7e6e28b0db?w=800&auto=format&fit=crop',
     nutritionAnalysis: 'Floral and fresh.',
     cookingTips: ['Use pickled blossoms for color.']
   },
@@ -79,7 +79,7 @@ export const seasonalRecipes: Recipe[] = [
     tags: ['american', 'pie', 'seasonal'],
     difficulty: 'Easy',
     mood: 'seasonal',
-    image: 'https://images.unsplash.com/photo-1576072115075-5cd5dc54608a?w=800&auto=format&fit=crop',
+    image: 'https://images.unsplash.com/photo-1509461399763-ae67a981a8b3?w=800&auto=format&fit=crop',
     nutritionAnalysis: 'Rich and festive.',
     cookingTips: ['Let cool fully for best slices.']
   }
