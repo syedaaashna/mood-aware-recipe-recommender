@@ -29,7 +29,7 @@ export const sadMacCheeseRecipe: Recipe = {
   tags: ['comfort food', 'pasta', 'cheese', 'classic'],
   difficulty: 'Medium',
   mood: 'sad',
-  image: 'https://images.unsplash.com/photo-aeLcUBr7kmM?w=800&auto=format&fit=crop',
+  image: 'https://images.unsplash.com/photo-1543352634-99a5d50ae78e?w=800&auto=format&fit=crop&q=80',
   nutritionAnalysis: 'Rich in protein and calcium, provides comfort and satisfaction',
   cookingTips: [
     'Use room temperature cheese for better melting',
