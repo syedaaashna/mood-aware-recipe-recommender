@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/select";
 
 interface MoodInputProps {
-  onMoodSelect: (mood: Mood) => void;
+  onMoodSelect: (mood: Mood | null) => void;
   selectedMood: Mood | null;
 }
 
@@ -65,7 +65,7 @@ const MoodInput = ({ onMoodSelect, selectedMood }: MoodInputProps) => {
               </div>
             </div>
             <button 
-              onClick={() => onMoodSelect(null as unknown as Mood)}
+              onClick={() => onMoodSelect(null)}
               className="p-1 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
             >
               <X className="h-5 w-5" />
