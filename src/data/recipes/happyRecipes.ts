@@ -28,7 +28,7 @@ export const happyRecipes: Recipe[] = [
     tags: ['fresh', 'fruity', 'healthy', 'quick'],
     difficulty: 'Easy',
     mood: 'happy',
-    image: 'https://unsplash.com/photos/a-bowl-filled-with-fruit-and-vegetables-on-top-of-a-table-PBgbIbOsprk w=800&auto=format&fit=crop',
+    image: 'https://images.unsplash.com/photo-1564207550505-196d4c8ced5e?w=800&auto=format&fit=crop',
     nutritionAnalysis: 'High in vitamin C and antioxidants, perfect for boosting mood and energy',
     cookingTips: [
       'Use room temperature fruit for better flavor',
@@ -101,7 +101,7 @@ export const happyRecipes: Recipe[] = [
     tags: ['japanese', 'fish', 'fresh', 'colorful'],
     difficulty: 'Medium',
     mood: 'happy',
-    image: 'https://images.unsplash.com/photo-1617196034183-421b4917c92d?w=800&auto=format&fit=crop',
+    image: 'https://images.unsplash.com/photo-1579871494447-9811cf80d66c?w=800&auto=format&fit=crop',
     nutritionAnalysis: 'High in protein and healthy fats',
     cookingTips: [
       'Use sharp knife for clean cuts',
