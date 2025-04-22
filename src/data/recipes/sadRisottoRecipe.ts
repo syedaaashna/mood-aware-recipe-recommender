@@ -1,4 +1,3 @@
-
 import { Recipe } from '@/types/recipe';
 
 export const sadRisottoRecipe: Recipe = {
@@ -29,7 +28,7 @@ export const sadRisottoRecipe: Recipe = {
   tags: ['italian', 'comfort', 'creamy', 'vegetarian'],
   difficulty: 'Medium',
   mood: 'sad',
-  image: 'https://images.unsplash.com/photo-1610789246295-825dcfb81df9?w=800&auto=format&fit=crop', // Specific risotto image
+  image: 'https://images.unsplash.com/photo-1493962853295-0fd70327578a', // Mushroom risotto image
   nutritionAnalysis: 'Rich in carbohydrates and protein',
   cookingTips: [
     'Keep stock hot',
