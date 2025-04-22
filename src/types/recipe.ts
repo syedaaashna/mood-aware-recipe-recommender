@@ -22,4 +22,5 @@ export interface Recipe {
   aiSuggestion?: string;
   nutritionAnalysis?: string;
   cookingTips?: string[];
+  image?: string; // Added image as an optional property
 }

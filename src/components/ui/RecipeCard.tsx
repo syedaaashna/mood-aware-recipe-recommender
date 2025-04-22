@@ -1,5 +1,5 @@
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -8,7 +8,6 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, Di
 import { Recipe } from '@/types/recipe';
 import { useToast } from "@/hooks/use-toast";
 import VoiceGuidance from './VoiceGuidance';
-import { getRecipeImageWithErrorHandling } from '@/utils/recipeImageHelper';
 
 interface RecipeCardProps {
   recipe: Recipe;
@@ -18,17 +17,7 @@ interface RecipeCardProps {
 
 const RecipeCard = ({ recipe, isFavorite, onToggleFavorite }: RecipeCardProps) => {
   const [isShareDialogOpen, setIsShareDialogOpen] = useState(false);
-  const [imageError, setImageError] = useState(false);
-  const [imageSrc, setImageSrc] = useState('');
   const { toast } = useToast();
-
-  // Reliable fallback image that works in all environments
-  const FALLBACK_IMAGE = 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=800&auto=format&fit=crop';
-
-  useEffect(() => {
-    // No image loading is needed as per user request
-    setImageError(true);
-  }, [recipe]);
 
   const handleCopyLink = () => {
     const recipeUrl = `${window.location.origin}/recipe/${recipe.id}`;
