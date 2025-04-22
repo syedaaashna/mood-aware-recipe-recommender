@@ -1,3 +1,4 @@
+
 import { Recipe } from '@/types/recipe';
 
 export const stressedRecipes: Recipe[] = [
@@ -28,7 +29,7 @@ export const stressedRecipes: Recipe[] = [
     tags: ['beverage', 'calming', 'stress-relief'],
     difficulty: 'Easy',
     mood: 'stressed',
-    image: 'https://images.unsplash.com/photo-1618160702438-9b02ab6515c9',
+    image: 'https://images.unsplash.com/photo-1576092768241-dec231879fc3',
     aiSuggestion: 'Add a drop of vanilla extract for extra comfort.',
     nutritionAnalysis: 'Contains calming properties from chamomile, natural sweetness from honey.',
     cookingTips: ['Don\'t overheat the milk', 'Use fresh tea bags for best flavor']
@@ -60,7 +61,7 @@ export const stressedRecipes: Recipe[] = [
     tags: ['dessert', 'chocolate', 'nuts', 'stress-relief'],
     difficulty: 'Easy',
     mood: 'stressed',
-    image: 'https://images.unsplash.com/photo-1500673922987-e212871fec22',
+    image: 'https://images.unsplash.com/photo-1606312619070-d48b4c652a52',
     aiSuggestion: 'Try adding lavender buds for extra calming properties.',
     nutritionAnalysis: 'Rich in magnesium and antioxidants from dark chocolate.',
     cookingTips: ['Use 70% dark chocolate for best benefits', 'Toast nuts for enhanced flavor']
@@ -92,7 +93,7 @@ export const stressedRecipes: Recipe[] = [
     tags: ['soup', 'japanese', 'comforting'],
     difficulty: 'Medium',
     mood: 'stressed',
-    image: 'https://images.unsplash.com/photo-1721322800607-8c38375eef04',
+    image: 'https://images.unsplash.com/photo-1582284798795-0b5739965fd1',
     aiSuggestion: 'Add ginger for extra stress-reducing properties.',
     nutritionAnalysis: 'Rich in probiotics and minerals.',
     cookingTips: ['Don\'t boil the miso', 'Use fresh ingredients']
@@ -156,7 +157,7 @@ export const stressedRecipes: Recipe[] = [
     tags: ['dessert', 'cookies', 'stress-relief'],
     difficulty: 'Medium',
     mood: 'stressed',
-    image: 'https://images.unsplash.com/photo-1558961363-fa8fdf82db35',
+    image: 'https://images.unsplash.com/photo-1499636136210-6f4ee915583e',
     aiSuggestion: 'Pair with chamomile tea.',
     nutritionAnalysis: 'Contains calming aromatics.',
     cookingTips: ['Don\'t overwork dough', 'Use culinary lavender']

@@ -1,3 +1,4 @@
+
 import { Recipe } from '@/types/recipe';
 
 export const sadRecipes: Recipe[] = [
@@ -28,7 +29,7 @@ export const sadRecipes: Recipe[] = [
     tags: ['dessert', 'chocolate', 'comfort'],
     difficulty: 'Medium',
     mood: 'sad',
-    image: 'https://images.unsplash.com/photo-1501854140801-50d01698950b',
+    image: 'https://images.unsplash.com/photo-1578985545062-69928b1d9587',
     aiSuggestion: 'Add raspberries for a fruity contrast.',
     nutritionAnalysis: 'Contains mood-boosting compounds from dark chocolate.',
     cookingTips: ['Don\'t overbake', 'Use quality chocolate']
@@ -60,7 +61,7 @@ export const sadRecipes: Recipe[] = [
     tags: ['pasta', 'comfort', 'dinner'],
     difficulty: 'Easy',
     mood: 'sad',
-    image: 'https://images.unsplash.com/photo-1500673922987-e212871fec22',
+    image: 'https://images.unsplash.com/photo-1645112411341-6c4fd023714a',
     aiSuggestion: 'Add peas for color and nutrition.',
     nutritionAnalysis: 'Rich in carbohydrates and protein.',
     cookingTips: ['Reserve pasta water', 'Grate cheese fresh']

@@ -60,7 +60,13 @@ export const moods: Mood[] = [
     id: 'stressed',
     name: 'Stressed',
     icon: '😰',
-    description: 'Need comfort food'
+    description: 'Need calming comfort food'
+  },
+  {
+    id: 'sad',
+    name: 'Sad',
+    icon: '😢',
+    description: 'Mood-lifting comfort food'
   },
   {
     id: 'cozy',
