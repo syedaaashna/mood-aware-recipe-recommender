@@ -27,7 +27,7 @@ export const happyRecipes: Recipe[] = [
     tags: ['fresh', 'fruity', 'healthy', 'quick'],
     difficulty: 'Easy',
     mood: 'happy',
-    image: 'https://images.unsplash.com/photo-1490323914169-4d5db28abf90?w=800&auto=format&fit=crop',
+    image: 'https://images.unsplash.com/photo-1464305795204-6f5bbfc7fb81?w=800&auto=format&fit=crop',
     nutritionAnalysis: 'High in vitamin C and antioxidants, perfect for boosting mood and energy',
     cookingTips: [
       'Use room temperature fruit for better flavor',
@@ -64,7 +64,7 @@ export const happyRecipes: Recipe[] = [
     tags: ['spanish', 'seafood', 'rice', 'celebration'],
     difficulty: 'Medium',
     mood: 'happy',
-    image: 'https://images.unsplash.com/photo-1611489142329-5f62cfa43e6e?w=800&auto=format&fit=crop',
+    image: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=800&auto=format&fit=crop',
     nutritionAnalysis: 'Rich in protein and omega-3 fatty acids',
     cookingTips: [
       'Use the correct rice-to-liquid ratio',

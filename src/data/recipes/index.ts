@@ -1,3 +1,4 @@
+
 import { happyRecipes } from './happyRecipes';
 import { sadRecipes } from './sadRecipes';
 import { energeticRecipes } from './energeticRecipes';
@@ -13,6 +14,8 @@ import { exoticRecipes } from './exoticRecipes';
 import { festiveRecipes } from './festiveRecipes';
 import { adventurousRecipes } from './adventurousRecipes';
 import { focusedRecipes } from './focusedRecipes';
+import { calmRecipes } from './calmRecipes';
+import { cozyRecipes } from './cozyRecipes';
 
 export const recipesData = {
   happy: happyRecipes,
@@ -30,6 +33,9 @@ export const recipesData = {
   festive: festiveRecipes,
   adventurous: adventurousRecipes,
   focused: focusedRecipes,
+  calm: calmRecipes,
+  cozy: cozyRecipes,
 };
 
 export default recipesData;
+

@@ -1,4 +1,3 @@
-
 import { Recipe } from '@/types/recipe';
 
 export const spicyRecipes: Recipe[] = [
@@ -59,7 +58,7 @@ export const spicyRecipes: Recipe[] = [
     tags: ['middle eastern', 'eggs', 'spicy'],
     difficulty: 'Easy',
     mood: 'spicy',
-    image: 'https://images.unsplash.com/photo-1590412200988-a436970781fa?w=800&auto=format&fit=crop',
+    image: 'https://images.unsplash.com/photo-1626116819195-b9bd9f9c7ed8?w=800&auto=format&fit=crop',
     nutritionAnalysis: 'High protein breakfast.',
     cookingTips: ['Control spice with amount of harissa.']
   }

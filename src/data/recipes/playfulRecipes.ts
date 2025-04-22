@@ -1,4 +1,3 @@
-
 import { Recipe } from '@/types/recipe';
 
 export const playfulRecipes: Recipe[] = [
@@ -27,7 +26,7 @@ export const playfulRecipes: Recipe[] = [
     tags: ['fruit', 'snack', 'colorful'],
     difficulty: 'Easy',
     mood: 'playful',
-    image: 'https://images.unsplash.com/photo-1464983953574-0892a716854b?w=800&auto=format&fit=crop',
+    image: 'https://images.unsplash.com/photo-1464983953574-0892a716854b?w=800&auto=format&fit=crop', // Colorful fruit skewers
     nutritionAnalysis: 'High in vitamin C.',
     cookingTips: ['Use seasonal fruit for best color and taste.']
   },
@@ -56,7 +55,7 @@ export const playfulRecipes: Recipe[] = [
     tags: ['snack', 'creative', 'kids'],
     difficulty: 'Easy',
     mood: 'playful',
-    image: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=800&auto=format&fit=crop',
+    image: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=800&auto=format&fit=crop', // Fun veggie sandwiches
     nutritionAnalysis: 'Fun way to eat veggies.',
     cookingTips: ['Let kids build their own.']
   }
