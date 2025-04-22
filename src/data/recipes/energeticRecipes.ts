@@ -32,9 +32,7 @@ export const energeticRecipes: Recipe[] = [
       'Freeze banana chunks for easier blending',
       'Add spinach for extra nutrients without changing taste',
       'Use coconut water for extra hydration'
-    ],
-    image: 'https://images.unsplash.com/photo-1519864600265-abb23847ef2c?w=800&auto=format&fit=crop',
-    imageUrl: 'https://images.unsplash.com/photo-1519864600265-abb23847ef2c?w=800&auto=format&fit=crop'
+    ]
   },
   {
     id: 'energetic-quinoa',
@@ -69,9 +67,7 @@ export const energeticRecipes: Recipe[] = [
       'Rinse quinoa well',
       "Don't overcrowd roasting pan",
       'Massage kale thoroughly'
-    ],
-    image: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=800&auto=format&fit=crop',
-    imageUrl: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=800&auto=format&fit=crop'
+    ]
   },
   {
     id: 'energetic-poke',

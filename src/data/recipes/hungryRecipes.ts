@@ -1,4 +1,3 @@
-
 import { Recipe } from '@/types/recipe';
 
 export const hungryRecipes: Recipe[] = [
@@ -27,8 +26,6 @@ export const hungryRecipes: Recipe[] = [
     tags: ['american', 'burger', 'main'],
     difficulty: 'Easy',
     mood: 'hungry',
-    image: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=800&auto=format&fit=crop',
-    imageUrl: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=800&auto=format&fit=crop',
     nutritionAnalysis: 'High protein meal.',
     cookingTips: ["Don't press burgers while cooking."]
   },
@@ -56,8 +53,6 @@ export const hungryRecipes: Recipe[] = [
     tags: ['indian', 'curry', 'main'],
     difficulty: 'Medium',
     mood: 'hungry',
-    image: 'https://images.unsplash.com/photo-1565557623262-b51c2513a641?w=800&auto=format&fit=crop',
-    imageUrl: 'https://images.unsplash.com/photo-1565557623262-b51c2513a641?w=800&auto=format&fit=crop',
     nutritionAnalysis: 'Filling and comforting.',
     cookingTips: ['Garnish with cilantro.']
   },
@@ -84,10 +79,7 @@ export const hungryRecipes: Recipe[] = [
     tags: ['italian', 'pasta', 'main'],
     difficulty: 'Medium',
     mood: 'hungry',
-    image: 'https://images.unsplash.com/photo-1588013273468-315fd88ea34c?w=800&auto=format&fit=crop',
-    imageUrl: 'https://images.unsplash.com/photo-1588013273468-315fd88ea34c?w=800&auto=format&fit=crop',
     nutritionAnalysis: 'Rich and satisfying.',
     cookingTips: ['Stir quickly to prevent scrambling eggs.']
   }
 ];
-
