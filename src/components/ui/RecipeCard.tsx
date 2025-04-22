@@ -7,6 +7,7 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, Di
 import { Recipe } from '@/utils/moodRecipeData';
 import { getRecipeImagePath, getFallbackImage } from '@/utils/recipeImageHelper';
 import { useToast } from "@/hooks/use-toast";
+import VoiceGuidance from './VoiceGuidance';
 
 interface RecipeCardProps {
   recipe: Recipe;
@@ -21,25 +22,19 @@ const RecipeCard = ({ recipe, isFavorite, onToggleFavorite }: RecipeCardProps) =
   const [imageRetries, setImageRetries] = useState(0);
   const { toast } = useToast();
 
-  // Set up image sources and fallbacks
   useEffect(() => {
     if (recipe) {
-      // Reset error state when recipe changes
       setImageError(false);
       setImageRetries(0);
       
-      // Get image path and set as primary source
       const primaryImageSrc = getRecipeImagePath(recipe.id);
       setImageSrc(primaryImageSrc);
       
-      // Preload the image to check if it exists
       const img = new Image();
       img.onload = () => {
-        // Image loaded successfully
         setImageError(false);
       };
       img.onerror = () => {
-        // Try fallback
         console.log(`Primary image failed for ${recipe.id}, trying fallback:`, getFallbackImage(recipe.id));
         setImageSrc(getFallbackImage(recipe.id));
       };
@@ -75,7 +70,6 @@ const RecipeCard = ({ recipe, isFavorite, onToggleFavorite }: RecipeCardProps) =
   };
 
   const handleImageError = () => {
-    // If we've already tried a few times, just show error state
     if (imageRetries >= 2) {
       setImageError(true);
       return;
@@ -83,13 +77,11 @@ const RecipeCard = ({ recipe, isFavorite, onToggleFavorite }: RecipeCardProps) =
     
     setImageRetries(prevRetries => prevRetries + 1);
     
-    // Try category-based fallback first
     if (imageRetries === 0) {
       const fallbackImg = getFallbackImage(recipe.id);
       console.log(`Image error for ${recipe.id}, trying category fallback:`, fallbackImg);
       setImageSrc(fallbackImg);
     } 
-    // Then try a reliable default
     else if (imageRetries === 1) {
       console.log(`Fallback also failed for ${recipe.id}, using reliable default`);
       setImageSrc('https://images.unsplash.com/photo-1506368249639-73a05d6f6488?w=800&auto=format&fit=crop');
@@ -182,6 +174,7 @@ const RecipeCard = ({ recipe, isFavorite, onToggleFavorite }: RecipeCardProps) =
         </Button>
         
         <div className="flex gap-1">
+          <VoiceGuidance recipe={recipe} />
           <Button
             size="icon"
             variant="ghost"
