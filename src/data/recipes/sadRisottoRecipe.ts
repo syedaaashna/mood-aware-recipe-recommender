@@ -29,7 +29,7 @@ export const sadRisottoRecipe: Recipe = {
   tags: ['italian', 'comfort', 'creamy', 'vegetarian'],
   difficulty: 'Medium',
   mood: 'sad',
-  image: 'https://images.unsplash.com/photos/a-table-topped-with-plates-of-food-and-bowls-of-vegetables-7Qzt-Zqg8pM?w=800&auto=format&fit=crop',
+  image: 'https://plus.unsplash.com/premium_photo-1698764304669-14ada1c118a7?q=80&w=800&auto=format&fit=crop',
   nutritionAnalysis: 'Rich in carbohydrates and protein',
   cookingTips: [
     'Keep stock hot',
