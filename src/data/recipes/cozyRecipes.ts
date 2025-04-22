@@ -28,7 +28,7 @@ export const cozyRecipes: Recipe[] = [
     tags: ['indian', 'vegetarian', 'cozy'],
     difficulty: 'Easy',
     mood: 'cozy',
-    image: 'https://images.unsplash.com/photo-1617196038434-f3e7d78acacc?w=800&auto=format&fit=crop', // Dal tadka bowl
+    image: 'https://images.unsplash.com/photo-1546833998-877b37c2e4c6?w=800&auto=format&fit=crop',
     nutritionAnalysis: 'High in plant protein & comforting.',
     cookingTips: ['Use ghee for aroma.']
   },
@@ -57,7 +57,7 @@ export const cozyRecipes: Recipe[] = [
     tags: ['american', 'beef', 'cozy'],
     difficulty: 'Medium',
     mood: 'cozy',
-    image: 'https://images.unsplash.com/photo-1502741338009-cac2772e18bc?w=800&auto=format&fit=crop', // Bowl of chili
+    image: 'https://images.unsplash.com/photo-1619460573803-e492817e8ffe?w=800&auto=format&fit=crop',
     nutritionAnalysis: 'High in protein, perfect for cold days.',
     cookingTips: ['Simmer long for better flavor.']
   },
@@ -86,9 +86,8 @@ export const cozyRecipes: Recipe[] = [
     tags: ['french', 'tart', 'cozy'],
     difficulty: 'Medium',
     mood: 'cozy',
-    image: 'https://images.unsplash.com/photo-1543353071-873f17a7a088?w=800&auto=format&fit=crop', // Authentic tart
+    image: 'https://images.unsplash.com/photo-1586717799252-bd134ad00e1c?w=800&auto=format&fit=crop',
     nutritionAnalysis: 'Cozy, rich, and comforting.',
     cookingTips: ['Let tart rest before slicing.']
   }
 ];
-

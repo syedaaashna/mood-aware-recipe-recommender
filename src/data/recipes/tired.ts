@@ -29,7 +29,7 @@ export const tiredRecipes: Recipe[] = [
     tags: ['snack', 'energy', 'no-bake'],
     difficulty: 'Easy',
     mood: 'tired',
-    image: 'https://images.unsplash.com/photo-1618160702438-9b02ab6515c9?w=800&auto=format&fit=crop',
+    image: 'https://images.unsplash.com/photo-1505253716362-afaea1d3d1af?w=800&auto=format&fit=crop',
     aiSuggestion: 'Add espresso powder for extra energy boost.',
     nutritionAnalysis: 'Good source of protein and healthy fats.',
     cookingTips: ['Use natural peanut butter', 'Adjust honey to taste']
@@ -61,7 +61,7 @@ export const tiredRecipes: Recipe[] = [
     tags: ['beverage', 'healthy', 'energizing'],
     difficulty: 'Easy',
     mood: 'tired',
-    image: 'https://images.unsplash.com/photo-1465146344425-f00d5f5c8f07?w=800&auto=format&fit=crop',
+    image: 'https://images.unsplash.com/photo-1540420773420-3366772f4999?w=800&auto=format&fit=crop',
     aiSuggestion: 'Add matcha powder for sustained energy.',
     nutritionAnalysis: 'High in vitamins and minerals.',
     cookingTips: ['Use frozen banana for thickness', 'Add ice if desired']
@@ -94,7 +94,7 @@ export const tiredRecipes: Recipe[] = [
     tags: ['japanese', 'noodles', 'soup', 'comfort'],
     difficulty: 'Easy',
     mood: 'tired',
-    image: 'https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=800&auto=format&fit=crop',
+    image: 'https://images.unsplash.com/photo-1557872943-16a5ac26437e?w=800&auto=format&fit=crop',
     nutritionAnalysis: 'Good balance of carbs and protein',
     cookingTips: ['Prep toppings while water boils', "Don't overcook noodles"]
   },
@@ -126,7 +126,7 @@ export const tiredRecipes: Recipe[] = [
     tags: ['middle eastern', 'breakfast', 'eggs', 'one-pan'],
     difficulty: 'Easy',
     mood: 'tired',
-    image: 'https://images.unsplash.com/photo-1553353071-873f17a7a088?w=800&auto=format&fit=crop',
+    image: 'https://images.unsplash.com/photo-1590412200988-a436970781fa?w=800&auto=format&fit=crop',
     nutritionAnalysis: 'High in protein and vitamins',
     cookingTips: ['Keep sauce simmering', 'Watch egg doneness']
   }

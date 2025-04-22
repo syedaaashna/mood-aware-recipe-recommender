@@ -28,6 +28,7 @@ export const spicyRecipes: Recipe[] = [
     tags: ['chinese', 'stir-fry', 'spicy'],
     difficulty: 'Medium',
     mood: 'spicy',
+    image: 'https://images.unsplash.com/photo-1525755662778-989d0524087e?w=800&auto=format&fit=crop',
     nutritionAnalysis: 'Hot and satisfying.',
     cookingTips: ['Use fresh Sichuan peppercorns.']
   },
@@ -58,6 +59,7 @@ export const spicyRecipes: Recipe[] = [
     tags: ['middle eastern', 'eggs', 'spicy'],
     difficulty: 'Easy',
     mood: 'spicy',
+    image: 'https://images.unsplash.com/photo-1520218508822-998633d997e6?w=800&auto=format&fit=crop',
     nutritionAnalysis: 'High protein breakfast.',
     cookingTips: ['Control spice with amount of harissa.']
   }

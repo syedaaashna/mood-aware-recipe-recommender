@@ -1,3 +1,4 @@
+
 import { Recipe } from '@/types/recipe';
 
 export const happyRecipes: Recipe[] = [
@@ -27,7 +28,7 @@ export const happyRecipes: Recipe[] = [
     tags: ['fresh', 'fruity', 'healthy', 'quick'],
     difficulty: 'Easy',
     mood: 'happy',
-    image: 'https://images.unsplash.com/photo-1565895405227-0d3481048efb?w=800&auto=format&fit=crop',
+    image: 'https://images.unsplash.com/photo-1564093497595-593b96d80180?w=800&auto=format&fit=crop',
     nutritionAnalysis: 'High in vitamin C and antioxidants, perfect for boosting mood and energy',
     cookingTips: [
       'Use room temperature fruit for better flavor',
@@ -64,7 +65,7 @@ export const happyRecipes: Recipe[] = [
     tags: ['spanish', 'seafood', 'rice', 'celebration'],
     difficulty: 'Medium',
     mood: 'happy',
-    image: 'https://images.unsplash.com/photo-1611489142329-5f62cfa43e6e?w=800&auto=format&fit=crop',
+    image: 'https://images.unsplash.com/photo-1534080564583-6be75777b70a?w=800&auto=format&fit=crop',
     nutritionAnalysis: 'Rich in protein and omega-3 fatty acids',
     cookingTips: [
       'Use the correct rice-to-liquid ratio',
