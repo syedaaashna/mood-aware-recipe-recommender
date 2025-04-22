@@ -179,5 +179,69 @@ export const sadRecipes: Recipe[] = [
       'Use good quality cheese',
       'Serve immediately'
     ]
+  },
+  {
+    id: 'sad-butter-chicken',
+    name: 'Comforting Butter Chicken',
+    description: 'Rich and creamy Indian butter chicken that soothes the soul',
+    ingredients: [
+      'Chicken thighs',
+      'Butter',
+      'Heavy cream',
+      'Tomato sauce',
+      'Garam masala',
+      'Garlic and ginger',
+      'Naan bread'
+    ],
+    instructions: [
+      'Marinate chicken in yogurt and spices',
+      'Cook chicken until tender',
+      'Prepare creamy tomato sauce',
+      'Combine chicken with sauce',
+      'Simmer until rich and thick',
+      'Serve with naan bread'
+    ],
+    prepTime: '30 mins',
+    cookTime: '40 mins',
+    servings: 4,
+    calories: 580,
+    tags: ['indian', 'comfort food', 'creamy', 'spicy'],
+    difficulty: 'Medium',
+    mood: 'sad',
+    image: 'https://images.unsplash.com/photo-1588166524941-3bf61a9c41db?w=800&auto=format&fit=crop',
+    nutritionAnalysis: 'High in protein and comfort factor',
+    cookingTips: ['Marinate overnight for best results', 'Adjust cream to taste']
+  },
+  {
+    id: 'sad-dim-sum',
+    name: 'Dim Sum Platter',
+    description: 'Assorted Chinese dumplings and small bites for comfort',
+    ingredients: [
+      'Shrimp dumplings',
+      'Pork buns',
+      'Spring rolls',
+      'Siu mai',
+      'Chili oil',
+      'Soy sauce',
+      'Chinese tea'
+    ],
+    instructions: [
+      'Steam dumplings until translucent',
+      'Warm up pork buns',
+      'Fry spring rolls until golden',
+      'Prepare dipping sauces',
+      'Arrange on platter',
+      'Serve with hot tea'
+    ],
+    prepTime: '45 mins',
+    cookTime: '25 mins',
+    servings: 4,
+    calories: 520,
+    tags: ['chinese', 'dumplings', 'comfort', 'sharing'],
+    difficulty: 'Hard',
+    mood: 'sad',
+    image: 'https://images.unsplash.com/photo-1563245372-f21724e3856d?w=800&auto=format&fit=crop',
+    nutritionAnalysis: 'Balanced protein and carbs',
+    cookingTips: ['Steam in batches', 'Serve immediately while hot']
   }
 ];

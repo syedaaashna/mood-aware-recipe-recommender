@@ -178,5 +178,69 @@ export const energeticRecipes: Recipe[] = [
       'Use high heat',
       'Don\'t overcrowd pan'
     ]
+  },
+  {
+    id: 'energetic-pad-thai',
+    name: 'Zesty Pad Thai',
+    description: 'Energy-boosting Thai stir-fried noodles with tamarind sauce',
+    ingredients: [
+      'Rice noodles',
+      'Tofu or shrimp',
+      'Bean sprouts',
+      'Peanuts',
+      'Eggs',
+      'Tamarind sauce',
+      'Lime wedges'
+    ],
+    instructions: [
+      'Soak noodles in warm water',
+      'Prepare tamarind sauce',
+      'Stir-fry proteins and vegetables',
+      'Add noodles and sauce',
+      'Toss with bean sprouts',
+      'Garnish and serve'
+    ],
+    prepTime: '20 mins',
+    cookTime: '15 mins',
+    servings: 2,
+    calories: 450,
+    tags: ['thai', 'noodles', 'quick', 'spicy'],
+    difficulty: 'Medium',
+    mood: 'energetic',
+    image: 'https://images.unsplash.com/photo-1559314809-0d155014e29e?w=800&auto=format&fit=crop',
+    nutritionAnalysis: 'Good balance of carbs and protein',
+    cookingTips: ['Don\'t overcook noodles', 'Have all ingredients ready']
+  },
+  {
+    id: 'energetic-schnitzel',
+    name: 'Crispy Wiener Schnitzel',
+    description: 'Classic European breaded veal cutlet with potato salad',
+    ingredients: [
+      'Veal cutlets',
+      'Breadcrumbs',
+      'Eggs',
+      'Flour',
+      'Potatoes',
+      'Fresh herbs',
+      'Lemon wedges'
+    ],
+    instructions: [
+      'Pound veal thin',
+      'Prepare breading station',
+      'Coat and fry until golden',
+      'Make potato salad',
+      'Rest on paper towels',
+      'Serve with lemon'
+    ],
+    prepTime: '25 mins',
+    cookTime: '20 mins',
+    servings: 4,
+    calories: 580,
+    tags: ['european', 'austrian', 'crispy', 'classic'],
+    difficulty: 'Medium',
+    mood: 'energetic',
+    image: 'https://images.unsplash.com/photo-1599921841143-819065a55cc6?w=800&auto=format&fit=crop',
+    nutritionAnalysis: 'High in protein and energy',
+    cookingTips: ['Pound meat evenly', 'Don\'t crowd the pan']
   }
 ];

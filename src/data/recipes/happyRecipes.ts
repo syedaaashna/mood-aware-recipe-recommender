@@ -179,5 +179,72 @@ export const happyRecipes: Recipe[] = [
       'Use room temperature dough',
       'Don\'t overload toppings'
     ]
+  },
+  {
+    id: 'happy-bibimbap',
+    name: 'Korean Bibimbap',
+    description: 'A colorful and joyful Korean rice bowl with assorted vegetables and gochujang sauce',
+    ingredients: [
+      'Steamed rice',
+      'Spinach',
+      'Bean sprouts',
+      'Carrots',
+      'Shiitake mushrooms',
+      'Beef bulgogi',
+      'Gochujang sauce',
+      'Fried egg'
+    ],
+    instructions: [
+      'Cook rice and set aside',
+      'Season and sauté each vegetable separately',
+      'Cook marinated beef bulgogi',
+      'Fry an egg sunny side up',
+      'Arrange rice in a bowl',
+      'Top with vegetables and beef in sections',
+      'Add fried egg and gochujang sauce'
+    ],
+    prepTime: '30 mins',
+    cookTime: '20 mins',
+    servings: 2,
+    calories: 650,
+    tags: ['korean', 'healthy', 'rice', 'colorful'],
+    difficulty: 'Medium',
+    mood: 'happy',
+    image: 'https://images.unsplash.com/photo-1553163147-622ab57be1c7?w=800&auto=format&fit=crop',
+    nutritionAnalysis: 'High in protein and vegetables',
+    cookingTips: ['Prep all ingredients before assembly', 'Serve immediately while hot']
+  },
+  {
+    id: 'happy-pho',
+    name: 'Vietnamese Pho',
+    description: 'A soul-warming Vietnamese noodle soup with rich broth and fresh herbs',
+    ingredients: [
+      'Rice noodles',
+      'Beef slices',
+      'Bean sprouts',
+      'Thai basil',
+      'Lime wedges',
+      'Hoisin sauce',
+      'Sriracha sauce',
+      'Beef broth'
+    ],
+    instructions: [
+      'Prepare rich beef broth',
+      'Cook rice noodles',
+      'Arrange noodles in bowls',
+      'Add beef slices',
+      'Pour hot broth',
+      'Serve with garnishes'
+    ],
+    prepTime: '20 mins',
+    cookTime: '40 mins',
+    servings: 4,
+    calories: 480,
+    tags: ['vietnamese', 'soup', 'noodles', 'comfort'],
+    difficulty: 'Medium',
+    mood: 'happy',
+    image: 'https://images.unsplash.com/photo-1582878826629-29b7ad1cdc43?w=800&auto=format&fit=crop',
+    nutritionAnalysis: 'Rich in protein and herbs',
+    cookingTips: ['Keep broth hot', 'Add garnishes just before serving']
   }
 ];

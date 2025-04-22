@@ -1,4 +1,3 @@
-
 import { Recipe } from '@/types/recipe';
 
 export const tiredRecipes: Recipe[] = [
@@ -65,5 +64,69 @@ export const tiredRecipes: Recipe[] = [
     aiSuggestion: 'Add matcha powder for sustained energy.',
     nutritionAnalysis: 'High in vitamins and minerals.',
     cookingTips: ['Use frozen banana for thickness', 'Add ice if desired']
+  },
+  {
+    id: 'tired-ramen',
+    name: 'Quick Ramen Bowl',
+    description: 'Easy and comforting Japanese-style ramen with soft-boiled egg',
+    ingredients: [
+      'Ramen noodles',
+      'Chicken broth',
+      'Soft-boiled egg',
+      'Green onions',
+      'Nori sheets',
+      'Corn',
+      'Chashu pork'
+    ],
+    instructions: [
+      'Boil eggs',
+      'Prepare broth',
+      'Cook noodles',
+      'Assemble bowl',
+      'Add toppings',
+      'Serve hot'
+    ],
+    prepTime: '15 mins',
+    cookTime: '20 mins',
+    servings: 2,
+    calories: 480,
+    tags: ['japanese', 'noodles', 'soup', 'comfort'],
+    difficulty: 'Easy',
+    mood: 'tired',
+    image: 'https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=800&auto=format&fit=crop',
+    nutritionAnalysis: 'Good balance of carbs and protein',
+    cookingTips: ['Prep toppings while water boils', 'Don\'t overcook noodles']
+  },
+  {
+    id: 'tired-shakshuka',
+    name: 'Easy Shakshuka',
+    description: 'Middle Eastern eggs poached in spiced tomato sauce',
+    ingredients: [
+      'Eggs',
+      'Tomatoes',
+      'Bell peppers',
+      'Onions',
+      'Garlic',
+      'Cumin',
+      'Paprika'
+    ],
+    instructions: [
+      'Sauté vegetables',
+      'Add tomatoes and spices',
+      'Create wells for eggs',
+      'Poach eggs in sauce',
+      'Garnish with herbs',
+      'Serve with bread'
+    ],
+    prepTime: '10 mins',
+    cookTime: '20 mins',
+    servings: 4,
+    calories: 320,
+    tags: ['middle eastern', 'breakfast', 'eggs', 'one-pan'],
+    difficulty: 'Easy',
+    mood: 'tired',
+    image: 'https://images.unsplash.com/photo-1590412200988-a436970781fa?w=800&auto=format&fit=crop',
+    nutritionAnalysis: 'High in protein and vitamins',
+    cookingTips: ['Keep sauce simmering', 'Watch egg doneness']
   }
 ];
