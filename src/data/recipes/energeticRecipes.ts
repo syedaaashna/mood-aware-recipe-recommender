@@ -1,4 +1,3 @@
-
 import { Recipe } from '@/types/recipe';
 
 export const energeticRecipes: Recipe[] = [
@@ -28,7 +27,6 @@ export const energeticRecipes: Recipe[] = [
     tags: ['breakfast', 'healthy', 'energizing', 'quick'],
     difficulty: 'Easy',
     mood: 'energetic',
-    image: 'https://images.unsplash.com/photo-1578697534965-fc633832ef0e?w=800&auto=format&fit=crop',
     nutritionAnalysis: 'High in protein and healthy fats, perfect for sustained energy',
     cookingTips: [
       'Freeze banana chunks for easier blending',
@@ -64,7 +62,6 @@ export const energeticRecipes: Recipe[] = [
     tags: ['healthy', 'vegan', 'protein', 'energizing'],
     difficulty: 'Easy',
     mood: 'energetic',
-    image: 'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=800&auto=format&fit=crop',
     nutritionAnalysis: 'High in protein, fiber, and healthy fats',
     cookingTips: [
       'Rinse quinoa well',
@@ -100,7 +97,6 @@ export const energeticRecipes: Recipe[] = [
     tags: ['hawaiian', 'fish', 'fresh', 'healthy'],
     difficulty: 'Medium',
     mood: 'energetic',
-    image: 'https://images.unsplash.com/photo-1540713711422-62a7cade6674?w=800&auto=format&fit=crop',
     nutritionAnalysis: 'Rich in omega-3 and protein',
     cookingTips: [
       'Use fresh fish',
@@ -136,7 +132,6 @@ export const energeticRecipes: Recipe[] = [
     tags: ['mediterranean', 'healthy', 'quick', 'vegetarian'],
     difficulty: 'Easy',
     mood: 'energetic',
-    image: 'https://images.unsplash.com/photo-1600850056064-a8b380df8395?w=800&auto=format&fit=crop',
     nutritionAnalysis: 'Good balance of protein and vegetables',
     cookingTips: [
       'Don\'t overfill wrap',
@@ -172,7 +167,6 @@ export const energeticRecipes: Recipe[] = [
     tags: ['asian', 'vegetarian', 'healthy', 'quick'],
     difficulty: 'Easy',
     mood: 'energetic',
-    image: 'https://images.unsplash.com/photo-1512058564366-18510be2db19?w=800&auto=format&fit=crop',
     nutritionAnalysis: 'High in protein and vegetables',
     cookingTips: [
       'Press tofu well',
@@ -208,7 +202,6 @@ export const energeticRecipes: Recipe[] = [
     tags: ['thai', 'noodles', 'quick', 'spicy'],
     difficulty: 'Medium',
     mood: 'energetic',
-    image: 'https://images.unsplash.com/photo-1559314809-0d155014e29e?w=800&auto=format&fit=crop',
     nutritionAnalysis: 'Good balance of carbs and protein',
     cookingTips: ['Don\'t overcook noodles', 'Have all ingredients ready']
   },
@@ -240,7 +233,6 @@ export const energeticRecipes: Recipe[] = [
     tags: ['european', 'austrian', 'crispy', 'classic'],
     difficulty: 'Medium',
     mood: 'energetic',
-    image: 'https://images.unsplash.com/photo-1599921841143-819065a55cc6?w=800&auto=format&fit=crop',
     nutritionAnalysis: 'High in protein and energy',
     cookingTips: ['Pound meat evenly', 'Don\'t crowd the pan']
   }

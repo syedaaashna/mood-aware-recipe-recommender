@@ -1,4 +1,3 @@
-
 import { Recipe } from '@/types/recipe';
 
 export const creativeRecipes: Recipe[] = [
@@ -29,7 +28,6 @@ export const creativeRecipes: Recipe[] = [
     tags: ['sushi', 'colorful', 'creative'],
     difficulty: 'Medium',
     mood: 'creative',
-    image: 'https://images.unsplash.com/photo-1558401391-57b93b7961db?w=800&auto=format&fit=crop',
     nutritionAnalysis: 'Lots of veggies and protein.',
     cookingTips: ['Keep hands wet for easier rolling.']
   },
@@ -58,7 +56,6 @@ export const creativeRecipes: Recipe[] = [
     tags: ['pizza', 'vegetarian', 'creative'],
     difficulty: 'Easy',
     mood: 'creative',
-    image: 'https://images.unsplash.com/photo-1513104890138-7c749659a591?w=800&auto=format&fit=crop',
     nutritionAnalysis: 'Fiber-rich and fun.',
     cookingTips: ['Encourage creativity!']
   }
