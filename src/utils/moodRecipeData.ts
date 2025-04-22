@@ -688,7 +688,7 @@ const recipesData: { [key: string]: Recipe[] } = {
       mood: 'happy',
       aiSuggestion: "Add a sprinkle of cinnamon for extra flavor.",
       nutritionAnalysis: "High in carbohydrates and fiber. Provides a good source of vitamins.",
-      cookingTips: ["Use ripe bananas for the best flavor.", "Let the bread cool completely before slicing."]
+      cookingTips: ["Use a ripe banana for the best flavor.", "Let the bread cool completely before slicing."]
     },
     {
       id: 'dessert3',
@@ -705,7 +705,7 @@ const recipesData: { [key: string]: Recipe[] } = {
       mood: 'relaxed',
       aiSuggestion: "Add a sprinkle of cinnamon for extra flavor.",
       nutritionAnalysis: "High in carbohydrates and fiber. Provides a good source of vitamins.",
-      cookingTips: ["Use ripe strawberries for the best flavor.", "Let the cake cool completely before frosting."]
+      cookingTips: ["Use a ripe strawberry for the best flavor.", "Let the cake cool completely before frosting."]
     }
   ],
   
@@ -868,7 +868,7 @@ export const getChatbotResponse = (message: string, moodId: string | null): stri
   } else if (lowerMessage.includes('thank')) {
     return "You're welcome! Enjoy your cooking and let me know if you need anything else.";
   } else if (lowerMessage.includes('ingredient') || lowerMessage.includes('substitute')) {
-    return 'For ingredient substitutions, you can often use what you have on hand. For example, yogurt can replace sour cream, and different vegetables can be swapped based on what's available.';
+    return 'For ingredient substitutions, you can often use what you have on hand. For example, yogurt can replace sour cream, and different vegetables can be swapped based on what\'s available.';
   } else if (lowerMessage.includes('time') || lowerMessage.includes('quick')) {
     return 'Looking for something quick? Check out the recipes tagged "easy" or "quick" - they typically take less than 30 minutes to prepare.';
   } else if (lowerMessage.includes('difficul') || lowerMessage.includes('hard')) {
