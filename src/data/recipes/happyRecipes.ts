@@ -28,7 +28,7 @@ export const happyRecipes: Recipe[] = [
     tags: ['fresh', 'fruity', 'healthy', 'quick'],
     difficulty: 'Easy',
     mood: 'happy',
-    image: 'https://unsplash.com/photos/a-bowl-filled-with-fruit-and-vegetables-on-top-of-a-table-PBgbIbOsprk?w=800&auto=format&fit=crop',
+    image: 'https://images.unsplash.com/photo-1600691007652-f31f2f74a6be?w=800&auto=format&fit=crop',
     nutritionAnalysis: 'High in vitamin C and antioxidants, perfect for boosting mood and energy',
     cookingTips: [
       'Use room temperature fruit for better flavor',
@@ -65,7 +65,7 @@ export const happyRecipes: Recipe[] = [
     tags: ['spanish', 'seafood', 'rice', 'celebration'],
     difficulty: 'Medium',
     mood: 'happy',
-    image: 'https://images.unsplash.com/photo-1534080564583-6be75777b70a?w=800&auto=format&fit=crop',
+    image: 'https://images.unsplash.com/photo-1515669097368-22e68427d265?w=800&auto=format&fit=crop',
     nutritionAnalysis: 'Rich in protein and omega-3 fatty acids',
     cookingTips: [
       'Use the correct rice-to-liquid ratio',
@@ -137,7 +137,7 @@ export const happyRecipes: Recipe[] = [
     tags: ['thai', 'curry', 'vegetarian', 'aromatic'],
     difficulty: 'Easy',
     mood: 'happy',
-    image: 'https://images.unsplash.com/photo-1559314809-0d155014e29e?w=800&auto=format&fit=crop',
+    image: 'https://images.unsplash.com/photo-1455619452474-d2be8b1e70cd?w=800&auto=format&fit=crop',
     nutritionAnalysis: 'Rich in vitamins and antioxidants',
     cookingTips: [
       'Use fresh curry paste',
@@ -244,7 +244,7 @@ export const happyRecipes: Recipe[] = [
     tags: ['vietnamese', 'soup', 'noodles', 'comfort'],
     difficulty: 'Medium',
     mood: 'happy',
-    image: 'https://images.unsplash.com/photo-1582878826629-29b7ad1cdc43?w=800&auto=format&fit=crop',
+    image: 'https://images.unsplash.com/photo-1576577445504-6af96abea32d?w=800&auto=format&fit=crop',
     nutritionAnalysis: 'Rich in protein and herbs',
     cookingTips: ['Keep broth hot', 'Add garnishes just before serving']
   }

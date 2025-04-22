@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -5,7 +6,6 @@ import { Button } from "@/components/ui/button";
 import { Heart, Clock, ChefHat, Bookmark, Share2, ImageOff } from 'lucide-react';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Recipe } from '@/utils/moodRecipeData';
-import { getRecipeImagePath, getFallbackImage } from '@/utils/recipeImageHelper';
 import { useToast } from "@/hooks/use-toast";
 import VoiceGuidance from './VoiceGuidance';
 
@@ -19,26 +19,13 @@ const RecipeCard = ({ recipe, isFavorite, onToggleFavorite }: RecipeCardProps) =
   const [isShareDialogOpen, setIsShareDialogOpen] = useState(false);
   const [imageError, setImageError] = useState(false);
   const [imageSrc, setImageSrc] = useState('');
-  const [imageRetries, setImageRetries] = useState(0);
   const { toast } = useToast();
 
   useEffect(() => {
     if (recipe) {
       setImageError(false);
-      setImageRetries(0);
-      
-      const primaryImageSrc = getRecipeImagePath(recipe.id);
-      setImageSrc(primaryImageSrc);
-      
-      const img = new Image();
-      img.onload = () => {
-        setImageError(false);
-      };
-      img.onerror = () => {
-        console.log(`Primary image failed for ${recipe.id}, trying fallback:`, getFallbackImage(recipe.id));
-        setImageSrc(getFallbackImage(recipe.id));
-      };
-      img.src = primaryImageSrc;
+      // Use the image URL directly from the recipe
+      setImageSrc(recipe.image || '');
     }
   }, [recipe]);
 
@@ -70,21 +57,11 @@ const RecipeCard = ({ recipe, isFavorite, onToggleFavorite }: RecipeCardProps) =
   };
 
   const handleImageError = () => {
-    if (imageRetries >= 2) {
+    if (!imageError) {
+      console.log(`Image failed to load: ${recipe.id} (${imageSrc}), using reliable fallback`);
+      // Use a reliable fallback image
+      setImageSrc('https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=800&auto=format&fit=crop');
       setImageError(true);
-      return;
-    }
-    
-    setImageRetries(prevRetries => prevRetries + 1);
-    
-    if (imageRetries === 0) {
-      const fallbackImg = getFallbackImage(recipe.id);
-      console.log(`Image error for ${recipe.id}, trying category fallback:`, fallbackImg);
-      setImageSrc(fallbackImg);
-    } 
-    else if (imageRetries === 1) {
-      console.log(`Fallback also failed for ${recipe.id}, using reliable default`);
-      setImageSrc('https://images.unsplash.com/photo-1506368249639-73a05d6f6488?w=800&auto=format&fit=crop');
     }
   };
 
