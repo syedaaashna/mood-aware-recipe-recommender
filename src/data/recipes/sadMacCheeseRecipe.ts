@@ -34,5 +34,5 @@ export const sadMacCheeseRecipe: Recipe = {
     'Reserve some pasta water for adjusting sauce consistency',
     'Add breadcrumbs on top for extra crunch'
   ],
-  image: 'https://unsplash.com/photos/a-bowl-of-pasta-and-a-plate-of-pizza-on-a-table-aeLcUBr7kmM'
+  image: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=800&auto=format&fit=crop'
 };
