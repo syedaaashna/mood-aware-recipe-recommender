@@ -29,7 +29,7 @@ export const comfortingRecipes: Recipe[] = [
     mood: 'comforting',
     nutritionAnalysis: 'Rich and warming.',
     cookingTips: ['Stir continuously for creamy texture.'],
-    image: 'https://images.unsplash.com/photo-1611958580242-8a42a6e8abfb?w=800&auto=format&fit=crop&q=80'
+    image: 'https://images.unsplash.com/photo-1659789821364-52243d5dee58?w=800&auto=format&fit=crop'
   },
   {
     id: 'comforting-mac-and-cheese',
@@ -57,7 +57,7 @@ export const comfortingRecipes: Recipe[] = [
     mood: 'comforting',
     nutritionAnalysis: 'Comforting and satisfying.',
     cookingTips: ['Use sharp cheddar for more flavor.'],
-    image: 'https://images.unsplash.com/photo-1551024601-54fa8877c076?w=800&auto=format&fit=crop&q=80'
+    image: 'https://images.unsplash.com/photo-1612874742237-6526221588e3?w=800&auto=format&fit=crop'
   },
   {
     id: 'comforting-indian-khichdi',
