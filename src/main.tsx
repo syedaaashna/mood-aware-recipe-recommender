@@ -20,11 +20,22 @@ document.addEventListener('error', function(e) {
       return;
     }
     
-    // Simple solution: always use our reliable fallback
-    imgElement.src = GLOBAL_FALLBACK_IMAGE;
+    // Try using a more reliable image service for Unsplash images
+    if (imgElement.src.includes('unsplash.com')) {
+      const originalUrl = imgElement.src;
+      // Modify URL to use a more reliable format from Unsplash
+      const newUrl = originalUrl.replace(/\?.*$/, '?w=800&auto=format&fit=crop&q=80');
+      
+      // Only change if the URL is different to avoid infinite loops
+      if (newUrl !== originalUrl) {
+        console.log('Trying alternative Unsplash URL:', newUrl);
+        imgElement.src = newUrl;
+        return;
+      }
+    }
     
-    // Add styling to show this is a fallback
-    imgElement.classList.add('img-fallback');
+    // Final fallback - if all else fails, use our guaranteed working image
+    imgElement.src = GLOBAL_FALLBACK_IMAGE;
     console.log('Applied global image fallback');
   }
 }, true);
