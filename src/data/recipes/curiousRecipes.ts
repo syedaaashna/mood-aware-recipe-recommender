@@ -25,7 +25,7 @@ export const curiousRecipes: Recipe[] = [
     tags: ['fusion', 'korean', 'tacos'],
     difficulty: 'Medium',
     mood: 'curious',
-    image: 'https://images.unsplash.com/photo-1512838243191-e81e8f66f1fd?w=800&auto=format&fit=crop',
+    image: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=800&auto=format&fit=crop', // Korean tacos
     nutritionAnalysis: 'Tangy, spicy, fresh.',
     cookingTips: ['Try with tofu for a veggie version.']
   },
@@ -54,7 +54,7 @@ export const curiousRecipes: Recipe[] = [
     tags: ['japanese', 'pancake', 'curious'],
     difficulty: 'Medium',
     mood: 'curious',
-    image: 'https://images.unsplash.com/photo-1584947897558-4fba7c099db8?w=800&auto=format&fit=crop',
+    image: 'https://images.unsplash.com/photo-1584947897558-4fba7c099db8?w=800&auto=format&fit=crop', // Okonomiyaki
     nutritionAnalysis: 'Hearty and unique.',
     cookingTips: ['Use bonito for authentic flavor.']
   },
@@ -81,7 +81,7 @@ export const curiousRecipes: Recipe[] = [
     tags: ['mexican', 'street food', 'curious'],
     difficulty: 'Easy',
     mood: 'curious',
-    image: 'https://images.unsplash.com/photo-1635363638580-c2809d049ebc?w=800&auto=format&fit=crop',
+    image: 'https://images.unsplash.com/photo-1502741338009-cac2772e18bc?w=800&auto=format&fit=crop', // Mexican elote
     nutritionAnalysis: 'Smoky, creamy, tangy.',
     cookingTips: ['Use fresh sweet corn.']
   }

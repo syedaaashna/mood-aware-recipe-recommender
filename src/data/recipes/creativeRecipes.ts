@@ -29,7 +29,7 @@ export const creativeRecipes: Recipe[] = [
     tags: ['sushi', 'colorful', 'creative'],
     difficulty: 'Medium',
     mood: 'creative',
-    image: 'https://images.unsplash.com/photo-1617196034183-421b4917c92d?w=800&auto=format&fit=crop',
+    image: 'https://images.unsplash.com/photo-1519864600265-abb23847ef2c?w=800&auto=format&fit=crop', // Rainbow sushi
     nutritionAnalysis: 'Lots of veggies and protein.',
     cookingTips: ['Keep hands wet for easier rolling.']
   },
@@ -58,7 +58,7 @@ export const creativeRecipes: Recipe[] = [
     tags: ['pizza', 'vegetarian', 'creative'],
     difficulty: 'Easy',
     mood: 'creative',
-    image: 'https://images.unsplash.com/photo-1617349933557-0f15ae2745af?w=800&auto=format&fit=crop',
+    image: 'https://images.unsplash.com/photo-1513104890138-7c749659a591?w=800&auto=format&fit=crop', // Mini veggie pizzas
     nutritionAnalysis: 'Fiber-rich and fun.',
     cookingTips: ['Encourage creativity!']
   }
