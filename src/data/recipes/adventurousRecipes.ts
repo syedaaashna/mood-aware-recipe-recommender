@@ -1,4 +1,3 @@
-
 import { Recipe } from '@/types/recipe';
 
 export const adventurousRecipes: Recipe[] = [
@@ -26,7 +25,7 @@ export const adventurousRecipes: Recipe[] = [
     tags: ['korean', 'rice', 'adventurous'],
     difficulty: 'Easy',
     mood: 'adventurous',
-    image: 'https://unsplash.com/photos/sunny-side-up-egg-on-white-ceramic-bowl-1C_RSVhy32Yw=800&auto=format&fit=crop',
+    image: 'https://images.unsplash.com/photo-1519864600265-abb23847ef2c?w=800&auto=format&fit=crop',
     nutritionAnalysis: 'Fermented, healthy.',
     cookingTips: ['Top with extra sesame seeds.']
   },

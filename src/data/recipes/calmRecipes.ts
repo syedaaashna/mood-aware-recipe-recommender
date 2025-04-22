@@ -1,4 +1,3 @@
-
 import { Recipe } from '@/types/recipe';
 
 // Calm mood - 3 recipes, each from a different cuisine
@@ -28,7 +27,7 @@ export const calmRecipes: Recipe[] = [
     tags: ['japanese', 'soup', 'calm'],
     difficulty: 'Easy',
     mood: 'calm',
-    image: 'https://images.unsplash.com/photo-1603052873669-3028a157429f?w=800&auto=format&fit=crop', // Accurate miso soup
+    image: 'https://images.unsplash.com/photo-1603052873669-3028a157429f?w=800&auto=format&fit=crop', // Japanese miso soup
     nutritionAnalysis: 'Low calorie, gentle and soothing.',
     cookingTips: ['Don\'t boil miso to preserve flavor.']
   },
@@ -89,4 +88,3 @@ export const calmRecipes: Recipe[] = [
     cookingTips: ['Use ripe, in-season tomatoes.']
   }
 ];
-

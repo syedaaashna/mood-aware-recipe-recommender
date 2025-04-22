@@ -1,4 +1,3 @@
-
 import { Recipe } from '@/types/recipe';
 
 export const comfortSeekerRecipes: Recipe[] = [
@@ -26,7 +25,7 @@ export const comfortSeekerRecipes: Recipe[] = [
     tags: ['american', 'meatloaf', 'comfort'],
     difficulty: 'Easy',
     mood: 'comfort seeker',
-    image: 'https://images.unsplash.com/photo-1629214831811-23c1a52f5c59?w=800&auto=format&fit=crop',
+    image: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=800&auto=format&fit=crop',
     nutritionAnalysis: 'Ultimate home comfort.',
     cookingTips: ['Rest before slicing.']
   },

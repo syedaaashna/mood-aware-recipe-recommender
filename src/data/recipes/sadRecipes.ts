@@ -33,7 +33,8 @@ export const sadRecipes: Recipe[] = [
       'Use room temperature cheese for better melting',
       'Reserve some pasta water for adjusting sauce consistency',
       'Add breadcrumbs on top for extra crunch'
-    ]
+    ],
+    image: 'https://images.unsplash.com/photo-1543339308-43e59d6b73a6?w=800&auto=format&fit=crop'
   },
   {
     id: 'sad-ramen',
