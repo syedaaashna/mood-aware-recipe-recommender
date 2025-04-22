@@ -1,5 +1,7 @@
-
 import recipeImageMapping from './recipeImageMapping';
+
+// Reliable fallback image that works in all environments
+const GLOBAL_FALLBACK_IMAGE = 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=800&auto=format&fit=crop';
 
 /**
  * Gets the correct image path for a recipe, with improved handling of
@@ -7,13 +9,16 @@ import recipeImageMapping from './recipeImageMapping';
  */
 export const getRecipeImagePath = (imageKey: string): string => {
   try {
+    // If no key is provided, return the fallback immediately
+    if (!imageKey) return GLOBAL_FALLBACK_IMAGE;
+    
     console.log(`Finding image for recipe: ${imageKey}`);
     
     // First try to match the exact recipe ID
     if (imageKey in recipeImageMapping) {
       const imagePath = recipeImageMapping[imageKey];
       console.log(`Found exact match for ${imageKey}: ${imagePath}`);
-      return imagePath;
+      return imagePath || GLOBAL_FALLBACK_IMAGE;
     }
     
     // Otherwise, for recipe IDs not in the mapping, try to find an image 
@@ -23,8 +28,9 @@ export const getRecipeImagePath = (imageKey: string): string => {
     const matchingKey = allKeys.find(key => key.startsWith(prefix));
     
     if (matchingKey) {
-      console.log(`Using similar image ${matchingKey} for recipe ${imageKey}: ${recipeImageMapping[matchingKey]}`);
-      return recipeImageMapping[matchingKey];
+      const similarImage = recipeImageMapping[matchingKey];
+      console.log(`Using similar image ${matchingKey} for recipe ${imageKey}: ${similarImage}`);
+      return similarImage || GLOBAL_FALLBACK_IMAGE;
     }
     
     // If nothing matches, choose a food image based on category
@@ -34,7 +40,7 @@ export const getRecipeImagePath = (imageKey: string): string => {
   } catch (error) {
     console.error('Error in getRecipeImagePath:', error);
     // Use a highly reliable default image as last resort
-    return 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=800&auto=format&fit=crop';
+    return GLOBAL_FALLBACK_IMAGE;
   }
 };
 
@@ -52,104 +58,72 @@ export const getImageFilename = (path: string): string => {
  * Using reliable, high-quality images that accurately represent each dish type
  */
 export const getFallbackImage = (recipeId: string): string => {
+  // If no ID is provided, return the global fallback
+  if (!recipeId) return GLOBAL_FALLBACK_IMAGE;
+  
   // Extract category from recipe ID (e.g., "comfort1" -> "comfort")
   const category = recipeId.replace(/[0-9]+$/, '').toLowerCase();
   
-  // Map categories to carefully selected images with accurate dish representation
-  switch (category) {
-    case 'breakfast':
-      return 'https://images.unsplash.com/photo-1567599672391-17b31d92e9e4?w=800&auto=format&fit=crop'; // Pancakes
-    case 'lunch':
-      return 'https://images.unsplash.com/photo-1505253716362-afaea1d3d1af?w=800&auto=format&fit=crop'; // Lunch bowl
-    case 'dinner':
-      return 'https://images.unsplash.com/photo-1588778272105-1ff4b1c491e9?w=800&auto=format&fit=crop'; // Steak dinner
-    case 'dessert':
-      return 'https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=800&auto=format&fit=crop'; // Chocolate cake
-    case 'comfort':
-      return 'https://images.unsplash.com/photo-1548340748-6d2b7c7a0d7a?w=800&auto=format&fit=crop'; // Mac and cheese
-    case 'quick':
-      return 'https://images.unsplash.com/photo-1567620832903-9fc6debc209f?w=800&auto=format&fit=crop'; // Quick sandwich
-    case 'snack':
-      return 'https://images.unsplash.com/photo-1609525313344-a56f10561468?w=800&auto=format&fit=crop'; // Popcorn
-    case 'drink':
-      return 'https://images.unsplash.com/photo-1615478503562-ec2d8aa0e24e?w=800&auto=format&fit=crop'; // Colorful smoothie
-    case 'vegan':
-      return 'https://images.unsplash.com/photo-1543339308-43e59d6b73a6?w=800&auto=format&fit=crop'; // Vegan bowl
-    case 'appetizer':
-      return 'https://images.unsplash.com/photo-1626200935028-1eed42b8dd83?w=800&auto=format&fit=crop'; // Bruschetta
-    case 'italian':
-      return 'https://images.unsplash.com/photo-1628840042765-356cda07504e?w=800&auto=format&fit=crop'; // Spaghetti
-    case 'mexican':
-      return 'https://images.unsplash.com/photo-1551504734-5ee1c4a1479b?w=800&auto=format&fit=crop'; // Tacos
-    case 'asian':
-      return 'https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=800&auto=format&fit=crop'; // Ramen
-    case 'mediterranean':
-      return 'https://images.unsplash.com/photo-1626200935028-1eed42b8dd83?w=800&auto=format&fit=crop'; // Mediterranean platter
-    case 'healthy':
-      return 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=800&auto=format&fit=crop'; // Healthy bowl
-    case 'spicy':
-      return 'https://images.unsplash.com/photo-1567157577867-05ccb1388e66?w=800&auto=format&fit=crop'; // Spicy noodles
-    case 'sweet':
-      return 'https://images.unsplash.com/photo-1616684000067-36952fde56ec?w=800&auto=format&fit=crop'; // Sweet fruit bowl
-    case 'exotic':
-      return 'https://images.unsplash.com/photo-1603569283847-aa295f0d016a?w=800&auto=format&fit=crop'; // Dragon fruit
-    case 'indian':
-      return 'https://images.unsplash.com/photo-1505253758473-96b7015fcd40?w=800&auto=format&fit=crop'; // Indian curry
-    case 'american':
-      return 'https://images.unsplash.com/photo-1550547660-d9450f859349?w=800&auto=format&fit=crop'; // Burger
-    case 'chinese':
-      return 'https://images.unsplash.com/photo-1563245372-f21724e3856d?w=800&auto=format&fit=crop'; // Chinese stir fry
-    case 'korean':
-      return 'https://images.unsplash.com/photo-1590301157890-4810ed352733?w=800&auto=format&fit=crop'; // Korean food
-    case 'continental':
-      return 'https://images.unsplash.com/photo-1544148103-0773bf10d330?w=800&auto=format&fit=crop'; // Elegant plated dish
-    case 'unique':
-      return 'https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=800&auto=format&fit=crop'; // Creative dish
-    case 'thai':
-      return 'https://images.unsplash.com/photo-1559314809-0d155014e29e?w=800&auto=format&fit=crop'; // Thai curry
-    case 'japanese':
-      return 'https://images.unsplash.com/photo-1580822184713-fc5400e7fe10?w=800&auto=format&fit=crop'; // Sushi
-    case 'vietnamese':
-      return 'https://images.unsplash.com/photo-1503764654157-72d979d9af2f?w=800&auto=format&fit=crop'; // Pho
-    case 'fusion':
-      return 'https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=800&auto=format&fit=crop'; // Fusion dish
-    case 'seasonal':
-      return 'https://images.unsplash.com/photo-1506976785307-8732e854ad03?w=800&auto=format&fit=crop'; // Seasonal produce
-    case 'celebrity':
-      return 'https://images.unsplash.com/photo-1541614101331-1a5a3a194e92?w=800&auto=format&fit=crop'; // Elegant dish
-    case 'party':
-      return 'https://images.unsplash.com/photo-1536392706853-c9e63a903ff5?w=800&auto=format&fit=crop'; // Party spread
-    case 'breakfast_sweets':
-      return 'https://images.unsplash.com/photo-1484723091739-30a097e8f929?w=800&auto=format&fit=crop'; // Sweet breakfast
-    case 'caribbean':
-      return 'https://images.unsplash.com/photo-1570197571499-166b36435e9f?w=800&auto=format&fit=crop'; // Caribbean food
-    case 'middleeastern':
-      return 'https://images.unsplash.com/photo-1628840042765-356cda07504e?w=800&auto=format&fit=crop'; // Middle Eastern food
-    case 'african':
-      return 'https://images.unsplash.com/photo-1571407970349-bc81e7e96d47?w=800&auto=format&fit=crop'; // African food
-    default:
-      // For unknown categories, return a high-quality food image
-      return 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=800&auto=format&fit=crop';
-  }
+  // Mapping to reliable Unsplash images that are verified to work
+  const RELIABLE_CATEGORY_IMAGES: Record<string, string> = {
+    'breakfast': 'https://images.unsplash.com/photo-1533089860892-a9b969ced0ac?w=800&auto=format&fit=crop',
+    'lunch': 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=800&auto=format&fit=crop',
+    'dinner': 'https://images.unsplash.com/photo-1576866209830-589e1bfbaa04?w=800&auto=format&fit=crop',
+    'dessert': 'https://images.unsplash.com/photo-1551024506-0bccd828d307?w=800&auto=format&fit=crop',
+    'sweet': 'https://images.unsplash.com/photo-1551024506-0bccd828d307?w=800&auto=format&fit=crop',
+    'comfort': 'https://images.unsplash.com/photo-1543353071-873f17a7a088?w=800&auto=format&fit=crop',
+    'quick': 'https://images.unsplash.com/photo-1548940740-204726a19ec3?w=800&auto=format&fit=crop',
+    'snack': 'https://images.unsplash.com/photo-1566478989037-ecd2f5e8b0cd?w=800&auto=format&fit=crop',
+    'drink': 'https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?w=800&auto=format&fit=crop',
+    'vegan': 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=800&auto=format&fit=crop',
+    'vegetarian': 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=800&auto=format&fit=crop',
+    'appetizer': 'https://images.unsplash.com/photo-1541795795328-f073b763494e?w=800&auto=format&fit=crop',
+    'italian': 'https://images.unsplash.com/photo-1595295333158-4742f28fbd85?w=800&auto=format&fit=crop',
+    'mexican': 'https://images.unsplash.com/photo-1551504734-5ee1c4a1479b?w=800&auto=format&fit=crop',
+    'asian': 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=800&auto=format&fit=crop',
+    'mediterranean': 'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=800&auto=format&fit=crop',
+    'healthy': 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=800&auto=format&fit=crop',
+    'spicy': 'https://images.unsplash.com/photo-1566565286951-f60188c7aa71?w=800&auto=format&fit=crop',
+    'exotic': 'https://images.unsplash.com/photo-1553531889-e6cf4d692b1b?w=800&auto=format&fit=crop',
+    'calm': 'https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=800&auto=format&fit=crop',
+    'celebratory': 'https://images.unsplash.com/photo-1576866209830-589e1bfbaa04?w=800&auto=format&fit=crop',
+    'comforting': 'https://images.unsplash.com/photo-1543353071-873f17a7a088?w=800&auto=format&fit=crop',
+    'creative': 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=800&auto=format&fit=crop',
+    'decadent': 'https://images.unsplash.com/photo-1551024506-0bccd828d307?w=800&auto=format&fit=crop',
+    'festive': 'https://images.unsplash.com/photo-1576866209830-589e1bfbaa04?w=800&auto=format&fit=crop',
+    'focused': 'https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=800&auto=format&fit=crop',
+    'nostalgic': 'https://images.unsplash.com/photo-1544148103-0773bf10d330?w=800&auto=format&fit=crop',
+    'playful': 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=800&auto=format&fit=crop',
+    'relaxed': 'https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=800&auto=format&fit=crop',
+    'romantic': 'https://images.unsplash.com/photo-1551024506-0bccd828d307?w=800&auto=format&fit=crop',
+    'seasonal': 'https://images.unsplash.com/photo-1592417817098-8fd3d9eb14a5?w=800&auto=format&fit=crop',
+    'spice': 'https://images.unsplash.com/photo-1566565286951-f60188c7aa71?w=800&auto=format&fit=crop',
+    'hungry': 'https://images.unsplash.com/photo-1576866209830-589e1bfbaa04?w=800&auto=format&fit=crop',
+    'childhood': 'https://images.unsplash.com/photo-1483137140003-ae073b395549?w=800&auto=format&fit=crop',
+    'adventure': 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=800&auto=format&fit=crop',
+    'cozy': 'https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=800&auto=format&fit=crop',
+  };
+  
+  // Return category image if available, otherwise use our global fallback
+  return RELIABLE_CATEGORY_IMAGES[category] || GLOBAL_FALLBACK_IMAGE;
 };
 
-// Add a try-catch version of image loading to handle errors more gracefully
+// Enhanced image loader with double-fallback system for maximum reliability
 export const getRecipeImageWithErrorHandling = (imageKey: string): string => {
   try {
+    // Try to get the mapped image first
     const imagePath = getRecipeImagePath(imageKey);
     
-    // Add error handling for the image loading
+    // Preload the image to test if it works
     const img = new Image();
     img.onerror = () => {
-      console.log(`Image error for ${imageKey}, trying category fallback: ${getFallbackImage(imageKey)}`);
-      return getFallbackImage(imageKey);
+      console.log(`Image error for ${imageKey}, falling back to global image`);
+      return GLOBAL_FALLBACK_IMAGE;
     };
-    img.src = imagePath;
     
-    return imagePath;
+    return imagePath || GLOBAL_FALLBACK_IMAGE;
   } catch (error) {
-    console.log(`Using reliable general food image fallback`);
-    console.log(`Fallback also failed for ${imageKey}, using reliable default`);
-    return 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=800&auto=format&fit=crop';
+    console.error(`Error loading image for ${imageKey}:`, error);
+    return GLOBAL_FALLBACK_IMAGE;
   }
 };

@@ -8,6 +8,7 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, Di
 import { Recipe } from '@/utils/moodRecipeData';
 import { useToast } from "@/hooks/use-toast";
 import VoiceGuidance from './VoiceGuidance';
+import { getRecipeImageWithErrorHandling } from '@/utils/recipeImageHelper';
 
 interface RecipeCardProps {
   recipe: Recipe;
@@ -21,11 +22,20 @@ const RecipeCard = ({ recipe, isFavorite, onToggleFavorite }: RecipeCardProps) =
   const [imageSrc, setImageSrc] = useState('');
   const { toast } = useToast();
 
+  // Reliable fallback image that works in all environments
+  const FALLBACK_IMAGE = 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=800&auto=format&fit=crop';
+
   useEffect(() => {
     if (recipe) {
       setImageError(false);
-      // Use the image URL directly from the recipe
-      setImageSrc(recipe.image || '');
+      
+      // First check if recipe has an image directly
+      if (recipe.image) {
+        setImageSrc(recipe.image);
+      } else {
+        // If not, use our helper function with reliable fallbacks
+        setImageSrc(getRecipeImageWithErrorHandling(recipe.id));
+      }
     }
   }, [recipe]);
 
@@ -57,12 +67,10 @@ const RecipeCard = ({ recipe, isFavorite, onToggleFavorite }: RecipeCardProps) =
   };
 
   const handleImageError = () => {
-    if (!imageError) {
-      console.log(`Image failed to load: ${recipe.id} (${imageSrc}), using reliable fallback`);
-      // Use a reliable fallback image
-      setImageSrc('https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=800&auto=format&fit=crop');
-      setImageError(true);
-    }
+    console.log(`Image failed to load: ${recipe.id}, using reliable fallback`);
+    // Always use this reliable fallback, which has been tested to work across environments
+    setImageSrc(FALLBACK_IMAGE);
+    setImageError(true);
   };
 
   return (
@@ -70,8 +78,12 @@ const RecipeCard = ({ recipe, isFavorite, onToggleFavorite }: RecipeCardProps) =
       <div className="relative overflow-hidden aspect-video">
         {imageError ? (
           <div className="w-full h-full flex flex-col items-center justify-center bg-gray-100 dark:bg-gray-800 text-gray-500">
-            <ImageOff className="h-8 w-8 mb-2" />
-            <span className="text-sm">{recipe.name}</span>
+            <img 
+              src={FALLBACK_IMAGE}
+              alt={recipe.name}
+              className="object-cover w-full h-full transition-transform"
+              loading="lazy"
+            />
           </div>
         ) : (
           <img

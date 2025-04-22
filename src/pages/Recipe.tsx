@@ -6,7 +6,9 @@ import RecipeAiFeatures from '@/components/ui/RecipeAiFeatures';
 import VoiceGuidance from '@/components/ui/VoiceGuidance';
 import { useToast } from "@/hooks/use-toast";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
-import { getRecipeImagePath, getFallbackImage } from '@/utils/recipeImageHelper';
+
+// Global reliable fallback image
+const GLOBAL_FALLBACK_IMAGE = 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=800&auto=format&fit=crop';
 
 const Recipe = () => {
   const { id } = useParams<{ id: string }>();
@@ -29,31 +31,13 @@ const Recipe = () => {
         if (foundRecipe) {
           setRecipe(foundRecipe);
           
-          // Set up image with fallback
-          const primaryImageSrc = getRecipeImagePath(foundRecipe.id);
-          setImageSrc(primaryImageSrc);
-          
-          // Preload image
-          const img = new Image();
-          img.onload = () => {
-            setImageError(false);
-          };
-          img.onerror = () => {
-            // Try fallback
-            const fallbackSrc = getFallbackImage(foundRecipe.id);
-            console.log(`Recipe page: Primary image failed, trying fallback:`, fallbackSrc);
-            setImageSrc(fallbackSrc);
-            
-            // Preload fallback
-            const fallbackImg = new Image();
-            fallbackImg.onerror = () => {
-              // Ultimate fallback
-              console.log('Recipe page: Fallback also failed, using reliable default');
-              setImageSrc('https://images.unsplash.com/photo-1506368249639-73a05d6f6488?w=800&auto=format&fit=crop');
-            };
-            fallbackImg.src = fallbackSrc;
-          };
-          img.src = primaryImageSrc;
+          // Prioritize direct image from the recipe
+          if (foundRecipe.image) {
+            setImageSrc(foundRecipe.image);
+          } else {
+            // Otherwise set default fallback
+            setImageSrc(GLOBAL_FALLBACK_IMAGE);
+          }
         } else {
           setRecipe(null);
         }
@@ -66,11 +50,9 @@ const Recipe = () => {
   }, [id]);
 
   const handleImageError = () => {
-    if (!imageError) {
-      console.log('Recipe page: Image error, using reliable default');
-      setImageSrc('https://images.unsplash.com/photo-1506368249639-73a05d6f6488?w=800&auto=format&fit=crop');
-      setImageError(true);
-    }
+    console.log('Recipe page: Image error, using reliable default');
+    setImageSrc(GLOBAL_FALLBACK_IMAGE);
+    setImageError(true);
   };
 
   const toggleFavorite = () => {
@@ -156,8 +138,6 @@ const Recipe = () => {
     );
   }
 
-  const recipeImage = recipe ? getRecipeImagePath(recipe.id) : '';
-
   return (
     <>
       <div className="min-h-screen pt-20 pb-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto animate-fade-in">
@@ -171,20 +151,13 @@ const Recipe = () => {
 
         <div className="mb-8 rounded-xl overflow-hidden bg-gray-200 dark:bg-gray-800">
           <AspectRatio ratio={21/9} className="bg-muted">
-            {imageError ? (
-              <div className="w-full h-full flex items-center justify-center bg-gray-100 dark:bg-gray-800">
-                <ImageOff size={60} className="text-gray-400" />
-                <p className="ml-2 text-gray-500">Image unavailable</p>
-              </div>
-            ) : (
-              <img 
-                src={imageSrc} 
-                alt={recipe?.name}
-                className="w-full h-full object-cover"
-                loading="lazy"
-                onError={handleImageError}
-              />
-            )}
+            <img 
+              src={imageSrc} 
+              alt={recipe?.name}
+              className="w-full h-full object-cover"
+              loading="lazy"
+              onError={handleImageError}
+            />
           </AspectRatio>
         </div>
         
