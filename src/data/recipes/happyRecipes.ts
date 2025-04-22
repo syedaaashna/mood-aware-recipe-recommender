@@ -1,4 +1,3 @@
-
 import { Recipe } from '@/types/recipe';
 
 export const happyRecipes: Recipe[] = [
@@ -28,7 +27,7 @@ export const happyRecipes: Recipe[] = [
     tags: ['fresh', 'fruity', 'healthy', 'quick'],
     difficulty: 'Easy',
     mood: 'happy',
-    image: 'https://images.unsplash.com/photo-1590080658-d464e1869fd5?w=800&auto=format&fit=crop',
+    image: 'https://images.unsplash.com/photo-1590080658-d464e1869fd5?w=800&auto=format&fit=crop&q=80', // Bright citrus salad with mixed fruits
     nutritionAnalysis: 'High in vitamin C and antioxidants, perfect for boosting mood and energy',
     cookingTips: [
       'Use room temperature fruit for better flavor',
@@ -173,7 +172,7 @@ export const happyRecipes: Recipe[] = [
     tags: ['italian', 'mediterranean', 'vegetarian', 'colorful'],
     difficulty: 'Easy',
     mood: 'happy',
-    image: 'https://images.unsplash.com/photo-1593560708920-61b98ae969e1?w=800&auto=format&fit=crop',
+    image: 'https://images.unsplash.com/photo-1623338725807-50f5ca888a38?w=800&auto=format&fit=crop&q=80', // Mediterranean pizza with colorful toppings
     nutritionAnalysis: 'Good source of protein and vegetables',
     cookingTips: [
       'Preheat oven thoroughly',
