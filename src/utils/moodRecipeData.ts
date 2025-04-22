@@ -1,6 +1,8 @@
 
+// Re-export the necessary types
+export type { Mood, Recipe } from '@/types/recipe';
 export { moods } from '@/data/moods/moodsList';
-export { recipesData } from '@/data/recipes';
+export { recipesData } from '@/data/recipes/index';
 export {
   getAllRecipes,
   getRecipeById,

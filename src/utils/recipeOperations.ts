@@ -1,12 +1,17 @@
 
 import { Recipe } from '@/types/recipe';
-import recipesData from '@/data/recipes';
+import { recipesData } from '@/data/recipes/index';
 
 export const getAllRecipes = (): Recipe[] => {
   const allRecipes: Recipe[] = [];
+  
+  // Fix the iterator issue by making sure we're iterating over an array
   Object.values(recipesData).forEach(categoryRecipes => {
-    allRecipes.push(...categoryRecipes);
+    if (Array.isArray(categoryRecipes)) {
+      allRecipes.push(...categoryRecipes);
+    }
   });
+  
   return allRecipes;
 };
 
