@@ -25,7 +25,6 @@ export const childhoodMemoriesRecipes: Recipe[] = [
     tags: ['american', 'childhood', 'mac'],
     difficulty: 'Easy',
     mood: 'childhood memories',
-    image: 'https://images.unsplash.com/photo-1612152328178-91a1f8161fb3?w=800&auto=format&fit=crop',
     nutritionAnalysis: 'Cheesy memory lane.',
     cookingTips: ['Use sharp cheddar for flavor.']
   },
@@ -50,7 +49,6 @@ export const childhoodMemoriesRecipes: Recipe[] = [
     tags: ['indian', 'snack', 'childhood'],
     difficulty: 'Easy',
     mood: 'childhood memories',
-    image: 'https://images.unsplash.com/photo-1557079582-eef857e0fcca?w=800&auto=format&fit=crop',
     nutritionAnalysis: 'Sugar rush nostalgia.',
     cookingTips: ['Use homemade jam if possible.']
   },
@@ -78,7 +76,6 @@ export const childhoodMemoriesRecipes: Recipe[] = [
     tags: ['thai', 'pancakes', 'childhood'],
     difficulty: 'Easy',
     mood: 'childhood memories',
-    image: 'https://images.unsplash.com/photo-1567608285969-48e4bbe0d399?w=800&auto=format&fit=crop',
     nutritionAnalysis: 'Sweet childhood memories.',
     cookingTips: ['Use ripe banana.']
   }

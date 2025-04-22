@@ -1,4 +1,3 @@
-
 import { Recipe } from '@/types/recipe';
 
 // Cozy mood - 3 recipes, all different cuisines
@@ -28,7 +27,6 @@ export const cozyRecipes: Recipe[] = [
     tags: ['indian', 'vegetarian', 'cozy'],
     difficulty: 'Easy',
     mood: 'cozy',
-    image: 'https://images.unsplash.com/photo-1631292784640-2b24be416617?w=800&auto=format&fit=crop',
     nutritionAnalysis: 'High in plant protein & comforting.',
     cookingTips: ['Use ghee for aroma.']
   },
@@ -57,7 +55,6 @@ export const cozyRecipes: Recipe[] = [
     tags: ['american', 'beef', 'cozy'],
     difficulty: 'Medium',
     mood: 'cozy',
-    image: 'https://images.unsplash.com/photo-1551462147-ff29053bfc14?w=800&auto=format&fit=crop',
     nutritionAnalysis: 'High in protein, perfect for cold days.',
     cookingTips: ['Simmer long for better flavor.']
   },
@@ -86,7 +83,6 @@ export const cozyRecipes: Recipe[] = [
     tags: ['french', 'tart', 'cozy'],
     difficulty: 'Medium',
     mood: 'cozy',
-    image: 'https://images.unsplash.com/photo-1588165171080-c89acfa5a507?w=800&auto=format&fit=crop',
     nutritionAnalysis: 'Cozy, rich, and comforting.',
     cookingTips: ['Let tart rest before slicing.']
   }

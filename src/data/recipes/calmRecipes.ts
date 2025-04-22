@@ -28,7 +28,6 @@ export const calmRecipes: Recipe[] = [
     tags: ['japanese', 'soup', 'calm'],
     difficulty: 'Easy',
     mood: 'calm',
-    image: 'https://images.unsplash.com/photo-1603052873669-3028a157429f?w=800&auto=format&fit=crop',
     nutritionAnalysis: 'Low calorie, gentle and soothing.',
     cookingTips: ['Don\'t boil miso to preserve flavor.']
   },
@@ -56,7 +55,6 @@ export const calmRecipes: Recipe[] = [
     tags: ['british', 'breakfast', 'calm'],
     difficulty: 'Easy',
     mood: 'calm',
-    image: 'https://images.unsplash.com/photo-1613478223719-2ab802602423?w=800&auto=format&fit=crop',
     nutritionAnalysis: 'Warm, slow-release energy.',
     cookingTips: ['Use milk for extra creaminess.']
   },
@@ -84,7 +82,6 @@ export const calmRecipes: Recipe[] = [
     tags: ['italian', 'salad', 'calm'],
     difficulty: 'Easy',
     mood: 'calm',
-    image: 'https://images.unsplash.com/photo-1599021456807-25db0f974333?w=800&auto=format&fit=crop',
     nutritionAnalysis: 'Light, fresh, cooling.',
     cookingTips: ['Use ripe, in-season tomatoes.']
   }
