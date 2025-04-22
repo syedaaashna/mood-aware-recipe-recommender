@@ -28,7 +28,36 @@ export const comfortingRecipes: Recipe[] = [
     difficulty: 'Medium',
     mood: 'comforting',
     nutritionAnalysis: 'Rich and warming.',
-    cookingTips: ['Stir continuously for creamy texture.']
+    cookingTips: ['Stir continuously for creamy texture.'],
+    image: 'https://images.unsplash.com/photo-1611958580242-8a42a6e8abfb?w=800&auto=format&fit=crop&q=80'
+  },
+  {
+    id: 'comforting-mac-and-cheese',
+    name: 'Comforting Mac & Cheese',
+    description: 'Creamy, cheesy pasta that warms the soul.',
+    ingredients: [
+      'Macaroni pasta',
+      'Cheddar cheese',
+      'Milk',
+      'Butter',
+      'Flour',
+      'Seasonings'
+    ],
+    instructions: [
+      'Cook pasta.',
+      'Make cheese sauce.',
+      'Combine and bake until golden.',
+    ],
+    prepTime: '15 mins',
+    cookTime: '25 mins',
+    servings: 2,
+    calories: 450,
+    tags: ['pasta', 'comfort', 'cheese'],
+    difficulty: 'Medium',
+    mood: 'comforting',
+    nutritionAnalysis: 'Comforting and satisfying.',
+    cookingTips: ['Use sharp cheddar for more flavor.'],
+    image: 'https://images.unsplash.com/photo-1551024601-54fa8877c076?w=800&auto=format&fit=crop&q=80'
   },
   {
     id: 'comforting-indian-khichdi',
