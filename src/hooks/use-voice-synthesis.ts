@@ -3,6 +3,14 @@ import { useState, useEffect, useRef } from 'react';
 import { Language } from '@/types/voice';
 import { useToast } from '@/hooks/use-toast';
 
+// Allow only these 4 languages
+const LANGUAGE_WHITELIST = [
+  { code: "en-US", label: "English" },
+  { code: "hi-IN", label: "Hindi" },
+  { code: "fr-FR", label: "French" },
+  { code: "zh-CN", label: "Chinese" },
+];
+
 export const useVoiceSynthesis = () => {
   const [availableLanguages, setAvailableLanguages] = useState<Language[]>([]);
   const [selectedLanguage, setSelectedLanguage] = useState<Language | null>(null);
@@ -14,58 +22,35 @@ export const useVoiceSynthesis = () => {
     const loadVoices = () => {
       const synth = speechSynthRef.current;
       const voices = synth.getVoices();
-      
+
       if (voices.length > 0) {
         const languages: Language[] = [];
         const addedLanguageCodes: string[] = [];
-        
-        const priorityLanguages = ['en-US', 'en-GB', 'es-ES', 'fr-FR', 'de-DE', 'it-IT', 'zh-CN', 'ja-JP', 'hi-IN', 'ar-SA'];
-        
-        priorityLanguages.forEach(langCode => {
-          const voice = voices.find(v => v.lang === langCode);
-          if (voice && !addedLanguageCodes.includes(langCode)) {
+
+        LANGUAGE_WHITELIST.forEach(({ code, label }) => {
+          const voice = voices.find(v => v.lang === code);
+          if (voice && !addedLanguageCodes.includes(code)) {
             languages.push({
-              code: langCode,
-              name: new Intl.DisplayNames([navigator.language], { type: 'language' }).of(langCode.split('-')[0]) || langCode,
+              code: code,
+              name: label,
               voice: voice
             });
-            addedLanguageCodes.push(langCode);
+            addedLanguageCodes.push(code);
           }
         });
-        
-        voices.forEach(voice => {
-          const langCode = voice.lang;
-          if (!addedLanguageCodes.includes(langCode)) {
-            try {
-              languages.push({
-                code: langCode,
-                name: new Intl.DisplayNames([navigator.language], { type: 'language' }).of(langCode.split('-')[0]) || langCode,
-                voice: voice
-              });
-              addedLanguageCodes.push(langCode);
-            } catch (e) {
-              console.log('Error getting language name:', e);
-              languages.push({
-                code: langCode,
-                name: langCode,
-                voice: voice
-              });
-              addedLanguageCodes.push(langCode);
-            }
-          }
-        });
-        
+
         setAvailableLanguages(languages);
-        
+
+        // Priority: browser language (if on whitelist), else English, else first.
         const browserLangCode = navigator.language;
-        const defaultLang = languages.find(l => l.code === browserLangCode) || 
-                          languages.find(l => l.code.startsWith('en')) || 
-                          languages[0];
-        
+        let defaultLang = languages.find(l => l.code === browserLangCode) 
+          || languages.find(l => l.code.startsWith('en')) 
+          || languages[0];
+
         if (defaultLang) {
           setSelectedLanguage(defaultLang);
         }
-        
+
         setVoicesLoaded(true);
       }
     };
@@ -73,7 +58,6 @@ export const useVoiceSynthesis = () => {
     if (speechSynthesis.onvoiceschanged !== undefined) {
       speechSynthesis.onvoiceschanged = loadVoices;
     }
-    
     loadVoices();
 
     return () => {
