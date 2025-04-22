@@ -49,10 +49,35 @@ const RecipeCard = ({ recipe, isFavorite, onToggleFavorite }: RecipeCardProps) =
   return (
     <Card className="overflow-hidden transition-all duration-300 hover:shadow-lg dark:hover:shadow-primary/10 h-full flex flex-col">
       <div className="relative overflow-hidden aspect-video bg-gray-100 dark:bg-gray-800 flex items-center justify-center">
-        <div className="flex flex-col items-center justify-center text-gray-500 p-4 text-center">
-          <ImageOff className="h-10 w-10 mb-2" />
-          <p className="text-sm">No image available</p>
-        </div>
+        {recipe.image ? (
+          <img 
+            src={recipe.image} 
+            alt={recipe.name}
+            className="w-full h-full object-cover"
+            onError={(e) => {
+              // If image fails to load, show placeholder
+              e.currentTarget.style.display = 'none';
+              e.currentTarget.parentElement?.classList.add('flex', 'flex-col', 'items-center', 'justify-center');
+              const placeholder = document.createElement('div');
+              placeholder.className = 'flex flex-col items-center justify-center text-gray-500 p-4 text-center';
+              placeholder.innerHTML = `
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10 mb-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <line x1="2" y1="2" x2="22" y2="22"></line>
+                  <path d="M10.41 10.41a2 2 0 1 1-2.83-2.83"></path>
+                  <line x1="13.5" y1="13.5" x2="6" y2="21"></line>
+                  <path d="M13.5 13.5L21 6"></path>
+                </svg>
+                <p className="text-sm">No image available</p>
+              `;
+              e.currentTarget.parentElement?.appendChild(placeholder);
+            }}
+          />
+        ) : (
+          <div className="flex flex-col items-center justify-center text-gray-500 p-4 text-center">
+            <ImageOff className="h-10 w-10 mb-2" />
+            <p className="text-sm">No image available</p>
+          </div>
+        )}
         
         <button
           onClick={() => onToggleFavorite(recipe)}
