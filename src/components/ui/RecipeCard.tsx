@@ -5,7 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Heart, Clock, ChefHat, Bookmark, Share2, ImageOff } from 'lucide-react';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { Recipe } from '@/utils/moodRecipeData';
+import { Recipe } from '@/types/recipe';
 import { useToast } from "@/hooks/use-toast";
 import VoiceGuidance from './VoiceGuidance';
 import { getRecipeImageWithErrorHandling } from '@/utils/recipeImageHelper';
@@ -26,17 +26,8 @@ const RecipeCard = ({ recipe, isFavorite, onToggleFavorite }: RecipeCardProps) =
   const FALLBACK_IMAGE = 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=800&auto=format&fit=crop';
 
   useEffect(() => {
-    if (recipe) {
-      setImageError(false);
-      
-      // First check if recipe has an image directly
-      if (recipe.image) {
-        setImageSrc(recipe.image);
-      } else {
-        // If not, use our helper function with reliable fallbacks
-        setImageSrc(getRecipeImageWithErrorHandling(recipe.id));
-      }
-    }
+    // No image loading is needed as per user request
+    setImageError(true);
   }, [recipe]);
 
   const handleCopyLink = () => {
@@ -66,34 +57,13 @@ const RecipeCard = ({ recipe, isFavorite, onToggleFavorite }: RecipeCardProps) =
     }
   };
 
-  const handleImageError = () => {
-    console.log(`Image failed to load: ${recipe.id}, using reliable fallback`);
-    // Always use this reliable fallback, which has been tested to work across environments
-    setImageSrc(FALLBACK_IMAGE);
-    setImageError(true);
-  };
-
   return (
     <Card className="overflow-hidden transition-all duration-300 hover:shadow-lg dark:hover:shadow-primary/10 h-full flex flex-col">
-      <div className="relative overflow-hidden aspect-video">
-        {imageError ? (
-          <div className="w-full h-full flex flex-col items-center justify-center bg-gray-100 dark:bg-gray-800 text-gray-500">
-            <img 
-              src={FALLBACK_IMAGE}
-              alt={recipe.name}
-              className="object-cover w-full h-full transition-transform"
-              loading="lazy"
-            />
-          </div>
-        ) : (
-          <img
-            src={imageSrc}
-            alt={recipe.name}
-            className="object-cover w-full h-full transition-transform duration-300 hover:scale-105"
-            onError={handleImageError}
-            loading="lazy"
-          />
-        )}
+      <div className="relative overflow-hidden aspect-video bg-gray-100 dark:bg-gray-800 flex items-center justify-center">
+        <div className="flex flex-col items-center justify-center text-gray-500 p-4 text-center">
+          <ImageOff className="h-10 w-10 mb-2" />
+          <p className="text-sm">No image available</p>
+        </div>
         
         <button
           onClick={() => onToggleFavorite(recipe)}

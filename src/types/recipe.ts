@@ -19,6 +19,7 @@ export interface Recipe {
   tags: string[];
   difficulty: string;
   mood: string;
+  image?: string;
   aiSuggestion?: string;
   nutritionAnalysis?: string;
   cookingTips?: string[];
