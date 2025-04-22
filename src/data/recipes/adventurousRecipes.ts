@@ -26,7 +26,6 @@ export const adventurousRecipes: Recipe[] = [
     tags: ['korean', 'rice', 'adventurous'],
     difficulty: 'Easy',
     mood: 'adventurous',
-    image: 'https://images.unsplash.com/photo-1555949258-eb67b1ef0ceb?w=800&auto=format&fit=crop',
     nutritionAnalysis: 'Fermented, healthy.',
     cookingTips: ['Top with extra sesame seeds.']
   },
@@ -55,7 +54,6 @@ export const adventurousRecipes: Recipe[] = [
     tags: ['vegan', 'mexican', 'adventurous'],
     difficulty: 'Easy',
     mood: 'adventurous',
-    image: 'https://images.unsplash.com/photo-1580713377205-310ce8ae71fc?w=800&auto=format&fit=crop',
     nutritionAnalysis: 'Pulled jackfruit is fiber-rich.',
     cookingTips: ['Drain jackfruit thoroughly.']
   }

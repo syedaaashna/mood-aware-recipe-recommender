@@ -1,3 +1,4 @@
+
 import { Recipe } from '@/types/recipe';
 
 export const creativeRecipes: Recipe[] = [

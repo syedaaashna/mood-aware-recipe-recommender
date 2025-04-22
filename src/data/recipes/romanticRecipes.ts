@@ -1,3 +1,4 @@
+
 import { Recipe } from '@/types/recipe';
 
 export const romanticRecipes: Recipe[] = [
@@ -26,7 +27,6 @@ export const romanticRecipes: Recipe[] = [
     tags: ['dessert', 'romantic', 'fondue'],
     difficulty: 'Easy',
     mood: 'romantic',
-    image: 'https://images.unsplash.com/photo-1532465909-4e0278962a2b?w=800&auto=format&fit=crop', // Chocolate fondue
     nutritionAnalysis: 'Indulgent treat.',
     cookingTips: ['Use good quality chocolate.']
   },
@@ -55,7 +55,6 @@ export const romanticRecipes: Recipe[] = [
     tags: ['dinner', 'seafood', 'romantic'],
     difficulty: 'Easy',
     mood: 'romantic',
-    image: 'https://images.unsplash.com/photo-1580476262798-bddd9f4b7369?w=800&auto=format&fit=crop', // Salmon fillet
     nutritionAnalysis: 'Rich in omega 3.',
     cookingTips: ['Do not overcook salmon.']
   }

@@ -25,7 +25,6 @@ export const focusedRecipes: Recipe[] = [
     tags: ['smoothie', 'healthy', 'focus'],
     difficulty: 'Easy',
     mood: 'focused',
-    image: 'https://images.unsplash.com/photo-1464983953574-0892a716854b?w=800&auto=format&fit=crop',
     nutritionAnalysis: 'High in antioxidants and brain-boosting fats.',
     cookingTips: ['Use frozen berries for thicker texture.']
   },
@@ -52,7 +51,6 @@ export const focusedRecipes: Recipe[] = [
     tags: ['chicken', 'lunch', 'focus'],
     difficulty: 'Easy',
     mood: 'focused',
-    image: 'https://images.unsplash.com/photo-1580476262798-bddd9f4b7369?w=800&auto=format&fit=crop',
     nutritionAnalysis: 'Lean protein plus herbs.',
     cookingTips: ['Rest chicken before slicing.']
   }

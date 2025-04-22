@@ -26,7 +26,6 @@ export const exoticRecipes: Recipe[] = [
     tags: ['thai', 'dessert', 'exotic'],
     difficulty: 'Medium',
     mood: 'exotic',
-    image: 'https://images.unsplash.com/photo-1563805042-7684c019e1cb?w=800&auto=format&fit=crop',
     nutritionAnalysis: 'Tropical sweet treat.',
     cookingTips: ['Use ripe mango only.']
   },
@@ -53,7 +52,6 @@ export const exoticRecipes: Recipe[] = [
     tags: ['smoothie', 'drink', 'exotic'],
     difficulty: 'Easy',
     mood: 'exotic',
-    image: 'https://images.unsplash.com/photo-1603569283847-aa295f0d016a?w=800&auto=format&fit=crop',
     nutritionAnalysis: 'High in vitamin C.',
     cookingTips: ['Use frozen fruit for thicker consistency.']
   }

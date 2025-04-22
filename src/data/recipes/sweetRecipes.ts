@@ -24,7 +24,6 @@ export const sweetRecipes: Recipe[] = [
     tags: ['dessert', 'breakfast', 'sweet'],
     difficulty: 'Easy',
     mood: 'sweet',
-    image: 'https://images.unsplash.com/photo-1464983953574-0892a716854b?w=800&auto=format&fit=crop',
     nutritionAnalysis: 'Rich in antioxidants.',
     cookingTips: ['Use seasonal berries.']
   },
@@ -54,7 +53,6 @@ export const sweetRecipes: Recipe[] = [
     tags: ['dessert', 'sweet', 'baking'],
     difficulty: 'Medium',
     mood: 'sweet',
-    image: 'https://images.unsplash.com/photo-1505394033641-40c6ad1178d7?w=800&auto=format&fit=crop',
     nutritionAnalysis: 'A classic sweet treat.',
     cookingTips: ['Let dough rise fully.']
   }

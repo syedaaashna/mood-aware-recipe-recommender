@@ -1,3 +1,4 @@
+
 import { Recipe } from '@/types/recipe';
 
 export const spicyRecipes: Recipe[] = [
@@ -27,7 +28,6 @@ export const spicyRecipes: Recipe[] = [
     tags: ['chinese', 'stir-fry', 'spicy'],
     difficulty: 'Medium',
     mood: 'spicy',
-    image: 'https://images.unsplash.com/photo-1563245372-f21724e3856d?w=800&auto=format&fit=crop',
     nutritionAnalysis: 'Hot and satisfying.',
     cookingTips: ['Use fresh Sichuan peppercorns.']
   },
@@ -58,7 +58,6 @@ export const spicyRecipes: Recipe[] = [
     tags: ['middle eastern', 'eggs', 'spicy'],
     difficulty: 'Easy',
     mood: 'spicy',
-    image: 'https://images.unsplash.com/photo-1626116819195-b9bd9f9c7ed8?w=800&auto=format&fit=crop',
     nutritionAnalysis: 'High protein breakfast.',
     cookingTips: ['Control spice with amount of harissa.']
   }
