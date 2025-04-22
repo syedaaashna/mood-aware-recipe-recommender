@@ -12,7 +12,7 @@ interface RecipeAiFeaturesProps {
 
 const RecipeAiFeatures = ({ recipe }: RecipeAiFeaturesProps) => {
   const [isExpanded, setIsExpanded] = useState(false);
-  const similarRecipes = getSimilarRecipes(recipe.id);
+  const similarRecipes = getSimilarRecipes(recipe.id, 3);
   const imagesInitializedRef = useRef(false);
 
   return (

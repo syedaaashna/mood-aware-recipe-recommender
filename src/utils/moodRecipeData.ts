@@ -845,6 +845,26 @@ export const searchRecipes = (query: string): Recipe[] => {
   );
 };
 
+export const getSimilarRecipes = (recipeId: string, limit: number = 3): Recipe[] => {
+  const targetRecipe = getRecipeById(recipeId);
+  
+  if (!targetRecipe) {
+    return [];
+  }
+  
+  const allRecipes = getAllRecipes().filter(recipe => recipe.id !== recipeId);
+  
+  // Sort recipes by tag similarity
+  const sortedRecipes = allRecipes.sort((a, b) => {
+    const aTagMatches = a.tags.filter(tag => targetRecipe.tags.includes(tag)).length;
+    const bTagMatches = b.tags.filter(tag => targetRecipe.tags.includes(tag)).length;
+    
+    return bTagMatches - aTagMatches;
+  });
+  
+  return sortedRecipes.slice(0, limit);
+};
+
 export const getChatbotResponse = (message: string, moodId: string | null): string => {
   const lowerMessage = message.toLowerCase();
   
