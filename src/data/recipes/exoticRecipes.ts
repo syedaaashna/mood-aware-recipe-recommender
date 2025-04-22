@@ -1,4 +1,3 @@
-
 import { Recipe } from '@/types/recipe';
 
 export const exoticRecipes: Recipe[] = [
@@ -27,7 +26,8 @@ export const exoticRecipes: Recipe[] = [
     difficulty: 'Medium',
     mood: 'exotic',
     nutritionAnalysis: 'Tropical sweet treat.',
-    cookingTips: ['Use ripe mango only.']
+    cookingTips: ['Use ripe mango only.'],
+    image: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&auto=format&fit=crop'
   },
   {
     id: 'exotic-dragon-fruit-smoothie',
@@ -53,6 +53,7 @@ export const exoticRecipes: Recipe[] = [
     difficulty: 'Easy',
     mood: 'exotic',
     nutritionAnalysis: 'High in vitamin C.',
-    cookingTips: ['Use frozen fruit for thicker consistency.']
+    cookingTips: ['Use frozen fruit for thicker consistency.'],
+    image: 'https://images.unsplash.com/photo-1552332386-f8dd00dc2f85?w=800&auto=format&fit=crop'
   }
 ];

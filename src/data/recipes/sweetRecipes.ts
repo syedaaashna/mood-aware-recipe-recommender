@@ -25,7 +25,8 @@ export const sweetRecipes: Recipe[] = [
     difficulty: 'Easy',
     mood: 'sweet',
     nutritionAnalysis: 'Rich in antioxidants.',
-    cookingTips: ['Use seasonal berries.']
+    cookingTips: ['Use seasonal berries.'],
+    image: 'https://images.unsplash.com/photo-1519864600265-abb23847ef2c?w=800&auto=format&fit=crop'
   },
   {
     id: 'sweet-cinnamon-rolls',
@@ -54,6 +55,7 @@ export const sweetRecipes: Recipe[] = [
     difficulty: 'Medium',
     mood: 'sweet',
     nutritionAnalysis: 'A classic sweet treat.',
-    cookingTips: ['Let dough rise fully.']
+    cookingTips: ['Let dough rise fully.'],
+    image: 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=800&auto=format&fit=crop'
   }
 ];
