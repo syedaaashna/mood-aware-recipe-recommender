@@ -29,7 +29,7 @@ export const sadOnionSoupRecipe: Recipe = {
   tags: ['french', 'soup', 'comfort', 'cheese'],
   difficulty: 'Medium',
   mood: 'sad',
-  image: 'https://images.unsplash.com/photo-1502741338009-cac2772e18bc?w=800&auto=format&fit=crop',
+  image: 'https://images.unsplash.com/photo-1484723091739-30a097e8f929?w=800&auto=format&fit=crop',
   nutritionAnalysis: 'Rich in flavor and comfort',
   cookingTips: [
     'Take time with onions',
