@@ -285,7 +285,153 @@ export interface Recipe {
   cookingTips?: string[];
 }
 
-const recipesData: { [key: string]: Recipe[] } = {};
+const recipesData: { [key: string]: Recipe[] } = {
+  happy: [
+    {
+      id: 'bright-citrus-salad',
+      name: 'Bright Citrus & Berry Salad',
+      description: 'A vibrant, energizing salad full of citrus fruits and fresh berries',
+      ingredients: [
+        '2 oranges, segmented',
+        '1 grapefruit, segmented',
+        '1 cup mixed berries',
+        '2 tbsp honey',
+        'Fresh mint leaves',
+        '¼ cup pomegranate seeds'
+      ],
+      instructions: [
+        'Segment the oranges and grapefruit, catching any juice',
+        'Arrange citrus segments on a serving plate',
+        'Add mixed berries and pomegranate seeds',
+        'Drizzle with honey',
+        'Garnish with fresh mint leaves'
+      ],
+      prepTime: '15 mins',
+      cookTime: '0 mins',
+      servings: 2,
+      calories: 180,
+      tags: ['fresh', 'fruity', 'healthy', 'quick'],
+      difficulty: 'Easy',
+      mood: 'happy',
+      image: 'https://images.unsplash.com/photo-1490323914169-4d5db28abf90?w=800&auto=format&fit=crop',
+      nutritionAnalysis: 'High in vitamin C and antioxidants, perfect for boosting mood and energy',
+      cookingTips: [
+        'Use room temperature fruit for better flavor',
+        'Add a sprinkle of chili flakes for an unexpected kick',
+        'Can be made ahead and chilled'
+      ]
+    }
+  ],
+  sad: [
+    {
+      id: 'classic-mac-cheese',
+      name: 'Comforting Mac & Cheese',
+      description: 'The ultimate comfort food with creamy cheese sauce and perfectly cooked pasta',
+      ingredients: [
+        '1 pound elbow macaroni',
+        '4 cups sharp cheddar cheese',
+        '2 cups whole milk',
+        '4 tbsp butter',
+        '¼ cup flour',
+        'Salt and pepper to taste'
+      ],
+      instructions: [
+        'Cook macaroni according to package directions',
+        'Melt butter in a large saucepan over medium heat',
+        'Whisk in flour and cook for 1 minute',
+        'Gradually add milk, whisking constantly',
+        'Add cheese and stir until melted',
+        'Mix with cooked pasta and season'
+      ],
+      prepTime: '10 mins',
+      cookTime: '20 mins',
+      servings: 6,
+      calories: 450,
+      tags: ['comfort food', 'pasta', 'cheese', 'classic'],
+      difficulty: 'Medium',
+      mood: 'sad',
+      image: 'https://images.unsplash.com/photo-1543339523-ad52a1872709?w=800&auto=format&fit=crop',
+      nutritionAnalysis: 'Rich in protein and calcium, provides comfort and satisfaction',
+      cookingTips: [
+        'Use room temperature cheese for better melting',
+        'Reserve some pasta water for adjusting sauce consistency',
+        'Add breadcrumbs on top for extra crunch'
+      ]
+    }
+  ],
+  energetic: [
+    {
+      id: 'power-smoothie-bowl',
+      name: 'Energy Boost Smoothie Bowl',
+      description: 'A nutrient-packed smoothie bowl that will keep you energized all morning',
+      ingredients: [
+        '1 banana, frozen',
+        '1 cup mixed berries',
+        '1 scoop protein powder',
+        '1 tbsp chia seeds',
+        'Almond milk',
+        'Granola and fresh fruit for topping'
+      ],
+      instructions: [
+        'Blend frozen banana and berries with protein powder',
+        'Add almond milk gradually until desired consistency',
+        'Pour into a bowl',
+        'Top with granola, fresh fruit, and chia seeds',
+        'Serve immediately'
+      ],
+      prepTime: '5 mins',
+      cookTime: '0 mins',
+      servings: 1,
+      calories: 320,
+      tags: ['breakfast', 'healthy', 'energizing', 'quick'],
+      difficulty: 'Easy',
+      mood: 'energetic',
+      image: 'https://images.unsplash.com/photo-1511690656952-34342bb7c2f2?w=800&auto=format&fit=crop',
+      nutritionAnalysis: 'High in protein and healthy fats, perfect for sustained energy',
+      cookingTips: [
+        'Freeze banana chunks for easier blending',
+        'Add spinach for extra nutrients without changing taste',
+        'Use coconut water for extra hydration'
+      ]
+    }
+  ],
+  tired: [
+    {
+      id: 'chamomile-honey-latte',
+      name: 'Soothing Chamomile Honey Latte',
+      description: 'A calming, caffeine-free latte perfect for winding down',
+      ingredients: [
+        '2 chamomile tea bags',
+        '1 cup hot water',
+        '1 cup warm milk (dairy or plant-based)',
+        '1 tbsp honey',
+        '¼ tsp vanilla extract',
+        'Pinch of cinnamon'
+      ],
+      instructions: [
+        'Steep chamomile tea bags in hot water for 5 minutes',
+        'Remove tea bags and stir in honey',
+        'Warm and froth milk',
+        'Combine tea mixture with frothed milk',
+        'Add vanilla extract and sprinkle with cinnamon'
+      ],
+      prepTime: '5 mins',
+      cookTime: '5 mins',
+      servings: 1,
+      calories: 120,
+      tags: ['beverage', 'relaxing', 'caffeine-free', 'warm'],
+      difficulty: 'Easy',
+      mood: 'tired',
+      image: 'https://images.unsplash.com/photo-1544787219-7f47ccb76574?w=800&auto=format&fit=crop',
+      nutritionAnalysis: 'Contains natural compounds that promote relaxation and better sleep',
+      cookingTips: [
+        'Use lavender honey for extra calming properties',
+        'Make tea stronger for more pronounced flavor',
+        'Try oat milk for a creamier texture'
+      ]
+    }
+  ]
+};
 
 export const getAllRecipes = (): Recipe[] => {
   const allRecipes: Recipe[] = [];
