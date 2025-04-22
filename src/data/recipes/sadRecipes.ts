@@ -34,7 +34,7 @@ export const sadRecipes: Recipe[] = [
       'Reserve some pasta water for adjusting sauce consistency',
       'Add breadcrumbs on top for extra crunch'
     ],
-    image: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=800&auto=format&fit=crop'
+    image: 'https://images.unsplash.com/photo-1aeLcUBr7kmM?w=800&auto=format&fit=crop'
   },
   {
     id: 'sad-ramen',
