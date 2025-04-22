@@ -172,7 +172,7 @@ export const happyRecipes: Recipe[] = [
     tags: ['italian', 'mediterranean', 'vegetarian', 'colorful'],
     difficulty: 'Easy',
     mood: 'happy',
-    image: 'https://images.unsplash.com/photo-1623338725807-50f5ca888a38?w=800&auto=format&fit=crop&q=80', // Mediterranean pizza with colorful toppings
+    image: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=800&auto=format&fit=crop&q=80', // Mediterranean-style colorful pizza
     nutritionAnalysis: 'Good source of protein and vegetables',
     cookingTips: [
       'Preheat oven thoroughly',
