@@ -28,7 +28,7 @@ export const sadRisottoRecipe: Recipe = {
   tags: ['italian', 'comfort', 'creamy', 'vegetarian'],
   difficulty: 'Medium',
   mood: 'sad',
-  image: 'https://images.unsplash.com/photo-1493962853295-0fd70327578a', // Mushroom risotto image
+  image: 'https://images.unsplash.com/photo-1610515451533-8383e4218e48?w=800&auto=format&fit=crop', // Creamy mushroom risotto
   nutritionAnalysis: 'Rich in carbohydrates and protein',
   cookingTips: [
     'Keep stock hot',
