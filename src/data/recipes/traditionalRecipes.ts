@@ -27,7 +27,7 @@ export const traditionalRecipes: Recipe[] = [
     tags: ['french', 'stew', 'traditional'],
     difficulty: 'Medium',
     mood: 'traditional',
-    image: 'https://images.unsplash.com/photo-1464306076886-debca5e8a6b0?w=800&auto=format&fit=crop',
+    image: 'https://images.unsplash.com/photo-1588195001284-2b1abe8cadc4?w=800&auto=format&fit=crop',
     nutritionAnalysis: 'Classic French comfort food.',
     cookingTips: ['Use diverse seafood.']
   },
@@ -56,7 +56,7 @@ export const traditionalRecipes: Recipe[] = [
     tags: ['italian', 'soup', 'traditional'],
     difficulty: 'Easy',
     mood: 'traditional',
-    image: 'https://images.unsplash.com/photo-1559847844-5315695dadae?w=800&auto=format&fit=crop',
+    image: 'https://images.unsplash.com/photo-1547592180-85f173990554?w=800&auto=format&fit=crop',
     nutritionAnalysis: 'Nutritious and filling.',
     cookingTips: ['Use seasonal veggies.']
   },
@@ -85,7 +85,7 @@ export const traditionalRecipes: Recipe[] = [
     tags: ['indian', 'dal', 'traditional'],
     difficulty: 'Easy',
     mood: 'traditional',
-    image: 'https://images.unsplash.com/photo-1533050487297-09b450131914?w=800&auto=format&fit=crop',
+    image: 'https://images.unsplash.com/photo-1631292784640-2b24be416617?w=800&auto=format&fit=crop',
     nutritionAnalysis: 'Wholesome and authentic.',
     cookingTips: ['Temper spices for real flavor.']
   }

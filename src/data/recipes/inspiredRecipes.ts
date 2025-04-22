@@ -56,7 +56,7 @@ export const inspiredRecipes: Recipe[] = [
     tags: ['italian', 'risotto', 'inspired'],
     difficulty: 'Medium',
     mood: 'inspired',
-    image: 'https://images.unsplash.com/photo-1633964913295-ceb43826e7c9?w=800&auto=format&fit=crop',
+    image: 'https://images.unsplash.com/photo-1667401677467-23538002f79d?w=800&auto=format&fit=crop',
     nutritionAnalysis: 'Rich and wholesome.',
     cookingTips: ['Stir constantly for creaminess.']
   },
@@ -85,7 +85,7 @@ export const inspiredRecipes: Recipe[] = [
     tags: ['american', 'taco', 'bowl'],
     difficulty: 'Easy',
     mood: 'inspired',
-    image: 'https://images.unsplash.com/photo-1513456852971-30c0b8199d4d?w=800&auto=format&fit=crop',
+    image: 'https://images.unsplash.com/photo-1564149504298-00c351fd7f16?w=800&auto=format&fit=crop',
     nutritionAnalysis: 'Easy protein meal.',
     cookingTips: ['Make with turkey for a lighter option.']
   }

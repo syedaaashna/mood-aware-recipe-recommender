@@ -25,7 +25,7 @@ export const socialRecipes: Recipe[] = [
     tags: ['spanish', 'tapas', 'social'],
     difficulty: 'Easy',
     mood: 'social',
-    image: 'https://images.unsplash.com/photo-1620060301898-cf0ae2c9fa86?w=800&auto=format&fit=crop',
+    image: 'https://images.unsplash.com/photo-1620060901025-e64fbec7ee29?w=800&auto=format&fit=crop',
     nutritionAnalysis: 'Snacks for sharing.',
     cookingTips: ['Add cured ham for variety.']
   },
@@ -81,7 +81,7 @@ export const socialRecipes: Recipe[] = [
     tags: ['british', 'fish and chips', 'social'],
     difficulty: 'Medium',
     mood: 'social',
-    image: 'https://images.unsplash.com/photo-1579208030886-b937da0925dc?w=800&auto=format&fit=crop',
+    image: 'https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=800&auto=format&fit=crop',
     nutritionAnalysis: 'Crispy and savory.',
     cookingTips: ['Dry fish thoroughly before battering.']
   }

@@ -1,3 +1,4 @@
+
 import { Recipe } from '@/types/recipe';
 
 export const exoticRecipes: Recipe[] = [
@@ -25,9 +26,9 @@ export const exoticRecipes: Recipe[] = [
     tags: ['thai', 'dessert', 'exotic'],
     difficulty: 'Medium',
     mood: 'exotic',
+    image: 'https://images.unsplash.com/photo-1563262924-641a8b3d397f?w=800&auto=format&fit=crop',
     nutritionAnalysis: 'Tropical sweet treat.',
-    cookingTips: ['Use ripe mango only.'],
-    image: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&auto=format&fit=crop'
+    cookingTips: ['Use ripe mango only.']
   },
   {
     id: 'exotic-dragon-fruit-smoothie',
@@ -52,8 +53,8 @@ export const exoticRecipes: Recipe[] = [
     tags: ['smoothie', 'drink', 'exotic'],
     difficulty: 'Easy',
     mood: 'exotic',
+    image: 'https://images.unsplash.com/photo-1601493700625-9185417898cf?w=800&auto=format&fit=crop',
     nutritionAnalysis: 'High in vitamin C.',
-    cookingTips: ['Use frozen fruit for thicker consistency.'],
-    image: 'https://images.unsplash.com/photo-1552332386-f8dd00dc2f85?w=800&auto=format&fit=crop'
+    cookingTips: ['Use frozen fruit for thicker consistency.']
   }
 ];

@@ -25,7 +25,7 @@ export const spiceLoverRecipes: Recipe[] = [
     tags: ['chinese', 'hotpot', 'spicy'],
     difficulty: 'Medium',
     mood: 'spice lover',
-    image: 'https://images.unsplash.com/photo-1557499305-0af888c3d8ec?w=800&auto=format&fit=crop',
+    image: 'https://images.unsplash.com/photo-1582644828437-56462454c836?w=800&auto=format&fit=crop',
     nutritionAnalysis: 'Spicy and social.',
     cookingTips: ['Use lots of aromatics for depth.']
   },
@@ -52,7 +52,7 @@ export const spiceLoverRecipes: Recipe[] = [
     tags: ['korean', 'spicy', 'snack'],
     difficulty: 'Easy',
     mood: 'spice lover',
-    image: 'https://images.unsplash.com/photo-1555949258-eb67b1ef0ceb?w=800&auto=format&fit=crop',
+    image: 'https://images.unsplash.com/photo-1635363282995-d9f9cc1b5a36?w=800&auto=format&fit=crop',
     nutritionAnalysis: 'Hot and chewy.',
     cookingTips: ['Adjust spice level to taste.']
   },
@@ -78,7 +78,7 @@ export const spiceLoverRecipes: Recipe[] = [
     tags: ['indian', 'spicy', 'street food'],
     difficulty: 'Medium',
     mood: 'spice lover',
-    image: 'https://images.unsplash.com/photo-1533050487297-09b450131914?w=800&auto=format&fit=crop',
+    image: 'https://images.unsplash.com/photo-1626694643587-8a8a4b2f99fb?w=800&auto=format&fit=crop',
     nutritionAnalysis: 'Spicy snack experience.',
     cookingTips: ['Use mild chilies if sensitive.']
   }

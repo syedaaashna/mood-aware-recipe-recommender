@@ -24,7 +24,7 @@ export const decadentRecipes: Recipe[] = [
     tags: ['french', 'chocolate', 'dessert'],
     difficulty: 'Medium',
     mood: 'decadent',
-    image: 'https://images.unsplash.com/photo-1541783245831-57afb5bca561?w=800&auto=format&fit=crop',
+    image: 'https://images.unsplash.com/photo-1624353365286-3f8d62daad51?w=800&auto=format&fit=crop',
     nutritionAnalysis: 'Chocolate heaven.',
     cookingTips: ['Use high quality chocolate.']
   },
@@ -52,7 +52,7 @@ export const decadentRecipes: Recipe[] = [
     tags: ['british', 'dessert', 'decadent'],
     difficulty: 'Medium',
     mood: 'decadent',
-    image: 'https://images.unsplash.com/photo-1611329695518-1763fc775ce8?w=800&auto=format&fit=crop',
+    image: 'https://images.unsplash.com/photo-1635321593217-40050ad13c74?w=800&auto=format&fit=crop',
     nutritionAnalysis: 'Sticky, sweet comfort.',
     cookingTips: ['Serve warm for gooey effect.']
   },
@@ -79,7 +79,7 @@ export const decadentRecipes: Recipe[] = [
     tags: ['italian', 'dessert', 'panna cotta'],
     difficulty: 'Easy',
     mood: 'decadent',
-    image: 'https://images.unsplash.com/photo-1579523651250-2a0bb822b2ce?w=800&auto=format&fit=crop',
+    image: 'https://images.unsplash.com/photo-1488477181946-6428a0291777?w=800&auto=format&fit=crop',
     nutritionAnalysis: 'Rich and fruity.',
     cookingTips: ['Chill until fully set.']
   }

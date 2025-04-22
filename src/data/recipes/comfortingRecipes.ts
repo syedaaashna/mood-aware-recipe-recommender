@@ -28,7 +28,7 @@ export const comfortingRecipes: Recipe[] = [
     tags: ['italian', 'risotto', 'comforting'],
     difficulty: 'Medium',
     mood: 'comforting',
-    image: 'https://images.unsplash.com/photo-1476124369491-e7addf5db371?w=800&auto=format&fit=crop',
+    image: 'https://images.unsplash.com/photo-1667401677467-23538002f79d?w=800&auto=format&fit=crop',
     nutritionAnalysis: 'Rich and warming.',
     cookingTips: ['Stir continuously for creamy texture.']
   },
@@ -58,7 +58,7 @@ export const comfortingRecipes: Recipe[] = [
     tags: ['indian', 'lentils', 'comforting'],
     difficulty: 'Easy',
     mood: 'comforting',
-    image: 'https://images.unsplash.com/photo-1585937421612-70a008356c36?w=800&auto=format&fit=crop',
+    image: 'https://images.unsplash.com/photo-1631293957597-f65e89f48107?w=800&auto=format&fit=crop',
     nutritionAnalysis: 'Easy to digest comfort food.',
     cookingTips: ['Adjust water for desired consistency.']
   },

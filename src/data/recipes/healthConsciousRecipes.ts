@@ -28,7 +28,7 @@ export const healthConsciousRecipes: Recipe[] = [
     tags: ['mediterranean', 'bowl', 'healthy'],
     difficulty: 'Easy',
     mood: 'health conscious',
-    image: 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=800&auto=format&fit=crop',
+    image: 'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=800&auto=format&fit=crop',
     nutritionAnalysis: 'Plant protein and fiber.',
     cookingTips: ['Add hummus for variety.']
   },
@@ -55,7 +55,7 @@ export const healthConsciousRecipes: Recipe[] = [
     tags: ['japanese', 'soup', 'healthy'],
     difficulty: 'Easy',
     mood: 'health conscious',
-    image: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=800&auto=format&fit=crop',
+    image: 'https://images.unsplash.com/photo-1603052873669-3028a157429f?w=800&auto=format&fit=crop',
     nutritionAnalysis: 'Low calorie, light.',
     cookingTips: ['Do not boil after adding miso.']
   },
@@ -83,7 +83,7 @@ export const healthConsciousRecipes: Recipe[] = [
     tags: ['california', 'toast', 'healthy'],
     difficulty: 'Easy',
     mood: 'health conscious',
-    image: 'https://images.unsplash.com/photo-1525351484163-7529414344d8?w=800&auto=format&fit=crop',
+    image: 'https://images.unsplash.com/photo-1588137378633-dea1a02fccfa?w=800&auto=format&fit=crop',
     nutritionAnalysis: 'Healthy fats and fiber.',
     cookingTips: ['Use ripe avocado.']
   }

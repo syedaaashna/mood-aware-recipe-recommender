@@ -29,6 +29,7 @@ export const creativeRecipes: Recipe[] = [
     tags: ['sushi', 'colorful', 'creative'],
     difficulty: 'Medium',
     mood: 'creative',
+    image: 'https://images.unsplash.com/photo-1617196034183-421b4917c92d?w=800&auto=format&fit=crop',
     nutritionAnalysis: 'Lots of veggies and protein.',
     cookingTips: ['Keep hands wet for easier rolling.']
   },
@@ -57,6 +58,7 @@ export const creativeRecipes: Recipe[] = [
     tags: ['pizza', 'vegetarian', 'creative'],
     difficulty: 'Easy',
     mood: 'creative',
+    image: 'https://images.unsplash.com/photo-1617349933557-0f15ae2745af?w=800&auto=format&fit=crop',
     nutritionAnalysis: 'Fiber-rich and fun.',
     cookingTips: ['Encourage creativity!']
   }

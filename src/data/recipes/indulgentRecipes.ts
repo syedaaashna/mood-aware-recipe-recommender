@@ -24,7 +24,7 @@ export const indulgentRecipes: Recipe[] = [
     tags: ['french', 'dessert', 'indulgent'],
     difficulty: 'Medium',
     mood: 'indulgent',
-    image: 'https://images.unsplash.com/photo-1519864600265-abb23847ef2c?w=800&auto=format&fit=crop',
+    image: 'https://images.unsplash.com/photo-1470124182917-cc6e71b22ecc?w=800&auto=format&fit=crop',
     nutritionAnalysis: 'Rich, creamy dessert.',
     cookingTips: ['Torch topping for crispiness.']
   },
@@ -52,7 +52,7 @@ export const indulgentRecipes: Recipe[] = [
     tags: ['american', 'dessert', 'chocolate'],
     difficulty: 'Easy',
     mood: 'indulgent',
-    image: 'https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=800&auto=format&fit=crop',
+    image: 'https://images.unsplash.com/photo-1590841609987-4ac211aaa872?w=800&auto=format&fit=crop',
     nutritionAnalysis: 'Decadent and sweet.',
     cookingTips: ['Do not overbake.']
   },
@@ -80,7 +80,7 @@ export const indulgentRecipes: Recipe[] = [
     tags: ['italian', 'dessert', 'indulgent'],
     difficulty: 'Medium',
     mood: 'indulgent',
-    image: 'https://images.unsplash.com/photo-1464306076886-debca5e8a6b0?w=800&auto=format&fit=crop',
+    image: 'https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?w=800&auto=format&fit=crop',
     nutritionAnalysis: 'Coffee, cream, and chocolate.',
     cookingTips: ['Chill well for best flavor.']
   }

@@ -1,3 +1,4 @@
+
 import { Recipe } from '@/types/recipe';
 
 export const sadRecipes: Recipe[] = [
@@ -34,7 +35,7 @@ export const sadRecipes: Recipe[] = [
       'Reserve some pasta water for adjusting sauce consistency',
       'Add breadcrumbs on top for extra crunch'
     ],
-    image: 'https://images.unsplash.com/photo-1543339308-43e59d6b73a6?w=800&auto=format&fit=crop'
+    image: 'https://images.unsplash.com/photo-1612152328178-91a1f8161fb3?w=800&auto=format&fit=crop'
   },
   {
     id: 'sad-ramen',
@@ -64,6 +65,7 @@ export const sadRecipes: Recipe[] = [
     tags: ['japanese', 'soup', 'comfort', 'warming'],
     difficulty: 'Medium',
     mood: 'sad',
+    image: 'https://images.unsplash.com/photo-1557872943-16a5ac26437e?w=800&auto=format&fit=crop',
     nutritionAnalysis: 'Rich in protein and umami flavors',
     cookingTips: [
       'Don\'t overcook the noodles',
@@ -99,6 +101,7 @@ export const sadRecipes: Recipe[] = [
     tags: ['italian', 'comfort', 'creamy', 'vegetarian'],
     difficulty: 'Medium',
     mood: 'sad',
+    image: 'https://images.unsplash.com/photo-1667401677467-23538002f79d?w=800&auto=format&fit=crop',
     nutritionAnalysis: 'Rich in carbohydrates and protein',
     cookingTips: [
       'Keep stock hot',
@@ -134,6 +137,7 @@ export const sadRecipes: Recipe[] = [
     tags: ['indian', 'curry', 'comfort', 'creamy'],
     difficulty: 'Medium',
     mood: 'sad',
+    image: 'https://images.unsplash.com/photo-1565557623262-b51c2513a641?w=800&auto=format&fit=crop',
     nutritionAnalysis: 'High in protein and healthy fats',
     cookingTips: [
       'Use quality spices',
@@ -169,6 +173,7 @@ export const sadRecipes: Recipe[] = [
     tags: ['french', 'soup', 'comfort', 'cheese'],
     difficulty: 'Medium',
     mood: 'sad',
+    image: 'https://images.unsplash.com/photo-1583741717243-f96270dcfb90?w=800&auto=format&fit=crop',
     nutritionAnalysis: 'Rich in flavor and comfort',
     cookingTips: [
       'Take time with onions',
@@ -204,6 +209,7 @@ export const sadRecipes: Recipe[] = [
     tags: ['indian', 'comfort food', 'creamy', 'spicy'],
     difficulty: 'Medium',
     mood: 'sad',
+    image: 'https://images.unsplash.com/photo-1603894584373-5ac82b2ae398?w=800&auto=format&fit=crop',
     nutritionAnalysis: 'High in protein and comfort factor',
     cookingTips: ['Marinate overnight for best results', 'Adjust cream to taste']
   },
@@ -235,6 +241,7 @@ export const sadRecipes: Recipe[] = [
     tags: ['chinese', 'dumplings', 'comfort', 'sharing'],
     difficulty: 'Hard',
     mood: 'sad',
+    image: 'https://images.unsplash.com/photo-1563245372-f21724e3856d?w=800&auto=format&fit=crop',
     nutritionAnalysis: 'Balanced protein and carbs',
     cookingTips: ['Steam in batches', 'Serve immediately while hot']
   }

@@ -24,7 +24,7 @@ export const nostalgicRecipes: Recipe[] = [
     tags: ['sandwich', 'cheese', 'comfort'],
     difficulty: 'Easy',
     mood: 'nostalgic',
-    image: 'https://images.unsplash.com/photo-1484723091739-30a097e8f929?w=800&auto=format&fit=crop',
+    image: 'https://images.unsplash.com/photo-1528736235302-52922df5c122?w=800&auto=format&fit=crop',
     nutritionAnalysis: 'Good source of calcium.',
     cookingTips: ['Use thick bread for extra crunch.']
   },
@@ -54,7 +54,7 @@ export const nostalgicRecipes: Recipe[] = [
     tags: ['soup', 'classic', 'comfort'],
     difficulty: 'Easy',
     mood: 'nostalgic',
-    image: 'https://images.unsplash.com/photo-1588195538326-c5b1e9f80a1b?w=800&auto=format&fit=crop',
+    image: 'https://images.unsplash.com/photo-1547592166-23ac45744acd?w=800&auto=format&fit=crop',
     nutritionAnalysis: 'Comforting and hydrating.',
     cookingTips: ['Add fresh parsley before serving.']
   }

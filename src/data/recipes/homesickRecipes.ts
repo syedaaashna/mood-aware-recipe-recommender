@@ -26,7 +26,7 @@ export const homesickRecipes: Recipe[] = [
     tags: ['chinese', 'porridge', 'comfort'],
     difficulty: 'Easy',
     mood: 'homesick',
-    image: 'https://images.unsplash.com/photo-1502741338009-cac2772e18bc?w=800&auto=format&fit=crop',
+    image: 'https://images.unsplash.com/photo-1626548276103-b17dabef6344?w=800&auto=format&fit=crop',
     nutritionAnalysis: 'Soothing for the soul.',
     cookingTips: ['Add more water for a silkier porridge.']
   },
@@ -55,7 +55,7 @@ export const homesickRecipes: Recipe[] = [
     tags: ['british', 'pie', 'classic'],
     difficulty: 'Medium',
     mood: 'homesick',
-    image: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=800&auto=format&fit=crop',
+    image: 'https://images.unsplash.com/photo-1585672840563-f2af2ced55c9?w=800&auto=format&fit=crop',
     nutritionAnalysis: 'Warm, starchy comfort.',
     cookingTips: ['Use lamb for authenticity.']
   },
@@ -83,7 +83,7 @@ export const homesickRecipes: Recipe[] = [
     tags: ['american', 'soup', 'comfort'],
     difficulty: 'Easy',
     mood: 'homesick',
-    image: 'https://images.unsplash.com/photo-1519864600265-abb23847ef2c?w=800&auto=format&fit=crop',
+    image: 'https://images.unsplash.com/photo-1547592166-23ac45744acd?w=800&auto=format&fit=crop',
     nutritionAnalysis: 'Classic home remedy.',
     cookingTips: ['Add herbs for flavor.']
   }

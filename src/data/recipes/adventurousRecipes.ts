@@ -1,3 +1,4 @@
+
 import { Recipe } from '@/types/recipe';
 
 export const adventurousRecipes: Recipe[] = [
@@ -25,7 +26,7 @@ export const adventurousRecipes: Recipe[] = [
     tags: ['korean', 'rice', 'adventurous'],
     difficulty: 'Easy',
     mood: 'adventurous',
-    image: 'https://images.unsplash.com/photo-1519864600265-abb23847ef2c?w=800&auto=format&fit=crop',
+    image: 'https://images.unsplash.com/photo-1590301157890-4810ed352733?w=800&auto=format&fit=crop',
     nutritionAnalysis: 'Fermented, healthy.',
     cookingTips: ['Top with extra sesame seeds.']
   },
@@ -54,7 +55,7 @@ export const adventurousRecipes: Recipe[] = [
     tags: ['vegan', 'mexican', 'adventurous'],
     difficulty: 'Easy',
     mood: 'adventurous',
-    image: 'https://images.unsplash.com/photo-1552332386-f8dd00dc2f85?w=800&auto=format&fit=crop',
+    image: 'https://images.unsplash.com/photo-1584947897558-4fba7c099db8?w=800&auto=format&fit=crop',
     nutritionAnalysis: 'Pulled jackfruit is fiber-rich.',
     cookingTips: ['Drain jackfruit thoroughly.']
   }

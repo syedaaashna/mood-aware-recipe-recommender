@@ -1,3 +1,4 @@
+
 import { Recipe } from '@/types/recipe';
 
 export const celebratoryRecipes: Recipe[] = [
@@ -25,7 +26,7 @@ export const celebratoryRecipes: Recipe[] = [
     tags: ['italian', 'celebration', 'main'],
     difficulty: 'Medium',
     mood: 'celebratory',
-    image: 'https://images.unsplash.com/photo-1432139555190-58524dae6a55?w=800&auto=format&fit=crop', // Lasagna
+    image: 'https://images.unsplash.com/photo-1551183053-bf91a1d81141?w=800&auto=format&fit=crop',
     nutritionAnalysis: 'Rich and festive dish.',
     cookingTips: ['Let rest before serving.']
   },
@@ -53,7 +54,7 @@ export const celebratoryRecipes: Recipe[] = [
     tags: ['chinese', 'duck', 'celebration'],
     difficulty: 'Hard',
     mood: 'celebratory',
-    image: 'https://images.unsplash.com/photo-1628244477986-c5a84593992b?w=800&auto=format&fit=crop',
+    image: 'https://images.unsplash.com/photo-1592994238317-8788ab05ebb0?w=800&auto=format&fit=crop',
     nutritionAnalysis: 'Special occasion meal.',
     cookingTips: ['Dry duck for crisp skin.']
   },
@@ -81,7 +82,7 @@ export const celebratoryRecipes: Recipe[] = [
     tags: ['british', 'main', 'special'],
     difficulty: 'Hard',
     mood: 'celebratory',
-    image: 'https://images.unsplash.com/photo-1630434423903-9aa39e199991?w=800&auto=format&fit=crop',
+    image: 'https://images.unsplash.com/photo-1602102397393-d408bd2e01e1?w=800&auto=format&fit=crop',
     nutritionAnalysis: 'Rich and impressive.',
     cookingTips: ['Rest before slicing.']
   }

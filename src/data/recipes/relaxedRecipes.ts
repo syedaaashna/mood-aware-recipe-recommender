@@ -25,6 +25,7 @@ export const relaxedRecipes: Recipe[] = [
     tags: ['tea', 'relax', 'drink'],
     difficulty: 'Easy',
     mood: 'relaxed',
+    image: 'https://images.unsplash.com/photo-1571934811356-5cc061b6821f?w=800&auto=format&fit=crop',
     nutritionAnalysis: 'Naturally caffeine free.',
     cookingTips: ['Use filtered water for best flavor.']
   },
@@ -52,6 +53,7 @@ export const relaxedRecipes: Recipe[] = [
     tags: ['breakfast', 'healthy', 'snack'],
     difficulty: 'Easy',
     mood: 'relaxed',
+    image: 'https://images.unsplash.com/photo-1588137378633-dea1a02fccfa?w=800&auto=format&fit=crop',
     nutritionAnalysis: 'Rich in healthy fats.',
     cookingTips: ['Use ripe avocado for best results.']
   }

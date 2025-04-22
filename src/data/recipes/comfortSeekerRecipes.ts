@@ -1,3 +1,4 @@
+
 import { Recipe } from '@/types/recipe';
 
 export const comfortSeekerRecipes: Recipe[] = [
@@ -25,7 +26,7 @@ export const comfortSeekerRecipes: Recipe[] = [
     tags: ['american', 'meatloaf', 'comfort'],
     difficulty: 'Easy',
     mood: 'comfort seeker',
-    image: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=800&auto=format&fit=crop',
+    image: 'https://images.unsplash.com/photo-1600891963935-9e9544aa16a0?w=800&auto=format&fit=crop',
     nutritionAnalysis: 'Ultimate home comfort.',
     cookingTips: ['Rest before slicing.']
   },
@@ -53,7 +54,7 @@ export const comfortSeekerRecipes: Recipe[] = [
     tags: ['british', 'comfort', 'classic'],
     difficulty: 'Easy',
     mood: 'comfort seeker',
-    image: 'https://images.unsplash.com/photo-1529042410759-befb1204b468?w=800&auto=format&fit=crop',
+    image: 'https://images.unsplash.com/photo-1596380862374-3e81098cf3cf?w=800&auto=format&fit=crop',
     nutritionAnalysis: 'Starchy and hearty.',
     cookingTips: ['Use quality sausages.']
   },
@@ -81,7 +82,7 @@ export const comfortSeekerRecipes: Recipe[] = [
     tags: ['french', 'gratin', 'comfort'],
     difficulty: 'Medium',
     mood: 'comfort seeker',
-    image: 'https://images.unsplash.com/photo-1554998171-7e599bc95ccd?w=800&auto=format&fit=crop',
+    image: 'https://images.unsplash.com/photo-1599320209623-d46337effea5?w=800&auto=format&fit=crop',
     nutritionAnalysis: 'Creamy and rich.',
     cookingTips: ['Use starchy potatoes.']
   }

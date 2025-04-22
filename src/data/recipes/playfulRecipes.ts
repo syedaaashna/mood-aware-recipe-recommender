@@ -27,7 +27,7 @@ export const playfulRecipes: Recipe[] = [
     tags: ['fruit', 'snack', 'colorful'],
     difficulty: 'Easy',
     mood: 'playful',
-    image: 'https://images.unsplash.com/photo-1515545111251-b44e808571aa?w=800&auto=format&fit=crop',
+    image: 'https://images.unsplash.com/photo-1490818387583-1baba5e638af?w=800&auto=format&fit=crop',
     nutritionAnalysis: 'High in vitamin C.',
     cookingTips: ['Use seasonal fruit for best color and taste.']
   },
@@ -56,7 +56,7 @@ export const playfulRecipes: Recipe[] = [
     tags: ['snack', 'creative', 'kids'],
     difficulty: 'Easy',
     mood: 'playful',
-    image: 'https://images.unsplash.com/photo-1583307767818-5003aed2e8e3?w=800&auto=format&fit=crop',
+    image: 'https://images.unsplash.com/photo-1622611936237-49632a4e1396?w=800&auto=format&fit=crop',
     nutritionAnalysis: 'Fun way to eat veggies.',
     cookingTips: ['Let kids build their own.']
   }

@@ -27,7 +27,7 @@ export const refreshedRecipes: Recipe[] = [
     tags: ['vietnamese', 'fresh', 'spring rolls'],
     difficulty: 'Easy',
     mood: 'refreshed',
-    image: 'https://images.unsplash.com/photo-1562967915-92ae0c400478?w=800&auto=format&fit=crop',
+    image: 'https://images.unsplash.com/photo-1562967914-3ea3c8b75307?w=800&auto=format&fit=crop',
     nutritionAnalysis: 'Low calorie, fresh.',
     cookingTips: ['Keep rice paper moist but not soggy.']
   },
@@ -57,7 +57,7 @@ export const refreshedRecipes: Recipe[] = [
     tags: ['greek', 'salad', 'fresh'],
     difficulty: 'Easy',
     mood: 'refreshed',
-    image: 'https://images.unsplash.com/photo-1561043433-aaf687c4cf04?w=800&auto=format&fit=crop',
+    image: 'https://images.unsplash.com/photo-1551248429-40975aa4de74?w=800&auto=format&fit=crop',
     nutritionAnalysis: 'High in vitamins.',
     cookingTips: ['Use high-quality feta and olives.']
   },
@@ -86,7 +86,7 @@ export const refreshedRecipes: Recipe[] = [
     tags: ['thai', 'salad', 'refreshing'],
     difficulty: 'Medium',
     mood: 'refreshed',
-    image: 'https://images.unsplash.com/photo-1654267288787-a571e933b8d2?w=800&auto=format&fit=crop',
+    image: 'https://images.unsplash.com/photo-1559847844-5315695dadae?w=800&auto=format&fit=crop',
     nutritionAnalysis: 'Rich in fiber and vitamins.',
     cookingTips: ['Use unripened papaya for best texture.']
   }

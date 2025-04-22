@@ -27,6 +27,7 @@ export const festiveRecipes: Recipe[] = [
     tags: ['holiday', 'roast', 'festive'],
     difficulty: 'Hard',
     mood: 'festive',
+    image: 'https://images.unsplash.com/photo-1574672280600-4502048e1e1d?w=800&auto=format&fit=crop',
     nutritionAnalysis: 'High in protein and tradition.',
     cookingTips: ['Rest turkey 20 mins before slicing.']
   },
@@ -55,6 +56,7 @@ export const festiveRecipes: Recipe[] = [
     tags: ['holiday', 'drink', 'festive'],
     difficulty: 'Easy',
     mood: 'festive',
+    image: 'https://images.unsplash.com/photo-1543362906-acfc16c67564?w=800&auto=format&fit=crop',
     nutritionAnalysis: 'May help you relax at a party!',
     cookingTips: ['Don\'t let wine boil.']
   }

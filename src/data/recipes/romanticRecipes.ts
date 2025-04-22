@@ -27,6 +27,7 @@ export const romanticRecipes: Recipe[] = [
     tags: ['dessert', 'romantic', 'fondue'],
     difficulty: 'Easy',
     mood: 'romantic',
+    image: 'https://images.unsplash.com/photo-1575762661682-014fa9622918?w=800&auto=format&fit=crop',
     nutritionAnalysis: 'Indulgent treat.',
     cookingTips: ['Use good quality chocolate.']
   },
@@ -55,6 +56,7 @@ export const romanticRecipes: Recipe[] = [
     tags: ['dinner', 'seafood', 'romantic'],
     difficulty: 'Easy',
     mood: 'romantic',
+    image: 'https://images.unsplash.com/photo-1485921325833-c519f76c4927?w=800&auto=format&fit=crop',
     nutritionAnalysis: 'Rich in omega 3.',
     cookingTips: ['Do not overcook salmon.']
   }

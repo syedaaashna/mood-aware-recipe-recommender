@@ -25,9 +25,9 @@ export const focusedRecipes: Recipe[] = [
     tags: ['smoothie', 'healthy', 'focus'],
     difficulty: 'Easy',
     mood: 'focused',
+    image: 'https://images.unsplash.com/photo-1623065422902-30a2d299bbe4?w=800&auto=format&fit=crop',
     nutritionAnalysis: 'High in antioxidants and brain-boosting fats.',
-    cookingTips: ['Use frozen berries for thicker texture.'],
-    image: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=800&auto=format&fit=crop'
+    cookingTips: ['Use frozen berries for thicker texture.']
   },
   {
     id: 'focused-rosemary-chicken',
@@ -52,8 +52,8 @@ export const focusedRecipes: Recipe[] = [
     tags: ['chicken', 'lunch', 'focus'],
     difficulty: 'Easy',
     mood: 'focused',
+    image: 'https://images.unsplash.com/photo-1518492104633-130d0cc84637?w=800&auto=format&fit=crop',
     nutritionAnalysis: 'Lean protein plus herbs.',
-    cookingTips: ['Rest chicken before slicing.'],
-    image: 'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=800&auto=format&fit=crop'
+    cookingTips: ['Rest chicken before slicing.']
   }
 ];

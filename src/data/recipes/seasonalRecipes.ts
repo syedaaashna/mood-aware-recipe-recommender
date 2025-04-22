@@ -26,7 +26,7 @@ export const seasonalRecipes: Recipe[] = [
     tags: ['french', 'vegetarian', 'seasonal'],
     difficulty: 'Medium',
     mood: 'seasonal',
-    image: 'https://images.unsplash.com/photo-1615368942847-413b1a09d039?w=800&auto=format&fit=crop',
+    image: 'https://images.unsplash.com/photo-1572453800999-e8d2d1589b7c?w=800&auto=format&fit=crop',
     nutritionAnalysis: 'Vibrant seasonal veggies.',
     cookingTips: ['Use ripe local produce.']
   },
@@ -52,7 +52,7 @@ export const seasonalRecipes: Recipe[] = [
     tags: ['japanese', 'seasonal', 'rice'],
     difficulty: 'Medium',
     mood: 'seasonal',
-    image: 'https://images.unsplash.com/photo-1617196035154-1e7e6e28b0db?w=800&auto=format&fit=crop',
+    image: 'https://images.unsplash.com/photo-1522672742863-b423e0358006?w=800&auto=format&fit=crop',
     nutritionAnalysis: 'Floral and fresh.',
     cookingTips: ['Use pickled blossoms for color.']
   },

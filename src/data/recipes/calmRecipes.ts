@@ -1,3 +1,4 @@
+
 import { Recipe } from '@/types/recipe';
 
 // Calm mood - 3 recipes, each from a different cuisine
@@ -27,7 +28,7 @@ export const calmRecipes: Recipe[] = [
     tags: ['japanese', 'soup', 'calm'],
     difficulty: 'Easy',
     mood: 'calm',
-    image: 'https://images.unsplash.com/photo-1603052873669-3028a157429f?w=800&auto=format&fit=crop', // Japanese miso soup
+    image: 'https://images.unsplash.com/photo-1603052873669-3028a157429f?w=800&auto=format&fit=crop',
     nutritionAnalysis: 'Low calorie, gentle and soothing.',
     cookingTips: ['Don\'t boil miso to preserve flavor.']
   },
@@ -55,7 +56,7 @@ export const calmRecipes: Recipe[] = [
     tags: ['british', 'breakfast', 'calm'],
     difficulty: 'Easy',
     mood: 'calm',
-    image: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=800&auto=format&fit=crop', // Plain oatmeal/porridge bowl
+    image: 'https://images.unsplash.com/photo-1613478223719-2ab802602423?w=800&auto=format&fit=crop',
     nutritionAnalysis: 'Warm, slow-release energy.',
     cookingTips: ['Use milk for extra creaminess.']
   },
@@ -83,7 +84,7 @@ export const calmRecipes: Recipe[] = [
     tags: ['italian', 'salad', 'calm'],
     difficulty: 'Easy',
     mood: 'calm',
-    image: 'https://images.unsplash.com/photo-1565895405227-0d3481048efb?w=800&auto=format&fit=crop', // Caprese salad
+    image: 'https://images.unsplash.com/photo-1599021456807-25db0f974333?w=800&auto=format&fit=crop',
     nutritionAnalysis: 'Light, fresh, cooling.',
     cookingTips: ['Use ripe, in-season tomatoes.']
   }
