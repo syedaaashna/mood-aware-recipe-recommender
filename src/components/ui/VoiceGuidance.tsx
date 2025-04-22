@@ -1,129 +1,39 @@
 
-import React, { useState, useEffect, useRef } from 'react';
-import { VolumeX, Volume2, Pause, Play, SkipForward, SkipBack, Globe, Settings, X } from 'lucide-react';
-import { Recipe } from '@/utils/moodRecipeData';
-import { useToast } from '@/hooks/use-toast';
+import React, { useState, useRef } from 'react';
+import { Volume2, Pause, Play, Settings, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-
-interface VoiceGuidanceProps {
-  recipe: Recipe;
-}
-
-interface Language {
-  code: string;
-  name: string;
-  voice: SpeechSynthesisVoice | null;
-}
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { VoiceControls } from './voice-guidance/VoiceControls';
+import { VoiceSettings } from './voice-guidance/VoiceSettings';
+import { useVoiceSynthesis } from '@/hooks/use-voice-synthesis';
+import { useToast } from '@/hooks/use-toast';
+import { VoiceGuidanceProps } from '@/types/voice';
 
 const VoiceGuidance: React.FC<VoiceGuidanceProps> = ({ recipe }) => {
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
-  const [availableLanguages, setAvailableLanguages] = useState<Language[]>([]);
-  const [selectedLanguage, setSelectedLanguage] = useState<Language | null>(null);
   const [volume, setVolume] = useState(1);
   const [speechRate, setSpeechRate] = useState(1);
-  const [isLanguageMenuOpen, setIsLanguageMenuOpen] = useState(false);
-  const [voicesLoaded, setVoicesLoaded] = useState(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const { toast } = useToast();
 
-  const speechSynthRef = useRef(window.speechSynthesis);
   const utteranceRef = useRef<SpeechSynthesisUtterance | null>(null);
+  const { 
+    availableLanguages, 
+    selectedLanguage, 
+    setSelectedLanguage, 
+    voicesLoaded,
+    speechSynthRef 
+  } = useVoiceSynthesis();
 
-  // Load available voices and languages
-  useEffect(() => {
-    const loadVoices = () => {
-      const synth = speechSynthRef.current;
-      const voices = synth.getVoices();
-      
-      if (voices.length > 0) {
-        const languages: Language[] = [];
-        const addedLanguageCodes: string[] = [];
-        
-        // Common languages to prioritize
-        const priorityLanguages = ['en-US', 'en-GB', 'es-ES', 'fr-FR', 'de-DE', 'it-IT', 'zh-CN', 'ja-JP', 'hi-IN', 'ar-SA'];
-        
-        // First add priority languages
-        priorityLanguages.forEach(langCode => {
-          const voice = voices.find(v => v.lang === langCode);
-          if (voice && !addedLanguageCodes.includes(langCode)) {
-            languages.push({
-              code: langCode,
-              name: new Intl.DisplayNames([navigator.language], { type: 'language' }).of(langCode.split('-')[0]) || langCode,
-              voice: voice
-            });
-            addedLanguageCodes.push(langCode);
-          }
-        });
-        
-        // Then add any other available languages
-        voices.forEach(voice => {
-          const langCode = voice.lang;
-          if (!addedLanguageCodes.includes(langCode)) {
-            try {
-              languages.push({
-                code: langCode,
-                name: new Intl.DisplayNames([navigator.language], { type: 'language' }).of(langCode.split('-')[0]) || langCode,
-                voice: voice
-              });
-              addedLanguageCodes.push(langCode);
-            } catch (e) {
-              console.log('Error getting language name:', e);
-              // Fallback for unsupported languages
-              languages.push({
-                code: langCode,
-                name: langCode,
-                voice: voice
-              });
-              addedLanguageCodes.push(langCode);
-            }
-          }
-        });
-        
-        setAvailableLanguages(languages);
-        
-        // Set default language to browser language or English
-        const browserLangCode = navigator.language;
-        const defaultLang = languages.find(l => l.code === browserLangCode) || 
-                          languages.find(l => l.code.startsWith('en')) || 
-                          languages[0];
-        
-        if (defaultLang) {
-          setSelectedLanguage(defaultLang);
-        }
-        
-        setVoicesLoaded(true);
-      }
-    };
-
-    // Chrome loads voices asynchronously
-    if (speechSynthesis.onvoiceschanged !== undefined) {
-      speechSynthesis.onvoiceschanged = loadVoices;
-    }
-    
-    loadVoices();
-
-    return () => {
-      stopSpeaking();
-    };
-  }, []);
-
-  // Prepare the text to speak for each instruction
   const prepareInstructionText = (index: number) => {
     if (index < 0 || index >= recipe.instructions.length) {
       return '';
     }
-    
     return `Step ${index + 1}: ${recipe.instructions[index]}`;
   };
 
-  // Start speaking from a specific step
   const speakStep = (stepIndex: number) => {
     if (!selectedLanguage || !selectedLanguage.voice) {
       toast({
@@ -134,7 +44,6 @@ const VoiceGuidance: React.FC<VoiceGuidanceProps> = ({ recipe }) => {
       return;
     }
 
-    // Cancel any ongoing speech
     stopSpeaking();
     
     const textToSpeak = prepareInstructionText(stepIndex);
@@ -175,7 +84,6 @@ const VoiceGuidance: React.FC<VoiceGuidanceProps> = ({ recipe }) => {
     }
   };
 
-  // Toggle play/pause
   const togglePlayPause = () => {
     if (!isSpeaking) {
       speakStep(currentStepIndex);
@@ -190,43 +98,12 @@ const VoiceGuidance: React.FC<VoiceGuidanceProps> = ({ recipe }) => {
     }
   };
 
-  // Stop speaking
   const stopSpeaking = () => {
     speechSynthRef.current.cancel();
     setIsSpeaking(false);
     setIsPaused(false);
   };
 
-  // Go to next step
-  const nextStep = () => {
-    if (currentStepIndex < recipe.instructions.length - 1) {
-      stopSpeaking();
-      speakStep(currentStepIndex + 1);
-    }
-  };
-
-  // Go to previous step
-  const prevStep = () => {
-    if (currentStepIndex > 0) {
-      stopSpeaking();
-      speakStep(currentStepIndex - 1);
-    }
-  };
-
-  // Change language
-  const changeLanguage = (language: Language) => {
-    setSelectedLanguage(language);
-    setIsLanguageMenuOpen(false);
-    
-    if (isSpeaking) {
-      stopSpeaking();
-      setTimeout(() => {
-        speakStep(currentStepIndex);
-      }, 100);
-    }
-  };
-
-  // Set volume
   const handleVolumeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newVolume = parseFloat(e.target.value);
     setVolume(newVolume);
@@ -236,13 +113,24 @@ const VoiceGuidance: React.FC<VoiceGuidanceProps> = ({ recipe }) => {
     }
   };
 
-  // Set speech rate
   const handleRateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newRate = parseFloat(e.target.value);
     setSpeechRate(newRate);
     
     if (utteranceRef.current) {
       utteranceRef.current.rate = newRate;
+    }
+  };
+
+  const changeLanguage = (language: typeof selectedLanguage) => {
+    if (language) {
+      setSelectedLanguage(language);
+      if (isSpeaking) {
+        stopSpeaking();
+        setTimeout(() => {
+          speakStep(currentStepIndex);
+        }, 100);
+      }
     }
   };
 
@@ -313,119 +201,26 @@ const VoiceGuidance: React.FC<VoiceGuidanceProps> = ({ recipe }) => {
             </div>
           )}
           
-          {/* Controls */}
-          <div className="flex items-center justify-between mb-3 gap-1">
-            <Button 
-              onClick={prevStep} 
-              disabled={currentStepIndex === 0 || !isSpeaking}
-              variant="outline"
-              size="icon"
-              className="h-8 w-8 rounded-full"
-            >
-              <SkipBack size={14} />
-            </Button>
-            
-            <Button 
-              onClick={togglePlayPause}
-              variant="default"
-              size="icon"
-              className="h-10 w-10 rounded-full"
-            >
-              {isSpeaking && !isPaused ? <Pause size={16} /> : <Play size={16} />}
-            </Button>
-            
-            <Button 
-              onClick={nextStep}
-              disabled={currentStepIndex === recipe.instructions.length - 1 || !isSpeaking}
-              variant="outline"
-              size="icon"
-              className="h-8 w-8 rounded-full"
-            >
-              <SkipForward size={14} />
-            </Button>
-            
-            <Button 
-              onClick={stopSpeaking}
-              disabled={!isSpeaking}
-              variant="outline"
-              size="icon"
-              className="h-8 w-8 rounded-full"
-            >
-              <VolumeX size={14} />
-            </Button>
-            
-            <Popover>
-              <PopoverTrigger asChild>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="h-8 text-xs px-2"
-                >
-                  <Globe size={14} className="mr-1" />
-                  {selectedLanguage?.name?.slice(0, 6) || 'Lang'}
-                </Button>
-              </PopoverTrigger>
-              <PopoverContent className="w-40 p-0 max-h-60 overflow-auto">
-                <div className="py-1">
-                  {availableLanguages.map((language) => (
-                    <button
-                      key={language.code}
-                      onClick={() => changeLanguage(language)}
-                      className={`block w-full text-left px-3 py-1.5 text-xs ${
-                        selectedLanguage?.code === language.code 
-                          ? 'bg-primary/10 text-primary' 
-                          : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'
-                      }`}
-                    >
-                      {language.name}
-                    </button>
-                  ))}
-                </div>
-              </PopoverContent>
-            </Popover>
-          </div>
+          <VoiceControls
+            isSpeaking={isSpeaking}
+            isPaused={isPaused}
+            currentStepIndex={currentStepIndex}
+            totalSteps={recipe.instructions.length}
+            onPrevStep={() => currentStepIndex > 0 && speakStep(currentStepIndex - 1)}
+            onNextStep={() => currentStepIndex < recipe.instructions.length - 1 && speakStep(currentStepIndex + 1)}
+            onTogglePlayPause={togglePlayPause}
+            onStop={stopSpeaking}
+          />
           
-          {/* Settings */}
-          <div className="space-y-2 text-xs">
-            <div>
-              <div className="flex justify-between mb-1">
-                <label htmlFor="volume" className="font-medium">Volume</label>
-                <span>{Math.round(volume * 100)}%</span>
-              </div>
-              <input
-                id="volume"
-                type="range"
-                min="0"
-                max="1"
-                step="0.1"
-                value={volume}
-                onChange={handleVolumeChange}
-                className="w-full h-1.5 rounded-full bg-gray-200 dark:bg-gray-700 appearance-none cursor-pointer"
-              />
-            </div>
-            
-            <div>
-              <div className="flex justify-between mb-1">
-                <label htmlFor="rate" className="font-medium">Speed</label>
-                <span>{speechRate}x</span>
-              </div>
-              <input
-                id="rate"
-                type="range"
-                min="0.5"
-                max="2"
-                step="0.1"
-                value={speechRate}
-                onChange={handleRateChange}
-                className="w-full h-1.5 rounded-full bg-gray-200 dark:bg-gray-700 appearance-none cursor-pointer"
-              />
-              <div className="flex justify-between text-[10px] text-gray-500 mt-0.5">
-                <span>Slow</span>
-                <span>Normal</span>
-                <span>Fast</span>
-              </div>
-            </div>
-          </div>
+          <VoiceSettings
+            volume={volume}
+            speechRate={speechRate}
+            selectedLanguage={selectedLanguage}
+            availableLanguages={availableLanguages}
+            onVolumeChange={handleVolumeChange}
+            onRateChange={handleRateChange}
+            onLanguageChange={changeLanguage}
+          />
         </PopoverContent>
       </Popover>
     </div>
