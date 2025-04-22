@@ -28,7 +28,7 @@ export const happyRecipes: Recipe[] = [
     tags: ['fresh', 'fruity', 'healthy', 'quick'],
     difficulty: 'Easy',
     mood: 'happy',
-    image: 'https://images.unsplash.com/photo-1563589173312-d8c924e7a8a8?w=800&auto=format&fit=crop',
+    image: 'https://unsplash.com/photos/a-bowl-filled-with-fruit-and-vegetables-on-top-of-a-table-PBgbIbOsprk w=800&auto=format&fit=crop',
     nutritionAnalysis: 'High in vitamin C and antioxidants, perfect for boosting mood and energy',
     cookingTips: [
       'Use room temperature fruit for better flavor',
