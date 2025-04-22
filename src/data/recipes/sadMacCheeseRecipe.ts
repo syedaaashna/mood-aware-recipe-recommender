@@ -15,11 +15,12 @@ export const sadMacCheeseRecipe: Recipe = {
   ],
   instructions: [
     'Cook macaroni according to package directions',
-    'Melt butter in a large saucepan over medium heat',
+    'Melt butter in a large saucepan',
     'Whisk in flour and cook for 1 minute',
     'Gradually add milk, whisking constantly',
     'Add cheese and stir until melted',
-    'Mix with cooked pasta and season'
+    'Mix cheese sauce with cooked pasta',
+    'Season with salt and pepper'
   ],
   prepTime: '10 mins',
   cookTime: '20 mins',
@@ -28,11 +29,11 @@ export const sadMacCheeseRecipe: Recipe = {
   tags: ['comfort food', 'pasta', 'cheese', 'classic'],
   difficulty: 'Medium',
   mood: 'sad',
+  image: 'https://images.unsplash.com/photo-aeLcUBr7kmM?w=800&auto=format&fit=crop',
   nutritionAnalysis: 'Rich in protein and calcium, provides comfort and satisfaction',
   cookingTips: [
     'Use room temperature cheese for better melting',
     'Reserve some pasta water for adjusting sauce consistency',
     'Add breadcrumbs on top for extra crunch'
-  ],
-  image: 'https://images.unsplash.com/photo-1619740455993-9e612b50487e?w=800&auto=format&fit=crop'
+  ]
 };
