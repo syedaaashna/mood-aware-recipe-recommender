@@ -26,7 +26,7 @@ export const adventurousRecipes: Recipe[] = [
     tags: ['korean', 'rice', 'adventurous'],
     difficulty: 'Easy',
     mood: 'adventurous',
-    image: 'https://images.unsplash.com/photo-1605853557368-e6a8d557c752?w=800&auto=format&fit=crop',
+    image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQGCsJXqHIvFmjOdUdWHaXjs46zPO5CS2JBigjC2CdabqTZMdsrtg&s=10&ec=72940545&auto=format&fit=crop',
     nutritionAnalysis: 'Fermented, healthy.',
     cookingTips: ['Top with extra sesame seeds.']
   },
