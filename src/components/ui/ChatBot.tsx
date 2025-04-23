@@ -1,3 +1,4 @@
+
 import { useState, useRef, useEffect } from 'react';
 import { MessageSquare, Send, ChevronUp, X, Mic, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -101,6 +102,17 @@ const ChatBot = ({ currentMood }: ChatBotProps) => {
       messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
     }
   }, [messages]);
+
+  // Auto-open the chat when the component mounts (optional, remove if not needed)
+  useEffect(() => {
+    // Remove this if you don't want the chat to auto-open
+    const timer = setTimeout(() => {
+      if (!isOpen) {
+        setIsOpen(true);
+      }
+    }, 1500);
+    return () => clearTimeout(timer);
+  }, []);
 
   const addBotResponse = (text: string, moodId?: string | null) => {
     setIsTyping(true);
@@ -221,7 +233,7 @@ const ChatBot = ({ currentMood }: ChatBotProps) => {
 
   return (
     <>
-      <div className={`fixed right-4 bottom-4 z-40 transition-transform duration-300 ${isOpen ? 'scale-0' : 'scale-100'}`}>
+      <div className={`fixed right-4 bottom-4 z-50 transition-transform duration-300 ${isOpen ? 'scale-0' : 'scale-100'}`}>
         <Button
           size="icon"
           onClick={toggleChat}

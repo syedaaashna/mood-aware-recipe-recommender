@@ -10,11 +10,13 @@ import Recipe from "./pages/Recipe";
 import Favorites from "./pages/Favorites";
 import NotFound from "./pages/NotFound";
 import Navbar from "./components/ui/Navbar";
+import ChatBot from "./components/ui/ChatBot";
 
 const queryClient = new QueryClient();
 
 const App = () => {
   const [isDarkMode, setIsDarkMode] = useState(false);
+  const [currentMood, setCurrentMood] = useState<string | null>(null);
 
   // Initialize dark mode from user preference or system preference
   useEffect(() => {
@@ -58,6 +60,7 @@ const App = () => {
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
+          <ChatBot currentMood={currentMood} />
         </BrowserRouter>
       </TooltipProvider>
     </QueryClientProvider>
