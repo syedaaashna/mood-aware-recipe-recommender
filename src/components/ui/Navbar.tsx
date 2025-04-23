@@ -32,6 +32,11 @@ const Navbar = ({ toggleDarkMode, isDarkMode, onSearch }: NavbarProps) => {
     };
   }, []);
 
+  const handleLogoClick = () => {
+    navigate('/');
+    setMobileMenuOpen(false);
+  };
+
   return (
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
@@ -44,7 +49,7 @@ const Navbar = ({ toggleDarkMode, isDarkMode, onSearch }: NavbarProps) => {
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center">
             <button
-              onClick={() => navigate('/')}
+              onClick={handleLogoClick}
               className="flex items-center cursor-pointer bg-transparent border-none outline-none"
               style={{ background: 'none', border: 'none' }}
             >

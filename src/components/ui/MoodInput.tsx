@@ -7,12 +7,13 @@ import { Input } from "@/components/ui/input";
 
 interface MoodInputProps {
   onMoodSelect: (mood: Mood | null) => void;
-  selectedMood: Mood | null;
+  selectedMood?: Mood | null;
+  placeholder?: string;
 }
 
 const customMoodIdPrefix = "__custom-";
 
-const MoodInput = ({ onMoodSelect, selectedMood }: MoodInputProps) => {
+const MoodInput = ({ onMoodSelect, selectedMood, placeholder = "Type your mood or select below..." }: MoodInputProps) => {
   const { toast } = useToast();
   const [searchText, setSearchText] = useState('');
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -105,7 +106,7 @@ const MoodInput = ({ onMoodSelect, selectedMood }: MoodInputProps) => {
         <Input
           ref={inputRef}
           type="text"
-          placeholder="Type your mood or select below..."
+          placeholder={placeholder}
           value={searchText}
           autoComplete="off"
           onFocus={() => setIsDropdownOpen(true)}
