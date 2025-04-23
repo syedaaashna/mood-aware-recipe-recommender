@@ -1,4 +1,3 @@
-
 import { useState, useRef, useEffect } from 'react';
 import { MessageSquare, Send, ChevronUp, X, Mic, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -20,8 +19,8 @@ type MessageType = {
   timestamp: Date;
   isTyping?: boolean;
   attachment?: string;
-  recipes?: { id: string, name: string }[]; // for bot: recipes to suggest
-  mood?: string | null; // mood id
+  recipes?: { id: string, name: string }[];
+  mood?: string | null;
 };
 
 const ChatBot = ({ currentMood }: ChatBotProps) => {
@@ -43,44 +42,38 @@ const ChatBot = ({ currentMood }: ChatBotProps) => {
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const { toast } = useToast();
 
-  // Improved mood mapping logic for custom inputs
   function inferMoodFromInput(text: string): string | null {
     const lower = text.trim().toLowerCase();
-    // Direct match on known mood names
     for (const mood of moods) {
-      if (lower.includes(mood.name.toLowerCase())) return mood.id;
+      if (lower.includes(mood.name.toLowerCase()) || lower.includes(mood.id.toLowerCase())) return mood.id;
     }
-    // Soft/common mappings
-    if (lower.includes('sad') || lower.match(/\bdown\b/)) return 'sad';
-    if (lower.includes('happy') || lower.includes('good mood') || lower.includes('great')) return 'happy';
-    if (lower.includes('comfort') || lower.includes('cozy')) return 'comfort';
-    if (lower.includes('romantic') || lower.includes('date')) return 'romantic';
-    if (lower.includes('adventur')) return 'adventurous';
-    if (lower.includes('nostalgic') || lower.includes('memory')) return 'nostalgic';
-    if (lower.includes('energetic') || lower.includes('energy')) return 'energetic';
-    if (lower.includes('tired') || lower.includes('no energy') || lower.includes('exhausted')) return 'tired';
-    if (lower.includes('creative')) return 'creative';
-    if (lower.includes('traditional') || lower.includes('classic')) return 'traditional';
-    if (lower.includes('party') || lower.includes('celebrate')) return 'celebratory';
-    if (lower.includes('indulgent') || lower.includes('decadent') || lower.includes('treat')) return 'indulgent';
-    if (lower.includes('healthy') || lower.includes('light') || lower.includes('diet') || lower.includes('nutritious')) return 'mindful';
-    if (lower.includes('stress') || lower.includes('anxious')) return 'stressed';
-    // Map food items to likely moods (examples)
-    if (lower.includes('soup') || lower.includes('ramen') || lower.includes('mac') || lower.includes('cheese')) return 'comfort';
-    // Default (fallback)
+    if (lower.match(/\bhappy|joy|great|awesome|excited|good mood|wonderful\b/)) return "happy";
+    if (lower.match(/\bsad|down|unhappy|depressed|blue|cry|not feeling good|upset\b/)) return "sad";
+    if (lower.match(/\bromantic|love|date night|anniversary\b/)) return "romantic";
+    if (lower.match(/\bcomfort|cozy|relax|relaxing|need warmth|comfort food\b/)) return "comforting";
+    if (lower.match(/\badventure|try new|explore|different|exotic|spontaneous\b/)) return "adventurous";
+    if (lower.match(/\bnostalgic|childhood|memory|like mom|reminds me\b/)) return "nostalgic";
+    if (lower.match(/\benergetic|energy|workout|power|active|boost\b/)) return "energetic";
+    if (lower.match(/\bstress|anxious|overwhelm|busy|no time|pressure\b/)) return "stressed";
+    if (lower.match(/\bparty|celebrate|achievement|special occasion\b/)) return "celebratory";
+    if (lower.match(/\btired|fatigue|sleepy|exhausted|no energy\b/)) return "tired";
+    if (lower.match(/\bindulge|treat|decadent|spoil\b/)) return "indulgent";
+    if (lower.match(/\bmindful|healthy|light|nutritious|diet|balanced\b/)) return "mindful";
+    if (lower.match(/\bsocial|friends|gathering|get together\b/)) return "social";
+    if (lower.match(/\bcreative|artistic|unique|unusual|experimental\b/)) return "creative";
+    if (lower.match(/\bclassic|traditional|heritage|authentic|old fashioned\b/)) return "traditional";
+    if (lower.match(/\brefresh|light meal|fresh\b/)) return "refreshed";
+    if (lower.match(/\bheavy|cheese|mac|ramen|soup|comfort dish\b/)) return "comforting";
     return null;
   }
 
-  // For recipe suggestions, always map some (best effort) mood
-  function getBestMoodId(userInput: string): string | null {
-    // Prefer currentMood if set from outside (Index page)
+  function getBestMoodId(userInput: string): string {
     let bestMood = currentMood || inferMoodFromInput(userInput);
-    // Fallback: random mood if none matched (for always mapping)
-    if (!bestMood) bestMood = moods[Math.floor(Math.random() * moods.length)].id;
+    if (!bestMood) bestMood = "comforting";
+    if (!moods.some((m) => m.id === bestMood)) bestMood = moods[0].id;
     return bestMood;
   }
 
-  // Show recipes as bubbles after bot response (if mood is inferred/found)
   function renderRecipeSuggestions(recipes: { id: string; name: string }[], moodId: string) {
     if (!recipes || !recipes.length) return null;
     return (
@@ -109,7 +102,6 @@ const ChatBot = ({ currentMood }: ChatBotProps) => {
     }
   }, [messages]);
 
-  // Simulate bot typing with animation
   const addBotResponse = (text: string, moodId?: string | null) => {
     setIsTyping(true);
     const typingMessage: MessageType = {
@@ -123,7 +115,7 @@ const ChatBot = ({ currentMood }: ChatBotProps) => {
     const resolvedMood = moodId ? moodId : getBestMoodId(text);
     const recipeSuggestions = resolvedMood ? getRecipesByMood(resolvedMood) : [];
 
-    const typingDelay = Math.min(Math.max(text.length * 17, 600), 1800);
+    const typingDelay = Math.min(Math.max(text.length * 15, 600), 1400);
 
     setTimeout(() => {
       setIsTyping(false);
@@ -143,7 +135,6 @@ const ChatBot = ({ currentMood }: ChatBotProps) => {
     }, typingDelay);
   };
 
-  // Main message send handler
   const handleSendMessage = (e?: React.FormEvent) => {
     if (e) e.preventDefault();
     if (inputValue.trim() === '') return;
@@ -152,7 +143,6 @@ const ChatBot = ({ currentMood }: ChatBotProps) => {
     setInputValue('');
     setShowSuggestions(false);
 
-    // Always map to a mood so we always have a recipe suggestion
     const moodId = getBestMoodId(userMessage);
     const botResponse = getChatbotResponse(userMessage, moodId);
     addBotResponse(botResponse, moodId);
@@ -171,7 +161,7 @@ const ChatBot = ({ currentMood }: ChatBotProps) => {
 
   const handleSuggestionClick = (suggestion: string) => {
     setInputValue(suggestion);
-    setTimeout(() => handleSendMessage(), 80); // minimal delay for UX
+    setTimeout(() => handleSendMessage(), 80);
   };
 
   const handleVoiceInput = () => {
@@ -231,30 +221,27 @@ const ChatBot = ({ currentMood }: ChatBotProps) => {
 
   return (
     <>
-      {/* FAB Open */}
       <div className={`fixed right-4 bottom-4 z-40 transition-transform duration-300 ${isOpen ? 'scale-0' : 'scale-100'}`}>
         <Button
           size="icon"
           onClick={toggleChat}
-          className="h-14 w-14 rounded-full shadow-lg bg-primary hover:bg-primary/90"
+          className="h-14 w-14 rounded-full shadow-lg bg-primary hover:bg-primary/90 transition-transform duration-150 hover:scale-105 active:scale-95"
         >
           <MessageSquare className="h-6 w-6" />
           <span className="sr-only">Open chat</span>
         </Button>
       </div>
 
-      {/* Chatbot Container */}
       <div
         className={`fixed bottom-0 right-0 z-50 flex flex-col w-full sm:w-96
                    transition-all duration-300 ease-in-out shadow-xl rounded-t-xl
                    bg-card border border-border max-h-[600px]
                    ${isOpen ? 'sm:right-4 sm:bottom-4 translate-y-0 animate-fade-in' : 'translate-y-full'}`}
       >
-        {/* Chat Header */}
         <div className="flex items-center justify-between border-b p-3 bg-primary/90 rounded-t-xl">
           <div className="flex items-center gap-3">
-            <Avatar className="h-8 w-8 bg-primary">
-              <span className="text-white">🍳</span>
+            <Avatar className="h-8 w-8 bg-primary shadow">
+              <span className="text-white text-lg animate-bounce">🍳</span>
             </Avatar>
             <div>
               <h3 className="font-medium text-white">Recipe Assistant</h3>
@@ -282,7 +269,6 @@ const ChatBot = ({ currentMood }: ChatBotProps) => {
           </div>
         </div>
 
-        {/* Main Chat Tabs */}
         <Tabs defaultValue="chat" value={activeTab} onValueChange={setActiveTab} className="w-full">
           <TabsList className="grid grid-cols-2 px-2 py-1">
             <TabsTrigger value="chat">Chat</TabsTrigger>
@@ -290,15 +276,14 @@ const ChatBot = ({ currentMood }: ChatBotProps) => {
           </TabsList>
 
           <TabsContent value="chat" className="flex flex-col flex-1 overflow-hidden">
-            {/* Chat Messages */}
             <div className="flex-1 overflow-y-auto px-4 pt-4 pb-2 space-y-4 bg-background/90">
               {messages.map((message, index) => (
                 <div
                   key={index}
-                  className={`flex ${message.sender === 'user' ? 'justify-end' : 'justify-start'} items-end`}
+                  className={`flex ${message.sender === 'user' ? 'justify-end' : 'justify-start'} items-end transition-all duration-150`}
                 >
                   {message.isTyping ? (
-                    <div className="max-w-[72%] rounded-2xl p-3 bg-muted flex items-center shadow-sm">
+                    <div className="max-w-[72%] rounded-2xl p-3 bg-muted flex items-center shadow-sm animate-pulse">
                       <div className="flex space-x-2">
                         <div className="h-2 w-2 rounded-full bg-muted-foreground/40 animate-bounce"></div>
                         <div className="h-2 w-2 rounded-full bg-muted-foreground/40 animate-bounce" style={{ animationDelay: '0.2s' }}></div>
@@ -309,18 +294,19 @@ const ChatBot = ({ currentMood }: ChatBotProps) => {
                   ) : (
                     <div className={`flex flex-col max-w-[74%] group
                       ${message.sender === 'user' ? 'items-end' : 'items-start'}
+                      ${message.sender === 'user' ? 'animate-fade-in-up' : 'animate-fade-in'}
                     `}>
                       <div
                         className={`
                             rounded-2xl px-4 py-2 text-base transition-all duration-200
+                            shadow
                             ${message.sender === 'user'
-                              ? 'bg-primary text-primary-foreground ml-auto shadow-md'
+                              ? 'bg-gradient-to-tr from-primary to-primary/80 text-primary-foreground ml-auto'
                               : 'bg-muted text-foreground'}
                           `}
                       >
                         {message.text}
                       </div>
-                      {/* Show recipe suggestion chips for bot only */}
                       {message.sender === 'bot' && message.recipes && message.recipes.length > 0 && (
                         renderRecipeSuggestions(message.recipes, message.mood || '')
                       )}
@@ -332,7 +318,6 @@ const ChatBot = ({ currentMood }: ChatBotProps) => {
                 </div>
               ))}
 
-              {/* Show suggestions at start */}
               {showSuggestions && messages.length <= 2 && (
                 <div className="mt-6 space-y-2 animate-fade-in">
                   <p className="text-xs text-muted-foreground">Suggested questions:</p>
@@ -341,7 +326,7 @@ const ChatBot = ({ currentMood }: ChatBotProps) => {
                       <button
                         key={idx}
                         onClick={() => handleSuggestionClick(suggestion)}
-                        className="text-sm bg-primary/10 px-3 py-1.5 rounded-full hover:bg-primary/20 transition-colors text-left"
+                        className="text-sm bg-primary/10 px-3 py-1.5 rounded-full hover:bg-primary/20 transition-colors text-left shadow"
                       >
                         {suggestion}
                       </button>
@@ -352,7 +337,6 @@ const ChatBot = ({ currentMood }: ChatBotProps) => {
               <div ref={messagesEndRef} />
             </div>
 
-            {/* Chat Input */}
             <form onSubmit={handleSendMessage} className="border-t bg-background/90 p-3 flex gap-2">
               <div className="relative flex-1">
                 <input
@@ -360,7 +344,7 @@ const ChatBot = ({ currentMood }: ChatBotProps) => {
                   value={inputValue}
                   onChange={(e) => setInputValue(e.target.value)}
                   placeholder="Ask me about recipes..."
-                  className="w-full bg-background border rounded-xl px-4 py-2.5 pr-11 outline-none focus:ring-2 focus:ring-primary transition-all text-base"
+                  className="w-full bg-background border rounded-xl px-4 py-2.5 pr-11 outline-none focus:ring-2 focus:ring-primary transition-all text-base shadow focus:shadow-lg"
                   disabled={isTyping}
                   autoFocus={isOpen}
                   onKeyDown={(e) => {
@@ -373,7 +357,7 @@ const ChatBot = ({ currentMood }: ChatBotProps) => {
                   variant="ghost"
                   size="icon"
                   onClick={handleVoiceInput}
-                  className={`absolute right-1.5 top-1/2 -translate-y-1/2 h-7 w-7 ${isListening ? 'text-red-500' : ''}`}
+                  className={`absolute right-1.5 top-1/2 -translate-y-1/2 h-7 w-7 ${isListening ? 'text-red-500 scale-110' : ''} transition-transform`}
                   tabIndex={-1}
                 >
                   <Mic className="h-4 w-4" />
@@ -392,7 +376,6 @@ const ChatBot = ({ currentMood }: ChatBotProps) => {
             </form>
           </TabsContent>
 
-          {/* Recipe Tips tab */}
           <TabsContent value="tips" className="flex-1 overflow-y-auto p-4">
             <div className="space-y-4">
               <h3 className="font-medium text-lg">Popular Cooking Tips</h3>
@@ -421,7 +404,6 @@ const ChatBot = ({ currentMood }: ChatBotProps) => {
         </Tabs>
       </div>
 
-      {/* Help Dialog */}
       <Dialog open={helpDialogOpen} onOpenChange={setHelpDialogOpen}>
         <DialogContent>
           <DialogHeader>
@@ -460,4 +442,3 @@ const ChatBot = ({ currentMood }: ChatBotProps) => {
 };
 
 export default ChatBot;
-
