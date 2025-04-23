@@ -1,6 +1,6 @@
 
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Sun, Moon, Menu, X } from 'lucide-react';
 import { Input } from "@/components/ui/input";
 import { Search } from 'lucide-react';
@@ -15,6 +15,7 @@ const Navbar = ({ toggleDarkMode, isDarkMode, onSearch }: NavbarProps) => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+  const navigate = useNavigate();
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -47,25 +48,17 @@ const Navbar = ({ toggleDarkMode, isDarkMode, onSearch }: NavbarProps) => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center">
-            <Link to="/" className="flex items-center cursor-pointer">
-              <span className="text-xl font-bold text-primary mr-1">Mood</span>
-              <span className="text-xl font-bold">Recipes</span>
-            </Link>
+            <button
+              onClick={() => navigate('/')}
+              className="flex items-center cursor-pointer bg-transparent border-none outline-none"
+              style={{ background: 'none', border: 'none' }}
+            >
+              <span className="text-xl font-bold text-[hsl(267,78%,58%)] mr-1">Mood</span>
+              <span className="text-xl font-bold text-black dark:text-white">Recipes</span>
+            </button>
           </div>
           
-          {/* Search Bar */}
-          <form onSubmit={handleSearch} className="flex-grow max-w-xl mx-4">
-            <div className="relative">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
-              <Input
-                type="search"
-                placeholder="Search recipes or describe how you're feeling..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-10 w-full rounded-full bg-white text-base shadow border border-gray-200 py-5"
-              />
-            </div>
-          </form>
+          {/* Search bar removed from here for always-inside-main-page search input */}
           
           <div className="hidden md:block">
             <div className="ml-10 flex items-center space-x-4">
@@ -138,3 +131,4 @@ const Navbar = ({ toggleDarkMode, isDarkMode, onSearch }: NavbarProps) => {
 };
 
 export default Navbar;
+
