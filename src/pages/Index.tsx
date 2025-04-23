@@ -1,7 +1,8 @@
+
 import { useState, useEffect } from "react";
 import { getAllRecipes, searchRecipes, getRecipesByMood } from "@/utils/recipeOperations";
 import { Recipe } from "@/types/recipe";
-import RecipeCard from "@/components/RecipeCard";
+import RecipeCard from "@/components/ui/RecipeCard";
 import SearchBar from "@/components/SearchBar";
 import { inferMoodFromText } from "@/utils/moodFromText";
 
@@ -55,7 +56,12 @@ const Index = () => {
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {searchResults.map((recipe) => (
-            <RecipeCard key={recipe.id} recipe={recipe} />
+            <RecipeCard 
+              key={recipe.id} 
+              recipe={recipe}
+              isFavorite={false} 
+              onToggleFavorite={() => {}} 
+            />
           ))}
         </div>
       )}
