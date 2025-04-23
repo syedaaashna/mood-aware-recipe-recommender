@@ -1,10 +1,9 @@
-
 import { useState, useRef, useEffect } from 'react';
 import { MessageSquare, Send, ChevronUp, X, Mic, Image, Paperclip, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Avatar } from '@/components/ui/avatar';
 import { useToast } from '@/hooks/use-toast';
-import { getChatbotResponse } from '@/utils/moodRecipeData';
+import { getChatbotResponse } from '@/utils/chatbotResponse';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Progress } from '@/components/ui/progress';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
@@ -40,23 +39,19 @@ const ChatBot = ({ currentMood }: ChatBotProps) => {
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const { toast } = useToast();
 
-  // Check if speech recognition is supported
   useEffect(() => {
     setVoiceSupported('SpeechRecognition' in window || 'webkitSpeechRecognition' in window);
   }, []);
 
-  // Auto-scroll to bottom of messages when new message is added
   useEffect(() => {
     if (messagesEndRef.current) {
       messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
     }
   }, [messages]);
 
-  // Simulate typing effect for bot messages
   const addBotResponse = (text: string) => {
     setIsTyping(true);
     
-    // First add a "typing" message
     const typingMessage: MessageType = { 
       sender: 'bot', 
       text: '', 
@@ -66,13 +61,11 @@ const ChatBot = ({ currentMood }: ChatBotProps) => {
     
     setMessages(prev => [...prev, typingMessage]);
     
-    // Simulate variable typing speed based on message length
     const typingDelay = Math.min(Math.max(text.length * 20, 800), 2000);
     
     setTimeout(() => {
       setIsTyping(false);
       
-      // Replace the typing message with the actual message
       setMessages(prev => 
         prev.map((msg, idx) => 
           idx === prev.length - 1 && msg.isTyping 
@@ -88,14 +81,12 @@ const ChatBot = ({ currentMood }: ChatBotProps) => {
     
     if (inputValue.trim() === '') return;
     
-    // Add user message
     const userMessage = inputValue.trim();
     const newMessage: MessageType = { sender: 'user', text: userMessage, timestamp: new Date() };
     setMessages(prev => [...prev, newMessage]);
     setInputValue('');
     setShowSuggestions(false);
     
-    // Get bot response based on user query and current mood
     const botResponse = getChatbotResponse(userMessage, currentMood);
     addBotResponse(botResponse);
   };
@@ -128,11 +119,9 @@ const ChatBot = ({ currentMood }: ChatBotProps) => {
       return;
     }
 
-    // Toggle listening state
     setIsListening(prev => !prev);
     
     if (!isListening) {
-      // Start voice recognition
       const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
       const recognition = new SpeechRecognition();
       
@@ -203,7 +192,6 @@ const ChatBot = ({ currentMood }: ChatBotProps) => {
                    bg-card border border-border max-h-[600px]
                    ${isOpen ? 'sm:right-4 sm:bottom-4 translate-y-0' : 'translate-y-full'}`}
       >
-        {/* Chat header */}
         <div className="flex items-center justify-between border-b p-3">
           <div className="flex items-center gap-3">
             <Avatar className="h-8 w-8 bg-primary">
@@ -236,7 +224,6 @@ const ChatBot = ({ currentMood }: ChatBotProps) => {
           </div>
         </div>
         
-        {/* Tabs for different chat functionalities */}
         <Tabs defaultValue="chat" value={activeTab} onValueChange={setActiveTab} className="w-full">
           <TabsList className="grid grid-cols-2 px-2 py-1">
             <TabsTrigger value="chat">Chat</TabsTrigger>
@@ -244,7 +231,6 @@ const ChatBot = ({ currentMood }: ChatBotProps) => {
           </TabsList>
           
           <TabsContent value="chat" className="flex flex-col flex-1 overflow-hidden">
-            {/* Chat messages */}
             <div className="flex-1 overflow-y-auto p-4 space-y-4">
               {messages.map((message, index) => (
                 <div
@@ -285,7 +271,6 @@ const ChatBot = ({ currentMood }: ChatBotProps) => {
                 </div>
               ))}
               
-              {/* Suggested questions (only shown at beginning) */}
               {showSuggestions && messages.length <= 2 && (
                 <div className="mt-6 space-y-2">
                   <p className="text-xs text-muted-foreground">Suggested questions:</p>
@@ -317,7 +302,6 @@ const ChatBot = ({ currentMood }: ChatBotProps) => {
               <div ref={messagesEndRef} />
             </div>
             
-            {/* Chat input */}
             <form onSubmit={handleSendMessage} className="border-t p-3 flex gap-2">
               <div className="relative flex-1">
                 <input
@@ -384,7 +368,6 @@ const ChatBot = ({ currentMood }: ChatBotProps) => {
         </Tabs>
       </div>
       
-      {/* Help dialog */}
       <Dialog open={helpDialogOpen} onOpenChange={setHelpDialogOpen}>
         <DialogContent>
           <DialogHeader>
