@@ -65,36 +65,15 @@ const Index = () => {
             Discover personalized recipes based on how you're feeling right now, with step-by-step voice guidance to help you cook.
           </div>
 
-          {/* Mood Input */}
-          <form
-            onSubmit={(e) => {
-              e.preventDefault();
-              // MoodInput bar shouldn't submit, but lets it stay focusable
-            }}
-            className="max-w-xl mx-auto w-full mb-4"
-            style={{ pointerEvents: selectedMood ? "none" : "auto" }}
-          >
-            <div className="relative">
-              {/* Place icon */}
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
-              <Input
-                placeholder="How are you feeling today?"
-                className="pl-10 py-5 md:py-6 w-full rounded-full bg-white text-base shadow border border-gray-200"
-                value={selectedMood?.name || ""}
-                readOnly // Block direct typing, only selects mood below
-                tabIndex={-1}
-              />
-              {/* Overlay actual MoodInput */}
-              <div className="absolute left-0 top-0 w-full h-full z-10">
-                <MoodInput
-                  onMoodSelect={handleMoodSelect}
-                  selectedMood={selectedMood}
-                />
-              </div>
-            </div>
-          </form>
+          {/* Mood Input - standalone with no overlapping elements */}
+          <div className="max-w-xl mx-auto w-full mb-6">
+            <MoodInput 
+              onMoodSelect={handleMoodSelect}
+              selectedMood={selectedMood}
+            />
+          </div>
 
-          {/* Search bar */}
+          {/* Search bar - separate from mood input */}
           <form onSubmit={handleSearch} className="max-w-xl mx-auto w-full flex gap-2 items-center mb-3">
             <div className="relative flex-1">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
@@ -103,14 +82,14 @@ const Index = () => {
                 placeholder="Or search recipes by name, ingredient, or tag..."
                 value={searchValue}
                 onChange={(e) => setSearchValue(e.target.value)}
-                className="pl-10 pr-28 w-full rounded-full bg-white text-base shadow border border-gray-200 py-5 md:py-6"
+                className="pl-10 w-full rounded-full bg-white text-base shadow border border-gray-200 py-5 md:py-6"
                 autoFocus={false}
                 disabled={!!selectedMood}
               />
             </div>
             <button
               type="submit"
-              className="bg-purple-500 hover:bg-purple-600 text-white font-semibold rounded-full px-8 py-3 transition-colors text-base -ml-8"
+              className="bg-purple-500 hover:bg-purple-600 text-white font-semibold rounded-full px-8 py-3 transition-colors text-base"
               disabled={!!selectedMood}
             >
               Search
