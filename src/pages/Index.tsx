@@ -38,11 +38,6 @@ const Index = () => {
     }
   };
 
-  // Show intro info if no recipes displayed
-  const showIntroCard = !selectedMood && !searchQuery && recipes.length === 0;
-  // Show search/mood bars if no recipes or mood selected or searched
-  const showInputs = !selectedMood && recipes.length === 0;
-
   return (
     <div
       className="min-h-screen w-full pt-16"
@@ -71,31 +66,28 @@ const Index = () => {
             Discover personalized recipes based on how you're feeling right now, with step-by-step voice guidance to help you cook.
           </div>
 
-          {/* Centered mood input and search bar as seen in the screenshot */}
-          {showInputs && (
-            <div className="flex flex-col w-full max-w-2xl gap-3 mx-auto">
-              {/* MoodInput as top text bar */}
-              <div className="relative z-10 flex-1">
-                <MoodInput 
-                  onMoodSelect={handleMoodSelect}
-                  selectedMood={null}
-                  inputPlaceholder="How are you feeling? Type your mood or select below..."
-                />
-              </div>
-              {/* SearchBar right below, stylized */}
-              <div className="relative z-0 flex-1">
-                <SearchBar
-                  onSearch={handleSearch}
-                  showSearchButton
-                  placeholder="Or search recipes by name, ingredient, or tag..."
-                  buttonClassName="bg-[hsl(267,78%,58%)] hover:bg-purple-700 text-white font-semibold px-7 rounded-full transition-colors"
-                />
-              </div>
+          {/* Centered mood input and search bar */}
+          <div className="flex flex-col w-full max-w-2xl gap-3 mx-auto">
+            {/* MoodInput as top text bar */}
+            <div className="relative z-10 flex-1">
+              <MoodInput 
+                onMoodSelect={handleMoodSelect}
+                placeholder="How are you feeling? Type your mood or select below..."
+              />
             </div>
-          )}
+            {/* SearchBar right below, stylized */}
+            <div className="relative z-0 flex-1">
+              <SearchBar
+                onSearch={handleSearch}
+                showSearchButton
+                placeholder="Or search recipes by name, ingredient, or tag..."
+                buttonClassName="bg-[hsl(267,78%,58%)] hover:bg-purple-700 text-white font-semibold px-7 rounded-full transition-colors"
+              />
+            </div>
+          </div>
 
-          {/* Fun interactive intro card only shown when nothing selected */}
-          {showIntroCard && (
+          {/* Fun interactive intro card only shown when no recipes */}
+          {recipes.length === 0 && !selectedMood && !searchQuery && (
             <div className="w-full flex justify-center pt-6 pb-8">
               <div className="bg-gradient-to-br from-[#9b87f5] via-[#D3E4FD] to-[#f1f1f1] rounded-3xl shadow-xl p-8 flex flex-col items-center max-w-2xl w-full transition-all duration-500 hover:scale-105 hover:shadow-2xl glass-card">
                 <div className="text-6xl mb-4 animate-float">🍽️</div>
@@ -137,4 +129,3 @@ const Index = () => {
 };
 
 export default Index;
-

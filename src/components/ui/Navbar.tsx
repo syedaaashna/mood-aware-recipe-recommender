@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Sun, Moon, Menu, X } from 'lucide-react';
 import { Input } from "@/components/ui/input";
 import { Search } from 'lucide-react';
+import SearchBar from '../SearchBar';
 
 interface NavbarProps {
   toggleDarkMode: () => void;
@@ -14,13 +15,7 @@ interface NavbarProps {
 const Navbar = ({ toggleDarkMode, isDarkMode, onSearch }: NavbarProps) => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [searchQuery, setSearchQuery] = useState('');
   const navigate = useNavigate();
-
-  const handleSearch = (e: React.FormEvent) => {
-    e.preventDefault();
-    onSearch(searchQuery);
-  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -57,8 +52,6 @@ const Navbar = ({ toggleDarkMode, isDarkMode, onSearch }: NavbarProps) => {
               <span className="text-xl font-bold text-black dark:text-white">Recipes</span>
             </button>
           </div>
-          
-          {/* Search bar removed from here for always-inside-main-page search input */}
           
           <div className="hidden md:block">
             <div className="ml-10 flex items-center space-x-4">
@@ -131,4 +124,3 @@ const Navbar = ({ toggleDarkMode, isDarkMode, onSearch }: NavbarProps) => {
 };
 
 export default Navbar;
-
