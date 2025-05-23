@@ -1,6 +1,5 @@
-
 import { useState, useRef, useEffect } from 'react';
-import { MessageSquare, Send, ChevronUp, X, Mic, Sparkles } from 'lucide-react';
+import { MessageSquare, Send, ChevronUp, X, Mic, Sparkles, Bot, User, Zap, Heart, Star, Chef } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Avatar } from '@/components/ui/avatar';
 import { useToast } from '@/hooks/use-toast';
@@ -22,6 +21,7 @@ type MessageType = {
   attachment?: string;
   recipes?: { id: string, name: string }[];
   mood?: string | null;
+  emotion?: 'happy' | 'excited' | 'helpful' | 'thinking' | 'surprised';
 };
 
 const ChatBot = ({ currentMood }: ChatBotProps) => {
@@ -29,8 +29,9 @@ const ChatBot = ({ currentMood }: ChatBotProps) => {
   const [messages, setMessages] = useState<MessageType[]>([
     {
       sender: 'bot',
-      text: "Hi there! I'm your recipe assistant. How can I help you today? You can ask me for recipe suggestions, cooking tips, or any food-related questions.",
+      text: "Hi there! 👋 I'm your AI recipe assistant! I'm absolutely thrilled to help you discover amazing recipes. How can I make your cooking journey more delicious today? ✨",
       timestamp: new Date(),
+      emotion: 'excited'
     }
   ]);
   const [inputValue, setInputValue] = useState('');
@@ -40,8 +41,25 @@ const ChatBot = ({ currentMood }: ChatBotProps) => {
   const [showSuggestions, setShowSuggestions] = useState(true);
   const [voiceSupported, setVoiceSupported] = useState(false);
   const [helpDialogOpen, setHelpDialogOpen] = useState(false);
+  const [botMood, setBotMood] = useState<'happy' | 'excited' | 'helpful' | 'thinking'>('happy');
+  const [chatBackground, setChatBackground] = useState(0);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const { toast } = useToast();
+
+  const botEmojis = {
+    happy: '😊',
+    excited: '🤩',
+    helpful: '🍳',
+    thinking: '🤔',
+    surprised: '😮'
+  };
+
+  const chatBackgrounds = [
+    'bg-gradient-to-br from-purple-400 via-pink-400 to-red-400',
+    'bg-gradient-to-br from-blue-400 via-purple-400 to-pink-400',
+    'bg-gradient-to-br from-green-400 via-blue-400 to-purple-400',
+    'bg-gradient-to-br from-yellow-400 via-red-400 to-pink-400'
+  ];
 
   function inferMoodFromInput(text: string): string | null {
     const lower = text.trim().toLowerCase();
@@ -75,18 +93,24 @@ const ChatBot = ({ currentMood }: ChatBotProps) => {
     return bestMood;
   }
 
+  function getRandomBotEmotion(): 'happy' | 'excited' | 'helpful' | 'thinking' | 'surprised' {
+    const emotions: ('happy' | 'excited' | 'helpful' | 'thinking' | 'surprised')[] = ['happy', 'excited', 'helpful'];
+    return emotions[Math.floor(Math.random() * emotions.length)];
+  }
+
   function renderRecipeSuggestions(recipes: { id: string; name: string }[], moodId: string) {
     if (!recipes || !recipes.length) return null;
     return (
-      <div className="mt-3 flex flex-wrap gap-2">
-        {recipes.slice(0, 4).map(recipe => (
+      <div className="mt-4 flex flex-wrap gap-2">
+        {recipes.slice(0, 4).map((recipe, index) => (
           <a
             key={recipe.id}
             href={`/recipe/${recipe.id}`}
-            className="bg-primary/10 hover:bg-primary/20 text-primary px-3 py-1.5 rounded-xl text-xs font-semibold transition-colors border border-primary"
+            className="bg-gradient-to-r from-primary/20 to-secondary/20 hover:from-primary/30 hover:to-secondary/30 text-primary px-4 py-2 rounded-2xl text-sm font-bold transition-all duration-300 border border-primary/30 hover:scale-105 animate-bounce-in shadow-lg"
             target="_blank" rel="noopener"
+            style={{ animationDelay: `${index * 0.1}s` }}
           >
-            {recipe.name}
+            ✨ {recipe.name}
           </a>
         ))}
       </div>
@@ -103,19 +127,18 @@ const ChatBot = ({ currentMood }: ChatBotProps) => {
     }
   }, [messages]);
 
-  // Auto-open the chat when the component mounts (optional, remove if not needed)
   useEffect(() => {
-    // Remove this if you don't want the chat to auto-open
-    const timer = setTimeout(() => {
-      if (!isOpen) {
-        setIsOpen(true);
-      }
-    }, 1500);
-    return () => clearTimeout(timer);
+    // Change chat background periodically
+    const interval = setInterval(() => {
+      setChatBackground(prev => (prev + 1) % chatBackgrounds.length);
+    }, 30000);
+    return () => clearInterval(interval);
   }, []);
 
   const addBotResponse = (text: string, moodId?: string | null) => {
     setIsTyping(true);
+    setBotMood('thinking');
+    
     const typingMessage: MessageType = {
       sender: 'bot',
       text: '',
@@ -127,10 +150,13 @@ const ChatBot = ({ currentMood }: ChatBotProps) => {
     const resolvedMood = moodId ? moodId : getBestMoodId(text);
     const recipeSuggestions = resolvedMood ? getRecipesByMood(resolvedMood) : [];
 
-    const typingDelay = Math.min(Math.max(text.length * 15, 600), 1400);
+    const typingDelay = Math.min(Math.max(text.length * 20, 800), 2000);
 
     setTimeout(() => {
       setIsTyping(false);
+      const newEmotion = getRandomBotEmotion();
+      setBotMood(newEmotion);
+      
       setMessages(prev =>
         prev.map((msg, idx) =>
           idx === prev.length - 1 && msg.isTyping
@@ -139,7 +165,8 @@ const ChatBot = ({ currentMood }: ChatBotProps) => {
                 text,
                 timestamp: new Date(),
                 recipes: recipeSuggestions.map(r => ({ id: r.id, name: r.name })),
-                mood: resolvedMood
+                mood: resolvedMood,
+                emotion: newEmotion
               }
             : msg
         )
@@ -158,31 +185,41 @@ const ChatBot = ({ currentMood }: ChatBotProps) => {
     const moodId = getBestMoodId(userMessage);
     const botResponse = getChatbotResponse(userMessage, moodId);
     addBotResponse(botResponse, moodId);
+
+    // Add some celebratory effects for certain keywords
+    if (userMessage.toLowerCase().includes('thank') || userMessage.toLowerCase().includes('awesome')) {
+      toast({
+        title: "🎉 You're amazing!",
+        description: "Happy to help with your culinary adventures!",
+        duration: 3000,
+      });
+    }
   };
 
   const toggleChat = () => {
     setIsOpen(prev => !prev);
     if (!isOpen) {
+      setBotMood('excited');
       toast({
-        title: "Recipe Assistant Activated",
-        description: "Ask me anything about recipes or cooking techniques!",
-        duration: 2200,
+        title: "🤖 Recipe Assistant Activated!",
+        description: "Ready to make cooking magical! ✨",
+        duration: 2500,
       });
     }
   };
 
   const handleSuggestionClick = (suggestion: string) => {
     setInputValue(suggestion);
-    setTimeout(() => handleSendMessage(), 80);
+    setTimeout(() => handleSendMessage(), 100);
   };
 
   const handleVoiceInput = () => {
     if (!voiceSupported) {
       toast({
-        title: "Voice Input Not Supported",
+        title: "🎤 Voice Input Not Supported",
         description: "Your browser doesn't support voice recognition.",
         variant: "destructive",
-        duration: 2800,
+        duration: 3000,
       });
       return;
     }
@@ -202,29 +239,31 @@ const ChatBot = ({ currentMood }: ChatBotProps) => {
         console.error('Speech recognition error', event.error);
         setIsListening(false);
         toast({
-          title: "Voice Recognition Error",
+          title: "🎤 Voice Recognition Error",
           description: "There was a problem with voice recognition. Please try again.",
           variant: "destructive",
-          duration: 2600,
+          duration: 3000,
         });
       };
       recognition.onend = () => setIsListening(false);
       recognition.start();
       toast({
-        title: "Listening...",
-        description: "Speak now. I'm listening.",
-        duration: 1700,
+        title: "🎧 Listening...",
+        description: "Speak now! I'm all ears! 👂",
+        duration: 2000,
       });
     }
   };
 
-  const chatSuggestions = [
-    "What should I cook for dinner tonight?",
-    "Give me a quick breakfast recipe",
-    "How do I make perfect pasta?",
-    "Suggest a healthy dessert",
-    "What can I cook with chicken and vegetables?",
-    "Tell me about Italian cuisine"
+  const enhancedChatSuggestions = [
+    "🍽️ What should I cook for dinner tonight?",
+    "🥞 Give me a quick breakfast recipe",
+    "🍝 How do I make perfect pasta?",
+    "🍰 Suggest a healthy dessert",
+    "🥗 What can I cook with chicken and vegetables?",
+    "🇮🇹 Tell me about Italian cuisine",
+    "🌶️ I want something spicy!",
+    "🧁 Something sweet for my mood"
   ];
 
   const formatTime = (date: Date): string => {
@@ -233,97 +272,121 @@ const ChatBot = ({ currentMood }: ChatBotProps) => {
 
   return (
     <>
-      <div className={`fixed right-4 bottom-4 z-50 transition-transform duration-300 ${isOpen ? 'scale-0' : 'scale-100'}`}>
+      <div className={`fixed right-6 bottom-6 z-50 transition-all duration-500 ${isOpen ? 'scale-0 rotate-180' : 'scale-100 rotate-0'}`}>
         <Button
           size="icon"
           onClick={toggleChat}
-          className="h-14 w-14 rounded-full shadow-lg bg-primary hover:bg-primary/90 transition-transform duration-150 hover:scale-105 active:scale-95"
+          className={`h-16 w-16 rounded-full shadow-2xl transition-all duration-300 hover:scale-110 active:scale-95 ${chatBackgrounds[chatBackground]} border-4 border-white/30 backdrop-blur-sm relative overflow-hidden`}
         >
-          <MessageSquare className="h-6 w-6" />
-          <span className="sr-only">Open chat</span>
+          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent translate-x-[-100%] animate-[slide_3s_infinite] skew-x-[-45deg]"></div>
+          <div className="flex flex-col items-center justify-center text-white relative z-10">
+            <Bot className="h-6 w-6 mb-1 animate-bounce" />
+            <div className="text-xs font-bold">Chat</div>
+          </div>
+          <span className="sr-only">Open AI Recipe Assistant</span>
         </Button>
       </div>
 
       <div
-        className={`fixed bottom-0 right-0 z-50 flex flex-col w-full sm:w-96
-                   transition-all duration-300 ease-in-out shadow-xl rounded-t-xl
-                   bg-card border border-border max-h-[600px]
-                   ${isOpen ? 'sm:right-4 sm:bottom-4 translate-y-0 animate-fade-in' : 'translate-y-full'}`}
+        className={`fixed bottom-0 right-0 z-50 flex flex-col w-full sm:w-[420px]
+                   transition-all duration-500 ease-out shadow-2xl rounded-t-2xl
+                   border border-white/20 max-h-[650px] backdrop-blur-xl
+                   ${isOpen ? 'sm:right-6 sm:bottom-6 translate-y-0 opacity-100 scale-100' : 'translate-y-full opacity-0 scale-95'}`}
+        style={{
+          background: 'linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%)',
+        }}
       >
-        <div className="flex items-center justify-between border-b p-3 bg-primary/90 rounded-t-xl">
-          <div className="flex items-center gap-3">
-            <Avatar className="h-8 w-8 bg-primary shadow">
-              <span className="text-white text-lg animate-bounce">🍳</span>
+        <div className={`flex items-center justify-between border-b border-white/20 p-4 rounded-t-2xl ${chatBackgrounds[chatBackground]} relative overflow-hidden`}>
+          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent translate-x-[-100%] animate-[slide_4s_infinite] skew-x-[-25deg]"></div>
+          <div className="flex items-center gap-3 relative z-10">
+            <Avatar className="h-10 w-10 bg-white/20 shadow-lg border-2 border-white/30">
+              <span className="text-white text-xl animate-pulse">{botEmojis[botMood]}</span>
             </Avatar>
             <div>
-              <h3 className="font-medium text-white">Recipe Assistant</h3>
-              <p className="text-xs text-muted-foreground text-white/70">AI-powered guidance</p>
+              <h3 className="font-bold text-white text-lg">AI Recipe Chef</h3>
+              <p className="text-xs text-white/80 flex items-center gap-1">
+                <Zap className="w-3 h-3 animate-pulse" />
+                Super-powered culinary assistant
+                <Sparkles className="w-3 h-3 animate-pulse" />
+              </p>
             </div>
           </div>
-          <div className="flex">
+          <div className="flex relative z-10">
             <Button
               variant="ghost"
               size="icon"
               onClick={() => setHelpDialogOpen(true)}
-              className="text-white/70"
+              className="text-white/80 hover:text-white hover:bg-white/20 transition-all duration-200"
             >
-              <Sparkles className="h-4 w-4" />
-              <span className="sr-only">Help</span>
+              <Sparkles className="h-5 w-5" />
             </Button>
-            <Button variant="ghost" size="icon" onClick={toggleChat}>
-              <ChevronUp className="h-5 w-5 text-white/70" />
-              <span className="sr-only">Minimize</span>
-            </Button>
-            <Button variant="ghost" size="icon" onClick={toggleChat}>
-              <X className="h-5 w-5 text-white/70" />
-              <span className="sr-only">Close</span>
+            <Button 
+              variant="ghost" 
+              size="icon" 
+              onClick={toggleChat}
+              className="text-white/80 hover:text-white hover:bg-white/20 transition-all duration-200"
+            >
+              <X className="h-5 w-5" />
             </Button>
           </div>
         </div>
 
-        <Tabs defaultValue="chat" value={activeTab} onValueChange={setActiveTab} className="w-full">
-          <TabsList className="grid grid-cols-2 px-2 py-1">
-            <TabsTrigger value="chat">Chat</TabsTrigger>
-            <TabsTrigger value="tips">Recipe Tips</TabsTrigger>
+        <Tabs defaultValue="chat" value={activeTab} onValueChange={setActiveTab} className="w-full flex-1 flex flex-col">
+          <TabsList className="grid grid-cols-2 px-3 py-2 bg-white/5 backdrop-blur-sm">
+            <TabsTrigger value="chat" className="data-[state=active]:bg-white/20 data-[state=active]:text-white text-white/70">
+              💬 Chat
+            </TabsTrigger>
+            <TabsTrigger value="tips" className="data-[state=active]:bg-white/20 data-[state=active]:text-white text-white/70">
+              💡 Tips
+            </TabsTrigger>
           </TabsList>
 
           <TabsContent value="chat" className="flex flex-col flex-1 overflow-hidden">
-            <div className="flex-1 overflow-y-auto px-4 pt-4 pb-2 space-y-4 bg-background/90">
+            <div className="flex-1 overflow-y-auto px-4 pt-4 pb-2 space-y-4" style={{ background: 'rgba(255,255,255,0.02)' }}>
               {messages.map((message, index) => (
                 <div
                   key={index}
-                  className={`flex ${message.sender === 'user' ? 'justify-end' : 'justify-start'} items-end transition-all duration-150`}
+                  className={`flex ${message.sender === 'user' ? 'justify-end' : 'justify-start'} items-end transition-all duration-300 animate-fade-in`}
+                  style={{ animationDelay: `${index * 0.1}s` }}
                 >
                   {message.isTyping ? (
-                    <div className="max-w-[72%] rounded-2xl p-3 bg-muted flex items-center shadow-sm animate-pulse">
+                    <div className="max-w-[75%] rounded-2xl p-4 bg-gradient-to-r from-purple-500/20 to-pink-500/20 backdrop-blur-sm border border-white/20 flex items-center shadow-lg">
                       <div className="flex space-x-2">
-                        <div className="h-2 w-2 rounded-full bg-muted-foreground/40 animate-bounce"></div>
-                        <div className="h-2 w-2 rounded-full bg-muted-foreground/40 animate-bounce" style={{ animationDelay: '0.2s' }}></div>
-                        <div className="h-2 w-2 rounded-full bg-muted-foreground/40 animate-bounce" style={{ animationDelay: '0.4s' }}></div>
+                        <div className="h-3 w-3 rounded-full bg-white/60 animate-bounce"></div>
+                        <div className="h-3 w-3 rounded-full bg-white/60 animate-bounce" style={{ animationDelay: '0.2s' }}></div>
+                        <div className="h-3 w-3 rounded-full bg-white/60 animate-bounce" style={{ animationDelay: '0.4s' }}></div>
                       </div>
-                      <span className="ml-2 text-sm text-muted-foreground">Thinking...</span>
+                      <span className="ml-3 text-white/80 font-medium">Chef is thinking...</span>
                     </div>
                   ) : (
-                    <div className={`flex flex-col max-w-[74%] group
+                    <div className={`flex flex-col max-w-[80%] group
                       ${message.sender === 'user' ? 'items-end' : 'items-start'}
-                      ${message.sender === 'user' ? 'animate-fade-in-up' : 'animate-fade-in'}
                     `}>
-                      <div
-                        className={`
-                            rounded-2xl px-4 py-2 text-base transition-all duration-200
-                            shadow
-                            ${message.sender === 'user'
-                              ? 'bg-gradient-to-tr from-primary to-primary/80 text-primary-foreground ml-auto'
-                              : 'bg-muted text-foreground'}
-                          `}
-                      >
-                        {message.text}
+                      <div className="flex items-end gap-2 mb-1">
+                        {message.sender === 'bot' && (
+                          <div className="text-lg animate-bounce">
+                            {message.emotion ? botEmojis[message.emotion] : botEmojis[botMood]}
+                          </div>
+                        )}
+                        <div
+                          className={`
+                              rounded-2xl px-4 py-3 text-base transition-all duration-300 shadow-lg backdrop-blur-sm border
+                              ${message.sender === 'user'
+                                ? 'bg-gradient-to-r from-blue-500/80 to-purple-500/80 text-white border-white/20 hover:from-blue-500/90 hover:to-purple-500/90'
+                                : 'bg-gradient-to-r from-white/15 to-white/10 text-white border-white/20 hover:bg-white/20'}
+                            `}
+                        >
+                          {message.text}
+                        </div>
+                        {message.sender === 'user' && (
+                          <User className="h-6 w-6 text-white/60" />
+                        )}
                       </div>
                       {message.sender === 'bot' && message.recipes && message.recipes.length > 0 && (
                         renderRecipeSuggestions(message.recipes, message.mood || '')
                       )}
-                      <span className={`text-xs text-muted-foreground mt-1 tracking-tight ${message.sender === 'user' ? 'text-right' : 'text-left'}`}>
-                        {message.sender === 'user' ? 'You' : 'AI'} • {formatTime(message.timestamp)}
+                      <span className={`text-xs text-white/50 mt-1 tracking-tight ${message.sender === 'user' ? 'text-right' : 'text-left'}`}>
+                        {message.sender === 'user' ? 'You' : 'Chef AI'} • {formatTime(message.timestamp)}
                       </span>
                     </div>
                   )}
@@ -331,14 +394,17 @@ const ChatBot = ({ currentMood }: ChatBotProps) => {
               ))}
 
               {showSuggestions && messages.length <= 2 && (
-                <div className="mt-6 space-y-2 animate-fade-in">
-                  <p className="text-xs text-muted-foreground">Suggested questions:</p>
+                <div className="mt-6 space-y-3 animate-fade-in">
+                  <p className="text-sm text-white/70 font-medium flex items-center gap-2">
+                    <Star className="w-4 h-4 animate-pulse" />
+                    Try asking me:
+                  </p>
                   <div className="flex flex-wrap gap-2">
-                    {chatSuggestions.map((suggestion, idx) => (
+                    {enhancedChatSuggestions.map((suggestion, idx) => (
                       <button
                         key={idx}
                         onClick={() => handleSuggestionClick(suggestion)}
-                        className="text-sm bg-primary/10 px-3 py-1.5 rounded-full hover:bg-primary/20 transition-colors text-left shadow"
+                        className="text-sm bg-gradient-to-r from-white/10 to-white/5 px-4 py-2 rounded-full hover:from-white/20 hover:to-white/15 transition-all duration-300 text-white border border-white/20 shadow-lg hover:scale-105 backdrop-blur-sm"
                       >
                         {suggestion}
                       </button>
@@ -349,28 +415,23 @@ const ChatBot = ({ currentMood }: ChatBotProps) => {
               <div ref={messagesEndRef} />
             </div>
 
-            <form onSubmit={handleSendMessage} className="border-t bg-background/90 p-3 flex gap-2">
+            <form onSubmit={handleSendMessage} className="border-t border-white/20 p-4 flex gap-3" style={{ background: 'rgba(255,255,255,0.05)' }}>
               <div className="relative flex-1">
                 <input
                   type="text"
                   value={inputValue}
                   onChange={(e) => setInputValue(e.target.value)}
-                  placeholder="Ask me about recipes..."
-                  className="w-full bg-background border rounded-xl px-4 py-2.5 pr-11 outline-none focus:ring-2 focus:ring-primary transition-all text-base shadow focus:shadow-lg"
+                  placeholder="Ask me anything about cooking... 🍳"
+                  className="w-full bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl px-4 py-3 pr-12 outline-none focus:ring-2 focus:ring-purple-400/50 transition-all text-white placeholder-white/60 text-base shadow-lg"
                   disabled={isTyping}
                   autoFocus={isOpen}
-                  onKeyDown={(e) => {
-                    if (e.key === 'Enter' && !e.shiftKey && !isTyping) handleSendMessage(e);
-                  }}
-                  aria-label="Chat input"
                 />
                 <Button
                   type="button"
                   variant="ghost"
                   size="icon"
                   onClick={handleVoiceInput}
-                  className={`absolute right-1.5 top-1/2 -translate-y-1/2 h-7 w-7 ${isListening ? 'text-red-500 scale-110' : ''} transition-transform`}
-                  tabIndex={-1}
+                  className={`absolute right-2 top-1/2 -translate-y-1/2 h-8 w-8 ${isListening ? 'text-red-400 scale-110 animate-pulse' : 'text-white/60'} transition-all duration-300 hover:text-white hover:bg-white/10`}
                 >
                   <Mic className="h-4 w-4" />
                 </Button>
@@ -378,72 +439,114 @@ const ChatBot = ({ currentMood }: ChatBotProps) => {
               <Button
                 type="submit"
                 size="icon"
-                className="shrink-0"
+                className="shrink-0 h-12 w-12 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 transition-all duration-300 hover:scale-105 shadow-lg rounded-2xl"
                 disabled={inputValue.trim() === '' || isTyping}
-                aria-label="Send message"
               >
                 <Send className="h-5 w-5" />
-                <span className="sr-only">Send</span>
               </Button>
             </form>
           </TabsContent>
 
-          <TabsContent value="tips" className="flex-1 overflow-y-auto p-4">
+          <TabsContent value="tips" className="flex-1 overflow-y-auto p-4" style={{ background: 'rgba(255,255,255,0.02)' }}>
             <div className="space-y-4">
-              <h3 className="font-medium text-lg">Popular Cooking Tips</h3>
-              <div className="rounded-lg border p-3 hover:bg-muted/50 transition-colors cursor-pointer">
-                <h4 className="font-medium">Perfect Pasta Every Time</h4>
-                <p className="text-sm text-muted-foreground mt-1">Salt your pasta water (it should taste like the sea) and cook it until it's al dente for the best texture.</p>
-              </div>
-              <div className="rounded-lg border p-3 hover:bg-muted/50 transition-colors cursor-pointer">
-                <h4 className="font-medium">Meat Resting Technique</h4>
-                <p className="text-sm text-muted-foreground mt-1">Always let meat rest after cooking. For steaks, rest for about 5 minutes to allow juices to redistribute.</p>
-              </div>
-              <div className="rounded-lg border p-3 hover:bg-muted/50 transition-colors cursor-pointer">
-                <h4 className="font-medium">Mise en Place</h4>
-                <p className="text-sm text-muted-foreground mt-1">Prepare and organize all ingredients before you start cooking for a smoother cooking experience.</p>
-              </div>
-              <div className="rounded-lg border p-3 hover:bg-muted/50 transition-colors cursor-pointer">
-                <h4 className="font-medium">Knife Skills</h4>
-                <p className="text-sm text-muted-foreground mt-1">Keep your knives sharp and learn basic cutting techniques. A sharp knife is actually safer than a dull one.</p>
-              </div>
-              <div className="rounded-lg border p-3 hover:bg-muted/50 transition-colors cursor-pointer">
-                <h4 className="font-medium">Flavor Enhancers</h4>
-                <p className="text-sm text-muted-foreground mt-1">Use acids like lemon juice or vinegar to brighten flavors, and don't forget umami boosters like soy sauce or mushrooms.</p>
-              </div>
+              <h3 className="font-bold text-xl text-white flex items-center gap-2">
+                <Chef className="w-6 h-6" />
+                Professional Cooking Tips
+              </h3>
+              {[
+                {
+                  title: "Perfect Pasta Every Time 🍝",
+                  tip: "Salt your pasta water generously (it should taste like the sea) and cook until al dente. Save some pasta water to help bind your sauce!"
+                },
+                {
+                  title: "Meat Resting Technique 🥩", 
+                  tip: "Always let meat rest after cooking. For steaks, rest for about 5 minutes to allow juices to redistribute for maximum flavor."
+                },
+                {
+                  title: "Mise en Place ✨",
+                  tip: "Prepare and organize all ingredients before you start cooking. This French technique will make you cook like a pro!"
+                },
+                {
+                  title: "Sharp Knife Skills 🔪",
+                  tip: "Keep your knives sharp! A sharp knife is not only safer but makes prep work faster and more enjoyable."
+                },
+                {
+                  title: "Flavor Enhancers 🌟",
+                  tip: "Use acids like lemon juice or vinegar to brighten flavors. Don't forget umami boosters like soy sauce, mushrooms, or parmesan!"
+                }
+              ].map((item, idx) => (
+                <div 
+                  key={idx}
+                  className="rounded-2xl border border-white/20 p-4 hover:bg-white/10 transition-all duration-300 cursor-pointer backdrop-blur-sm shadow-lg animate-fade-in hover:scale-105"
+                  style={{ animationDelay: `${idx * 0.1}s` }}
+                >
+                  <h4 className="font-bold text-white mb-2">{item.title}</h4>
+                  <p className="text-sm text-white/80">{item.tip}</p>
+                </div>
+              ))}
             </div>
           </TabsContent>
         </Tabs>
       </div>
 
       <Dialog open={helpDialogOpen} onOpenChange={setHelpDialogOpen}>
-        <DialogContent>
+        <DialogContent className="bg-gradient-to-br from-purple-900/90 to-pink-900/90 backdrop-blur-xl border-white/20 text-white">
           <DialogHeader>
-            <DialogTitle>AI Recipe Assistant - Features</DialogTitle>
+            <DialogTitle className="text-2xl font-bold flex items-center gap-2">
+              <Sparkles className="w-6 h-6 animate-pulse" />
+              AI Recipe Assistant - Magic Features
+              <Star className="w-6 h-6 animate-pulse" />
+            </DialogTitle>
           </DialogHeader>
-          <div className="space-y-4">
-            <div className="space-y-2">
-              <h3 className="font-medium">How I Can Help You</h3>
-              <ul className="space-y-1 text-sm">
-                <li className="flex items-start gap-2"><span>•</span><span>Find recipes based on ingredients you have</span></li>
-                <li className="flex items-start gap-2"><span>•</span><span>Suggest meal ideas for different occasions</span></li>
-                <li className="flex items-start gap-2"><span>•</span><span>Provide cooking tips and techniques</span></li>
-                <li className="flex items-start gap-2"><span>•</span><span>Answer nutrition questions about meals</span></li>
-                <li className="flex items-start gap-2"><span>•</span><span>Help troubleshoot cooking issues</span></li>
-                <li className="flex items-start gap-2"><span>•</span><span>Explain ingredient substitutions</span></li>
+          <div className="space-y-6">
+            <div className="space-y-3">
+              <h3 className="font-bold text-lg flex items-center gap-2">
+                <Heart className="w-5 h-5 text-red-400" />
+                How I Can Help You
+              </h3>
+              <ul className="space-y-2 text-sm">
+                {[
+                  "🥘 Find recipes based on ingredients you have",
+                  "🎉 Suggest meal ideas for different occasions", 
+                  "👨‍🍳 Provide cooking tips and techniques",
+                  "🥗 Answer nutrition questions about meals",
+                  "🆘 Help troubleshoot cooking issues",
+                  "🔄 Explain ingredient substitutions",
+                  "🎯 Mood-based recipe recommendations",
+                  "🎤 Voice-guided cooking instructions"
+                ].map((item, idx) => (
+                  <li key={idx} className="flex items-start gap-2 animate-fade-in" style={{ animationDelay: `${idx * 0.1}s` }}>
+                    <span>{item}</span>
+                  </li>
+                ))}
               </ul>
             </div>
-            <div className="space-y-2">
-              <h3 className="font-medium">Example Questions</h3>
-              <ul className="space-y-1 text-sm">
-                <li className="flex items-start gap-2"><span>•</span><span>"What can I make with chicken, broccoli, and rice?"</span></li>
-                <li className="flex items-start gap-2"><span>•</span><span>"How do I know when my steak is medium-rare?"</span></li>
-                <li className="flex items-start gap-2"><span>•</span><span>"Suggest a healthy breakfast for weight loss"</span></li>
+            <div className="space-y-3">
+              <h3 className="font-bold text-lg flex items-center gap-2">
+                <Zap className="w-5 h-5 text-yellow-400" />
+                Example Magic Phrases
+              </h3>
+              <ul className="space-y-2 text-sm">
+                {[
+                  "✨ 'What can I make with chicken, broccoli, and rice?'",
+                  "🔥 'How do I know when my steak is medium-rare?'",
+                  "🌱 'Suggest a healthy breakfast for weight loss'",
+                  "💝 'I'm feeling romantic, what should I cook?'",
+                  "⚡ 'Quick 15-minute dinner ideas'",
+                  "🌶️ 'Something spicy to boost my energy'"
+                ].map((item, idx) => (
+                  <li key={idx} className="flex items-start gap-2 animate-fade-in" style={{ animationDelay: `${idx * 0.1}s` }}>
+                    <span>{item}</span>
+                  </li>
+                ))}
               </ul>
             </div>
             <div className="pt-2">
-              <Button onClick={() => setHelpDialogOpen(false)} className="w-full">
-                Got it
+              <Button 
+                onClick={() => setHelpDialogOpen(false)} 
+                className="w-full bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 transition-all duration-300 hover:scale-105"
+              >
+                Let's Cook! 🚀
               </Button>
             </div>
           </div>
